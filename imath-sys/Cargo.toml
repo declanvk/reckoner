@@ -4,6 +4,9 @@ version = "0.1.0"
 authors = ["Declan Kelly <thedeck@amazon.com>"]
 edition = "2018"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+build = "build.rs"
 
 [dependencies]
+
+[build-dependencies]
+cc = "1.0.46"
