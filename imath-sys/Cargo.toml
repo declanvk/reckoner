@@ -6,8 +6,10 @@ edition = "2018"
 readme = "README.md"
 
 build = "build.rs"
+links = "imath"
 
 [dependencies]
 
 [build-dependencies]
 cc = "1.0.46"
+bindgen = "0.51.1"
