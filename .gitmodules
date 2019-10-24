@@ -1,0 +1,3 @@
+[submodule "imath-sys/vendor/imath"]
+	path = imath-sys/vendor/imath
+	url = https://github.com/creachadair/imath.git
