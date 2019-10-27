@@ -18,8 +18,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Checkout submodules
-      uses: textbook/git-checkout-submodule-action@1.0.0
+      with:
+        submodules: recursive
+        token: ${{ secrets.GitHub_PAT }} // `GitHub_PAT` is a secret contains your PAT.
     - name: Build
       run: cargo build --verbose
     - name: Run tests
