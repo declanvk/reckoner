@@ -1,0 +1,10 @@
+unstable_features = true
+reorder_imports = true
+wrap_comments = true
+condense_wildcard_suffixes = true
+format_strings = true
+reorder_impl_items = true
+reorder_modules = true
+merge_imports = true
+use_field_init_shorthand = true
+report_fixme = "Unnumbered"
