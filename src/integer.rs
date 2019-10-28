@@ -1,6 +1,8 @@
+use crate::error::{Result, RimathError};
 use core::{fmt, mem::ManuallyDrop};
 use std::{ffi::CString, os::raw::c_long};
 
+pub(crate) mod conversions;
 pub(crate) mod ops;
 
 #[repr(transparent)]
@@ -9,7 +11,6 @@ pub struct Integer {
 }
 
 impl Integer {
-    #[allow(dead_code)]
     pub(crate) fn from_c_long(src: c_long) -> Self {
         // This is safe?
         let raw_mpz = unsafe { imath_sys::mp_int_alloc() };
@@ -23,10 +24,36 @@ impl Integer {
         if res != unsafe { imath_sys::MP_OK } {
             panic!("Value init failed! {:?}", res);
         }
-        // This operation is safe bc we correctly initialized the raw structure.
+
         Integer {
             raw: ManuallyDrop::new(raw_mpz),
         }
+    }
+
+    pub(crate) fn from_string_repr<T: ToString>(src: T) -> Result<Self> {
+        let string_repr =
+            CString::new(src.to_string()).map_err(|_| RimathError::IntegerReprContainedNul)?;
+        let char_ptr = string_repr.into_raw();
+
+        // This is safe?
+        let raw_mpz = unsafe { imath_sys::mp_int_alloc() };
+
+        // This is safe bc all the data provided to the function is correctly setup
+        // (integer was allocated/initialized, char_ptr is 0-terminated).
+        let res = unsafe { imath_sys::mp_int_read_string(raw_mpz, 10, char_ptr) };
+
+        // Accessing this is safe bc the MP_OK value is only ever used as an error
+        // condition.
+        if res != unsafe { imath_sys::MP_OK } {
+            return Err(RimathError::IntegerReprTruncated);
+        }
+
+        // This is safe bc we produced the char_ptr earlier from a CString
+        let _ = unsafe { CString::from_raw(char_ptr) };
+
+        Ok(Integer {
+            raw: ManuallyDrop::new(raw_mpz),
+        })
     }
 
     pub(crate) fn as_mut_ptr(&self) -> *mut imath_sys::mpz_t {
@@ -108,13 +135,12 @@ macro_rules! integer_binops_fn {
             result_int
         }
 
-        #[allow(dead_code)]
-        pub(crate) fn $c_long_name(&self, value: c_long) -> Self {
+        pub(crate) fn $c_long_name(&self, value: impl Into<c_long>) -> Self {
             let self_raw = self.as_mut_ptr();
             let result_int = Integer::new();
             let result_raw = result_int.as_mut_ptr();
 
-            let op_res = unsafe { $c_long_fn(self_raw, value, result_raw) };
+            let op_res = unsafe { $c_long_fn(self_raw, value.into(), result_raw) };
 
             if op_res != unsafe { imath_sys::MP_OK } {
                 panic!("Operation failed! {:?}", op_res);
