@@ -295,34 +295,4 @@ mod test {
         let string_repr = int.to_string();
         assert_eq!(&string_repr, "20000");
     }
-
-    #[test]
-    fn add_integers() {
-        let a = Integer::from_c_long(11111);
-        let b = Integer::from_c_long(33333);
-        let c = a.add(&b);
-
-        let string_repr = c.to_string();
-        assert_eq!(&string_repr, "44444");
-    }
-
-    #[test]
-    fn subtract_integers() {
-        let a = Integer::from_c_long(12345);
-        let b = Integer::from_c_long(1234);
-        let c = a.sub(&b);
-
-        let string_repr = c.to_string();
-        assert_eq!(&string_repr, "11111");
-    }
-
-    #[test]
-    fn multiply_integers() {
-        let a = Integer::from_c_long(50505);
-        let b = Integer::from_c_long(5050);
-        let c = a.mul(&b);
-
-        let string_repr = c.to_string();
-        assert_eq!(&string_repr, "255050250");
-    }
 }
