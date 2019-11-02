@@ -12,6 +12,8 @@ pub enum RimathError {
     /// An error occurred when converting a string to an integer value, and the
     /// output was truncated.
     IntegerReprTruncated,
+    /// The result of a remainder operation was outside the expected bounds.
+    RemainedOutsideBounds,
 }
 
 impl Error for RimathError {}
@@ -27,6 +29,10 @@ impl fmt::Display for RimathError {
             IntegerReprTruncated => write!(
                 f,
                 "During conversion, the integer conversion was not read fully."
+            ),
+            RemainedOutsideBounds => write!(
+                f,
+                "The result of a remainder operation was outside the expected bounds."
             ),
         }
     }

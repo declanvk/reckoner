@@ -1,9 +1,8 @@
 use crate::error::{Result, RimathError};
-use core::{cmp::Ordering, fmt, mem::ManuallyDrop};
+use core::{cmp::Ordering, convert::TryInto, fmt, mem::ManuallyDrop, ptr, str::FromStr};
 use std::{
     ffi::CString,
     os::raw::{c_long, c_ulong},
-    str::FromStr,
 };
 
 pub(crate) mod comparison;
@@ -180,6 +179,80 @@ impl Integer {
         imath_sys::mp_int_mul_value
     );
 
+    /// Return the additive inverse
+    pub fn negate(&self) -> Self {
+        let self_raw = self.as_mut_ptr();
+        let result_int = Integer::new();
+        let result_raw = result_int.as_mut_ptr();
+
+        let op_res = unsafe { imath_sys::mp_int_neg(self_raw, result_raw) };
+
+        if op_res != unsafe { imath_sys::MP_OK } {
+            panic!("Operation failed! {:?}", op_res);
+        }
+
+        result_int
+    }
+
+    /// Return the absolute value
+    pub fn absolute_value(&self) -> Self {
+        let self_raw = self.as_mut_ptr();
+        let result_int = Integer::new();
+        let result_raw = result_int.as_mut_ptr();
+
+        let op_res = unsafe { imath_sys::mp_int_abs(self_raw, result_raw) };
+
+        if op_res != unsafe { imath_sys::MP_OK } {
+            panic!("Operation failed! {:?}", op_res);
+        }
+
+        result_int
+    }
+
+    /// remainder two integers
+    pub fn remainder(&self, other: &Self) -> Self {
+        let self_raw = self.as_mut_ptr();
+        let other_raw = other.as_mut_ptr();
+
+        let result_int = Integer::new();
+        let result_raw = result_int.as_mut_ptr();
+
+        let op_res = unsafe { imath_sys::mp_int_mod(self_raw, other_raw, result_raw) };
+
+        if op_res != unsafe { imath_sys::MP_OK } {
+            panic!("Operation failed! {:?}", op_res);
+        }
+
+        result_int
+    }
+
+    pub(crate) fn remainder_c_long<V>(&self, value: V) -> V
+    where
+        V: Into<c_long>,
+        c_long: TryInto<V>,
+    {
+        let self_raw = self.as_mut_ptr();
+        let mut result: c_long = 0;
+        let result_raw = (&mut result) as *mut c_long;
+
+        // This operation comes from the static definition of mp_int_mod_value in
+        // imath.h
+        let op_res = unsafe {
+            imath_sys::mp_int_div_value(self_raw, value.into(), ptr::null_mut(), result_raw)
+        };
+
+        if op_res != unsafe { imath_sys::MP_OK } {
+            panic!("Operation failed! {:?}", op_res);
+        }
+
+        // This is safe bc the modulo operation will always return within the range
+        // [0, value].
+        result
+            .try_into()
+            .map_err(|_| RimathError::RemainedOutsideBounds)
+            .unwrap()
+    }
+
     /// Compare two integers
     pub fn compare(&self, rhs: &Self) -> Ordering {
         let self_raw = self.as_mut_ptr();
@@ -202,7 +275,7 @@ impl Integer {
         raw_cmp.cmp(&0)
     }
 
-    /// Compare an integer value to zero.
+    /// Compare an integer to zero.
     pub fn compare_zero(&self) -> Ordering {
         let self_raw = self.as_mut_ptr();
 
@@ -222,6 +295,7 @@ impl Integer {
         raw_cmp.cmp(&0)
     }
 
+    #[allow(dead_code)]
     pub(crate) fn compare_c_ulong(&self, value: impl Into<c_ulong>) -> Ordering {
         let self_raw = self.as_mut_ptr();
         let value = value.into();
@@ -307,13 +381,22 @@ mod test {
 
     #[test]
     fn parse_big_integer() {
-        const INT_STRING: &str =
-            "98712698346126837461287318238761234897612839471623487619872364981726348176234";
-
-        let int: Integer = INT_STRING.parse().unwrap();
+        let int: Integer =
+            "98712698346126837461287318238761234897612839471623487619872364981726348176234"
+                .parse()
+                .unwrap();
         #[allow(clippy::eq_op)]
         let zero = &int - &int;
 
         assert_eq!(zero, 0)
+    }
+
+    #[test]
+    fn absolute_value_integer() {
+        let neg_int: Integer = "-37129740".parse().unwrap();
+        let pos_int: Integer = "37129740".parse().unwrap();
+
+        assert_eq!(neg_int.absolute_value(), pos_int);
+        assert_eq!(pos_int.absolute_value(), 37_129_740);
     }
 }
