@@ -8,8 +8,6 @@ repository = "https://github.com/declanvk/rimath"
 categories = ["science"]
 license = "MIT"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 imath-sys = { path = "imath-sys/" }
 cfg-if = "0.1.10"

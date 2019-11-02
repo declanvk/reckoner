@@ -3,6 +3,7 @@ use core::{cmp::Ordering, fmt, mem::ManuallyDrop};
 use std::{
     ffi::CString,
     os::raw::{c_long, c_ulong},
+    str::FromStr,
 };
 
 pub(crate) mod comparison;
@@ -36,7 +37,7 @@ impl Integer {
         }
     }
 
-    pub(crate) fn from_string_repr<T: ToString>(src: T) -> Result<Self> {
+    pub(crate) fn from_string_repr(src: impl ToString) -> Result<Self> {
         let string_repr =
             CString::new(src.to_string()).map_err(|_| RimathError::IntegerReprContainedNul)?;
         let char_ptr = string_repr.into_raw();
@@ -265,6 +266,14 @@ impl Default for Integer {
     }
 }
 
+impl FromStr for Integer {
+    type Err = RimathError;
+
+    fn from_str(s: &str) -> core::result::Result<Self, Self::Err> {
+        Integer::from_string_repr(s)
+    }
+}
+
 impl Drop for Integer {
     fn drop(&mut self) {
         unsafe {
@@ -294,5 +303,17 @@ mod test {
 
         let string_repr = int.to_string();
         assert_eq!(&string_repr, "20000");
+    }
+
+    #[test]
+    fn parse_big_integer() {
+        const INT_STRING: &str =
+            "98712698346126837461287318238761234897612839471623487619872364981726348176234";
+
+        let int: Integer = INT_STRING.parse().unwrap();
+        #[allow(clippy::eq_op)]
+        let zero = &int - &int;
+
+        assert_eq!(zero, 0)
     }
 }
