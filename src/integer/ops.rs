@@ -144,135 +144,135 @@ impl_single_op!(Add, add, &Integer, &u128, Integer::add, into rhs);
 
 // SUBTRACTION
 
-impl_single_op!(Sub, sub, &Integer, Integer, Integer::sub, ref rhs);
-impl_single_op!(Sub, sub, Integer, &Integer, Integer::sub, ref self);
-impl_single_op!(Sub, sub, &Integer, &Integer, Integer::sub);
-impl_single_op!(Sub, sub, Integer, Integer, Integer::sub, ref self, ref rhs);
+impl_single_op!(Sub, sub, &Integer, Integer, Integer::subtract, ref rhs);
+impl_single_op!(Sub, sub, Integer, &Integer, Integer::subtract, ref self);
+impl_single_op!(Sub, sub, &Integer, &Integer, Integer::subtract);
+impl_single_op!(Sub, sub, Integer, Integer, Integer::subtract, ref self, ref rhs);
 
-impl_single_op!(Sub, sub, Integer, i8, Integer::sub_c_long, ref self);
-impl_single_op!(Sub, sub, &Integer, i8, Integer::sub_c_long);
-impl_single_op!(Sub, sub, Integer, &i8, Integer::sub_c_long, ref self, deref rhs);
-impl_single_op!(Sub, sub, &Integer, &i8, Integer::sub_c_long, deref rhs);
+impl_single_op!(Sub, sub, Integer, i8, Integer::subtract_c_long, ref self);
+impl_single_op!(Sub, sub, &Integer, i8, Integer::subtract_c_long);
+impl_single_op!(Sub, sub, Integer, &i8, Integer::subtract_c_long, ref self, deref rhs);
+impl_single_op!(Sub, sub, &Integer, &i8, Integer::subtract_c_long, deref rhs);
 
-impl_single_op!(Sub, sub, Integer, u8, Integer::sub_c_long, ref self);
-impl_single_op!(Sub, sub, &Integer, u8, Integer::sub_c_long);
-impl_single_op!(Sub, sub, Integer, &u8, Integer::sub_c_long, ref self, deref rhs);
-impl_single_op!(Sub, sub, &Integer, &u8, Integer::sub_c_long, deref rhs);
+impl_single_op!(Sub, sub, Integer, u8, Integer::subtract_c_long, ref self);
+impl_single_op!(Sub, sub, &Integer, u8, Integer::subtract_c_long);
+impl_single_op!(Sub, sub, Integer, &u8, Integer::subtract_c_long, ref self, deref rhs);
+impl_single_op!(Sub, sub, &Integer, &u8, Integer::subtract_c_long, deref rhs);
 
-impl_single_op!(Sub, sub, Integer, i16, Integer::sub_c_long, ref self);
-impl_single_op!(Sub, sub, &Integer, i16, Integer::sub_c_long);
-impl_single_op!(Sub, sub, Integer, &i16, Integer::sub_c_long, ref self, deref rhs);
-impl_single_op!(Sub, sub, &Integer, &i16, Integer::sub_c_long, deref rhs);
+impl_single_op!(Sub, sub, Integer, i16, Integer::subtract_c_long, ref self);
+impl_single_op!(Sub, sub, &Integer, i16, Integer::subtract_c_long);
+impl_single_op!(Sub, sub, Integer, &i16, Integer::subtract_c_long, ref self, deref rhs);
+impl_single_op!(Sub, sub, &Integer, &i16, Integer::subtract_c_long, deref rhs);
 
-impl_single_op!(Sub, sub, Integer, u16, Integer::sub_c_long, ref self);
-impl_single_op!(Sub, sub, &Integer, u16, Integer::sub_c_long);
-impl_single_op!(Sub, sub, Integer, &u16, Integer::sub_c_long, ref self, deref rhs);
-impl_single_op!(Sub, sub, &Integer, &u16, Integer::sub_c_long, deref rhs);
+impl_single_op!(Sub, sub, Integer, u16, Integer::subtract_c_long, ref self);
+impl_single_op!(Sub, sub, &Integer, u16, Integer::subtract_c_long);
+impl_single_op!(Sub, sub, Integer, &u16, Integer::subtract_c_long, ref self, deref rhs);
+impl_single_op!(Sub, sub, &Integer, &u16, Integer::subtract_c_long, deref rhs);
 
-impl_single_op!(Sub, sub, Integer, i32, Integer::sub_c_long, ref self);
-impl_single_op!(Sub, sub, &Integer, i32, Integer::sub_c_long);
-impl_single_op!(Sub, sub, Integer, &i32, Integer::sub_c_long, ref self, deref rhs);
-impl_single_op!(Sub, sub, &Integer, &i32, Integer::sub_c_long, deref rhs);
+impl_single_op!(Sub, sub, Integer, i32, Integer::subtract_c_long, ref self);
+impl_single_op!(Sub, sub, &Integer, i32, Integer::subtract_c_long);
+impl_single_op!(Sub, sub, Integer, &i32, Integer::subtract_c_long, ref self, deref rhs);
+impl_single_op!(Sub, sub, &Integer, &i32, Integer::subtract_c_long, deref rhs);
 
-impl_single_op!(Sub, sub, Integer, u32, Integer::sub_c_long, ref self);
-impl_single_op!(Sub, sub, &Integer, u32, Integer::sub_c_long);
-impl_single_op!(Sub, sub, Integer, &u32, Integer::sub_c_long, ref self, deref rhs);
-impl_single_op!(Sub, sub, &Integer, &u32, Integer::sub_c_long, deref rhs);
+impl_single_op!(Sub, sub, Integer, u32, Integer::subtract_c_long, ref self);
+impl_single_op!(Sub, sub, &Integer, u32, Integer::subtract_c_long);
+impl_single_op!(Sub, sub, Integer, &u32, Integer::subtract_c_long, ref self, deref rhs);
+impl_single_op!(Sub, sub, &Integer, &u32, Integer::subtract_c_long, deref rhs);
 
 cfg_if::cfg_if! {
     if #[cfg(all(target_pointer_width = "64", not(windows)))] {
-        impl_single_op!(Sub, sub, Integer, i64, Integer::sub_c_long, ref self);
-        impl_single_op!(Sub, sub, &Integer, i64, Integer::sub_c_long);
-        impl_single_op!(Sub, sub, Integer, &i64, Integer::sub_c_long, ref self, deref rhs);
-        impl_single_op!(Sub, sub, &Integer, &i64, Integer::sub_c_long, deref rhs);
+        impl_single_op!(Sub, sub, Integer, i64, Integer::subtract_c_long, ref self);
+        impl_single_op!(Sub, sub, &Integer, i64, Integer::subtract_c_long);
+        impl_single_op!(Sub, sub, Integer, &i64, Integer::subtract_c_long, ref self, deref rhs);
+        impl_single_op!(Sub, sub, &Integer, &i64, Integer::subtract_c_long, deref rhs);
     } else {
-        impl_single_op!(Sub, sub, Integer, i64, Integer::sub, ref self, into rhs);
-        impl_single_op!(Sub, sub, &Integer, i64, Integer::sub, into rhs);
-        impl_single_op!(Sub, sub, Integer, &i64, Integer::sub, ref self, into rhs);
-        impl_single_op!(Sub, sub, &Integer, &i64, Integer::sub, into rhs);
+        impl_single_op!(Sub, sub, Integer, i64, Integer::subtract, ref self, into rhs);
+        impl_single_op!(Sub, sub, &Integer, i64, Integer::subtract, into rhs);
+        impl_single_op!(Sub, sub, Integer, &i64, Integer::subtract, ref self, into rhs);
+        impl_single_op!(Sub, sub, &Integer, &i64, Integer::subtract, into rhs);
     }
 }
 
-impl_single_op!(Sub, sub, Integer, u64, Integer::sub, ref self, into rhs);
-impl_single_op!(Sub, sub, &Integer, u64, Integer::sub, into rhs);
-impl_single_op!(Sub, sub, Integer, &u64, Integer::sub, ref self, into rhs);
-impl_single_op!(Sub, sub, &Integer, &u64, Integer::sub, into rhs);
+impl_single_op!(Sub, sub, Integer, u64, Integer::subtract, ref self, into rhs);
+impl_single_op!(Sub, sub, &Integer, u64, Integer::subtract, into rhs);
+impl_single_op!(Sub, sub, Integer, &u64, Integer::subtract, ref self, into rhs);
+impl_single_op!(Sub, sub, &Integer, &u64, Integer::subtract, into rhs);
 
-impl_single_op!(Sub, sub, Integer, i128, Integer::sub, ref self, into rhs);
-impl_single_op!(Sub, sub, &Integer, i128, Integer::sub, into rhs);
-impl_single_op!(Sub, sub, Integer, &i128, Integer::sub, ref self, into rhs);
-impl_single_op!(Sub, sub, &Integer, &i128, Integer::sub, into rhs);
+impl_single_op!(Sub, sub, Integer, i128, Integer::subtract, ref self, into rhs);
+impl_single_op!(Sub, sub, &Integer, i128, Integer::subtract, into rhs);
+impl_single_op!(Sub, sub, Integer, &i128, Integer::subtract, ref self, into rhs);
+impl_single_op!(Sub, sub, &Integer, &i128, Integer::subtract, into rhs);
 
-impl_single_op!(Sub, sub, Integer, u128, Integer::sub, ref self, into rhs);
-impl_single_op!(Sub, sub, &Integer, u128, Integer::sub, into rhs);
-impl_single_op!(Sub, sub, Integer, &u128, Integer::sub, ref self, into rhs);
-impl_single_op!(Sub, sub, &Integer, &u128, Integer::sub, into rhs);
+impl_single_op!(Sub, sub, Integer, u128, Integer::subtract, ref self, into rhs);
+impl_single_op!(Sub, sub, &Integer, u128, Integer::subtract, into rhs);
+impl_single_op!(Sub, sub, Integer, &u128, Integer::subtract, ref self, into rhs);
+impl_single_op!(Sub, sub, &Integer, &u128, Integer::subtract, into rhs);
 
 // MULTIPLICATION
 
-impl_single_op!(Mul, mul, &Integer, Integer, Integer::mul, ref rhs);
-impl_single_op!(Mul, mul, Integer, &Integer, Integer::mul, ref self);
-impl_single_op!(Mul, mul, &Integer, &Integer, Integer::mul);
-impl_single_op!(Mul, mul, Integer, Integer, Integer::mul, ref self, ref rhs);
+impl_single_op!(Mul, mul, &Integer, Integer, Integer::multiply, ref rhs);
+impl_single_op!(Mul, mul, Integer, &Integer, Integer::multiply, ref self);
+impl_single_op!(Mul, mul, &Integer, &Integer, Integer::multiply);
+impl_single_op!(Mul, mul, Integer, Integer, Integer::multiply, ref self, ref rhs);
 
-impl_single_op!(Mul, mul, Integer, i8, Integer::mul_c_long, ref self);
-impl_single_op!(Mul, mul, &Integer, i8, Integer::mul_c_long);
-impl_single_op!(Mul, mul, Integer, &i8, Integer::mul_c_long, ref self, deref rhs);
-impl_single_op!(Mul, mul, &Integer, &i8, Integer::mul_c_long, deref rhs);
+impl_single_op!(Mul, mul, Integer, i8, Integer::multiply_c_long, ref self);
+impl_single_op!(Mul, mul, &Integer, i8, Integer::multiply_c_long);
+impl_single_op!(Mul, mul, Integer, &i8, Integer::multiply_c_long, ref self, deref rhs);
+impl_single_op!(Mul, mul, &Integer, &i8, Integer::multiply_c_long, deref rhs);
 
-impl_single_op!(Mul, mul, Integer, u8, Integer::mul_c_long, ref self);
-impl_single_op!(Mul, mul, &Integer, u8, Integer::mul_c_long);
-impl_single_op!(Mul, mul, Integer, &u8, Integer::mul_c_long, ref self, deref rhs);
-impl_single_op!(Mul, mul, &Integer, &u8, Integer::mul_c_long, deref rhs);
+impl_single_op!(Mul, mul, Integer, u8, Integer::multiply_c_long, ref self);
+impl_single_op!(Mul, mul, &Integer, u8, Integer::multiply_c_long);
+impl_single_op!(Mul, mul, Integer, &u8, Integer::multiply_c_long, ref self, deref rhs);
+impl_single_op!(Mul, mul, &Integer, &u8, Integer::multiply_c_long, deref rhs);
 
-impl_single_op!(Mul, mul, Integer, i16, Integer::mul_c_long, ref self);
-impl_single_op!(Mul, mul, &Integer, i16, Integer::mul_c_long);
-impl_single_op!(Mul, mul, Integer, &i16, Integer::mul_c_long, ref self, deref rhs);
-impl_single_op!(Mul, mul, &Integer, &i16, Integer::mul_c_long, deref rhs);
+impl_single_op!(Mul, mul, Integer, i16, Integer::multiply_c_long, ref self);
+impl_single_op!(Mul, mul, &Integer, i16, Integer::multiply_c_long);
+impl_single_op!(Mul, mul, Integer, &i16, Integer::multiply_c_long, ref self, deref rhs);
+impl_single_op!(Mul, mul, &Integer, &i16, Integer::multiply_c_long, deref rhs);
 
-impl_single_op!(Mul, mul, Integer, u16, Integer::mul_c_long, ref self);
-impl_single_op!(Mul, mul, &Integer, u16, Integer::mul_c_long);
-impl_single_op!(Mul, mul, Integer, &u16, Integer::mul_c_long, ref self, deref rhs);
-impl_single_op!(Mul, mul, &Integer, &u16, Integer::mul_c_long, deref rhs);
+impl_single_op!(Mul, mul, Integer, u16, Integer::multiply_c_long, ref self);
+impl_single_op!(Mul, mul, &Integer, u16, Integer::multiply_c_long);
+impl_single_op!(Mul, mul, Integer, &u16, Integer::multiply_c_long, ref self, deref rhs);
+impl_single_op!(Mul, mul, &Integer, &u16, Integer::multiply_c_long, deref rhs);
 
-impl_single_op!(Mul, mul, Integer, i32, Integer::mul_c_long, ref self);
-impl_single_op!(Mul, mul, &Integer, i32, Integer::mul_c_long);
-impl_single_op!(Mul, mul, Integer, &i32, Integer::mul_c_long, ref self, deref rhs);
-impl_single_op!(Mul, mul, &Integer, &i32, Integer::mul_c_long, deref rhs);
+impl_single_op!(Mul, mul, Integer, i32, Integer::multiply_c_long, ref self);
+impl_single_op!(Mul, mul, &Integer, i32, Integer::multiply_c_long);
+impl_single_op!(Mul, mul, Integer, &i32, Integer::multiply_c_long, ref self, deref rhs);
+impl_single_op!(Mul, mul, &Integer, &i32, Integer::multiply_c_long, deref rhs);
 
-impl_single_op!(Mul, mul, Integer, u32, Integer::mul_c_long, ref self);
-impl_single_op!(Mul, mul, &Integer, u32, Integer::mul_c_long);
-impl_single_op!(Mul, mul, Integer, &u32, Integer::mul_c_long, ref self, deref rhs);
-impl_single_op!(Mul, mul, &Integer, &u32, Integer::mul_c_long, deref rhs);
+impl_single_op!(Mul, mul, Integer, u32, Integer::multiply_c_long, ref self);
+impl_single_op!(Mul, mul, &Integer, u32, Integer::multiply_c_long);
+impl_single_op!(Mul, mul, Integer, &u32, Integer::multiply_c_long, ref self, deref rhs);
+impl_single_op!(Mul, mul, &Integer, &u32, Integer::multiply_c_long, deref rhs);
 
 cfg_if::cfg_if! {
     if #[cfg(all(target_pointer_width = "64", not(windows)))] {
-        impl_single_op!(Mul, mul, Integer, i64, Integer::mul_c_long, ref self);
-        impl_single_op!(Mul, mul, &Integer, i64, Integer::mul_c_long);
-        impl_single_op!(Mul, mul, Integer, &i64, Integer::mul_c_long, ref self, deref rhs);
-        impl_single_op!(Mul, mul, &Integer, &i64, Integer::mul_c_long, deref rhs);
+        impl_single_op!(Mul, mul, Integer, i64, Integer::multiply_c_long, ref self);
+        impl_single_op!(Mul, mul, &Integer, i64, Integer::multiply_c_long);
+        impl_single_op!(Mul, mul, Integer, &i64, Integer::multiply_c_long, ref self, deref rhs);
+        impl_single_op!(Mul, mul, &Integer, &i64, Integer::multiply_c_long, deref rhs);
     } else {
-        impl_single_op!(Mul, mul, Integer, i64, Integer::mul, ref self, into rhs);
-        impl_single_op!(Mul, mul, &Integer, i64, Integer::mul, into rhs);
-        impl_single_op!(Mul, mul, Integer, &i64, Integer::mul, ref self, into rhs);
-        impl_single_op!(Mul, mul, &Integer, &i64, Integer::mul, into rhs);
+        impl_single_op!(Mul, mul, Integer, i64, Integer::multiply, ref self, into rhs);
+        impl_single_op!(Mul, mul, &Integer, i64, Integer::multiply, into rhs);
+        impl_single_op!(Mul, mul, Integer, &i64, Integer::multiply, ref self, into rhs);
+        impl_single_op!(Mul, mul, &Integer, &i64, Integer::multiply, into rhs);
     }
 }
 
-impl_single_op!(Mul, mul, Integer, u64, Integer::mul, ref self, into rhs);
-impl_single_op!(Mul, mul, &Integer, u64, Integer::mul, into rhs);
-impl_single_op!(Mul, mul, Integer, &u64, Integer::mul, ref self, into rhs);
-impl_single_op!(Mul, mul, &Integer, &u64, Integer::mul, into rhs);
+impl_single_op!(Mul, mul, Integer, u64, Integer::multiply, ref self, into rhs);
+impl_single_op!(Mul, mul, &Integer, u64, Integer::multiply, into rhs);
+impl_single_op!(Mul, mul, Integer, &u64, Integer::multiply, ref self, into rhs);
+impl_single_op!(Mul, mul, &Integer, &u64, Integer::multiply, into rhs);
 
-impl_single_op!(Mul, mul, Integer, i128, Integer::mul, ref self, into rhs);
-impl_single_op!(Mul, mul, &Integer, i128, Integer::mul, into rhs);
-impl_single_op!(Mul, mul, Integer, &i128, Integer::mul, ref self, into rhs);
-impl_single_op!(Mul, mul, &Integer, &i128, Integer::mul, into rhs);
+impl_single_op!(Mul, mul, Integer, i128, Integer::multiply, ref self, into rhs);
+impl_single_op!(Mul, mul, &Integer, i128, Integer::multiply, into rhs);
+impl_single_op!(Mul, mul, Integer, &i128, Integer::multiply, ref self, into rhs);
+impl_single_op!(Mul, mul, &Integer, &i128, Integer::multiply, into rhs);
 
-impl_single_op!(Mul, mul, Integer, u128, Integer::mul, ref self, into rhs);
-impl_single_op!(Mul, mul, &Integer, u128, Integer::mul, into rhs);
-impl_single_op!(Mul, mul, Integer, &u128, Integer::mul, ref self, into rhs);
-impl_single_op!(Mul, mul, &Integer, &u128, Integer::mul, into rhs);
+impl_single_op!(Mul, mul, Integer, u128, Integer::multiply, ref self, into rhs);
+impl_single_op!(Mul, mul, &Integer, u128, Integer::multiply, into rhs);
+impl_single_op!(Mul, mul, Integer, &u128, Integer::multiply, ref self, into rhs);
+impl_single_op!(Mul, mul, &Integer, &u128, Integer::multiply, into rhs);
 
 #[cfg(test)]
 mod test {
