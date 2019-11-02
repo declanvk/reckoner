@@ -5,6 +5,7 @@ use std::{
     os::raw::{c_long, c_ulong},
 };
 
+pub(crate) mod comparison;
 pub(crate) mod conversions;
 pub(crate) mod ops;
 
@@ -231,26 +232,6 @@ impl Integer {
     }
 }
 
-impl PartialEq<Integer> for Integer {
-    fn eq(&self, other: &Integer) -> bool {
-        Integer::cmp(&self, other) == Ordering::Equal
-    }
-}
-
-impl Eq for Integer {}
-
-impl PartialOrd<Integer> for Integer {
-    fn partial_cmp(&self, other: &Integer) -> Option<Ordering> {
-        Some(Integer::cmp_integer(self, other))
-    }
-}
-
-impl Ord for Integer {
-    fn cmp(&self, other: &Self) -> Ordering {
-        Integer::cmp_integer(self, other)
-    }
-}
-
 impl fmt::Display for Integer {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let string_repr = self.to_cstring();
@@ -343,26 +324,5 @@ mod test {
 
         let string_repr = c.to_string();
         assert_eq!(&string_repr, "255050250");
-    }
-
-    #[test]
-    fn compare_integers() {
-        let a = Integer::from_c_long(50505);
-        let b = Integer::from_c_long(5050);
-
-        assert_eq!(a.cmp(&b), Ordering::Greater);
-        assert_eq!(a.cmp(&a), Ordering::Equal);
-        assert_eq!(b.cmp(&a), Ordering::Less);
-    }
-
-    #[test]
-    fn compare_integers_with_operands() {
-        let a = Integer::from_c_long(12345);
-        let b = Integer::from_c_long(1234);
-
-        assert!(a != b);
-        assert!(a > b);
-        assert!(!(a < b));
-        assert!((a - &b) > b);
     }
 }
