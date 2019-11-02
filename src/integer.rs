@@ -167,21 +167,21 @@ impl Integer {
     );
 
     integer_binops_fn!(
-        sub,
+        subtract,
         imath_sys::mp_int_sub,
-        sub_c_long,
+        subtract_c_long,
         imath_sys::mp_int_sub_value
     );
 
     integer_binops_fn!(
-        mul,
+        multiply,
         imath_sys::mp_int_mul,
-        mul_c_long,
+        multiply_c_long,
         imath_sys::mp_int_mul_value
     );
 
     /// Compare two integers
-    pub fn cmp_integer(&self, rhs: &Self) -> Ordering {
+    pub fn compare(&self, rhs: &Self) -> Ordering {
         let self_raw = self.as_mut_ptr();
         let rhs_raw = rhs.as_mut_ptr();
 
@@ -192,7 +192,7 @@ impl Integer {
     }
 
     /// Compare the magnitude of two integers, not taking sign into account.
-    pub fn cmp_integer_magnitude(&self, rhs: &Self) -> Ordering {
+    pub fn compare_magnitude(&self, rhs: &Self) -> Ordering {
         let self_raw = self.as_mut_ptr();
         let rhs_raw = rhs.as_mut_ptr();
 
@@ -203,7 +203,7 @@ impl Integer {
     }
 
     /// Compare an integer value to zero.
-    pub fn cmp_zero(&self) -> Ordering {
+    pub fn compare_zero(&self) -> Ordering {
         let self_raw = self.as_mut_ptr();
 
         // This is safe bc both self has been initialized correctly
@@ -212,7 +212,7 @@ impl Integer {
         raw_cmp.cmp(&0)
     }
 
-    pub(crate) fn cmp_c_long(&self, value: impl Into<c_long>) -> Ordering {
+    pub(crate) fn compare_c_long(&self, value: impl Into<c_long>) -> Ordering {
         let self_raw = self.as_mut_ptr();
         let value = value.into();
 
@@ -222,7 +222,7 @@ impl Integer {
         raw_cmp.cmp(&0)
     }
 
-    pub(crate) fn cmp_c_ulong(&self, value: impl Into<c_ulong>) -> Ordering {
+    pub(crate) fn compare_c_ulong(&self, value: impl Into<c_ulong>) -> Ordering {
         let self_raw = self.as_mut_ptr();
         let value = value.into();
 

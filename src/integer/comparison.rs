@@ -25,23 +25,23 @@ macro_rules! impl_partial_eq {
     };
 }
 
-impl_partial_eq!(Integer, Integer::cmp);
-impl_partial_eq!(u8, Integer::cmp_c_long, deref rhs);
-impl_partial_eq!(i8, Integer::cmp_c_long, deref rhs);
-impl_partial_eq!(u16, Integer::cmp_c_long, deref rhs);
-impl_partial_eq!(i16, Integer::cmp_c_long, deref rhs);
-impl_partial_eq!(u32, Integer::cmp_c_long, deref rhs);
-impl_partial_eq!(i32, Integer::cmp_c_long, deref rhs);
+impl_partial_eq!(Integer, Integer::compare);
+impl_partial_eq!(u8, Integer::compare_c_long, deref rhs);
+impl_partial_eq!(i8, Integer::compare_c_long, deref rhs);
+impl_partial_eq!(u16, Integer::compare_c_long, deref rhs);
+impl_partial_eq!(i16, Integer::compare_c_long, deref rhs);
+impl_partial_eq!(u32, Integer::compare_c_long, deref rhs);
+impl_partial_eq!(i32, Integer::compare_c_long, deref rhs);
 cfg_if::cfg_if! {
     if #[cfg(all(target_pointer_width = "64", not(windows)))] {
-        impl_partial_eq!(i64, Integer::cmp_c_long, deref rhs);
+        impl_partial_eq!(i64, Integer::compare_c_long, deref rhs);
     } else {
-        impl_partial_eq!(i64, Integer::cmp, into rhs);
+        impl_partial_eq!(i64, Integer::compare, into rhs);
     }
 }
-impl_partial_eq!(u64, Integer::cmp, into rhs);
-impl_partial_eq!(i128, Integer::cmp, into rhs);
-impl_partial_eq!(u128, Integer::cmp, into rhs);
+impl_partial_eq!(u64, Integer::compare, into rhs);
+impl_partial_eq!(i128, Integer::compare, into rhs);
+impl_partial_eq!(u128, Integer::compare, into rhs);
 
 impl Eq for Integer {}
 
@@ -69,27 +69,27 @@ macro_rules! impl_partial_ord {
     };
 }
 
-impl_partial_ord!(Integer, Integer::cmp);
-impl_partial_ord!(u8, Integer::cmp_c_long, deref rhs);
-impl_partial_ord!(i8, Integer::cmp_c_long, deref rhs);
-impl_partial_ord!(u16, Integer::cmp_c_long, deref rhs);
-impl_partial_ord!(i16, Integer::cmp_c_long, deref rhs);
-impl_partial_ord!(u32, Integer::cmp_c_long, deref rhs);
-impl_partial_ord!(i32, Integer::cmp_c_long, deref rhs);
+impl_partial_ord!(Integer, Integer::compare);
+impl_partial_ord!(u8, Integer::compare_c_long, deref rhs);
+impl_partial_ord!(i8, Integer::compare_c_long, deref rhs);
+impl_partial_ord!(u16, Integer::compare_c_long, deref rhs);
+impl_partial_ord!(i16, Integer::compare_c_long, deref rhs);
+impl_partial_ord!(u32, Integer::compare_c_long, deref rhs);
+impl_partial_ord!(i32, Integer::compare_c_long, deref rhs);
 cfg_if::cfg_if! {
     if #[cfg(all(target_pointer_width = "64", not(windows)))] {
-        impl_partial_ord!(i64, Integer::cmp_c_long, deref rhs);
+        impl_partial_ord!(i64, Integer::compare_c_long, deref rhs);
     } else {
-        impl_partial_ord!(i64, Integer::cmp, into rhs);
+        impl_partial_ord!(i64, Integer::compare, into rhs);
     }
 }
-impl_partial_ord!(u64, Integer::cmp, into rhs);
-impl_partial_ord!(i128, Integer::cmp, into rhs);
-impl_partial_ord!(u128, Integer::cmp, into rhs);
+impl_partial_ord!(u64, Integer::compare, into rhs);
+impl_partial_ord!(i128, Integer::compare, into rhs);
+impl_partial_ord!(u128, Integer::compare, into rhs);
 
 impl Ord for Integer {
     fn cmp(&self, other: &Self) -> Ordering {
-        Integer::cmp_integer(self, other)
+        Integer::compare(self, other)
     }
 }
 
