@@ -1,10 +1,15 @@
 use crate::error::{Result, RimathError};
-use core::{fmt, mem::ManuallyDrop};
-use std::{ffi::CString, os::raw::c_long};
+use core::{cmp::Ordering, fmt, mem::ManuallyDrop};
+use std::{
+    ffi::CString,
+    os::raw::{c_long, c_ulong},
+};
 
 pub(crate) mod conversions;
 pub(crate) mod ops;
 
+/// Multiple precision integer value. Always heap allocated, not safe for
+/// sharing across threads.
 #[repr(transparent)]
 pub struct Integer {
     raw: ManuallyDrop<*mut imath_sys::mpz_t>,
@@ -118,7 +123,7 @@ impl Integer {
 
 macro_rules! integer_binops_fn {
     ($name:ident, $raw_fn:path, $c_long_name:ident, $c_long_fn:path) => {
-        // $name two integers
+        /// $name two integers
         pub fn $name(&self, other: &Self) -> Self {
             let self_raw = self.as_mut_ptr();
             let other_raw = other.as_mut_ptr();
@@ -172,6 +177,78 @@ impl Integer {
         mul_c_long,
         imath_sys::mp_int_mul_value
     );
+
+    /// Compare two integers
+    pub fn cmp_integer(&self, rhs: &Self) -> Ordering {
+        let self_raw = self.as_mut_ptr();
+        let rhs_raw = rhs.as_mut_ptr();
+
+        // This is safe bc both self & rhs have been initialized correctly
+        let raw_cmp = unsafe { imath_sys::mp_int_compare(self_raw, rhs_raw) };
+
+        raw_cmp.cmp(&0)
+    }
+
+    /// Compare the magnitude of two integers, not taking sign into account.
+    pub fn cmp_integer_magnitude(&self, rhs: &Self) -> Ordering {
+        let self_raw = self.as_mut_ptr();
+        let rhs_raw = rhs.as_mut_ptr();
+
+        // This is safe bc both self & rhs have been initialized correctly
+        let raw_cmp = unsafe { imath_sys::mp_int_compare_unsigned(self_raw, rhs_raw) };
+
+        raw_cmp.cmp(&0)
+    }
+
+    /// Compare an integer value to zero.
+    pub fn cmp_zero(&self) -> Ordering {
+        let self_raw = self.as_mut_ptr();
+
+        // This is safe bc both self has been initialized correctly
+        let raw_cmp = unsafe { imath_sys::mp_int_compare_zero(self_raw) };
+
+        raw_cmp.cmp(&0)
+    }
+
+    pub(crate) fn cmp_c_long(&self, value: impl Into<c_long>) -> Ordering {
+        let self_raw = self.as_mut_ptr();
+        let value = value.into();
+
+        // This is safe bc both self has been initialized correctly
+        let raw_cmp = unsafe { imath_sys::mp_int_compare_value(self_raw, value) };
+
+        raw_cmp.cmp(&0)
+    }
+
+    pub(crate) fn cmp_c_ulong(&self, value: impl Into<c_ulong>) -> Ordering {
+        let self_raw = self.as_mut_ptr();
+        let value = value.into();
+
+        // This is safe bc both self has been initialized correctly
+        let raw_cmp = unsafe { imath_sys::mp_int_compare_uvalue(self_raw, value) };
+
+        raw_cmp.cmp(&0)
+    }
+}
+
+impl PartialEq<Integer> for Integer {
+    fn eq(&self, other: &Integer) -> bool {
+        Integer::cmp(&self, other) == Ordering::Equal
+    }
+}
+
+impl Eq for Integer {}
+
+impl PartialOrd<Integer> for Integer {
+    fn partial_cmp(&self, other: &Integer) -> Option<Ordering> {
+        Some(Integer::cmp_integer(self, other))
+    }
+}
+
+impl Ord for Integer {
+    fn cmp(&self, other: &Self) -> Ordering {
+        Integer::cmp_integer(self, other)
+    }
 }
 
 impl fmt::Display for Integer {
@@ -266,5 +343,26 @@ mod test {
 
         let string_repr = c.to_string();
         assert_eq!(&string_repr, "255050250");
+    }
+
+    #[test]
+    fn compare_integers() {
+        let a = Integer::from_c_long(50505);
+        let b = Integer::from_c_long(5050);
+
+        assert_eq!(a.cmp(&b), Ordering::Greater);
+        assert_eq!(a.cmp(&a), Ordering::Equal);
+        assert_eq!(b.cmp(&a), Ordering::Less);
+    }
+
+    #[test]
+    fn compare_integers_with_operands() {
+        let a = Integer::from_c_long(12345);
+        let b = Integer::from_c_long(1234);
+
+        assert!(a != b);
+        assert!(a > b);
+        assert!(!(a < b));
+        assert!((a - &b) > b);
     }
 }

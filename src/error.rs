@@ -3,9 +3,14 @@ use std::error::Error;
 
 pub(crate) type Result<T> = core::result::Result<T, RimathError>;
 
+/// Error used in rimath, usually originating from imath-sys.
 #[derive(Debug, Clone)]
 pub enum RimathError {
+    /// When converting from a string representation, the given string contained
+    /// a zero-byte that was not at the end.
     IntegerReprContainedNul,
+    /// An error occurred when converting a string to an integer value, and the
+    /// output was truncated.
     IntegerReprTruncated,
 }
 
