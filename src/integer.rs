@@ -1,6 +1,15 @@
 use crate::error::{Result, RimathError};
-use core::{cmp::Ordering, convert::TryInto, fmt, mem::ManuallyDrop, ptr, str::FromStr};
+use core::{
+    cell::UnsafeCell,
+    cmp::Ordering,
+    convert::TryInto,
+    fmt,
+    mem::{self, MaybeUninit},
+    ptr,
+    str::FromStr,
+};
 use std::{
+    alloc,
     ffi::CString,
     os::raw::{c_long, c_ulong},
 };
@@ -13,26 +22,52 @@ pub(crate) mod ops;
 /// sharing across threads.
 #[repr(transparent)]
 pub struct Integer {
-    raw: ManuallyDrop<*mut imath_sys::mpz_t>,
+    raw: Box<UnsafeCell<imath_sys::mpz_t>>,
+}
+
+fn uninit_int() -> Box<MaybeUninit<imath_sys::mpz_t>> {
+    // Replace with Box::new_uninit when it is stable (1.40 maybe?).
+    let layout = alloc::Layout::new::<MaybeUninit<imath_sys::mpz_t>>();
+    let ptr = unsafe { alloc::alloc(layout) };
+    // This cast is safe bc the layout was specified for
+    // MaybeUninit<imath_sys::mpz_t>
+    unsafe { Box::from_raw(ptr.cast()) }
+}
+
+fn assume_int_valid(int: Box<MaybeUninit<imath_sys::mpz_t>>) -> Box<UnsafeCell<imath_sys::mpz_t>> {
+    // This is safe bc MaybeUninit<imath_sys::mpz_t> and
+    // UnsafeCell<imath_sys::mpz_t> are transparently represented as
+    // a imath_sys::mpz_t
+    unsafe { mem::transmute(int) }
 }
 
 impl Integer {
+    /// Construct a new integer with a default value of zero.
+    pub fn new() -> Self {
+        Self::from_c_long(0)
+    }
+
     pub(crate) fn from_c_long(src: c_long) -> Self {
-        // This is safe?
-        let raw_mpz = unsafe { imath_sys::mp_int_alloc() };
+        let mut init = uninit_int();
 
-        // This is safe bc a valid structure is provided to the unsafe methods. And the
-        // src value is of the correct type?
-        let res = unsafe { imath_sys::mp_int_init_value(raw_mpz, src) };
+        {
+            // This is safe bc init is entirely local. raw_mpz is also scoped to be less
+            // than the lifetime of the value init
+            let raw_mpz = init.as_mut_ptr();
 
-        // Accessing this is safe bc the MP_OK value is only ever used as an error
-        // condition.
-        if res != unsafe { imath_sys::MP_OK } {
-            panic!("Value init failed! {:?}", res);
+            // This is safe bc a valid structure is provided to the unsafe methods. And the
+            // src value is of the correct type?
+            let res = unsafe { imath_sys::mp_int_init_value(raw_mpz, src) };
+
+            // Accessing this is safe bc the MP_OK value is only ever used as an error
+            // condition.
+            if res != unsafe { imath_sys::MP_OK } {
+                panic!("Value init failed! {:?}", res);
+            }
         }
 
         Integer {
-            raw: ManuallyDrop::new(raw_mpz),
+            raw: assume_int_valid(init),
         }
     }
 
@@ -41,29 +76,44 @@ impl Integer {
             CString::new(src.to_string()).map_err(|_| RimathError::IntegerReprContainedNul)?;
         let char_ptr = string_repr.into_raw();
 
-        // This is safe?
-        let raw_mpz = unsafe { imath_sys::mp_int_alloc() };
+        let mut init = uninit_int();
 
-        // This is safe bc all the data provided to the function is correctly setup
-        // (integer was allocated/initialized, char_ptr is 0-terminated).
-        let res = unsafe { imath_sys::mp_int_read_string(raw_mpz, 10, char_ptr) };
+        {
+            // This is safe bc init is entirely local. raw_mpz is also scoped to be less
+            // than the lifetime of the value init
+            let raw_mpz = init.as_mut_ptr();
 
-        // Accessing this is safe bc the MP_OK value is only ever used as an error
-        // condition.
-        if res != unsafe { imath_sys::MP_OK } {
-            return Err(RimathError::IntegerReprTruncated);
+            // This is safe bc a valid structure is provided to the unsafe methods. And the
+            // src value is of the correct type?
+            let res_init = unsafe { imath_sys::mp_int_init(raw_mpz) };
+
+            // Accessing this is safe bc the MP_OK value is only ever used as an error
+            // condition.
+            if res_init != unsafe { imath_sys::MP_OK } {
+                panic!("Init failed! {:?}", res_init);
+            }
+
+            // This is safe bc all the data provided to the function is correctly setup
+            // (integer was allocated/initialized, char_ptr is 0-terminated).
+            let res_read = unsafe { imath_sys::mp_int_read_string(raw_mpz, 10, char_ptr) };
+
+            // Accessing this is safe bc the MP_OK value is only ever used as an error
+            // condition.
+            if res_read != unsafe { imath_sys::MP_OK } {
+                return Err(RimathError::IntegerReprTruncated);
+            }
         }
 
         // This is safe bc we produced the char_ptr earlier from a CString
         let _ = unsafe { CString::from_raw(char_ptr) };
 
         Ok(Integer {
-            raw: ManuallyDrop::new(raw_mpz),
+            raw: assume_int_valid(init),
         })
     }
 
     pub(crate) fn as_mut_ptr(&self) -> *mut imath_sys::mpz_t {
-        *self.raw
+        self.raw.get()
     }
 
     // Reports the minimum number of characters required to represent `z` as a
@@ -113,12 +163,20 @@ impl Integer {
 
         CString::new(without_nul).expect("Failed to produce a valid CString")
     }
-}
 
-impl Integer {
-    /// Construct a new integer with a default value of zero.
-    pub fn new() -> Self {
-        Self::from_c_long(0)
+    /// Replaces the value of `other` with a copy of the value of `self`. No new
+    /// memory is allocated unless `self` has more significant digits than
+    /// `other` has allocated.
+    pub fn copy_to(&self, other: &mut Self) {
+        let self_raw = self.as_mut_ptr();
+        let other_raw = other.as_mut_ptr();
+
+        // This is safe bc self has been initialized with a value
+        let res = unsafe { imath_sys::mp_int_copy(other_raw, self_raw) };
+
+        if res != unsafe { imath_sys::MP_OK } {
+            panic!("Copying the value failed! {:?}", res);
+        }
     }
 }
 
@@ -253,6 +311,26 @@ impl Integer {
             .unwrap()
     }
 
+    /// Divide two integers and return quotient and remainder
+    pub fn divide(&self, rhs: &Self) -> (Self, Self) {
+        let self_raw = self.as_mut_ptr();
+        let rhs_raw = rhs.as_mut_ptr();
+
+        let quotient = Integer::new();
+        let quotient_raw = quotient.as_mut_ptr();
+        let remainder = Integer::new();
+        let remainder_raw = remainder.as_mut_ptr();
+
+        let op_res =
+            unsafe { imath_sys::mp_int_div(self_raw, rhs_raw, quotient_raw, remainder_raw) };
+
+        if op_res != unsafe { imath_sys::MP_OK } {
+            panic!("Operation failed! {:?}", op_res);
+        }
+
+        (quotient, remainder)
+    }
+
     /// Compare two integers
     pub fn compare(&self, rhs: &Self) -> Ordering {
         let self_raw = self.as_mut_ptr();
@@ -324,13 +402,27 @@ impl fmt::Debug for Integer {
             alloc,
             used,
             sign,
-        } = unsafe { **self.raw };
+        } = unsafe { *self.raw.get() };
 
         write!(
             f,
             "Integer {{ single: {:?}, digits: {:p}, alloc: {:?}, used: {:?}, sign: {:?} }}",
             single, digits, alloc, used, sign
         )
+    }
+}
+
+impl Clone for Integer {
+    fn clone(&self) -> Self {
+        let mut new_int = Integer::new();
+
+        self.copy_to(&mut new_int);
+
+        new_int
+    }
+
+    fn clone_from(&mut self, source: &Self) {
+        source.copy_to(self);
     }
 }
 
@@ -353,8 +445,7 @@ impl Drop for Integer {
         unsafe {
             let raw = self.as_mut_ptr();
 
-            imath_sys::mp_int_free(raw);
-            ManuallyDrop::drop(&mut self.raw);
+            imath_sys::mp_int_clear(raw);
         }
     }
 }

@@ -2,73 +2,73 @@ use crate::integer::Integer;
 
 impl From<i8> for Integer {
     fn from(src: i8) -> Self {
-        Self::from_c_long(src as _)
+        Self::from_c_long(i64::from(src))
     }
 }
 
 impl From<&i8> for Integer {
     fn from(src: &i8) -> Self {
-        Self::from_c_long(*src as _)
+        Self::from_c_long(i64::from(*src))
     }
 }
 
 impl From<u8> for Integer {
     fn from(src: u8) -> Self {
-        Self::from_c_long(src as _)
+        Self::from_c_long(i64::from(src))
     }
 }
 
 impl From<&u8> for Integer {
     fn from(src: &u8) -> Self {
-        Self::from_c_long(*src as _)
+        Self::from_c_long(i64::from(*src))
     }
 }
 
 impl From<i16> for Integer {
     fn from(src: i16) -> Self {
-        Self::from_c_long(src as _)
+        Self::from_c_long(i64::from(src))
     }
 }
 
 impl From<&i16> for Integer {
     fn from(src: &i16) -> Self {
-        Self::from_c_long(*src as _)
+        Self::from_c_long(i64::from(*src))
     }
 }
 
 impl From<u16> for Integer {
     fn from(src: u16) -> Self {
-        Self::from_c_long(src as _)
+        Self::from_c_long(i64::from(src))
     }
 }
 
 impl From<&u16> for Integer {
     fn from(src: &u16) -> Self {
-        Self::from_c_long(*src as _)
+        Self::from_c_long(i64::from(*src))
     }
 }
 
 impl From<i32> for Integer {
     fn from(src: i32) -> Self {
-        Self::from_c_long(src as _)
+        Self::from_c_long(i64::from(src))
     }
 }
 
 impl From<&i32> for Integer {
     fn from(src: &i32) -> Self {
-        Self::from_c_long(*src as _)
+        Self::from_c_long(i64::from(*src))
     }
 }
 
 impl From<u32> for Integer {
     fn from(src: u32) -> Self {
-        Self::from_c_long(src as _)
+        Self::from_c_long(i64::from(src))
     }
 }
 
 impl From<&u32> for Integer {
     fn from(src: &u32) -> Self {
-        Self::from_c_long(*src as _)
+        Self::from_c_long(i64::from(*src))
     }
 }
 
