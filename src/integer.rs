@@ -2,10 +2,8 @@ use crate::error::{Result, RimathError};
 use core::{
     cell::UnsafeCell,
     cmp::Ordering,
-    convert::TryInto,
     fmt,
     mem::{self, MaybeUninit},
-    ptr,
     str::FromStr,
 };
 use std::{
