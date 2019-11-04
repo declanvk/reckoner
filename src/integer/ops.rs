@@ -2,124 +2,8 @@ use crate::{error::RimathError, integer::Integer};
 use core::{convert::TryInto, ptr};
 use std::os::raw::c_long;
 
-macro_rules! impl_single_binop {
-    ($op_path:ident, $op_fn:ident, $celf:ty, $rhs:ty, $fn:path, $ret:ty, ref self, ref rhs) => {
-        impl $op_path<$rhs> for $celf {
-            type Output = $ret;
-
-            fn $op_fn(mut self, rhs: $rhs) -> Self::Output {
-                $fn(&mut self, &rhs);
-
-                self
-            }
-        }
-    };
-    ($op_path:ident, $op_fn:ident, $celf:ty, $rhs:ty, $fn:path, $ret:ty, ref self) => {
-        impl $op_path<$rhs> for $celf {
-            type Output = $ret;
-
-            fn $op_fn(mut self, rhs: $rhs) -> Self::Output {
-                $fn(&mut self, rhs);
-
-                self
-            }
-        }
-    };
-    ($op_path:ident, $op_fn:ident, $celf:ty, $rhs:ty, $fn:path, $ret:ty, ref rhs) => {
-        impl $op_path<$rhs> for $celf {
-            type Output = $ret;
-
-            fn $op_fn(self, rhs: $rhs) -> Self::Output {
-                $fn(self, &rhs)
-            }
-        }
-    };
-    ($op_path:ident, $op_fn:ident, $celf:ty, $rhs:ty, $fn:path, $ret:ty) => {
-        impl $op_path<$rhs> for $celf {
-            type Output = $ret;
-
-            fn $op_fn(self, rhs: $rhs) -> Self::Output {
-                $fn(self, rhs)
-            }
-        }
-    };
-    ($op_path:ident, $op_fn:ident, $celf:ty, $rhs:ty, $fn:path, $ret:ty, deref rhs) => {
-        impl $op_path<$rhs> for $celf {
-            type Output = $ret;
-
-            fn $op_fn(self, rhs: $rhs) -> Self::Output {
-                $fn(self, *rhs)
-            }
-        }
-    };
-    ($op_path:ident, $op_fn:ident, $celf:ty, $rhs:ty, $fn:path, $ret:ty, ref self, deref rhs) => {
-        impl $op_path<$rhs> for $celf {
-            type Output = $ret;
-
-            fn $op_fn(mut self, rhs: $rhs) -> Self::Output {
-                $fn(&mut self, *rhs);
-
-                self
-            }
-        }
-    };
-    ($op_path:ident, $op_fn:ident, $celf:ty, $rhs:ty, $fn:path, $ret:ty, into rhs) => {
-        impl $op_path<$rhs> for $celf {
-            type Output = $ret;
-
-            fn $op_fn(self, rhs: $rhs) -> Self::Output {
-                $fn(self, &Integer::from(rhs))
-            }
-        }
-    };
-    ($op_path:ident, $op_fn:ident, $celf:ty, $rhs:ty, $fn:path, $ret:ty, ref self, into rhs) => {
-        impl $op_path<$rhs> for $celf {
-            type Output = $ret;
-
-            fn $op_fn(mut self, rhs: $rhs) -> Self::Output {
-                $fn(&mut self, &Integer::from(rhs));
-
-                self
-            }
-        }
-    };
-    ($op_path:ident, $op_fn:ident, $celf:ty, $rhs:ty, $fn:path, $ret:ty, ref self, ref rhs, no reuse) => {
-        impl $op_path<$rhs> for $celf {
-            type Output = $ret;
-
-            fn $op_fn(self, rhs: $rhs) -> Self::Output {
-                $fn(&self, &rhs)
-            }
-        }
-    };
-    ($op_path:ident, $op_fn:ident, $celf:ty, $rhs:ty, $fn:path, $ret:ty, ref self, no reuse) => {
-        impl $op_path<$rhs> for $celf {
-            type Output = $ret;
-
-            fn $op_fn(self, rhs: $rhs) -> Self::Output {
-                $fn(&self, rhs)
-            }
-        }
-    };
-    ($op_path:ident, $op_fn:ident, $celf:ty, $rhs:ty, $fn:path, $ret:ty, ref self, deref rhs, no reuse) => {
-        impl $op_path<$rhs> for $celf {
-            type Output = $ret;
-
-            fn $op_fn(self, rhs: $rhs) -> Self::Output {
-                $fn(&self, *rhs)
-            }
-        }
-    };
-    ($op_path:ident, $op_fn:ident, $celf:ty, $rhs:ty, $fn:path, $ret:ty, ref self, into rhs, no reuse) => {
-        impl $op_path<$rhs> for $celf {
-            type Output = $ret;
-
-            fn $op_fn(self, rhs: $rhs) -> Self::Output {
-                $fn(&self, &Integer::from(rhs))
-            }
-        }
-    };
-}
+#[macro_use]
+mod macros;
 
 mod addition;
 mod division;
@@ -479,7 +363,6 @@ impl Integer {
             .unwrap()
     }
 
-    #[allow(dead_code)]
     pub(crate) fn remainder_c_long_assign(&mut self, value: impl Into<c_long>) {
         let remainder_raw = self.as_mut_ptr();
 
@@ -533,8 +416,16 @@ mod test {
         let b = Integer::from_c_long(33333);
         let c = a + b;
 
-        let string_repr = c.to_string();
-        assert_eq!(&string_repr, "44444");
+        assert_eq!(c, 44_444);
+    }
+
+    #[test]
+    fn add_assign_integers() {
+        let mut a = Integer::from_c_long(11111);
+        let b = Integer::from_c_long(33333);
+        a += b;
+
+        assert_eq!(a, 44_444);
     }
 
     #[test]
@@ -543,8 +434,16 @@ mod test {
         let b = Integer::from_c_long(1234);
         let c = a - b;
 
-        let string_repr = c.to_string();
-        assert_eq!(&string_repr, "11111");
+        assert_eq!(c, 11_111);
+    }
+
+    #[test]
+    fn subtract_assign_integers() {
+        let mut a = Integer::from_c_long(12345);
+        let b = Integer::from_c_long(1234);
+        a -= b;
+
+        assert_eq!(a, 11_111);
     }
 
     #[test]
@@ -553,8 +452,16 @@ mod test {
         let b = Integer::from_c_long(5050);
         let c = a * b;
 
-        let string_repr = c.to_string();
-        assert_eq!(&string_repr, "255050250");
+        assert_eq!(c, 255_050_250);
+    }
+
+    #[test]
+    fn multiply_assign_integers() {
+        let mut a = Integer::from_c_long(50505);
+        let b = Integer::from_c_long(5050);
+
+        a *= b;
+        assert_eq!(a, 255_050_250);
     }
 
     #[test]
@@ -574,6 +481,14 @@ mod test {
     }
 
     #[test]
+    fn divide_assign_integers() {
+        let mut a: Integer = "52384129912341238437480192384".parse().unwrap();
+
+        a /= a.clone();
+        assert_eq!(a, 1);
+    }
+
+    #[test]
     fn remainder_integers() {
         let a: Integer = "52384129912341238437480192384".parse().unwrap();
 
@@ -585,6 +500,14 @@ mod test {
 
         let res_u32: u32 = &a % 127_384u32;
         assert_eq!(res_u32, 85248);
+    }
+
+    #[test]
+    fn remainder_assign_integers() {
+        let mut a: Integer = "52384129912341238437480192384".parse().unwrap();
+
+        a %= 60_000u16;
+        assert_eq!(a, 12384);
     }
 
     #[test]
