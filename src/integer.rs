@@ -204,218 +204,22 @@ impl Integer {
         }
     }
 
+    #[allow(dead_code)]
+    pub(crate) fn set_value(&mut self, value: impl Into<c_long>) {
+        let self_raw = self.as_mut_ptr();
+
+        let res = unsafe { imath_sys::mp_int_set_value(self_raw, value.into()) };
+
+        if res != unsafe { imath_sys::MP_OK } {
+            panic!("Setting the value failed! {:?}", res);
+        }
+    }
+
     /// Set value of integer to zero
     pub fn zero(&mut self) {
         let self_raw = self.as_mut_ptr();
 
         unsafe { imath_sys::mp_int_zero(self_raw) };
-    }
-}
-
-macro_rules! integer_binops_fn {
-    ($name:ident, $raw_fn:path, $c_long_name:ident, $c_long_fn:path) => {
-        /// $name two integers
-        pub fn $name(&self, other: &Self) -> Self {
-            let self_raw = self.as_mut_ptr();
-            let other_raw = other.as_mut_ptr();
-
-            let result_int = Integer::new();
-            let result_raw = result_int.as_mut_ptr();
-
-            let op_res = unsafe { $raw_fn(self_raw, other_raw, result_raw) };
-
-            if op_res != unsafe { imath_sys::MP_OK } {
-                panic!("Operation failed! {:?}", op_res);
-            }
-
-            result_int
-        }
-
-        pub(crate) fn $c_long_name(&self, value: impl Into<c_long>) -> Self {
-            let self_raw = self.as_mut_ptr();
-            let result_int = Integer::new();
-            let result_raw = result_int.as_mut_ptr();
-
-            let op_res = unsafe { $c_long_fn(self_raw, value.into(), result_raw) };
-
-            if op_res != unsafe { imath_sys::MP_OK } {
-                panic!("Operation failed! {:?}", op_res);
-            }
-
-            result_int
-        }
-    };
-}
-
-impl Integer {
-    integer_binops_fn!(
-        add,
-        imath_sys::mp_int_add,
-        add_c_long,
-        imath_sys::mp_int_add_value
-    );
-
-    integer_binops_fn!(
-        subtract,
-        imath_sys::mp_int_sub,
-        subtract_c_long,
-        imath_sys::mp_int_sub_value
-    );
-
-    integer_binops_fn!(
-        multiply,
-        imath_sys::mp_int_mul,
-        multiply_c_long,
-        imath_sys::mp_int_mul_value
-    );
-
-    /// Return the additive inverse
-    pub fn negate(&self) -> Self {
-        let self_raw = self.as_mut_ptr();
-        let result_int = Integer::new();
-        let result_raw = result_int.as_mut_ptr();
-
-        let op_res = unsafe { imath_sys::mp_int_neg(self_raw, result_raw) };
-
-        if op_res != unsafe { imath_sys::MP_OK } {
-            panic!("Operation failed! {:?}", op_res);
-        }
-
-        result_int
-    }
-
-    /// Return the absolute value
-    pub fn absolute_value(&self) -> Self {
-        let self_raw = self.as_mut_ptr();
-        let result_int = Integer::new();
-        let result_raw = result_int.as_mut_ptr();
-
-        let op_res = unsafe { imath_sys::mp_int_abs(self_raw, result_raw) };
-
-        if op_res != unsafe { imath_sys::MP_OK } {
-            panic!("Operation failed! {:?}", op_res);
-        }
-
-        result_int
-    }
-
-    fn mp_int_div(
-        dividend: &Integer,
-        divisor: &Integer,
-        out_quotient: imath_sys::mp_int,
-        out_remainder: imath_sys::mp_int,
-    ) {
-        assert!(!(out_quotient.is_null() && out_remainder.is_null()));
-
-        let dividend_raw = dividend.as_mut_ptr();
-        let divisor_raw = divisor.as_mut_ptr();
-
-        let op_res = unsafe {
-            imath_sys::mp_int_div(dividend_raw, divisor_raw, out_quotient, out_remainder)
-        };
-
-        if op_res != unsafe { imath_sys::MP_OK } {
-            panic!("Operation failed! {:?}", op_res);
-        }
-    }
-
-    /// Divide two integers and return quotient and remainder
-    pub fn divide_full(&self, rhs: &Self) -> (Self, Self) {
-        let quotient = Integer::new();
-        let quotient_raw = quotient.as_mut_ptr();
-        let remainder = Integer::new();
-        let remainder_raw = remainder.as_mut_ptr();
-
-        Integer::mp_int_div(self, rhs, quotient_raw, remainder_raw);
-
-        (quotient, remainder)
-    }
-
-    /// Divide two integers and return only quotient
-    pub fn divide(&self, rhs: &Self) -> Self {
-        let quotient = Integer::new();
-        let quotient_raw = quotient.as_mut_ptr();
-
-        Integer::mp_int_div(self, rhs, quotient_raw, ptr::null_mut());
-
-        quotient
-    }
-
-    /// Divide two integers and return only remainder
-    pub fn remainder(&self, other: &Self) -> Self {
-        let result = Integer::new();
-        let result_raw = result.as_mut_ptr();
-
-        Integer::mp_int_div(self, other, result_raw, ptr::null_mut());
-
-        result
-    }
-
-    fn mp_int_div_value(
-        dividend: &Integer,
-        divisor: impl Into<c_long>,
-        out_quotient: imath_sys::mp_int,
-        out_remainder: *mut c_long,
-    ) {
-        let divident_raw = dividend.as_mut_ptr();
-
-        let op_res = unsafe {
-            imath_sys::mp_int_div_value(divident_raw, divisor.into(), out_quotient, out_remainder)
-        };
-
-        if op_res != unsafe { imath_sys::MP_OK } {
-            panic!("Operation failed! {:?}", op_res);
-        }
-    }
-
-    #[allow(dead_code)]
-    pub(crate) fn divide_full_c_long<V>(&self, value: V) -> (Integer, V)
-    where
-        V: Into<c_long>,
-        c_long: TryInto<V>,
-    {
-        let mut remainder: c_long = 0;
-        let quotient = Integer::new();
-        let quotient_raw = quotient.as_mut_ptr();
-
-        Integer::mp_int_div_value(self, value.into(), quotient_raw, &mut remainder);
-
-        // This is safe bc the modulo operation will always return within the range
-        // [0, value].
-        (
-            quotient,
-            remainder
-                .try_into()
-                .map_err(|_| RimathError::RemainedOutsideBounds)
-                .unwrap(),
-        )
-    }
-
-    pub(crate) fn divide_c_long(&self, value: impl Into<c_long>) -> Self {
-        let quotient = Integer::new();
-        let quotient_raw = quotient.as_mut_ptr();
-
-        Integer::mp_int_div_value(self, value, quotient_raw, ptr::null_mut());
-
-        quotient
-    }
-
-    pub(crate) fn remainder_c_long<V>(&self, value: V) -> V
-    where
-        V: Into<c_long>,
-        c_long: TryInto<V>,
-    {
-        let mut result: c_long = 0;
-        let result_raw = (&mut result) as *mut _;
-
-        Integer::mp_int_div_value(self, value, ptr::null_mut(), result_raw);
-
-        // This is safe bc the modulo operation will always return within the range
-        // [0, value].
-        result
-            .try_into()
-            .map_err(|_| RimathError::RemainedOutsideBounds)
-            .unwrap()
     }
 
     /// Compare two integers
@@ -563,15 +367,6 @@ mod test {
         let zero = &int - &int;
 
         assert_eq!(zero, 0)
-    }
-
-    #[test]
-    fn absolute_value_integer() {
-        let neg_int: Integer = "-37129740".parse().unwrap();
-        let pos_int: Integer = "37129740".parse().unwrap();
-
-        assert_eq!(neg_int.absolute_value(), pos_int);
-        assert_eq!(pos_int.absolute_value(), 37_129_740);
     }
 
     #[test]

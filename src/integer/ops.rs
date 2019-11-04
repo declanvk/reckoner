@@ -1,5 +1,8 @@
+use crate::error::RimathError;
 use crate::integer::Integer;
-use core::ops::{Add, Div, Mul, Neg, Rem, Sub};
+use core::ops::Neg;
+use core::{convert::TryInto, ptr};
+use std::os::raw::c_long;
 
 macro_rules! impl_single_binop {
     ($op_path:ident, $op_fn:ident, $celf:ty, $rhs:ty, $fn:path, $ret:ty, ref self, ref rhs) => {
@@ -76,358 +79,11 @@ macro_rules! impl_single_binop {
     };
 }
 
-// ADDITION
-
-impl_single_binop!(Add, add, &Integer, Integer, Integer::add, Integer, ref rhs);
-impl_single_binop!(Add, add, Integer, &Integer, Integer::add, Integer, ref self);
-impl_single_binop!(Add, add, &Integer, &Integer, Integer::add, Integer);
-impl_single_binop!(Add, add, Integer, Integer, Integer::add, Integer, ref self, ref rhs);
-
-impl_single_binop!(Add, add, Integer, i8, Integer::add_c_long, Integer, ref self);
-impl_single_binop!(Add, add, &Integer, i8, Integer::add_c_long, Integer);
-impl_single_binop!(Add, add, Integer, &i8, Integer::add_c_long, Integer, ref self, deref rhs);
-impl_single_binop!(Add, add, &Integer, &i8, Integer::add_c_long, Integer, deref rhs);
-
-impl_single_binop!(Add, add, Integer, u8, Integer::add_c_long, Integer, ref self);
-impl_single_binop!(Add, add, &Integer, u8, Integer::add_c_long, Integer);
-impl_single_binop!(Add, add, Integer, &u8, Integer::add_c_long, Integer, ref self, deref rhs);
-impl_single_binop!(Add, add, &Integer, &u8, Integer::add_c_long, Integer, deref rhs);
-
-impl_single_binop!(Add, add, Integer, i16, Integer::add_c_long, Integer, ref self);
-impl_single_binop!(Add, add, &Integer, i16, Integer::add_c_long, Integer);
-impl_single_binop!(Add, add, Integer, &i16, Integer::add_c_long, Integer, ref self, deref rhs);
-impl_single_binop!(Add, add, &Integer, &i16, Integer::add_c_long, Integer, deref rhs);
-
-impl_single_binop!(Add, add, Integer, u16, Integer::add_c_long, Integer, ref self);
-impl_single_binop!(Add, add, &Integer, u16, Integer::add_c_long, Integer);
-impl_single_binop!(Add, add, Integer, &u16, Integer::add_c_long, Integer, ref self, deref rhs);
-impl_single_binop!(Add, add, &Integer, &u16, Integer::add_c_long, Integer, deref rhs);
-
-impl_single_binop!(Add, add, Integer, i32, Integer::add_c_long, Integer, ref self);
-impl_single_binop!(Add, add, &Integer, i32, Integer::add_c_long, Integer);
-impl_single_binop!(Add, add, Integer, &i32, Integer::add_c_long, Integer, ref self, deref rhs);
-impl_single_binop!(Add, add, &Integer, &i32, Integer::add_c_long, Integer, deref rhs);
-
-impl_single_binop!(Add, add, Integer, u32, Integer::add_c_long, Integer, ref self);
-impl_single_binop!(Add, add, &Integer, u32, Integer::add_c_long, Integer);
-impl_single_binop!(Add, add, Integer, &u32, Integer::add_c_long, Integer, ref self, deref rhs);
-impl_single_binop!(Add, add, &Integer, &u32, Integer::add_c_long, Integer, deref rhs);
-
-cfg_if::cfg_if! {
-    if #[cfg(all(target_pointer_width = "64", not(windows)))] {
-        impl_single_binop!(Add, add, Integer, i64, Integer::add_c_long, Integer, ref self);
-        impl_single_binop!(Add, add, &Integer, i64, Integer::add_c_long, Integer);
-        impl_single_binop!(Add, add, Integer, &i64, Integer::add_c_long, Integer, ref self, deref rhs);
-        impl_single_binop!(Add, add, &Integer, &i64, Integer::add_c_long, Integer, deref rhs);
-    } else {
-        impl_single_binop!(Add, add, Integer, i64, Integer::add, Integer, ref self, into rhs);
-        impl_single_binop!(Add, add, &Integer, i64, Integer::add, Integer, into rhs);
-        impl_single_binop!(Add, add, Integer, &i64, Integer::add, Integer, ref self, into rhs);
-        impl_single_binop!(Add, add, &Integer, &i64, Integer::add, Integer, into rhs);
-    }
-}
-
-impl_single_binop!(Add, add, Integer, u64, Integer::add, Integer, ref self, into rhs);
-impl_single_binop!(Add, add, &Integer, u64, Integer::add, Integer, into rhs);
-impl_single_binop!(Add, add, Integer, &u64, Integer::add, Integer, ref self, into rhs);
-impl_single_binop!(Add, add, &Integer, &u64, Integer::add, Integer, into rhs);
-
-impl_single_binop!(Add, add, Integer, i128, Integer::add, Integer, ref self, into rhs);
-impl_single_binop!(Add, add, &Integer, i128, Integer::add, Integer, into rhs);
-impl_single_binop!(Add, add, Integer, &i128, Integer::add, Integer, ref self, into rhs);
-impl_single_binop!(Add, add, &Integer, &i128, Integer::add, Integer, into rhs);
-
-impl_single_binop!(Add, add, Integer, u128, Integer::add, Integer, ref self, into rhs);
-impl_single_binop!(Add, add, &Integer, u128, Integer::add, Integer, into rhs);
-impl_single_binop!(Add, add, Integer, &u128, Integer::add, Integer, ref self, into rhs);
-impl_single_binop!(Add, add, &Integer, &u128, Integer::add, Integer, into rhs);
-
-// SUBTRACTION
-
-impl_single_binop!(
-    Sub,
-    sub,
-    &Integer,
-    Integer,
-    Integer::subtract,
-    Integer,
-    ref rhs
-);
-impl_single_binop!(Sub, sub, Integer, &Integer, Integer::subtract, Integer, ref self);
-impl_single_binop!(Sub, sub, &Integer, &Integer, Integer::subtract, Integer);
-impl_single_binop!(Sub, sub, Integer, Integer, Integer::subtract, Integer, ref self, ref rhs);
-
-impl_single_binop!(Sub, sub, Integer, i8, Integer::subtract_c_long, Integer, ref self);
-impl_single_binop!(Sub, sub, &Integer, i8, Integer::subtract_c_long, Integer);
-impl_single_binop!(Sub, sub, Integer, &i8, Integer::subtract_c_long, Integer, ref self, deref rhs);
-impl_single_binop!(Sub, sub, &Integer, &i8, Integer::subtract_c_long, Integer, deref rhs);
-
-impl_single_binop!(Sub, sub, Integer, u8, Integer::subtract_c_long, Integer, ref self);
-impl_single_binop!(Sub, sub, &Integer, u8, Integer::subtract_c_long, Integer);
-impl_single_binop!(Sub, sub, Integer, &u8, Integer::subtract_c_long, Integer, ref self, deref rhs);
-impl_single_binop!(Sub, sub, &Integer, &u8, Integer::subtract_c_long, Integer, deref rhs);
-
-impl_single_binop!(Sub, sub, Integer, i16, Integer::subtract_c_long, Integer, ref self);
-impl_single_binop!(Sub, sub, &Integer, i16, Integer::subtract_c_long, Integer);
-impl_single_binop!(Sub, sub, Integer, &i16, Integer::subtract_c_long, Integer, ref self, deref rhs);
-impl_single_binop!(Sub, sub, &Integer, &i16, Integer::subtract_c_long, Integer, deref rhs);
-
-impl_single_binop!(Sub, sub, Integer, u16, Integer::subtract_c_long, Integer, ref self);
-impl_single_binop!(Sub, sub, &Integer, u16, Integer::subtract_c_long, Integer);
-impl_single_binop!(Sub, sub, Integer, &u16, Integer::subtract_c_long, Integer, ref self, deref rhs);
-impl_single_binop!(Sub, sub, &Integer, &u16, Integer::subtract_c_long, Integer, deref rhs);
-
-impl_single_binop!(Sub, sub, Integer, i32, Integer::subtract_c_long, Integer, ref self);
-impl_single_binop!(Sub, sub, &Integer, i32, Integer::subtract_c_long, Integer);
-impl_single_binop!(Sub, sub, Integer, &i32, Integer::subtract_c_long, Integer, ref self, deref rhs);
-impl_single_binop!(Sub, sub, &Integer, &i32, Integer::subtract_c_long, Integer, deref rhs);
-
-impl_single_binop!(Sub, sub, Integer, u32, Integer::subtract_c_long, Integer, ref self);
-impl_single_binop!(Sub, sub, &Integer, u32, Integer::subtract_c_long, Integer);
-impl_single_binop!(Sub, sub, Integer, &u32, Integer::subtract_c_long, Integer, ref self, deref rhs);
-impl_single_binop!(Sub, sub, &Integer, &u32, Integer::subtract_c_long, Integer, deref rhs);
-
-cfg_if::cfg_if! {
-    if #[cfg(all(target_pointer_width = "64", not(windows)))] {
-        impl_single_binop!(Sub, sub, Integer, i64, Integer::subtract_c_long, Integer, ref self);
-        impl_single_binop!(Sub, sub, &Integer, i64, Integer::subtract_c_long, Integer);
-        impl_single_binop!(Sub, sub, Integer, &i64, Integer::subtract_c_long, Integer, ref self, deref rhs);
-        impl_single_binop!(Sub, sub, &Integer, &i64, Integer::subtract_c_long, Integer, deref rhs);
-    } else {
-        impl_single_binop!(Sub, sub, Integer, i64, Integer::subtract, Integer, ref self, into rhs);
-        impl_single_binop!(Sub, sub, &Integer, i64, Integer::subtract, Integer, into rhs);
-        impl_single_binop!(Sub, sub, Integer, &i64, Integer::subtract, Integer, ref self, into rhs);
-        impl_single_binop!(Sub, sub, &Integer, &i64, Integer::subtract, Integer, into rhs);
-    }
-}
-
-impl_single_binop!(Sub, sub, Integer, u64, Integer::subtract, Integer, ref self, into rhs);
-impl_single_binop!(Sub, sub, &Integer, u64, Integer::subtract, Integer, into rhs);
-impl_single_binop!(Sub, sub, Integer, &u64, Integer::subtract, Integer, ref self, into rhs);
-impl_single_binop!(Sub, sub, &Integer, &u64, Integer::subtract, Integer, into rhs);
-
-impl_single_binop!(Sub, sub, Integer, i128, Integer::subtract, Integer, ref self, into rhs);
-impl_single_binop!(Sub, sub, &Integer, i128, Integer::subtract, Integer, into rhs);
-impl_single_binop!(Sub, sub, Integer, &i128, Integer::subtract, Integer, ref self, into rhs);
-impl_single_binop!(Sub, sub, &Integer, &i128, Integer::subtract, Integer, into rhs);
-
-impl_single_binop!(Sub, sub, Integer, u128, Integer::subtract, Integer, ref self, into rhs);
-impl_single_binop!(Sub, sub, &Integer, u128, Integer::subtract, Integer, into rhs);
-impl_single_binop!(Sub, sub, Integer, &u128, Integer::subtract, Integer, ref self, into rhs);
-impl_single_binop!(Sub, sub, &Integer, &u128, Integer::subtract, Integer, into rhs);
-
-// MULTIPLICATION
-
-impl_single_binop!(
-    Mul,
-    mul,
-    &Integer,
-    Integer,
-    Integer::multiply,
-    Integer,
-    ref rhs
-);
-impl_single_binop!(Mul, mul, Integer, &Integer, Integer::multiply, Integer, ref self);
-impl_single_binop!(Mul, mul, &Integer, &Integer, Integer::multiply, Integer);
-impl_single_binop!(Mul, mul, Integer, Integer, Integer::multiply, Integer, ref self, ref rhs);
-
-impl_single_binop!(Mul, mul, Integer, i8, Integer::multiply_c_long, Integer, ref self);
-impl_single_binop!(Mul, mul, &Integer, i8, Integer::multiply_c_long, Integer);
-impl_single_binop!(Mul, mul, Integer, &i8, Integer::multiply_c_long, Integer, ref self, deref rhs);
-impl_single_binop!(Mul, mul, &Integer, &i8, Integer::multiply_c_long, Integer, deref rhs);
-
-impl_single_binop!(Mul, mul, Integer, u8, Integer::multiply_c_long, Integer, ref self);
-impl_single_binop!(Mul, mul, &Integer, u8, Integer::multiply_c_long, Integer);
-impl_single_binop!(Mul, mul, Integer, &u8, Integer::multiply_c_long, Integer, ref self, deref rhs);
-impl_single_binop!(Mul, mul, &Integer, &u8, Integer::multiply_c_long, Integer, deref rhs);
-
-impl_single_binop!(Mul, mul, Integer, i16, Integer::multiply_c_long, Integer, ref self);
-impl_single_binop!(Mul, mul, &Integer, i16, Integer::multiply_c_long, Integer);
-impl_single_binop!(Mul, mul, Integer, &i16, Integer::multiply_c_long, Integer, ref self, deref rhs);
-impl_single_binop!(Mul, mul, &Integer, &i16, Integer::multiply_c_long, Integer, deref rhs);
-
-impl_single_binop!(Mul, mul, Integer, u16, Integer::multiply_c_long, Integer, ref self);
-impl_single_binop!(Mul, mul, &Integer, u16, Integer::multiply_c_long, Integer);
-impl_single_binop!(Mul, mul, Integer, &u16, Integer::multiply_c_long, Integer, ref self, deref rhs);
-impl_single_binop!(Mul, mul, &Integer, &u16, Integer::multiply_c_long, Integer, deref rhs);
-
-impl_single_binop!(Mul, mul, Integer, i32, Integer::multiply_c_long, Integer, ref self);
-impl_single_binop!(Mul, mul, &Integer, i32, Integer::multiply_c_long, Integer);
-impl_single_binop!(Mul, mul, Integer, &i32, Integer::multiply_c_long, Integer, ref self, deref rhs);
-impl_single_binop!(Mul, mul, &Integer, &i32, Integer::multiply_c_long, Integer, deref rhs);
-
-impl_single_binop!(Mul, mul, Integer, u32, Integer::multiply_c_long, Integer, ref self);
-impl_single_binop!(Mul, mul, &Integer, u32, Integer::multiply_c_long, Integer);
-impl_single_binop!(Mul, mul, Integer, &u32, Integer::multiply_c_long, Integer, ref self, deref rhs);
-impl_single_binop!(Mul, mul, &Integer, &u32, Integer::multiply_c_long, Integer, deref rhs);
-
-cfg_if::cfg_if! {
-    if #[cfg(all(target_pointer_width = "64", not(windows)))] {
-        impl_single_binop!(Mul, mul, Integer, i64, Integer::multiply_c_long, Integer, ref self);
-        impl_single_binop!(Mul, mul, &Integer, i64, Integer::multiply_c_long, Integer);
-        impl_single_binop!(Mul, mul, Integer, &i64, Integer::multiply_c_long, Integer, ref self, deref rhs);
-        impl_single_binop!(Mul, mul, &Integer, &i64, Integer::multiply_c_long, Integer, deref rhs);
-    } else {
-        impl_single_binop!(Mul, mul, Integer, i64, Integer::multiply, Integer, ref self, into rhs);
-        impl_single_binop!(Mul, mul, &Integer, i64, Integer::multiply, Integer, into rhs);
-        impl_single_binop!(Mul, mul, Integer, &i64, Integer::multiply, Integer, ref self, into rhs);
-        impl_single_binop!(Mul, mul, &Integer, &i64, Integer::multiply, Integer, into rhs);
-    }
-}
-
-impl_single_binop!(Mul, mul, Integer, u64, Integer::multiply, Integer, ref self, into rhs);
-impl_single_binop!(Mul, mul, &Integer, u64, Integer::multiply, Integer, into rhs);
-impl_single_binop!(Mul, mul, Integer, &u64, Integer::multiply, Integer, ref self, into rhs);
-impl_single_binop!(Mul, mul, &Integer, &u64, Integer::multiply, Integer, into rhs);
-
-impl_single_binop!(Mul, mul, Integer, i128, Integer::multiply, Integer, ref self, into rhs);
-impl_single_binop!(Mul, mul, &Integer, i128, Integer::multiply, Integer, into rhs);
-impl_single_binop!(Mul, mul, Integer, &i128, Integer::multiply, Integer, ref self, into rhs);
-impl_single_binop!(Mul, mul, &Integer, &i128, Integer::multiply, Integer, into rhs);
-
-impl_single_binop!(Mul, mul, Integer, u128, Integer::multiply, Integer, ref self, into rhs);
-impl_single_binop!(Mul, mul, &Integer, u128, Integer::multiply, Integer, into rhs);
-impl_single_binop!(Mul, mul, Integer, &u128, Integer::multiply, Integer, ref self, into rhs);
-impl_single_binop!(Mul, mul, &Integer, &u128, Integer::multiply, Integer, into rhs);
-
-// DIVISION
-
-impl_single_binop!(
-    Div,
-    div,
-    &Integer,
-    Integer,
-    Integer::divide,
-    Integer,
-    ref rhs
-);
-impl_single_binop!(Div, div, Integer, &Integer, Integer::divide, Integer, ref self);
-impl_single_binop!(Div, div, &Integer, &Integer, Integer::divide, Integer);
-impl_single_binop!(Div, div, Integer, Integer, Integer::divide, Integer, ref self, ref rhs);
-
-impl_single_binop!(Div, div, Integer, i8, Integer::divide_c_long, Integer, ref self);
-impl_single_binop!(Div, div, &Integer, i8, Integer::divide_c_long, Integer);
-impl_single_binop!(Div, div, Integer, &i8, Integer::divide_c_long, Integer, ref self, deref rhs);
-impl_single_binop!(Div, div, &Integer, &i8, Integer::divide_c_long, Integer, deref rhs);
-
-impl_single_binop!(Div, div, Integer, u8, Integer::divide_c_long, Integer, ref self);
-impl_single_binop!(Div, div, &Integer, u8, Integer::divide_c_long, Integer);
-impl_single_binop!(Div, div, Integer, &u8, Integer::divide_c_long, Integer, ref self, deref rhs);
-impl_single_binop!(Div, div, &Integer, &u8, Integer::divide_c_long, Integer, deref rhs);
-
-impl_single_binop!(Div, div, Integer, i16, Integer::divide_c_long, Integer, ref self);
-impl_single_binop!(Div, div, &Integer, i16, Integer::divide_c_long, Integer);
-impl_single_binop!(Div, div, Integer, &i16, Integer::divide_c_long, Integer, ref self, deref rhs);
-impl_single_binop!(Div, div, &Integer, &i16, Integer::divide_c_long, Integer, deref rhs);
-
-impl_single_binop!(Div, div, Integer, u16, Integer::divide_c_long, Integer, ref self);
-impl_single_binop!(Div, div, &Integer, u16, Integer::divide_c_long, Integer);
-impl_single_binop!(Div, div, Integer, &u16, Integer::divide_c_long, Integer, ref self, deref rhs);
-impl_single_binop!(Div, div, &Integer, &u16, Integer::divide_c_long, Integer, deref rhs);
-
-impl_single_binop!(Div, div, Integer, i32, Integer::divide_c_long, Integer, ref self);
-impl_single_binop!(Div, div, &Integer, i32, Integer::divide_c_long, Integer);
-impl_single_binop!(Div, div, Integer, &i32, Integer::divide_c_long, Integer, ref self, deref rhs);
-impl_single_binop!(Div, div, &Integer, &i32, Integer::divide_c_long, Integer, deref rhs);
-
-impl_single_binop!(Div, div, Integer, u32, Integer::divide_c_long, Integer, ref self);
-impl_single_binop!(Div, div, &Integer, u32, Integer::divide_c_long, Integer);
-impl_single_binop!(Div, div, Integer, &u32, Integer::divide_c_long, Integer, ref self, deref rhs);
-impl_single_binop!(Div, div, &Integer, &u32, Integer::divide_c_long, Integer, deref rhs);
-
-cfg_if::cfg_if! {
-    if #[cfg(all(target_pointer_width = "64", not(windows)))] {
-        impl_single_binop!(Div, div, Integer, i64, Integer::divide_c_long, Integer, ref self);
-        impl_single_binop!(Div, div, &Integer, i64, Integer::divide_c_long, Integer);
-        impl_single_binop!(Div, div, Integer, &i64, Integer::divide_c_long, Integer, ref self, deref rhs);
-        impl_single_binop!(Div, div, &Integer, &i64, Integer::divide_c_long, Integer, deref rhs);
-    } else {
-        impl_single_binop!(Div, div, Integer, i64, Integer::divide, Integer, ref self, into rhs);
-        impl_single_binop!(Div, div, &Integer, i64, Integer::divide, Integer, into rhs);
-        impl_single_binop!(Div, div, Integer, &i64, Integer::divide, Integer, ref self, into rhs);
-        impl_single_binop!(Div, div, &Integer, &i64, Integer::divide, Integer, into rhs);
-    }
-}
-
-impl_single_binop!(Div, div, Integer, u64, Integer::divide, Integer, ref self, into rhs);
-impl_single_binop!(Div, div, &Integer, u64, Integer::divide, Integer, into rhs);
-impl_single_binop!(Div, div, Integer, &u64, Integer::divide, Integer, ref self, into rhs);
-impl_single_binop!(Div, div, &Integer, &u64, Integer::divide, Integer, into rhs);
-
-impl_single_binop!(Div, div, Integer, i128, Integer::divide, Integer, ref self, into rhs);
-impl_single_binop!(Div, div, &Integer, i128, Integer::divide, Integer, into rhs);
-impl_single_binop!(Div, div, Integer, &i128, Integer::divide, Integer, ref self, into rhs);
-impl_single_binop!(Div, div, &Integer, &i128, Integer::divide, Integer, into rhs);
-
-impl_single_binop!(Div, div, Integer, u128, Integer::divide, Integer, ref self, into rhs);
-impl_single_binop!(Div, div, &Integer, u128, Integer::divide, Integer, into rhs);
-impl_single_binop!(Div, div, Integer, &u128, Integer::divide, Integer, ref self, into rhs);
-impl_single_binop!(Div, div, &Integer, &u128, Integer::divide, Integer, into rhs);
-
-// REMAINDER
-
-impl_single_binop!(
-    Rem,
-    rem,
-    &Integer,
-    Integer,
-    Integer::remainder,
-    Integer,
-    ref rhs
-);
-impl_single_binop!(Rem, rem, Integer, &Integer, Integer::remainder, Integer, ref self);
-impl_single_binop!(Rem, rem, &Integer, &Integer, Integer::remainder, Integer);
-impl_single_binop!(Rem, rem, Integer, Integer, Integer::remainder, Integer, ref self, ref rhs);
-
-impl_single_binop!(Rem, rem, Integer, i8, Integer::remainder_c_long, i8, ref self);
-impl_single_binop!(Rem, rem, &Integer, i8, Integer::remainder_c_long, i8);
-impl_single_binop!(Rem, rem, Integer, &i8, Integer::remainder_c_long, i8, ref self, deref rhs);
-impl_single_binop!(Rem, rem, &Integer, &i8, Integer::remainder_c_long, i8, deref rhs);
-
-impl_single_binop!(Rem, rem, Integer, u8, Integer::remainder_c_long, u8, ref self);
-impl_single_binop!(Rem, rem, &Integer, u8, Integer::remainder_c_long, u8);
-impl_single_binop!(Rem, rem, Integer, &u8, Integer::remainder_c_long, u8, ref self, deref rhs);
-impl_single_binop!(Rem, rem, &Integer, &u8, Integer::remainder_c_long, u8, deref rhs);
-
-impl_single_binop!(Rem, rem, Integer, i16, Integer::remainder_c_long, i16, ref self);
-impl_single_binop!(Rem, rem, &Integer, i16, Integer::remainder_c_long, i16);
-impl_single_binop!(Rem, rem, Integer, &i16, Integer::remainder_c_long, i16, ref self, deref rhs);
-impl_single_binop!(Rem, rem, &Integer, &i16, Integer::remainder_c_long, i16, deref rhs);
-
-impl_single_binop!(Rem, rem, Integer, u16, Integer::remainder_c_long, u16, ref self);
-impl_single_binop!(Rem, rem, &Integer, u16, Integer::remainder_c_long, u16);
-impl_single_binop!(Rem, rem, Integer, &u16, Integer::remainder_c_long, u16, ref self, deref rhs);
-impl_single_binop!(Rem, rem, &Integer, &u16, Integer::remainder_c_long, u16, deref rhs);
-
-impl_single_binop!(Rem, rem, Integer, i32, Integer::remainder_c_long, i32, ref self);
-impl_single_binop!(Rem, rem, &Integer, i32, Integer::remainder_c_long, i32);
-impl_single_binop!(Rem, rem, Integer, &i32, Integer::remainder_c_long, i32, ref self, deref rhs);
-impl_single_binop!(Rem, rem, &Integer, &i32, Integer::remainder_c_long, i32, deref rhs);
-
-impl_single_binop!(Rem, rem, Integer, u32, Integer::remainder_c_long, u32, ref self);
-impl_single_binop!(Rem, rem, &Integer, u32, Integer::remainder_c_long, u32);
-impl_single_binop!(Rem, rem, Integer, &u32, Integer::remainder_c_long, u32, ref self, deref rhs);
-impl_single_binop!(Rem, rem, &Integer, &u32, Integer::remainder_c_long, u32, deref rhs);
-
-impl_single_binop!(Rem, rem, Integer, i64, Integer::remainder, Integer, ref self, into rhs);
-impl_single_binop!(Rem, rem, &Integer, i64, Integer::remainder, Integer, into rhs);
-impl_single_binop!(Rem, rem, Integer, &i64, Integer::remainder, Integer, ref self, into rhs);
-impl_single_binop!(Rem, rem, &Integer, &i64, Integer::remainder, Integer, into rhs);
-
-impl_single_binop!(Rem, rem, Integer, u64, Integer::remainder, Integer, ref self, into rhs);
-impl_single_binop!(Rem, rem, &Integer, u64, Integer::remainder, Integer, into rhs);
-impl_single_binop!(Rem, rem, Integer, &u64, Integer::remainder, Integer, ref self, into rhs);
-impl_single_binop!(Rem, rem, &Integer, &u64, Integer::remainder, Integer, into rhs);
-
-impl_single_binop!(Rem, rem, Integer, i128, Integer::remainder, Integer, ref self, into rhs);
-impl_single_binop!(Rem, rem, &Integer, i128, Integer::remainder, Integer, into rhs);
-impl_single_binop!(Rem, rem, Integer, &i128, Integer::remainder, Integer, ref self, into rhs);
-impl_single_binop!(Rem, rem, &Integer, &i128, Integer::remainder, Integer, into rhs);
-
-impl_single_binop!(Rem, rem, Integer, u128, Integer::remainder, Integer, ref self, into rhs);
-impl_single_binop!(Rem, rem, &Integer, u128, Integer::remainder, Integer, into rhs);
-impl_single_binop!(Rem, rem, Integer, &u128, Integer::remainder, Integer, ref self, into rhs);
-impl_single_binop!(Rem, rem, &Integer, &u128, Integer::remainder, Integer, into rhs);
+mod addition;
+mod division;
+mod multiplication;
+mod remainder;
+mod subtraction;
 
 // NEGATION
 
@@ -444,6 +100,213 @@ impl Neg for &Integer {
 
     fn neg(self) -> Self::Output {
         self.negate()
+    }
+}
+
+macro_rules! integer_binops_fn {
+    ($name:ident, $raw_fn:path, $c_long_name:ident, $c_long_fn:path) => {
+        /// $name two integers
+        pub fn $name(&self, other: &Self) -> Self {
+            let self_raw = self.as_mut_ptr();
+            let other_raw = other.as_mut_ptr();
+
+            let result_int = Integer::new();
+            let result_raw = result_int.as_mut_ptr();
+
+            let op_res = unsafe { $raw_fn(self_raw, other_raw, result_raw) };
+
+            if op_res != unsafe { imath_sys::MP_OK } {
+                panic!("Operation failed! {:?}", op_res);
+            }
+
+            result_int
+        }
+
+        pub(crate) fn $c_long_name(&self, value: impl Into<c_long>) -> Self {
+            let self_raw = self.as_mut_ptr();
+            let result_int = Integer::new();
+            let result_raw = result_int.as_mut_ptr();
+
+            let op_res = unsafe { $c_long_fn(self_raw, value.into(), result_raw) };
+
+            if op_res != unsafe { imath_sys::MP_OK } {
+                panic!("Operation failed! {:?}", op_res);
+            }
+
+            result_int
+        }
+    };
+}
+
+impl Integer {
+    integer_binops_fn!(
+        add,
+        imath_sys::mp_int_add,
+        add_c_long,
+        imath_sys::mp_int_add_value
+    );
+
+    integer_binops_fn!(
+        subtract,
+        imath_sys::mp_int_sub,
+        subtract_c_long,
+        imath_sys::mp_int_sub_value
+    );
+
+    integer_binops_fn!(
+        multiply,
+        imath_sys::mp_int_mul,
+        multiply_c_long,
+        imath_sys::mp_int_mul_value
+    );
+
+    /// Return the additive inverse
+    pub fn negate(&self) -> Self {
+        let self_raw = self.as_mut_ptr();
+        let result_int = Integer::new();
+        let result_raw = result_int.as_mut_ptr();
+
+        let op_res = unsafe { imath_sys::mp_int_neg(self_raw, result_raw) };
+
+        if op_res != unsafe { imath_sys::MP_OK } {
+            panic!("Operation failed! {:?}", op_res);
+        }
+
+        result_int
+    }
+
+    /// Return the absolute value
+    pub fn absolute_value(&self) -> Self {
+        let self_raw = self.as_mut_ptr();
+        let result_int = Integer::new();
+        let result_raw = result_int.as_mut_ptr();
+
+        let op_res = unsafe { imath_sys::mp_int_abs(self_raw, result_raw) };
+
+        if op_res != unsafe { imath_sys::MP_OK } {
+            panic!("Operation failed! {:?}", op_res);
+        }
+
+        result_int
+    }
+
+    fn mp_int_div(
+        dividend: &Integer,
+        divisor: &Integer,
+        out_quotient: imath_sys::mp_int,
+        out_remainder: imath_sys::mp_int,
+    ) {
+        assert!(!(out_quotient.is_null() && out_remainder.is_null()));
+
+        let dividend_raw = dividend.as_mut_ptr();
+        let divisor_raw = divisor.as_mut_ptr();
+
+        let op_res = unsafe {
+            imath_sys::mp_int_div(dividend_raw, divisor_raw, out_quotient, out_remainder)
+        };
+
+        if op_res != unsafe { imath_sys::MP_OK } {
+            panic!("Operation failed! {:?}", op_res);
+        }
+    }
+
+    /// Divide two integers and return quotient and remainder
+    pub fn divide_full(&self, rhs: &Self) -> (Self, Self) {
+        let quotient = Integer::new();
+        let quotient_raw = quotient.as_mut_ptr();
+        let remainder = Integer::new();
+        let remainder_raw = remainder.as_mut_ptr();
+
+        Integer::mp_int_div(self, rhs, quotient_raw, remainder_raw);
+
+        (quotient, remainder)
+    }
+
+    /// Divide two integers and return only quotient
+    pub fn divide(&self, rhs: &Self) -> Self {
+        let quotient = Integer::new();
+        let quotient_raw = quotient.as_mut_ptr();
+
+        Integer::mp_int_div(self, rhs, quotient_raw, ptr::null_mut());
+
+        quotient
+    }
+
+    /// Divide two integers and return only remainder
+    pub fn remainder(&self, other: &Self) -> Self {
+        let result = Integer::new();
+        let result_raw = result.as_mut_ptr();
+
+        Integer::mp_int_div(self, other, result_raw, ptr::null_mut());
+
+        result
+    }
+
+    fn mp_int_div_value(
+        dividend: &Integer,
+        divisor: impl Into<c_long>,
+        out_quotient: imath_sys::mp_int,
+        out_remainder: *mut c_long,
+    ) {
+        let divident_raw = dividend.as_mut_ptr();
+
+        let op_res = unsafe {
+            imath_sys::mp_int_div_value(divident_raw, divisor.into(), out_quotient, out_remainder)
+        };
+
+        if op_res != unsafe { imath_sys::MP_OK } {
+            panic!("Operation failed! {:?}", op_res);
+        }
+    }
+
+    #[allow(dead_code)]
+    pub(crate) fn divide_full_c_long<V>(&self, value: V) -> (Integer, V)
+    where
+        V: Into<c_long>,
+        c_long: TryInto<V>,
+    {
+        let mut remainder: c_long = 0;
+        let quotient = Integer::new();
+        let quotient_raw = quotient.as_mut_ptr();
+
+        Integer::mp_int_div_value(self, value.into(), quotient_raw, &mut remainder);
+
+        // This is safe bc the modulo operation will always return within the range
+        // [0, value].
+        (
+            quotient,
+            remainder
+                .try_into()
+                .map_err(|_| RimathError::RemainedOutsideBounds)
+                .unwrap(),
+        )
+    }
+
+    pub(crate) fn divide_c_long(&self, value: impl Into<c_long>) -> Self {
+        let quotient = Integer::new();
+        let quotient_raw = quotient.as_mut_ptr();
+
+        Integer::mp_int_div_value(self, value, quotient_raw, ptr::null_mut());
+
+        quotient
+    }
+
+    pub(crate) fn remainder_c_long<V>(&self, value: V) -> V
+    where
+        V: Into<c_long>,
+        c_long: TryInto<V>,
+    {
+        let mut result: c_long = 0;
+        let result_raw = (&mut result) as *mut _;
+
+        Integer::mp_int_div_value(self, value, ptr::null_mut(), result_raw);
+
+        // This is safe bc the modulo operation will always return within the range
+        // [0, value].
+        result
+            .try_into()
+            .map_err(|_| RimathError::RemainedOutsideBounds)
+            .unwrap()
     }
 }
 
@@ -486,7 +349,7 @@ mod test {
     fn add_integers() {
         let a = Integer::from_c_long(11111);
         let b = Integer::from_c_long(33333);
-        let c = a.add(&b);
+        let c = a + b;
 
         let string_repr = c.to_string();
         assert_eq!(&string_repr, "44444");
@@ -496,7 +359,7 @@ mod test {
     fn subtract_integers() {
         let a = Integer::from_c_long(12345);
         let b = Integer::from_c_long(1234);
-        let c = a.sub(&b);
+        let c = a - b;
 
         let string_repr = c.to_string();
         assert_eq!(&string_repr, "11111");
@@ -506,7 +369,7 @@ mod test {
     fn multiply_integers() {
         let a = Integer::from_c_long(50505);
         let b = Integer::from_c_long(5050);
-        let c = a.mul(&b);
+        let c = a * b;
 
         let string_repr = c.to_string();
         assert_eq!(&string_repr, "255050250");
@@ -519,7 +382,7 @@ mod test {
         #[allow(clippy::eq_op)]
         let one = &a / &a;
         assert_eq!(one, 1);
-        assert_eq!(&a / 10_000_000_000_000_000_000_000u128, 5238412);
+        assert_eq!(&a / 10_000_000_000_000_000_000_000u128, 5_238_412);
 
         let b: Integer = 1_234_567.into();
         assert_eq!(&b / 123_456, 10);
@@ -549,5 +412,14 @@ mod test {
 
         let string_repr = b.to_string();
         assert_eq!(&string_repr, "-52384129912341238437480192384");
+    }
+
+    #[test]
+    fn absolute_value_integer() {
+        let neg_int: Integer = "-37129740".parse().unwrap();
+        let pos_int: Integer = "37129740".parse().unwrap();
+
+        assert_eq!(neg_int.absolute_value(), pos_int);
+        assert_eq!(pos_int.absolute_value(), 37_129_740);
     }
 }
