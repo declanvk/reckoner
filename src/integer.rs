@@ -47,6 +47,31 @@ impl Integer {
         Self::from_c_long(0)
     }
 
+    pub(crate) fn copy_init(other: &Self) -> Self {
+        let mut init = uninit_int();
+        let other_raw = other.as_mut_ptr();
+
+        {
+            // This is safe bc init is entirely local. raw_mpz is also scoped to be less
+            // than the lifetime of the value init
+            let raw_mpz = init.as_mut_ptr();
+
+            // This is safe bc a valid structure is provided to the unsafe methods. And the
+            // src value is of the correct type?
+            let res = unsafe { imath_sys::mp_int_init_copy(raw_mpz, other_raw) };
+
+            // Accessing this is safe bc the MP_OK value is only ever used as an error
+            // condition.
+            if res != unsafe { imath_sys::MP_OK } {
+                panic!("Value init failed! {:?}", res);
+            }
+        }
+
+        Integer {
+            raw: assume_int_valid(init),
+        }
+    }
+
     pub(crate) fn from_c_long(src: c_long) -> Self {
         let mut init = uninit_int();
 
@@ -177,6 +202,13 @@ impl Integer {
         if res != unsafe { imath_sys::MP_OK } {
             panic!("Copying the value failed! {:?}", res);
         }
+    }
+
+    /// Set value of integer to zero
+    pub fn zero(&mut self) {
+        let self_raw = self.as_mut_ptr();
+
+        unsafe { imath_sys::mp_int_zero(self_raw) };
     }
 }
 
@@ -414,11 +446,7 @@ impl fmt::Debug for Integer {
 
 impl Clone for Integer {
     fn clone(&self) -> Self {
-        let mut new_int = Integer::new();
-
-        self.copy_to(&mut new_int);
-
-        new_int
+        Integer::copy_init(self)
     }
 
     fn clone_from(&mut self, source: &Self) {
@@ -489,5 +517,32 @@ mod test {
 
         assert_eq!(neg_int.absolute_value(), pos_int);
         assert_eq!(pos_int.absolute_value(), 37_129_740);
+    }
+
+    #[test]
+    fn zero_integer() {
+        let mut big_int: Integer =
+            "98712698346126837461287318238761234897612839471623487619872364981726348176234"
+                .parse()
+                .unwrap();
+        let mut small_int: Integer = (-4_565_234).into();
+
+        big_int.zero();
+        assert_eq!(big_int, 0);
+
+        small_int.zero();
+        assert_eq!(small_int, 0);
+    }
+
+    #[test]
+    fn clone_integer() {
+        let a: Integer =
+            "98712698346126837461287318238761234897612839471623487619872364981726348176234"
+                .parse()
+                .unwrap();
+
+        let b = a.clone();
+
+        assert_eq!(a, b);
     }
 }
