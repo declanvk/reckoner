@@ -1,6 +1,4 @@
-use crate::error::RimathError;
-use crate::integer::Integer;
-use core::ops::Neg;
+use crate::{error::RimathError, integer::Integer};
 use core::{convert::TryInto, ptr};
 use std::os::raw::c_long;
 
@@ -9,8 +7,10 @@ macro_rules! impl_single_binop {
         impl $op_path<$rhs> for $celf {
             type Output = $ret;
 
-            fn $op_fn(self, rhs: $rhs) -> Self::Output {
-                $fn(&self, &rhs)
+            fn $op_fn(mut self, rhs: $rhs) -> Self::Output {
+                $fn(&mut self, &rhs);
+
+                self
             }
         }
     };
@@ -18,8 +18,10 @@ macro_rules! impl_single_binop {
         impl $op_path<$rhs> for $celf {
             type Output = $ret;
 
-            fn $op_fn(self, rhs: $rhs) -> Self::Output {
-                $fn(&self, rhs)
+            fn $op_fn(mut self, rhs: $rhs) -> Self::Output {
+                $fn(&mut self, rhs);
+
+                self
             }
         }
     };
@@ -54,8 +56,10 @@ macro_rules! impl_single_binop {
         impl $op_path<$rhs> for $celf {
             type Output = $ret;
 
-            fn $op_fn(self, rhs: $rhs) -> Self::Output {
-                $fn(&self, *rhs)
+            fn $op_fn(mut self, rhs: $rhs) -> Self::Output {
+                $fn(&mut self, *rhs);
+
+                self
             }
         }
     };
@@ -72,6 +76,44 @@ macro_rules! impl_single_binop {
         impl $op_path<$rhs> for $celf {
             type Output = $ret;
 
+            fn $op_fn(mut self, rhs: $rhs) -> Self::Output {
+                $fn(&mut self, &Integer::from(rhs));
+
+                self
+            }
+        }
+    };
+    ($op_path:ident, $op_fn:ident, $celf:ty, $rhs:ty, $fn:path, $ret:ty, ref self, ref rhs, no reuse) => {
+        impl $op_path<$rhs> for $celf {
+            type Output = $ret;
+
+            fn $op_fn(self, rhs: $rhs) -> Self::Output {
+                $fn(&self, &rhs)
+            }
+        }
+    };
+    ($op_path:ident, $op_fn:ident, $celf:ty, $rhs:ty, $fn:path, $ret:ty, ref self, no reuse) => {
+        impl $op_path<$rhs> for $celf {
+            type Output = $ret;
+
+            fn $op_fn(self, rhs: $rhs) -> Self::Output {
+                $fn(&self, rhs)
+            }
+        }
+    };
+    ($op_path:ident, $op_fn:ident, $celf:ty, $rhs:ty, $fn:path, $ret:ty, ref self, deref rhs, no reuse) => {
+        impl $op_path<$rhs> for $celf {
+            type Output = $ret;
+
+            fn $op_fn(self, rhs: $rhs) -> Self::Output {
+                $fn(&self, *rhs)
+            }
+        }
+    };
+    ($op_path:ident, $op_fn:ident, $celf:ty, $rhs:ty, $fn:path, $ret:ty, ref self, into rhs, no reuse) => {
+        impl $op_path<$rhs> for $celf {
+            type Output = $ret;
+
             fn $op_fn(self, rhs: $rhs) -> Self::Output {
                 $fn(&self, &Integer::from(rhs))
             }
@@ -82,83 +124,169 @@ macro_rules! impl_single_binop {
 mod addition;
 mod division;
 mod multiplication;
+mod negation;
 mod remainder;
 mod subtraction;
 
-// NEGATION
-
-impl Neg for Integer {
-    type Output = Integer;
-
-    fn neg(self) -> Self::Output {
-        self.negate()
-    }
-}
-
-impl Neg for &Integer {
-    type Output = Integer;
-
-    fn neg(self) -> Self::Output {
-        self.negate()
-    }
-}
-
-macro_rules! integer_binops_fn {
-    ($name:ident, $raw_fn:path, $c_long_name:ident, $c_long_fn:path) => {
-        /// $name two integers
-        pub fn $name(&self, other: &Self) -> Self {
-            let self_raw = self.as_mut_ptr();
-            let other_raw = other.as_mut_ptr();
-
-            let result_int = Integer::new();
-            let result_raw = result_int.as_mut_ptr();
-
-            let op_res = unsafe { $raw_fn(self_raw, other_raw, result_raw) };
-
-            if op_res != unsafe { imath_sys::MP_OK } {
-                panic!("Operation failed! {:?}", op_res);
-            }
-
-            result_int
-        }
-
-        pub(crate) fn $c_long_name(&self, value: impl Into<c_long>) -> Self {
-            let self_raw = self.as_mut_ptr();
-            let result_int = Integer::new();
-            let result_raw = result_int.as_mut_ptr();
-
-            let op_res = unsafe { $c_long_fn(self_raw, value.into(), result_raw) };
-
-            if op_res != unsafe { imath_sys::MP_OK } {
-                panic!("Operation failed! {:?}", op_res);
-            }
-
-            result_int
-        }
-    };
-}
-
 impl Integer {
-    integer_binops_fn!(
-        add,
-        imath_sys::mp_int_add,
-        add_c_long,
-        imath_sys::mp_int_add_value
-    );
+    /// Add two integers and return the result
+    pub fn add(&self, other: &Self) -> Self {
+        let self_raw = self.as_mut_ptr();
+        let other_raw = other.as_mut_ptr();
 
-    integer_binops_fn!(
-        subtract,
-        imath_sys::mp_int_sub,
-        subtract_c_long,
-        imath_sys::mp_int_sub_value
-    );
+        let result_int = Integer::new();
+        let result_raw = result_int.as_mut_ptr();
 
-    integer_binops_fn!(
-        multiply,
-        imath_sys::mp_int_mul,
-        multiply_c_long,
-        imath_sys::mp_int_mul_value
-    );
+        let op_res = unsafe { imath_sys::mp_int_add(self_raw, other_raw, result_raw) };
+
+        if op_res != unsafe { imath_sys::MP_OK } {
+            panic!("Operation failed! {:?}", op_res);
+        }
+
+        result_int
+    }
+
+    /// Add two integers and assign the result to self
+    pub fn add_assign(&mut self, other: &Self) {
+        let self_raw = self.as_mut_ptr();
+        let other_raw = other.as_mut_ptr();
+
+        let op_res = unsafe { imath_sys::mp_int_add(self_raw, other_raw, self_raw) };
+
+        if op_res != unsafe { imath_sys::MP_OK } {
+            panic!("Operation failed! {:?}", op_res);
+        }
+    }
+
+    pub(crate) fn add_c_long(&self, value: impl Into<c_long>) -> Self {
+        let self_raw = self.as_mut_ptr();
+        let result_int = Integer::new();
+        let result_raw = result_int.as_mut_ptr();
+
+        let op_res = unsafe { imath_sys::mp_int_add_value(self_raw, value.into(), result_raw) };
+
+        if op_res != unsafe { imath_sys::MP_OK } {
+            panic!("Operation failed! {:?}", op_res);
+        }
+
+        result_int
+    }
+
+    pub(crate) fn add_c_long_assign(&mut self, other: impl Into<c_long>) {
+        let self_raw = self.as_mut_ptr();
+
+        let op_res = unsafe { imath_sys::mp_int_add_value(self_raw, other.into(), self_raw) };
+
+        if op_res != unsafe { imath_sys::MP_OK } {
+            panic!("Operation failed! {:?}", op_res);
+        }
+    }
+
+    /// Subtract two integers and return the result
+    pub fn subtract(&self, other: &Self) -> Self {
+        let self_raw = self.as_mut_ptr();
+        let other_raw = other.as_mut_ptr();
+
+        let result_int = Integer::new();
+        let result_raw = result_int.as_mut_ptr();
+
+        let op_res = unsafe { imath_sys::mp_int_sub(self_raw, other_raw, result_raw) };
+
+        if op_res != unsafe { imath_sys::MP_OK } {
+            panic!("Operation failed! {:?}", op_res);
+        }
+
+        result_int
+    }
+
+    /// Subtract two integers and assign the result to self
+    pub fn subtract_assign(&mut self, other: &Self) {
+        let self_raw = self.as_mut_ptr();
+        let other_raw = other.as_mut_ptr();
+
+        let op_res = unsafe { imath_sys::mp_int_sub(self_raw, other_raw, self_raw) };
+
+        if op_res != unsafe { imath_sys::MP_OK } {
+            panic!("Operation failed! {:?}", op_res);
+        }
+    }
+
+    pub(crate) fn subtract_c_long(&self, value: impl Into<c_long>) -> Self {
+        let self_raw = self.as_mut_ptr();
+        let result_int = Integer::new();
+        let result_raw = result_int.as_mut_ptr();
+
+        let op_res = unsafe { imath_sys::mp_int_sub_value(self_raw, value.into(), result_raw) };
+
+        if op_res != unsafe { imath_sys::MP_OK } {
+            panic!("Operation failed! {:?}", op_res);
+        }
+
+        result_int
+    }
+
+    pub(crate) fn subtract_c_long_assign(&mut self, other: impl Into<c_long>) {
+        let self_raw = self.as_mut_ptr();
+
+        let op_res = unsafe { imath_sys::mp_int_sub_value(self_raw, other.into(), self_raw) };
+
+        if op_res != unsafe { imath_sys::MP_OK } {
+            panic!("Operation failed! {:?}", op_res);
+        }
+    }
+
+    /// Multiply two integers and return the result
+    pub fn multiply(&self, other: &Self) -> Self {
+        let self_raw = self.as_mut_ptr();
+        let other_raw = other.as_mut_ptr();
+
+        let result_int = Integer::new();
+        let result_raw = result_int.as_mut_ptr();
+
+        let op_res = unsafe { imath_sys::mp_int_mul(self_raw, other_raw, result_raw) };
+
+        if op_res != unsafe { imath_sys::MP_OK } {
+            panic!("Operation failed! {:?}", op_res);
+        }
+
+        result_int
+    }
+
+    /// Multiply two integers and assign the result to self
+    pub fn multiply_assign(&mut self, other: &Self) {
+        let self_raw = self.as_mut_ptr();
+        let other_raw = other.as_mut_ptr();
+
+        let op_res = unsafe { imath_sys::mp_int_mul(self_raw, other_raw, self_raw) };
+
+        if op_res != unsafe { imath_sys::MP_OK } {
+            panic!("Operation failed! {:?}", op_res);
+        }
+    }
+
+    pub(crate) fn multiply_c_long(&self, value: impl Into<c_long>) -> Self {
+        let self_raw = self.as_mut_ptr();
+        let result_int = Integer::new();
+        let result_raw = result_int.as_mut_ptr();
+
+        let op_res = unsafe { imath_sys::mp_int_mul_value(self_raw, value.into(), result_raw) };
+
+        if op_res != unsafe { imath_sys::MP_OK } {
+            panic!("Operation failed! {:?}", op_res);
+        }
+
+        result_int
+    }
+
+    pub(crate) fn multiply_c_long_assign(&mut self, other: impl Into<c_long>) {
+        let self_raw = self.as_mut_ptr();
+
+        let op_res = unsafe { imath_sys::mp_int_mul_value(self_raw, other.into(), self_raw) };
+
+        if op_res != unsafe { imath_sys::MP_OK } {
+            panic!("Operation failed! {:?}", op_res);
+        }
+    }
 
     /// Return the additive inverse
     pub fn negate(&self) -> Self {
@@ -175,6 +303,17 @@ impl Integer {
         result_int
     }
 
+    /// Assign the additive inverse to self
+    pub fn negate_assign(&mut self) {
+        let self_raw = self.as_mut_ptr();
+
+        let op_res = unsafe { imath_sys::mp_int_neg(self_raw, self_raw) };
+
+        if op_res != unsafe { imath_sys::MP_OK } {
+            panic!("Operation failed! {:?}", op_res);
+        }
+    }
+
     /// Return the absolute value
     pub fn absolute_value(&self) -> Self {
         let self_raw = self.as_mut_ptr();
@@ -188,6 +327,17 @@ impl Integer {
         }
 
         result_int
+    }
+
+    /// Assign the absolute value to self
+    pub fn absolute_value_assign(&mut self) {
+        let self_raw = self.as_mut_ptr();
+
+        let op_res = unsafe { imath_sys::mp_int_abs(self_raw, self_raw) };
+
+        if op_res != unsafe { imath_sys::MP_OK } {
+            panic!("Operation failed! {:?}", op_res);
+        }
     }
 
     fn mp_int_div(
@@ -232,14 +382,28 @@ impl Integer {
         quotient
     }
 
+    /// Divide two integers and assign the result to self
+    pub fn divide_assign(&mut self, rhs: &Self) {
+        let quotient_raw = self.as_mut_ptr();
+
+        Integer::mp_int_div(self, rhs, quotient_raw, ptr::null_mut());
+    }
+
     /// Divide two integers and return only remainder
-    pub fn remainder(&self, other: &Self) -> Self {
-        let result = Integer::new();
-        let result_raw = result.as_mut_ptr();
+    pub fn remainder(&self, rhs: &Self) -> Self {
+        let remainder = Integer::new();
+        let remainder_raw = remainder.as_mut_ptr();
 
-        Integer::mp_int_div(self, other, result_raw, ptr::null_mut());
+        Integer::mp_int_div(self, rhs, ptr::null_mut(), remainder_raw);
 
-        result
+        remainder
+    }
+
+    /// Divide two integers and assign the remainder to self
+    pub fn remainder_assign(&mut self, rhs: &Self) {
+        let remainder_raw = self.as_mut_ptr();
+
+        Integer::mp_int_div(self, rhs, ptr::null_mut(), remainder_raw);
     }
 
     fn mp_int_div_value(
@@ -291,6 +455,12 @@ impl Integer {
         quotient
     }
 
+    pub(crate) fn divide_c_long_assign(&mut self, value: impl Into<c_long>) {
+        let quotient_raw = self.as_mut_ptr();
+
+        Integer::mp_int_div_value(self, value, quotient_raw, ptr::null_mut());
+    }
+
     pub(crate) fn remainder_c_long<V>(&self, value: V) -> V
     where
         V: Into<c_long>,
@@ -307,6 +477,18 @@ impl Integer {
             .try_into()
             .map_err(|_| RimathError::RemainedOutsideBounds)
             .unwrap()
+    }
+
+    #[allow(dead_code)]
+    pub(crate) fn remainder_c_long_assign(&mut self, value: impl Into<c_long>) {
+        let remainder_raw = self.as_mut_ptr();
+
+        Integer::mp_int_div(
+            self,
+            &Integer::from(value.into()),
+            ptr::null_mut(),
+            remainder_raw,
+        );
     }
 }
 
