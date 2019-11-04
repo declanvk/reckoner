@@ -1,16 +1,9 @@
 name: Rust
 
-on:
-  push:
-    branches: 
-      - master
-  pull_request:
-    branches: 
-      - master
+on: [push, pull_request]
 
 jobs:
-  ci:
-    runs-on: ubuntu-latest
+  test:
     strategy:
       fail-fast: false
       matrix:
@@ -18,18 +11,22 @@ jobs:
           - stable
           - beta
           - nightly
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout source
         uses: actions/checkout@v1
         with:
           submodules: recursive
-      - name: Install rust toolchain ${{ matrix.rust }}
+      - name: Install ${{ matrix.rust }} toolchain
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
           toolchain: ${{ matrix.rust }}
           override: true
-          components: rustfmt, clippy
       - name: Build
         uses: actions-rs/cargo@v1
         with:
@@ -41,13 +38,37 @@ jobs:
         with:
           command: test
           args: --all
-
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v1
+      - name: Install nightly toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly
+          override: true
+          components: rustfmt
       - name: Check format
         uses: actions-rs/cargo@v1
         with:
           command: fmt
           args: --all -- --check
-
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v1
+        with:
+          submodules: recursive
+      - name: Install nightly toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly
+          override: true
+          components: clippy
       - name: Lint
         uses: actions-rs/cargo@v1
         with:
