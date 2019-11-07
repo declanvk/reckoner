@@ -41,18 +41,23 @@ impl_single_binop!(Sub, sub, &Integer, i32, Integer::subtract_c_long, Integer);
 impl_single_binop!(Sub, sub, Integer, &i32, Integer::subtract_c_long_assign, Integer, ref self, deref rhs);
 impl_single_binop!(Sub, sub, &Integer, &i32, Integer::subtract_c_long, Integer, deref rhs);
 
-impl_single_binop!(Sub, sub, Integer, u32, Integer::subtract_c_long_assign, Integer, ref self);
-impl_single_binop!(Sub, sub, &Integer, u32, Integer::subtract_c_long, Integer);
-impl_single_binop!(Sub, sub, Integer, &u32, Integer::subtract_c_long_assign, Integer, ref self, deref rhs);
-impl_single_binop!(Sub, sub, &Integer, &u32, Integer::subtract_c_long, Integer, deref rhs);
-
 cfg_if::cfg_if! {
     if #[cfg(all(target_pointer_width = "64", not(windows)))] {
+        impl_single_binop!(Sub, sub, Integer, u32, Integer::subtract_c_long_assign, Integer, ref self);
+        impl_single_binop!(Sub, sub, &Integer, u32, Integer::subtract_c_long, Integer);
+        impl_single_binop!(Sub, sub, Integer, &u32, Integer::subtract_c_long_assign, Integer, ref self, deref rhs);
+        impl_single_binop!(Sub, sub, &Integer, &u32, Integer::subtract_c_long, Integer, deref rhs);
+
         impl_single_binop!(Sub, sub, Integer, i64, Integer::subtract_c_long_assign, Integer, ref self);
         impl_single_binop!(Sub, sub, &Integer, i64, Integer::subtract_c_long, Integer);
         impl_single_binop!(Sub, sub, Integer, &i64, Integer::subtract_c_long_assign, Integer, ref self, deref rhs);
         impl_single_binop!(Sub, sub, &Integer, &i64, Integer::subtract_c_long, Integer, deref rhs);
     } else {
+        impl_single_binop!(Sub, sub, Integer, u32, Integer::subtract_assign, Integer, ref self, into rhs);
+        impl_single_binop!(Sub, sub, &Integer, u32, Integer::subtract, Integer, into rhs);
+        impl_single_binop!(Sub, sub, Integer, &u32, Integer::subtract_assign, Integer, ref self, into rhs);
+        impl_single_binop!(Sub, sub, &Integer, &u32, Integer::subtract, Integer, into rhs);
+
         impl_single_binop!(Sub, sub, Integer, i64, Integer::subtract_assign, Integer, ref self, into rhs);
         impl_single_binop!(Sub, sub, &Integer, i64, Integer::subtract, Integer, into rhs);
         impl_single_binop!(Sub, sub, Integer, &i64, Integer::subtract_assign, Integer, ref self, into rhs);
@@ -138,20 +143,17 @@ impl_single_op_assign!(
 );
 impl_single_op_assign!(SubAssign, sub_assign, Integer, &i32, Integer::subtract_c_long_assign, deref rhs);
 
-impl_single_op_assign!(
-    SubAssign,
-    sub_assign,
-    Integer,
-    u32,
-    Integer::subtract_c_long_assign
-);
-impl_single_op_assign!(SubAssign, sub_assign, Integer, &u32, Integer::subtract_c_long_assign, deref rhs);
-
 cfg_if::cfg_if! {
     if #[cfg(all(target_pointer_width = "64", not(windows)))] {
+        impl_single_op_assign!(SubAssign, sub_assign, Integer, u32, Integer::subtract_c_long_assign);
+        impl_single_op_assign!(SubAssign, sub_assign, Integer, &u32, Integer::subtract_c_long_assign, deref rhs);
+
         impl_single_op_assign!(SubAssign, sub_assign, Integer, i64, Integer::subtract_c_long_assign);
         impl_single_op_assign!(SubAssign, sub_assign, Integer, &i64, Integer::subtract_c_long_assign, deref rhs);
     } else {
+        impl_single_op_assign!(SubAssign, sub_assign, Integer, u32, Integer::subtract_assign, into rhs);
+        impl_single_op_assign!(SubAssign, sub_assign, Integer, &u32, Integer::subtract_assign, into rhs);
+
         impl_single_op_assign!(SubAssign, sub_assign, Integer, i64, Integer::subtract_assign, into rhs);
         impl_single_op_assign!(SubAssign, sub_assign, Integer, &i64, Integer::subtract_assign, into rhs);
     }

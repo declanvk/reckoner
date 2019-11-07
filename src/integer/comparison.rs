@@ -30,12 +30,13 @@ impl_partial_eq!(u8, Integer::compare_c_long, deref rhs);
 impl_partial_eq!(i8, Integer::compare_c_long, deref rhs);
 impl_partial_eq!(u16, Integer::compare_c_long, deref rhs);
 impl_partial_eq!(i16, Integer::compare_c_long, deref rhs);
-impl_partial_eq!(u32, Integer::compare_c_long, deref rhs);
 impl_partial_eq!(i32, Integer::compare_c_long, deref rhs);
 cfg_if::cfg_if! {
     if #[cfg(all(target_pointer_width = "64", not(windows)))] {
+        impl_partial_eq!(u32, Integer::compare_c_long, deref rhs);
         impl_partial_eq!(i64, Integer::compare_c_long, deref rhs);
     } else {
+        impl_partial_eq!(u32, Integer::compare, into rhs);
         impl_partial_eq!(i64, Integer::compare, into rhs);
     }
 }
@@ -74,12 +75,13 @@ impl_partial_ord!(u8, Integer::compare_c_long, deref rhs);
 impl_partial_ord!(i8, Integer::compare_c_long, deref rhs);
 impl_partial_ord!(u16, Integer::compare_c_long, deref rhs);
 impl_partial_ord!(i16, Integer::compare_c_long, deref rhs);
-impl_partial_ord!(u32, Integer::compare_c_long, deref rhs);
 impl_partial_ord!(i32, Integer::compare_c_long, deref rhs);
 cfg_if::cfg_if! {
     if #[cfg(all(target_pointer_width = "64", not(windows)))] {
+        impl_partial_ord!(u32, Integer::compare_c_long, deref rhs);
         impl_partial_ord!(i64, Integer::compare_c_long, deref rhs);
     } else {
+        impl_partial_ord!(u32, Integer::compare, into rhs);
         impl_partial_ord!(i64, Integer::compare, into rhs);
     }
 }

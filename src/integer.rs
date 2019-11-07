@@ -70,7 +70,7 @@ impl Integer {
         }
     }
 
-    pub(crate) fn from_c_long(src: c_long) -> Self {
+    pub(crate) fn from_c_long(src: impl Into<c_long>) -> Self {
         let mut init = uninit_int();
 
         {
@@ -80,7 +80,7 @@ impl Integer {
 
             // This is safe bc a valid structure is provided to the unsafe methods. And the
             // src value is of the correct type?
-            let res = unsafe { imath_sys::mp_int_init_value(raw_mpz, src) };
+            let res = unsafe { imath_sys::mp_int_init_value(raw_mpz, src.into()) };
 
             // Accessing this is safe bc the MP_OK value is only ever used as an error
             // condition.
