@@ -41,10 +41,10 @@ impl_single_binop!(Rem, rem, &Integer, i32, Integer::remainder_c_long, i32);
 impl_single_binop!(Rem, rem, Integer, &i32, Integer::remainder_c_long, i32, ref self, deref rhs, no reuse);
 impl_single_binop!(Rem, rem, &Integer, &i32, Integer::remainder_c_long, i32, deref rhs);
 
-impl_single_binop!(Rem, rem, Integer, u32, Integer::remainder_c_long, u32, ref self, no reuse);
-impl_single_binop!(Rem, rem, &Integer, u32, Integer::remainder_c_long, u32);
-impl_single_binop!(Rem, rem, Integer, &u32, Integer::remainder_c_long, u32, ref self, deref rhs, no reuse);
-impl_single_binop!(Rem, rem, &Integer, &u32, Integer::remainder_c_long, u32, deref rhs);
+impl_single_binop!(Rem, rem, Integer, u32, Integer::remainder, Integer, ref self, into rhs, no reuse);
+impl_single_binop!(Rem, rem, &Integer, u32, Integer::remainder, Integer, into rhs);
+impl_single_binop!(Rem, rem, Integer, &u32, Integer::remainder, Integer, ref self, into rhs, no reuse);
+impl_single_binop!(Rem, rem, &Integer, &u32, Integer::remainder, Integer, into rhs);
 
 impl_single_binop!(Rem, rem, Integer, i64, Integer::remainder, Integer, ref self, into rhs, no reuse);
 impl_single_binop!(Rem, rem, &Integer, i64, Integer::remainder, Integer, into rhs);
@@ -129,20 +129,17 @@ impl_single_op_assign!(
 );
 impl_single_op_assign!(RemAssign, rem_assign, Integer, &i32, Integer::remainder_c_long_assign, deref rhs);
 
-impl_single_op_assign!(
-    RemAssign,
-    rem_assign,
-    Integer,
-    u32,
-    Integer::remainder_c_long_assign
-);
-impl_single_op_assign!(RemAssign, rem_assign, Integer, &u32, Integer::remainder_c_long_assign, deref rhs);
-
 cfg_if::cfg_if! {
     if #[cfg(all(target_pointer_width = "64", not(windows)))] {
+        impl_single_op_assign!(RemAssign, rem_assign, Integer, u32, Integer::remainder_c_long_assign);
+        impl_single_op_assign!(RemAssign, rem_assign, Integer, &u32, Integer::remainder_c_long_assign, deref rhs);
+
         impl_single_op_assign!(RemAssign, rem_assign, Integer, i64, Integer::remainder_c_long_assign);
         impl_single_op_assign!(RemAssign, rem_assign, Integer, &i64, Integer::remainder_c_long_assign, deref rhs);
     } else {
+        impl_single_op_assign!(RemAssign, rem_assign, Integer, u32, Integer::remainder_assign, into rhs);
+        impl_single_op_assign!(RemAssign, rem_assign, Integer, &u32, Integer::remainder_assign, into rhs);
+
         impl_single_op_assign!(RemAssign, rem_assign, Integer, i64, Integer::remainder_assign, into rhs);
         impl_single_op_assign!(RemAssign, rem_assign, Integer, &i64, Integer::remainder_assign, into rhs);
     }

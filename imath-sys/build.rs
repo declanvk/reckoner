@@ -1,4 +1,5 @@
 use cc::Build;
+use dunce::canonicalize;
 use std::{env, path::PathBuf};
 
 const HEADER_FILES: &[&str] = &["imath.h", "imrat.h", "iprime.h"];
@@ -6,9 +7,7 @@ const HEADER_FILES: &[&str] = &["imath.h", "imrat.h", "iprime.h"];
 const SRC_FILES: &[&str] = &["imath.c", "imrat.c", "iprime.c"];
 
 fn main() {
-    let root_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap())
-        .canonicalize()
-        .unwrap();
+    let root_dir = canonicalize(PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap())).unwrap();
     let src = root_dir.join("vendor").join("imath");
 
     let headers: Vec<_> = HEADER_FILES.iter().map(|head| src.join(head)).collect();

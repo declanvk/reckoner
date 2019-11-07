@@ -498,7 +498,7 @@ mod test {
         let res_u16: u16 = &a % 60_000u16;
         assert_eq!(res_u16, 12384);
 
-        let res_u32: u32 = &a % 127_384u32;
+        let res_u32: i32 = &a % 127_384i32;
         assert_eq!(res_u32, 85248);
     }
 
