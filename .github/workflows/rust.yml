@@ -2,11 +2,11 @@ name: Rust
 
 on:
   push:
-    branches: 
+    branches:
       - master
-  pull_request: 
-    branches: 
-      - '*'
+  pull_request:
+    branches:
+      - "*"
 
 jobs:
   test:
@@ -33,6 +33,11 @@ jobs:
           profile: minimal
           toolchain: ${{ matrix.rust }}
           override: true
+      - name: Install libclang via llvm
+        if: startsWith(matrix.os, 'windows')
+        uses: crazy-max/ghaction-chocolatey@v1
+        with:
+          args: install llvm
       - name: Build
         uses: actions-rs/cargo@v1
         with:
