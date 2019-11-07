@@ -135,15 +135,6 @@ impl_single_op_assign!(
 );
 impl_single_op_assign!(AddAssign, add_assign, Integer, &i32, Integer::add_c_long_assign, deref rhs);
 
-impl_single_op_assign!(
-    AddAssign,
-    add_assign,
-    Integer,
-    u32,
-    Integer::add_c_long_assign
-);
-impl_single_op_assign!(AddAssign, add_assign, Integer, &u32, Integer::add_c_long_assign, deref rhs);
-
 cfg_if::cfg_if! {
     if #[cfg(all(target_pointer_width = "64", not(windows)))] {
         impl_single_op_assign!(AddAssign, add_assign, Integer, u32,  Integer::add_c_long_assign);
