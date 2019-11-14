@@ -1,4 +1,4 @@
-use crate::{error::RimathError, integer::Integer};
+use crate::{error::Error, integer::Integer};
 use core::{convert::TryInto, ptr};
 use std::os::raw::c_long;
 
@@ -325,7 +325,7 @@ impl Integer {
             quotient,
             remainder
                 .try_into()
-                .map_err(|_| RimathError::RemainedOutsideBounds)
+                .map_err(|_| Error::RemainedOutsideBounds)
                 .unwrap(),
         )
     }
@@ -359,7 +359,7 @@ impl Integer {
         // [0, value].
         result
             .try_into()
-            .map_err(|_| RimathError::RemainedOutsideBounds)
+            .map_err(|_| Error::RemainedOutsideBounds)
             .unwrap()
     }
 

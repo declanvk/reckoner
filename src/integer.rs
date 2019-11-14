@@ -1,4 +1,4 @@
-use crate::error::{Result, RimathError};
+use crate::error::{Error, Result};
 use core::{
     cell::UnsafeCell,
     cmp::Ordering,
@@ -96,7 +96,7 @@ impl Integer {
 
     pub(crate) fn from_string_repr(src: impl ToString) -> Result<Self> {
         let string_repr =
-            CString::new(src.to_string()).map_err(|_| RimathError::IntegerReprContainedNul)?;
+            CString::new(src.to_string()).map_err(|_| Error::IntegerReprContainedNul)?;
         let char_ptr = string_repr.into_raw();
 
         let mut init = uninit_int();
@@ -123,7 +123,7 @@ impl Integer {
             // Accessing this is safe bc the MP_OK value is only ever used as an error
             // condition.
             if res_read != unsafe { imath_sys::MP_OK } {
-                return Err(RimathError::IntegerReprTruncated);
+                return Err(Error::IntegerReprTruncated);
             }
         }
 
@@ -318,7 +318,7 @@ impl Default for Integer {
 }
 
 impl FromStr for Integer {
-    type Err = RimathError;
+    type Err = Error;
 
     fn from_str(s: &str) -> core::result::Result<Self, Self::Err> {
         Integer::from_string_repr(s)
