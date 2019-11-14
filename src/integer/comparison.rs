@@ -15,11 +15,25 @@ macro_rules! impl_partial_eq {
                 $func(&self, *other) == Ordering::Equal
             }
         }
+
+        impl PartialEq<Integer> for $rhs {
+            fn eq(&self, other: &Integer) -> bool {
+                // This doesn't need to be reversed as it simply checks equality
+                $func(&other, *self) == Ordering::Equal
+            }
+        }
     };
     ($rhs:ty, $func:path, into rhs) => {
         impl PartialEq<$rhs> for Integer {
             fn eq(&self, other: &$rhs) -> bool {
                 $func(&self, &Integer::from(other)) == Ordering::Equal
+            }
+        }
+
+        impl PartialEq<Integer> for $rhs {
+            fn eq(&self, other: &Integer) -> bool {
+                // This doesn't need to be reversed as it simply checks equality
+                $func(&other, &Integer::from(self)) == Ordering::Equal
             }
         }
     };
@@ -60,11 +74,29 @@ macro_rules! impl_partial_ord {
                 Some($func(self, *other))
             }
         }
+
+        impl PartialOrd<Integer> for $rhs {
+            fn partial_cmp(&self, other: &Integer) -> Option<Ordering> {
+                // This implies that:
+                // (a cmp b) <=> (b cmp a).reverse()
+                // I don't know if thats always true
+                Some($func(other, *self).reverse())
+            }
+        }
     };
     ($rhs:ty, $func:path, into rhs) => {
         impl PartialOrd<$rhs> for Integer {
             fn partial_cmp(&self, other: &$rhs) -> Option<Ordering> {
                 Some($func(self, &Integer::from(other)))
+            }
+        }
+
+        impl PartialOrd<Integer> for $rhs {
+            fn partial_cmp(&self, other: &Integer) -> Option<Ordering> {
+                // This implies that:
+                // (a cmp b) <=> (b cmp a).reverse()
+                // I don't know if thats always true
+                Some($func(other, &Integer::from(self)).reverse())
             }
         }
     };
@@ -117,7 +149,12 @@ mod test {
         assert!(a != b);
         assert!(a > b);
         assert!(!(a < b));
-        assert!((a - &b) > b);
+        assert!((&a - &b) > b);
+
+        assert!(b != a);
+        assert!(b < a);
+        assert!(!(b > a));
+        assert!((&b - &a) < 0);
     }
 
     #[test]
@@ -127,5 +164,9 @@ mod test {
         assert!(a > 0);
         assert!(a != 987_654_321);
         assert!(a < 9_999_999_990u128);
+
+        assert!(9_999_999_990u128 > a);
+        assert!(987_654_321 != a);
+        assert!(0 < a);
     }
 }
