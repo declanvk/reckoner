@@ -2,7 +2,7 @@ use core::fmt;
 
 pub(crate) type Result<T> = core::result::Result<T, Error>;
 
-/// Error used in rimath, usually originating from imath-sys.
+/// Error used in wrath, usually originating from imath-sys.
 #[derive(Debug, Clone)]
 pub enum Error {
     /// When converting from a string representation, the given string contained
