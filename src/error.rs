@@ -1,11 +1,10 @@
 use core::fmt;
-use std::error::Error;
 
-pub(crate) type Result<T> = core::result::Result<T, RimathError>;
+pub(crate) type Result<T> = core::result::Result<T, Error>;
 
 /// Error used in rimath, usually originating from imath-sys.
 #[derive(Debug, Clone)]
-pub enum RimathError {
+pub enum Error {
     /// When converting from a string representation, the given string contained
     /// a zero-byte that was not at the end.
     IntegerReprContainedNul,
@@ -16,11 +15,11 @@ pub enum RimathError {
     RemainedOutsideBounds,
 }
 
-impl Error for RimathError {}
+impl std::error::Error for Error {}
 
-impl fmt::Display for RimathError {
+impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        use RimathError::*;
+        use Error::*;
 
         match self {
             IntegerReprContainedNul => {
