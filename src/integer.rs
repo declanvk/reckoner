@@ -272,6 +272,20 @@ impl Integer {
 
         raw_cmp.cmp(&0)
     }
+
+    pub(crate) fn try_into_c_long(&self) -> Result<c_long> {
+        let self_raw = self.as_mut_ptr();
+        let mut out: c_long = 0;
+        let out_raw = (&mut out) as *mut _;
+
+        let res = unsafe { imath_sys::mp_int_to_int(self_raw, out_raw) };
+
+        if res == unsafe { imath_sys::MP_OK } {
+            Ok(out)
+        } else {
+            Err(Error::ConversionOutsideRange)
+        }
+    }
 }
 
 impl fmt::Display for Integer {
