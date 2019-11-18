@@ -325,7 +325,7 @@ impl Integer {
             quotient,
             remainder
                 .try_into()
-                .map_err(|_| Error::RemainedOutsideBounds)
+                .map_err(|_| Error::RemainderOutsideBounds)
                 .unwrap(),
         )
     }
@@ -359,7 +359,7 @@ impl Integer {
         // [0, value].
         result
             .try_into()
-            .map_err(|_| Error::RemainedOutsideBounds)
+            .map_err(|_| Error::RemainderOutsideBounds)
             .unwrap()
     }
 
