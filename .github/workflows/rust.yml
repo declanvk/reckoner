@@ -38,6 +38,15 @@ jobs:
         uses: crazy-max/ghaction-chocolatey@v1
         with:
           args: install llvm
+      - name: Cache target directory
+        uses: actions/cache@v1
+        with:
+          path: target
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ matrix.os }}-${{ matrix.Rust }}-build-${{ env.cache-name }}-
+            ${{ matrix.os }}-${{ matrix.Rust }}-build-
+            ${{ matrix.os }}-${{ matrix.Rust }}-
       - name: Build
         uses: actions-rs/cargo@v1
         with:
