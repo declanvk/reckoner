@@ -6,6 +6,10 @@ const HEADER_FILES: &[&str] = &["imath.h", "imrat.h", "iprime.h"];
 
 const SRC_FILES: &[&str] = &["imath.c", "imrat.c", "iprime.c"];
 
+const FUNCTION_REG: &str = "mp_.*";
+const VAR_REG: &str = "(mp|MP)_.*";
+const TYPE_REG: &str = "((mp_.*)|mpq_t|mpz_t)";
+
 fn main() {
     let root_dir = canonicalize(PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap())).unwrap();
     let src = root_dir.join("vendor").join("imath");
@@ -35,6 +39,9 @@ fn main() {
     // Parse and generate source
     let bindings = bindings_builder
         .use_core()
+        .whitelist_function(FUNCTION_REG)
+        .whitelist_type(TYPE_REG)
+        .whitelist_var(VAR_REG)
         .generate()
         .expect("Unable to generate bindings");
 
