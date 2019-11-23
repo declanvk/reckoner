@@ -41,30 +41,30 @@ impl_single_binop!(Rem, rem, &Integer, i32, Integer::remainder_c_long, i32);
 impl_single_binop!(Rem, rem, Integer, &i32, Integer::remainder_c_long, i32, ref self, deref rhs, no reuse);
 impl_single_binop!(Rem, rem, &Integer, &i32, Integer::remainder_c_long, i32, deref rhs);
 
-impl_single_binop!(Rem, rem, Integer, u32, Integer::remainder, Integer, ref self, into rhs, no reuse);
-impl_single_binop!(Rem, rem, &Integer, u32, Integer::remainder, Integer, into rhs);
-impl_single_binop!(Rem, rem, Integer, &u32, Integer::remainder, Integer, ref self, into rhs, no reuse);
-impl_single_binop!(Rem, rem, &Integer, &u32, Integer::remainder, Integer, into rhs);
+impl_single_binop!(Rem, rem, Integer, u32, Integer::remainder, u32, ref self, into rhs, no reuse, conv output);
+impl_single_binop!(Rem, rem, &Integer, u32, Integer::remainder, u32, into rhs, conv output);
+impl_single_binop!(Rem, rem, Integer, &u32, Integer::remainder, u32, ref self, into rhs, no reuse, conv output);
+impl_single_binop!(Rem, rem, &Integer, &u32, Integer::remainder, u32, into rhs, conv output);
 
-impl_single_binop!(Rem, rem, Integer, i64, Integer::remainder, Integer, ref self, into rhs, no reuse);
-impl_single_binop!(Rem, rem, &Integer, i64, Integer::remainder, Integer, into rhs);
-impl_single_binop!(Rem, rem, Integer, &i64, Integer::remainder, Integer, ref self, into rhs, no reuse);
-impl_single_binop!(Rem, rem, &Integer, &i64, Integer::remainder, Integer, into rhs);
+impl_single_binop!(Rem, rem, Integer, i64, Integer::remainder, i64, ref self, into rhs, no reuse, conv output);
+impl_single_binop!(Rem, rem, &Integer, i64, Integer::remainder, i64, into rhs, conv output);
+impl_single_binop!(Rem, rem, Integer, &i64, Integer::remainder, i64, ref self, into rhs, no reuse, conv output);
+impl_single_binop!(Rem, rem, &Integer, &i64, Integer::remainder, i64, into rhs, conv output);
 
-impl_single_binop!(Rem, rem, Integer, u64, Integer::remainder, Integer, ref self, into rhs, no reuse);
-impl_single_binop!(Rem, rem, &Integer, u64, Integer::remainder, Integer, into rhs);
-impl_single_binop!(Rem, rem, Integer, &u64, Integer::remainder, Integer, ref self, into rhs, no reuse);
-impl_single_binop!(Rem, rem, &Integer, &u64, Integer::remainder, Integer, into rhs);
+impl_single_binop!(Rem, rem, Integer, u64, Integer::remainder, u64, ref self, into rhs, no reuse, conv output);
+impl_single_binop!(Rem, rem, &Integer, u64, Integer::remainder, u64, into rhs, conv output);
+impl_single_binop!(Rem, rem, Integer, &u64, Integer::remainder, u64, ref self, into rhs, no reuse, conv output);
+impl_single_binop!(Rem, rem, &Integer, &u64, Integer::remainder, u64, into rhs, conv output);
 
-impl_single_binop!(Rem, rem, Integer, i128, Integer::remainder, Integer, ref self, into rhs, no reuse);
-impl_single_binop!(Rem, rem, &Integer, i128, Integer::remainder, Integer, into rhs);
-impl_single_binop!(Rem, rem, Integer, &i128, Integer::remainder, Integer, ref self, into rhs, no reuse);
-impl_single_binop!(Rem, rem, &Integer, &i128, Integer::remainder, Integer, into rhs);
+impl_single_binop!(Rem, rem, Integer, i128, Integer::remainder, i128, ref self, into rhs, no reuse, conv output);
+impl_single_binop!(Rem, rem, &Integer, i128, Integer::remainder, i128, into rhs, conv output);
+impl_single_binop!(Rem, rem, Integer, &i128, Integer::remainder, i128, ref self, into rhs, no reuse, conv output);
+impl_single_binop!(Rem, rem, &Integer, &i128, Integer::remainder, i128, into rhs, conv output);
 
-impl_single_binop!(Rem, rem, Integer, u128, Integer::remainder, Integer, ref self, into rhs, no reuse);
-impl_single_binop!(Rem, rem, &Integer, u128, Integer::remainder, Integer, into rhs);
-impl_single_binop!(Rem, rem, Integer, &u128, Integer::remainder, Integer, ref self, into rhs, no reuse);
-impl_single_binop!(Rem, rem, &Integer, &u128, Integer::remainder, Integer, into rhs);
+impl_single_binop!(Rem, rem, Integer, u128, Integer::remainder, u128, ref self, into rhs, no reuse, conv output);
+impl_single_binop!(Rem, rem, &Integer, u128, Integer::remainder, u128, into rhs, conv output);
+impl_single_binop!(Rem, rem, Integer, &u128, Integer::remainder, u128, ref self, into rhs, no reuse, conv output);
+impl_single_binop!(Rem, rem, &Integer, &u128, Integer::remainder, u128, into rhs, conv output);
 
 // RemAssign    The remainder assignment operator %=.
 
