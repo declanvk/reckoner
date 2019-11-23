@@ -115,6 +115,28 @@ macro_rules! impl_single_binop {
             }
         }
     };
+    ($op_path:ident, $op_fn:ident, $celf:ty, $rhs:ty, $fn:path, $ret:ty, into rhs, conv output) => {
+        impl $op_path<$rhs> for $celf {
+            type Output = $ret;
+
+            fn $op_fn(self, rhs: $rhs) -> Self::Output {
+                use core::convert::TryInto;
+
+                $fn(self, &Integer::from(rhs)).try_into().unwrap()
+            }
+        }
+    };
+    ($op_path:ident, $op_fn:ident, $celf:ty, $rhs:ty, $fn:path, $ret:ty, ref self, into rhs, no reuse, conv output) => {
+        impl $op_path<$rhs> for $celf {
+            type Output = $ret;
+
+            fn $op_fn(self, rhs: $rhs) -> Self::Output {
+                use core::convert::TryInto;
+
+                $fn(&self, &Integer::from(rhs)).try_into().unwrap()
+            }
+        }
+    };
 }
 
 macro_rules! impl_single_op_assign {
