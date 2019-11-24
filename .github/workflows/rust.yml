@@ -39,7 +39,7 @@ jobs:
         with:
           args: install llvm
       - name: Update dependencies
-        uses: action-rs/cargo@v1
+        uses: actions-rs/cargo@v1
         with:
           command: update
       - name: Cache target directory
