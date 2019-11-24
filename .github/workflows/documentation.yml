@@ -38,7 +38,7 @@ jobs:
           command: doc
           args: --workspace --no-deps
       - name: Prepare to publish
-        run: .github/scripts/prep_documentation.sh
+        run: ./.github/scripts/prep_documentation.sh
       - name: Publish to Github Pages
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
