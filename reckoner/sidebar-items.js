@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Error","Error used in `reckoner`, usually originating from `imath-sys`."]],"struct":[["Integer","Multiple precision integer value. Always heap allocated, not safe for sharing across threads."]]});
