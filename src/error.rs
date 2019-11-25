@@ -6,7 +6,7 @@ use core::{
 
 pub(crate) type Result<T> = core::result::Result<T, Error>;
 
-/// Error used in wrath, usually originating from imath-sys.
+/// Error used in `reckoner`, usually originating from `imath-sys`.
 #[derive(Debug, Clone, PartialEq)]
 pub enum Error {
     /// When converting from a string representation, the given string contained
