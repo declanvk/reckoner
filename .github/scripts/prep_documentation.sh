@@ -8,10 +8,10 @@ DOC_FOLDER="target/doc"
 cat > "$DOC_FOLDER/index.html" <<EOF
 <html>
     <head>
-        <noscript><meta http-equiv="refresh" content="0; url=wrath/index.html"></noscript>
+        <noscript><meta http-equiv="refresh" content="0; url=reckoner/index.html"></noscript>
     </head>
-    <body onload="window.location = 'wrath/index.html'">
-        <a href="wrath/index.html">Redirect</a>
+    <body onload="window.location = 'reckoner/index.html'">
+        <a href="reckoner/index.html">Redirect</a>
     </body>
 </html>
 EOF
