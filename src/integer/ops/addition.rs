@@ -456,9 +456,189 @@ impl Add<&Integer> for &i32 {
     }
 }
 
+// [u'Integer', u'u32', u'Integer', u'Integer::add_c_long_assign', u'lhs',
+// [u'ref_mut'], []]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Add<u32> for Integer {
+    type Output = Integer;
+
+    fn add(mut self, rhs: u32) -> Self::Output {
+        Integer::add_c_long_assign(&mut self, rhs);
+        self
+    }
+}
+
+// [u'Integer', u'&u32', u'Integer', u'Integer::add_c_long_assign', u'lhs',
+// [u'ref_mut'], [u'deref']]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Add<&u32> for Integer {
+    type Output = Integer;
+
+    fn add(mut self, rhs: &u32) -> Self::Output {
+        Integer::add_c_long_assign(&mut self, *rhs);
+        self
+    }
+}
+
+// [u'&Integer', u'u32', u'Integer', u'Integer::add_c_long', u'no', [], []]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Add<u32> for &Integer {
+    type Output = Integer;
+
+    fn add(self, rhs: u32) -> Self::Output {
+        Integer::add_c_long(self, rhs)
+    }
+}
+
+// [u'&Integer', u'&u32', u'Integer', u'Integer::add_c_long', u'no', [],
+// [u'deref']]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Add<&u32> for &Integer {
+    type Output = Integer;
+
+    fn add(self, rhs: &u32) -> Self::Output {
+        Integer::add_c_long(self, *rhs)
+    }
+}
+
+// [u'u32', u'Integer', u'Integer', u'reverse_add_c_long_assign', u'rhs', [],
+// [u'ref_mut']]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Add<Integer> for u32 {
+    type Output = Integer;
+
+    fn add(self, mut rhs: Integer) -> Self::Output {
+        reverse_add_c_long_assign(self, &mut rhs);
+        rhs
+    }
+}
+
+// [u'u32', u'&Integer', u'Integer', u'reverse_add_c_long', u'no', [], []]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Add<&Integer> for u32 {
+    type Output = Integer;
+
+    fn add(self, rhs: &Integer) -> Self::Output {
+        reverse_add_c_long(self, rhs)
+    }
+}
+
+// [u'&u32', u'Integer', u'Integer', u'reverse_add_c_long_assign', u'rhs',
+// [u'deref'], [u'ref_mut']]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Add<Integer> for &u32 {
+    type Output = Integer;
+
+    fn add(self, mut rhs: Integer) -> Self::Output {
+        reverse_add_c_long_assign(*self, &mut rhs);
+        rhs
+    }
+}
+
+// [u'&u32', u'&Integer', u'Integer', u'reverse_add_c_long', u'no', [u'deref'],
+// []]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Add<&Integer> for &u32 {
+    type Output = Integer;
+
+    fn add(self, rhs: &Integer) -> Self::Output {
+        reverse_add_c_long(*self, rhs)
+    }
+}
+
+// [u'Integer', u'i64', u'Integer', u'Integer::add_c_long_assign', u'lhs',
+// [u'ref_mut'], []]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Add<i64> for Integer {
+    type Output = Integer;
+
+    fn add(mut self, rhs: i64) -> Self::Output {
+        Integer::add_c_long_assign(&mut self, rhs);
+        self
+    }
+}
+
+// [u'Integer', u'&i64', u'Integer', u'Integer::add_c_long_assign', u'lhs',
+// [u'ref_mut'], [u'deref']]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Add<&i64> for Integer {
+    type Output = Integer;
+
+    fn add(mut self, rhs: &i64) -> Self::Output {
+        Integer::add_c_long_assign(&mut self, *rhs);
+        self
+    }
+}
+
+// [u'&Integer', u'i64', u'Integer', u'Integer::add_c_long', u'no', [], []]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Add<i64> for &Integer {
+    type Output = Integer;
+
+    fn add(self, rhs: i64) -> Self::Output {
+        Integer::add_c_long(self, rhs)
+    }
+}
+
+// [u'&Integer', u'&i64', u'Integer', u'Integer::add_c_long', u'no', [],
+// [u'deref']]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Add<&i64> for &Integer {
+    type Output = Integer;
+
+    fn add(self, rhs: &i64) -> Self::Output {
+        Integer::add_c_long(self, *rhs)
+    }
+}
+
+// [u'i64', u'Integer', u'Integer', u'reverse_add_c_long_assign', u'rhs', [],
+// [u'ref_mut']]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Add<Integer> for i64 {
+    type Output = Integer;
+
+    fn add(self, mut rhs: Integer) -> Self::Output {
+        reverse_add_c_long_assign(self, &mut rhs);
+        rhs
+    }
+}
+
+// [u'i64', u'&Integer', u'Integer', u'reverse_add_c_long', u'no', [], []]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Add<&Integer> for i64 {
+    type Output = Integer;
+
+    fn add(self, rhs: &Integer) -> Self::Output {
+        reverse_add_c_long(self, rhs)
+    }
+}
+
+// [u'&i64', u'Integer', u'Integer', u'reverse_add_c_long_assign', u'rhs',
+// [u'deref'], [u'ref_mut']]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Add<Integer> for &i64 {
+    type Output = Integer;
+
+    fn add(self, mut rhs: Integer) -> Self::Output {
+        reverse_add_c_long_assign(*self, &mut rhs);
+        rhs
+    }
+}
+
+// [u'&i64', u'&Integer', u'Integer', u'reverse_add_c_long', u'no', [u'deref'],
+// []]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Add<&Integer> for &i64 {
+    type Output = Integer;
+
+    fn add(self, rhs: &Integer) -> Self::Output {
+        reverse_add_c_long(*self, rhs)
+    }
+}
+
 // [u'Integer', u'u32', u'Integer', u'Integer::add_assign', u'lhs',
 // [u'ref_mut'], [u'ref', {u'convert': u'Integer'}]]
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Add<u32> for Integer {
     type Output = Integer;
 
@@ -470,7 +650,7 @@ impl Add<u32> for Integer {
 
 // [u'Integer', u'&u32', u'Integer', u'Integer::add_assign', u'lhs',
 // [u'ref_mut'], [u'ref', {u'convert': u'Integer'}, u'deref']]
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Add<&u32> for Integer {
     type Output = Integer;
 
@@ -482,7 +662,7 @@ impl Add<&u32> for Integer {
 
 // [u'&Integer', u'u32', u'Integer', u'let mut rhs =
 // Integer::from(rhs);\nreverse_add_assign(self, &mut rhs);\nrhs']
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Add<u32> for &Integer {
     type Output = Integer;
 
@@ -495,7 +675,7 @@ impl Add<u32> for &Integer {
 
 // [u'&Integer', u'&u32', u'Integer', u'let mut rhs =
 // Integer::from(*rhs);\nreverse_add_assign(self, &mut rhs);\nrhs']
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Add<&u32> for &Integer {
     type Output = Integer;
 
@@ -508,7 +688,7 @@ impl Add<&u32> for &Integer {
 
 // [u'u32', u'Integer', u'Integer', u'reverse_add_assign', u'rhs', [u'ref',
 // {u'convert': u'Integer'}], [u'ref_mut']]
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Add<Integer> for u32 {
     type Output = Integer;
 
@@ -520,7 +700,7 @@ impl Add<Integer> for u32 {
 
 // [u'u32', u'&Integer', u'Integer', u'let mut lhs =
 // Integer::from(self);\nInteger::add_assign(&mut lhs, rhs);\nlhs']
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Add<&Integer> for u32 {
     type Output = Integer;
 
@@ -533,7 +713,7 @@ impl Add<&Integer> for u32 {
 
 // [u'&u32', u'Integer', u'Integer', u'reverse_add_assign', u'rhs', [u'ref',
 // {u'convert': u'Integer'}, u'deref'], [u'ref_mut']]
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Add<Integer> for &u32 {
     type Output = Integer;
 
@@ -545,7 +725,7 @@ impl Add<Integer> for &u32 {
 
 // [u'&u32', u'&Integer', u'Integer', u'let mut lhs =
 // Integer::from(*self);\nInteger::add_assign(&mut lhs, rhs);\nlhs']
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Add<&Integer> for &u32 {
     type Output = Integer;
 
@@ -558,7 +738,7 @@ impl Add<&Integer> for &u32 {
 
 // [u'Integer', u'i64', u'Integer', u'Integer::add_assign', u'lhs',
 // [u'ref_mut'], [u'ref', {u'convert': u'Integer'}]]
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Add<i64> for Integer {
     type Output = Integer;
 
@@ -570,7 +750,7 @@ impl Add<i64> for Integer {
 
 // [u'Integer', u'&i64', u'Integer', u'Integer::add_assign', u'lhs',
 // [u'ref_mut'], [u'ref', {u'convert': u'Integer'}, u'deref']]
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Add<&i64> for Integer {
     type Output = Integer;
 
@@ -582,7 +762,7 @@ impl Add<&i64> for Integer {
 
 // [u'&Integer', u'i64', u'Integer', u'let mut rhs =
 // Integer::from(rhs);\nreverse_add_assign(self, &mut rhs);\nrhs']
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Add<i64> for &Integer {
     type Output = Integer;
 
@@ -595,7 +775,7 @@ impl Add<i64> for &Integer {
 
 // [u'&Integer', u'&i64', u'Integer', u'let mut rhs =
 // Integer::from(*rhs);\nreverse_add_assign(self, &mut rhs);\nrhs']
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Add<&i64> for &Integer {
     type Output = Integer;
 
@@ -608,7 +788,7 @@ impl Add<&i64> for &Integer {
 
 // [u'i64', u'Integer', u'Integer', u'reverse_add_assign', u'rhs', [u'ref',
 // {u'convert': u'Integer'}], [u'ref_mut']]
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Add<Integer> for i64 {
     type Output = Integer;
 
@@ -620,7 +800,7 @@ impl Add<Integer> for i64 {
 
 // [u'i64', u'&Integer', u'Integer', u'let mut lhs =
 // Integer::from(self);\nInteger::add_assign(&mut lhs, rhs);\nlhs']
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Add<&Integer> for i64 {
     type Output = Integer;
 
@@ -633,7 +813,7 @@ impl Add<&Integer> for i64 {
 
 // [u'&i64', u'Integer', u'Integer', u'reverse_add_assign', u'rhs', [u'ref',
 // {u'convert': u'Integer'}, u'deref'], [u'ref_mut']]
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Add<Integer> for &i64 {
     type Output = Integer;
 
@@ -645,7 +825,7 @@ impl Add<Integer> for &i64 {
 
 // [u'&i64', u'&Integer', u'Integer', u'let mut lhs =
 // Integer::from(*self);\nInteger::add_assign(&mut lhs, rhs);\nlhs']
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Add<&Integer> for &i64 {
     type Output = Integer;
 
@@ -653,186 +833,6 @@ impl Add<&Integer> for &i64 {
         let mut lhs = Integer::from(*self);
         Integer::add_assign(&mut lhs, rhs);
         lhs
-    }
-}
-
-// [u'Integer', u'u32', u'Integer', u'Integer::add_c_long_assign', u'lhs',
-// [u'ref_mut'], []]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Add<u32> for Integer {
-    type Output = Integer;
-
-    fn add(mut self, rhs: u32) -> Self::Output {
-        Integer::add_c_long_assign(&mut self, rhs);
-        self
-    }
-}
-
-// [u'Integer', u'&u32', u'Integer', u'Integer::add_c_long_assign', u'lhs',
-// [u'ref_mut'], [u'deref']]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Add<&u32> for Integer {
-    type Output = Integer;
-
-    fn add(mut self, rhs: &u32) -> Self::Output {
-        Integer::add_c_long_assign(&mut self, *rhs);
-        self
-    }
-}
-
-// [u'&Integer', u'u32', u'Integer', u'Integer::add_c_long', u'no', [], []]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Add<u32> for &Integer {
-    type Output = Integer;
-
-    fn add(self, rhs: u32) -> Self::Output {
-        Integer::add_c_long(self, rhs)
-    }
-}
-
-// [u'&Integer', u'&u32', u'Integer', u'Integer::add_c_long', u'no', [],
-// [u'deref']]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Add<&u32> for &Integer {
-    type Output = Integer;
-
-    fn add(self, rhs: &u32) -> Self::Output {
-        Integer::add_c_long(self, *rhs)
-    }
-}
-
-// [u'u32', u'Integer', u'Integer', u'reverse_add_c_long_assign', u'rhs', [],
-// [u'ref_mut']]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Add<Integer> for u32 {
-    type Output = Integer;
-
-    fn add(self, mut rhs: Integer) -> Self::Output {
-        reverse_add_c_long_assign(self, &mut rhs);
-        rhs
-    }
-}
-
-// [u'u32', u'&Integer', u'Integer', u'reverse_add_c_long', u'no', [], []]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Add<&Integer> for u32 {
-    type Output = Integer;
-
-    fn add(self, rhs: &Integer) -> Self::Output {
-        reverse_add_c_long(self, rhs)
-    }
-}
-
-// [u'&u32', u'Integer', u'Integer', u'reverse_add_c_long_assign', u'rhs',
-// [u'deref'], [u'ref_mut']]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Add<Integer> for &u32 {
-    type Output = Integer;
-
-    fn add(self, mut rhs: Integer) -> Self::Output {
-        reverse_add_c_long_assign(*self, &mut rhs);
-        rhs
-    }
-}
-
-// [u'&u32', u'&Integer', u'Integer', u'reverse_add_c_long', u'no', [u'deref'],
-// []]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Add<&Integer> for &u32 {
-    type Output = Integer;
-
-    fn add(self, rhs: &Integer) -> Self::Output {
-        reverse_add_c_long(*self, rhs)
-    }
-}
-
-// [u'Integer', u'i64', u'Integer', u'Integer::add_c_long_assign', u'lhs',
-// [u'ref_mut'], []]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Add<i64> for Integer {
-    type Output = Integer;
-
-    fn add(mut self, rhs: i64) -> Self::Output {
-        Integer::add_c_long_assign(&mut self, rhs);
-        self
-    }
-}
-
-// [u'Integer', u'&i64', u'Integer', u'Integer::add_c_long_assign', u'lhs',
-// [u'ref_mut'], [u'deref']]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Add<&i64> for Integer {
-    type Output = Integer;
-
-    fn add(mut self, rhs: &i64) -> Self::Output {
-        Integer::add_c_long_assign(&mut self, *rhs);
-        self
-    }
-}
-
-// [u'&Integer', u'i64', u'Integer', u'Integer::add_c_long', u'no', [], []]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Add<i64> for &Integer {
-    type Output = Integer;
-
-    fn add(self, rhs: i64) -> Self::Output {
-        Integer::add_c_long(self, rhs)
-    }
-}
-
-// [u'&Integer', u'&i64', u'Integer', u'Integer::add_c_long', u'no', [],
-// [u'deref']]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Add<&i64> for &Integer {
-    type Output = Integer;
-
-    fn add(self, rhs: &i64) -> Self::Output {
-        Integer::add_c_long(self, *rhs)
-    }
-}
-
-// [u'i64', u'Integer', u'Integer', u'reverse_add_c_long_assign', u'rhs', [],
-// [u'ref_mut']]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Add<Integer> for i64 {
-    type Output = Integer;
-
-    fn add(self, mut rhs: Integer) -> Self::Output {
-        reverse_add_c_long_assign(self, &mut rhs);
-        rhs
-    }
-}
-
-// [u'i64', u'&Integer', u'Integer', u'reverse_add_c_long', u'no', [], []]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Add<&Integer> for i64 {
-    type Output = Integer;
-
-    fn add(self, rhs: &Integer) -> Self::Output {
-        reverse_add_c_long(self, rhs)
-    }
-}
-
-// [u'&i64', u'Integer', u'Integer', u'reverse_add_c_long_assign', u'rhs',
-// [u'deref'], [u'ref_mut']]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Add<Integer> for &i64 {
-    type Output = Integer;
-
-    fn add(self, mut rhs: Integer) -> Self::Output {
-        reverse_add_c_long_assign(*self, &mut rhs);
-        rhs
-    }
-}
-
-// [u'&i64', u'&Integer', u'Integer', u'reverse_add_c_long', u'no', [u'deref'],
-// []]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Add<&Integer> for &i64 {
-    type Output = Integer;
-
-    fn add(self, rhs: &Integer) -> Self::Output {
-        reverse_add_c_long(*self, rhs)
     }
 }
 

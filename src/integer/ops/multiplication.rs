@@ -458,9 +458,189 @@ impl Mul<&Integer> for &i32 {
     }
 }
 
+// [u'Integer', u'u32', u'Integer', u'Integer::multiply_c_long_assign', u'lhs',
+// [u'ref_mut'], []]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Mul<u32> for Integer {
+    type Output = Integer;
+
+    fn mul(mut self, rhs: u32) -> Self::Output {
+        Integer::multiply_c_long_assign(&mut self, rhs);
+        self
+    }
+}
+
+// [u'Integer', u'&u32', u'Integer', u'Integer::multiply_c_long_assign', u'lhs',
+// [u'ref_mut'], [u'deref']]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Mul<&u32> for Integer {
+    type Output = Integer;
+
+    fn mul(mut self, rhs: &u32) -> Self::Output {
+        Integer::multiply_c_long_assign(&mut self, *rhs);
+        self
+    }
+}
+
+// [u'&Integer', u'u32', u'Integer', u'Integer::multiply_c_long', u'no', [], []]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Mul<u32> for &Integer {
+    type Output = Integer;
+
+    fn mul(self, rhs: u32) -> Self::Output {
+        Integer::multiply_c_long(self, rhs)
+    }
+}
+
+// [u'&Integer', u'&u32', u'Integer', u'Integer::multiply_c_long', u'no', [],
+// [u'deref']]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Mul<&u32> for &Integer {
+    type Output = Integer;
+
+    fn mul(self, rhs: &u32) -> Self::Output {
+        Integer::multiply_c_long(self, *rhs)
+    }
+}
+
+// [u'u32', u'Integer', u'Integer', u'reverse_multiply_c_long_assign', u'rhs',
+// [], [u'ref_mut']]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Mul<Integer> for u32 {
+    type Output = Integer;
+
+    fn mul(self, mut rhs: Integer) -> Self::Output {
+        reverse_multiply_c_long_assign(self, &mut rhs);
+        rhs
+    }
+}
+
+// [u'u32', u'&Integer', u'Integer', u'reverse_multiply_c_long', u'no', [], []]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Mul<&Integer> for u32 {
+    type Output = Integer;
+
+    fn mul(self, rhs: &Integer) -> Self::Output {
+        reverse_multiply_c_long(self, rhs)
+    }
+}
+
+// [u'&u32', u'Integer', u'Integer', u'reverse_multiply_c_long_assign', u'rhs',
+// [u'deref'], [u'ref_mut']]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Mul<Integer> for &u32 {
+    type Output = Integer;
+
+    fn mul(self, mut rhs: Integer) -> Self::Output {
+        reverse_multiply_c_long_assign(*self, &mut rhs);
+        rhs
+    }
+}
+
+// [u'&u32', u'&Integer', u'Integer', u'reverse_multiply_c_long', u'no',
+// [u'deref'], []]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Mul<&Integer> for &u32 {
+    type Output = Integer;
+
+    fn mul(self, rhs: &Integer) -> Self::Output {
+        reverse_multiply_c_long(*self, rhs)
+    }
+}
+
+// [u'Integer', u'i64', u'Integer', u'Integer::multiply_c_long_assign', u'lhs',
+// [u'ref_mut'], []]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Mul<i64> for Integer {
+    type Output = Integer;
+
+    fn mul(mut self, rhs: i64) -> Self::Output {
+        Integer::multiply_c_long_assign(&mut self, rhs);
+        self
+    }
+}
+
+// [u'Integer', u'&i64', u'Integer', u'Integer::multiply_c_long_assign', u'lhs',
+// [u'ref_mut'], [u'deref']]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Mul<&i64> for Integer {
+    type Output = Integer;
+
+    fn mul(mut self, rhs: &i64) -> Self::Output {
+        Integer::multiply_c_long_assign(&mut self, *rhs);
+        self
+    }
+}
+
+// [u'&Integer', u'i64', u'Integer', u'Integer::multiply_c_long', u'no', [], []]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Mul<i64> for &Integer {
+    type Output = Integer;
+
+    fn mul(self, rhs: i64) -> Self::Output {
+        Integer::multiply_c_long(self, rhs)
+    }
+}
+
+// [u'&Integer', u'&i64', u'Integer', u'Integer::multiply_c_long', u'no', [],
+// [u'deref']]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Mul<&i64> for &Integer {
+    type Output = Integer;
+
+    fn mul(self, rhs: &i64) -> Self::Output {
+        Integer::multiply_c_long(self, *rhs)
+    }
+}
+
+// [u'i64', u'Integer', u'Integer', u'reverse_multiply_c_long_assign', u'rhs',
+// [], [u'ref_mut']]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Mul<Integer> for i64 {
+    type Output = Integer;
+
+    fn mul(self, mut rhs: Integer) -> Self::Output {
+        reverse_multiply_c_long_assign(self, &mut rhs);
+        rhs
+    }
+}
+
+// [u'i64', u'&Integer', u'Integer', u'reverse_multiply_c_long', u'no', [], []]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Mul<&Integer> for i64 {
+    type Output = Integer;
+
+    fn mul(self, rhs: &Integer) -> Self::Output {
+        reverse_multiply_c_long(self, rhs)
+    }
+}
+
+// [u'&i64', u'Integer', u'Integer', u'reverse_multiply_c_long_assign', u'rhs',
+// [u'deref'], [u'ref_mut']]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Mul<Integer> for &i64 {
+    type Output = Integer;
+
+    fn mul(self, mut rhs: Integer) -> Self::Output {
+        reverse_multiply_c_long_assign(*self, &mut rhs);
+        rhs
+    }
+}
+
+// [u'&i64', u'&Integer', u'Integer', u'reverse_multiply_c_long', u'no',
+// [u'deref'], []]
+#[cfg(all(target_pointer_width = "64", not(windows)))]
+impl Mul<&Integer> for &i64 {
+    type Output = Integer;
+
+    fn mul(self, rhs: &Integer) -> Self::Output {
+        reverse_multiply_c_long(*self, rhs)
+    }
+}
+
 // [u'Integer', u'u32', u'Integer', u'Integer::multiply_assign', u'lhs',
 // [u'ref_mut'], [u'ref', {u'convert': u'Integer'}]]
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<u32> for Integer {
     type Output = Integer;
 
@@ -472,7 +652,7 @@ impl Mul<u32> for Integer {
 
 // [u'Integer', u'&u32', u'Integer', u'Integer::multiply_assign', u'lhs',
 // [u'ref_mut'], [u'ref', {u'convert': u'Integer'}, u'deref']]
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<&u32> for Integer {
     type Output = Integer;
 
@@ -484,7 +664,7 @@ impl Mul<&u32> for Integer {
 
 // [u'&Integer', u'u32', u'Integer', u'let mut rhs =
 // Integer::from(rhs);\nreverse_multiply_assign(self, &mut rhs);\nrhs']
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<u32> for &Integer {
     type Output = Integer;
 
@@ -497,7 +677,7 @@ impl Mul<u32> for &Integer {
 
 // [u'&Integer', u'&u32', u'Integer', u'let mut rhs =
 // Integer::from(*rhs);\nreverse_multiply_assign(self, &mut rhs);\nrhs']
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<&u32> for &Integer {
     type Output = Integer;
 
@@ -510,7 +690,7 @@ impl Mul<&u32> for &Integer {
 
 // [u'u32', u'Integer', u'Integer', u'reverse_multiply_assign', u'rhs', [u'ref',
 // {u'convert': u'Integer'}], [u'ref_mut']]
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<Integer> for u32 {
     type Output = Integer;
 
@@ -522,7 +702,7 @@ impl Mul<Integer> for u32 {
 
 // [u'u32', u'&Integer', u'Integer', u'let mut lhs =
 // Integer::from(self);\nInteger::multiply_assign(&mut lhs, rhs);\nlhs']
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<&Integer> for u32 {
     type Output = Integer;
 
@@ -535,7 +715,7 @@ impl Mul<&Integer> for u32 {
 
 // [u'&u32', u'Integer', u'Integer', u'reverse_multiply_assign', u'rhs',
 // [u'ref', {u'convert': u'Integer'}, u'deref'], [u'ref_mut']]
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<Integer> for &u32 {
     type Output = Integer;
 
@@ -547,7 +727,7 @@ impl Mul<Integer> for &u32 {
 
 // [u'&u32', u'&Integer', u'Integer', u'let mut lhs =
 // Integer::from(*self);\nInteger::multiply_assign(&mut lhs, rhs);\nlhs']
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<&Integer> for &u32 {
     type Output = Integer;
 
@@ -560,7 +740,7 @@ impl Mul<&Integer> for &u32 {
 
 // [u'Integer', u'i64', u'Integer', u'Integer::multiply_assign', u'lhs',
 // [u'ref_mut'], [u'ref', {u'convert': u'Integer'}]]
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<i64> for Integer {
     type Output = Integer;
 
@@ -572,7 +752,7 @@ impl Mul<i64> for Integer {
 
 // [u'Integer', u'&i64', u'Integer', u'Integer::multiply_assign', u'lhs',
 // [u'ref_mut'], [u'ref', {u'convert': u'Integer'}, u'deref']]
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<&i64> for Integer {
     type Output = Integer;
 
@@ -584,7 +764,7 @@ impl Mul<&i64> for Integer {
 
 // [u'&Integer', u'i64', u'Integer', u'let mut rhs =
 // Integer::from(rhs);\nreverse_multiply_assign(self, &mut rhs);\nrhs']
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<i64> for &Integer {
     type Output = Integer;
 
@@ -597,7 +777,7 @@ impl Mul<i64> for &Integer {
 
 // [u'&Integer', u'&i64', u'Integer', u'let mut rhs =
 // Integer::from(*rhs);\nreverse_multiply_assign(self, &mut rhs);\nrhs']
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<&i64> for &Integer {
     type Output = Integer;
 
@@ -610,7 +790,7 @@ impl Mul<&i64> for &Integer {
 
 // [u'i64', u'Integer', u'Integer', u'reverse_multiply_assign', u'rhs', [u'ref',
 // {u'convert': u'Integer'}], [u'ref_mut']]
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<Integer> for i64 {
     type Output = Integer;
 
@@ -622,7 +802,7 @@ impl Mul<Integer> for i64 {
 
 // [u'i64', u'&Integer', u'Integer', u'let mut lhs =
 // Integer::from(self);\nInteger::multiply_assign(&mut lhs, rhs);\nlhs']
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<&Integer> for i64 {
     type Output = Integer;
 
@@ -635,7 +815,7 @@ impl Mul<&Integer> for i64 {
 
 // [u'&i64', u'Integer', u'Integer', u'reverse_multiply_assign', u'rhs',
 // [u'ref', {u'convert': u'Integer'}, u'deref'], [u'ref_mut']]
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<Integer> for &i64 {
     type Output = Integer;
 
@@ -647,7 +827,7 @@ impl Mul<Integer> for &i64 {
 
 // [u'&i64', u'&Integer', u'Integer', u'let mut lhs =
 // Integer::from(*self);\nInteger::multiply_assign(&mut lhs, rhs);\nlhs']
-#[cfg(all(target_pointer_width = "64", not(windows)))]
+#[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<&Integer> for &i64 {
     type Output = Integer;
 
@@ -655,186 +835,6 @@ impl Mul<&Integer> for &i64 {
         let mut lhs = Integer::from(*self);
         Integer::multiply_assign(&mut lhs, rhs);
         lhs
-    }
-}
-
-// [u'Integer', u'u32', u'Integer', u'Integer::multiply_c_long_assign', u'lhs',
-// [u'ref_mut'], []]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Mul<u32> for Integer {
-    type Output = Integer;
-
-    fn mul(mut self, rhs: u32) -> Self::Output {
-        Integer::multiply_c_long_assign(&mut self, rhs);
-        self
-    }
-}
-
-// [u'Integer', u'&u32', u'Integer', u'Integer::multiply_c_long_assign', u'lhs',
-// [u'ref_mut'], [u'deref']]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Mul<&u32> for Integer {
-    type Output = Integer;
-
-    fn mul(mut self, rhs: &u32) -> Self::Output {
-        Integer::multiply_c_long_assign(&mut self, *rhs);
-        self
-    }
-}
-
-// [u'&Integer', u'u32', u'Integer', u'Integer::multiply_c_long', u'no', [], []]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Mul<u32> for &Integer {
-    type Output = Integer;
-
-    fn mul(self, rhs: u32) -> Self::Output {
-        Integer::multiply_c_long(self, rhs)
-    }
-}
-
-// [u'&Integer', u'&u32', u'Integer', u'Integer::multiply_c_long', u'no', [],
-// [u'deref']]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Mul<&u32> for &Integer {
-    type Output = Integer;
-
-    fn mul(self, rhs: &u32) -> Self::Output {
-        Integer::multiply_c_long(self, *rhs)
-    }
-}
-
-// [u'u32', u'Integer', u'Integer', u'reverse_multiply_c_long_assign', u'rhs',
-// [], [u'ref_mut']]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Mul<Integer> for u32 {
-    type Output = Integer;
-
-    fn mul(self, mut rhs: Integer) -> Self::Output {
-        reverse_multiply_c_long_assign(self, &mut rhs);
-        rhs
-    }
-}
-
-// [u'u32', u'&Integer', u'Integer', u'reverse_multiply_c_long', u'no', [], []]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Mul<&Integer> for u32 {
-    type Output = Integer;
-
-    fn mul(self, rhs: &Integer) -> Self::Output {
-        reverse_multiply_c_long(self, rhs)
-    }
-}
-
-// [u'&u32', u'Integer', u'Integer', u'reverse_multiply_c_long_assign', u'rhs',
-// [u'deref'], [u'ref_mut']]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Mul<Integer> for &u32 {
-    type Output = Integer;
-
-    fn mul(self, mut rhs: Integer) -> Self::Output {
-        reverse_multiply_c_long_assign(*self, &mut rhs);
-        rhs
-    }
-}
-
-// [u'&u32', u'&Integer', u'Integer', u'reverse_multiply_c_long', u'no',
-// [u'deref'], []]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Mul<&Integer> for &u32 {
-    type Output = Integer;
-
-    fn mul(self, rhs: &Integer) -> Self::Output {
-        reverse_multiply_c_long(*self, rhs)
-    }
-}
-
-// [u'Integer', u'i64', u'Integer', u'Integer::multiply_c_long_assign', u'lhs',
-// [u'ref_mut'], []]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Mul<i64> for Integer {
-    type Output = Integer;
-
-    fn mul(mut self, rhs: i64) -> Self::Output {
-        Integer::multiply_c_long_assign(&mut self, rhs);
-        self
-    }
-}
-
-// [u'Integer', u'&i64', u'Integer', u'Integer::multiply_c_long_assign', u'lhs',
-// [u'ref_mut'], [u'deref']]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Mul<&i64> for Integer {
-    type Output = Integer;
-
-    fn mul(mut self, rhs: &i64) -> Self::Output {
-        Integer::multiply_c_long_assign(&mut self, *rhs);
-        self
-    }
-}
-
-// [u'&Integer', u'i64', u'Integer', u'Integer::multiply_c_long', u'no', [], []]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Mul<i64> for &Integer {
-    type Output = Integer;
-
-    fn mul(self, rhs: i64) -> Self::Output {
-        Integer::multiply_c_long(self, rhs)
-    }
-}
-
-// [u'&Integer', u'&i64', u'Integer', u'Integer::multiply_c_long', u'no', [],
-// [u'deref']]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Mul<&i64> for &Integer {
-    type Output = Integer;
-
-    fn mul(self, rhs: &i64) -> Self::Output {
-        Integer::multiply_c_long(self, *rhs)
-    }
-}
-
-// [u'i64', u'Integer', u'Integer', u'reverse_multiply_c_long_assign', u'rhs',
-// [], [u'ref_mut']]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Mul<Integer> for i64 {
-    type Output = Integer;
-
-    fn mul(self, mut rhs: Integer) -> Self::Output {
-        reverse_multiply_c_long_assign(self, &mut rhs);
-        rhs
-    }
-}
-
-// [u'i64', u'&Integer', u'Integer', u'reverse_multiply_c_long', u'no', [], []]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Mul<&Integer> for i64 {
-    type Output = Integer;
-
-    fn mul(self, rhs: &Integer) -> Self::Output {
-        reverse_multiply_c_long(self, rhs)
-    }
-}
-
-// [u'&i64', u'Integer', u'Integer', u'reverse_multiply_c_long_assign', u'rhs',
-// [u'deref'], [u'ref_mut']]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Mul<Integer> for &i64 {
-    type Output = Integer;
-
-    fn mul(self, mut rhs: Integer) -> Self::Output {
-        reverse_multiply_c_long_assign(*self, &mut rhs);
-        rhs
-    }
-}
-
-// [u'&i64', u'&Integer', u'Integer', u'reverse_multiply_c_long', u'no',
-// [u'deref'], []]
-#[cfg(not(all(target_pointer_width = "64", not(windows))))]
-impl Mul<&Integer> for &i64 {
-    type Output = Integer;
-
-    fn mul(self, rhs: &Integer) -> Self::Output {
-        reverse_multiply_c_long(*self, rhs)
     }
 }
 
