@@ -1,0 +1,9 @@
+use crate::integer::Integer;
+use core::ops::Mul;
+use super::helpers::reverse_multiply_c_long;
+use super::helpers::reverse_multiply_assign;
+use super::helpers::reverse_multiply_c_long_assign;
+
+// Mul          The multiplication operator *.
+
+{}

@@ -1,0 +1,7 @@
+use crate::integer::Integer;
+use core::ops::RemAssign;
+use super::helpers::c_long_remainder_assign;
+
+// RemAssign          The remainder assignment operator %=.
+
+{}

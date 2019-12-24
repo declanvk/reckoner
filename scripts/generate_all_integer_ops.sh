@@ -1,0 +1,10 @@
+python scripts/generate_integer_ops.py generate/op_descriptions/integer_addition_assign.json generate/templates/ src/
+python scripts/generate_integer_ops.py generate/op_descriptions/integer_addition.json generate/templates/ src/
+python scripts/generate_integer_ops.py generate/op_descriptions/integer_division_assign.json generate/templates/ src/
+python scripts/generate_integer_ops.py generate/op_descriptions/integer_division.json generate/templates/ src/
+python scripts/generate_integer_ops.py generate/op_descriptions/integer_multiplication_assign.json generate/templates/ src/
+python scripts/generate_integer_ops.py generate/op_descriptions/integer_multiplication.json generate/templates/ src/
+python scripts/generate_integer_ops.py generate/op_descriptions/integer_remainder_assign.json generate/templates/ src/
+python scripts/generate_integer_ops.py generate/op_descriptions/integer_remainder.json generate/templates/ src/
+python scripts/generate_integer_ops.py generate/op_descriptions/integer_subtraction_assign.json generate/templates/ src/
+python scripts/generate_integer_ops.py generate/op_descriptions/integer_subtraction.json generate/templates/ src/

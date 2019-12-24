@@ -1,0 +1,6 @@
+use crate::integer::Integer;
+use core::ops::MulAssign;
+
+// MulAssign    The multiplication assignment operator *=.
+
+{}

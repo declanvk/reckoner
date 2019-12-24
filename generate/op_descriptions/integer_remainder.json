@@ -1,0 +1,141 @@
+{
+    "template": "integer_ops_remainder.rs.template",
+    "output": "integer/ops/remainder.rs",
+    "trait": {
+        "name": "Rem",
+        "fn_name": "rem",
+        "is_op_assign": false
+    },
+    "instances": [
+        ["Integer", "Integer", "Integer", "Integer::remainder_assign", "lhs", ["ref_mut"], ["ref"]],
+        ["Integer", "&Integer", "Integer", "Integer::remainder_assign", "lhs", ["ref_mut"], []],
+        ["&Integer", "Integer", "Integer", "Integer::remainder", "no", [], ["ref"]],
+        ["&Integer", "&Integer", "Integer", "Integer::remainder", "no", [], []],
+
+        ["Integer", "i8", "i8", "Integer::remainder_c_long", "no", ["ref"], []],
+        ["Integer", "&i8", "i8", "Integer::remainder_c_long", "no", ["ref"], ["deref"]],
+        ["&Integer", "i8", "i8", "Integer::remainder_c_long", "no", [], []],
+        ["&Integer", "&i8", "i8", "Integer::remainder_c_long", "no", [], ["deref"]],
+
+        ["i8", "Integer", "i8", "reverse_remainder", "no", [], ["ref"]],
+        ["i8", "&Integer", "i8", "reverse_remainder", "no", [], []],
+        ["&i8", "Integer", "i8", "reverse_remainder", "no", ["deref"], ["ref"]],
+        ["&i8", "&Integer", "i8", "reverse_remainder", "no", ["deref"], []],
+
+        ["Integer", "u8", "u8", "Integer::remainder_c_long", "no", ["ref"], []],
+        ["Integer", "&u8", "u8", "Integer::remainder_c_long", "no", ["ref"], ["deref"]],
+        ["&Integer", "u8", "u8", "Integer::remainder_c_long", "no", [], []],
+        ["&Integer", "&u8", "u8", "Integer::remainder_c_long", "no", [], ["deref"]],
+
+        ["u8", "Integer", "u8", "reverse_remainder", "no", [], ["ref"]],
+        ["u8", "&Integer", "u8", "reverse_remainder", "no", [], []],
+        ["&u8", "Integer", "u8", "reverse_remainder", "no", ["deref"], ["ref"]],
+        ["&u8", "&Integer", "u8", "reverse_remainder", "no", ["deref"], []],
+
+        ["Integer", "i16", "i16", "Integer::remainder_c_long", "no", ["ref"], []],
+        ["Integer", "&i16", "i16", "Integer::remainder_c_long", "no", ["ref"], ["deref"]],
+        ["&Integer", "i16", "i16", "Integer::remainder_c_long", "no", [], []],
+        ["&Integer", "&i16", "i16", "Integer::remainder_c_long", "no", [], ["deref"]],
+
+        ["i16", "Integer", "i16", "reverse_remainder", "no", [], ["ref"]],
+        ["i16", "&Integer", "i16", "reverse_remainder", "no", [], []],
+        ["&i16", "Integer", "i16", "reverse_remainder", "no", ["deref"], ["ref"]],
+        ["&i16", "&Integer", "i16", "reverse_remainder", "no", ["deref"], []],
+
+        ["Integer", "u16", "u16", "Integer::remainder_c_long", "no", ["ref"], []],
+        ["Integer", "&u16", "u16", "Integer::remainder_c_long", "no", ["ref"], ["deref"]],
+        ["&Integer", "u16", "u16", "Integer::remainder_c_long", "no", [], []],
+        ["&Integer", "&u16", "u16", "Integer::remainder_c_long", "no", [], ["deref"]],
+
+        ["u16", "Integer", "u16", "reverse_remainder", "no", [], ["ref"]],
+        ["u16", "&Integer", "u16", "reverse_remainder", "no", [], []],
+        ["&u16", "Integer", "u16", "reverse_remainder", "no", ["deref"], ["ref"]],
+        ["&u16", "&Integer", "u16", "reverse_remainder", "no", ["deref"], []],
+
+        ["Integer", "i32", "i32", "Integer::remainder_c_long", "no", ["ref"], []],
+        ["Integer", "&i32", "i32", "Integer::remainder_c_long", "no", ["ref"], ["deref"]],
+        ["&Integer", "i32", "i32", "Integer::remainder_c_long", "no", [], []],
+        ["&Integer", "&i32", "i32", "Integer::remainder_c_long", "no", [], ["deref"]],
+
+        ["i32", "Integer", "i32", "reverse_remainder", "no", [], ["ref"]],
+        ["i32", "&Integer", "i32", "reverse_remainder", "no", [], []],
+        ["&i32", "Integer", "i32", "reverse_remainder", "no", ["deref"], ["ref"]],
+        ["&i32", "&Integer", "i32", "reverse_remainder", "no", ["deref"], []],
+        
+        { 
+            "condition": "all(target_pointer_width = \"64\", not(windows))",
+            "if_instances": [
+                ["Integer", "u32", "u32", "Integer::remainder_c_long", "no", ["ref"], []],
+                ["Integer", "&u32", "u32", "Integer::remainder_c_long", "no", ["ref"], ["deref"]],
+                ["&Integer", "u32", "u32", "Integer::remainder_c_long", "no", [], []],
+                ["&Integer", "&u32", "u32", "Integer::remainder_c_long", "no", [], ["deref"]],
+        
+                ["u32", "Integer", "u32", "reverse_remainder", "no", [], ["ref"]],
+                ["u32", "&Integer", "u32", "reverse_remainder", "no", [], []],
+                ["&u32", "Integer", "u32", "reverse_remainder", "no", ["deref"], ["ref"]],
+                ["&u32", "&Integer", "u32", "reverse_remainder", "no", ["deref"], []],
+        
+                ["Integer", "i64", "i64", "Integer::remainder_c_long", "no", ["ref"], []],
+                ["Integer", "&i64", "i64", "Integer::remainder_c_long", "no", ["ref"], ["deref"]],
+                ["&Integer", "i64", "i64", "Integer::remainder_c_long", "no", [], []],
+                ["&Integer", "&i64", "i64", "Integer::remainder_c_long", "no", [], ["deref"]],
+        
+                ["i64", "Integer", "i64", "reverse_remainder", "no", [], ["ref"]],
+                ["i64", "&Integer", "i64", "reverse_remainder", "no", [], []],
+                ["&i64", "Integer", "i64", "reverse_remainder", "no", ["deref"], ["ref"]],
+                ["&i64", "&Integer", "i64", "reverse_remainder", "no", ["deref"], []]
+            ],
+            "else_instances": [
+                ["Integer", "u32", "u32", "remainder_reuse", "no", [], []],
+                ["Integer", "&u32", "u32", "remainder_reuse", "no", [], ["deref"]],
+                ["&Integer", "u32", "u32", "remainder_ref", "no", [], []],
+                ["&Integer", "&u32", "u32", "remainder_ref", "no", [], ["deref"]],
+        
+                ["u32", "Integer", "u32", "reverse_remainder", "no", [], ["ref"]],
+                ["u32", "&Integer", "u32", "reverse_remainder", "no", [], []],
+                ["&u32", "Integer", "u32", "reverse_remainder", "no", ["deref"], ["ref"]],
+                ["&u32", "&Integer", "u32", "reverse_remainder", "no", ["deref"], []],
+        
+                ["Integer", "i64", "i64", "remainder_reuse", "no", [], []],
+                ["Integer", "&i64", "i64", "remainder_reuse", "no", [], ["deref"]],
+                ["&Integer", "i64", "i64", "remainder_ref", "no", [], []],
+                ["&Integer", "&i64", "i64", "remainder_ref", "no", [], ["deref"]],
+        
+                ["i64", "Integer", "i64", "reverse_remainder", "no", [], ["ref"]],
+                ["i64", "&Integer", "i64", "reverse_remainder", "no", [], []],
+                ["&i64", "Integer", "i64", "reverse_remainder", "no", ["deref"], ["ref"]],
+                ["&i64", "&Integer", "i64", "reverse_remainder", "no", ["deref"], []]
+            ]
+        },
+
+        ["Integer", "u64", "u64", "remainder_reuse", "no", [], []],
+        ["Integer", "&u64", "u64", "remainder_reuse", "no", [], ["deref"]],
+        ["&Integer", "u64", "u64", "remainder_ref", "no", [], []],
+        ["&Integer", "&u64", "u64", "remainder_ref", "no", [], ["deref"]],
+
+        ["u64", "Integer", "u64", "reverse_remainder", "no", [], ["ref"]],
+        ["u64", "&Integer", "u64", "reverse_remainder", "no", [], []],
+        ["&u64", "Integer", "u64", "reverse_remainder", "no", ["deref"], ["ref"]],
+        ["&u64", "&Integer", "u64", "reverse_remainder", "no", ["deref"], []],
+
+        ["Integer", "i128", "i128", "remainder_reuse", "no", [], []],
+        ["Integer", "&i128", "i128", "remainder_reuse", "no", [], ["deref"]],
+        ["&Integer", "i128", "i128", "remainder_ref", "no", [], []],
+        ["&Integer", "&i128", "i128", "remainder_ref", "no", [], ["deref"]],
+
+        ["i128", "Integer", "i128", "reverse_remainder", "no", [], ["ref"]],
+        ["i128", "&Integer", "i128", "reverse_remainder", "no", [], []],
+        ["&i128", "Integer", "i128", "reverse_remainder", "no", ["deref"], ["ref"]],
+        ["&i128", "&Integer", "i128", "reverse_remainder", "no", ["deref"], []],
+
+        ["Integer", "u128", "u128", "remainder_reuse", "no", [], []],
+        ["Integer", "&u128", "u128", "remainder_reuse", "no", [], ["deref"]],
+        ["&Integer", "u128", "u128", "remainder_ref", "no", [], []],
+        ["&Integer", "&u128", "u128", "remainder_ref", "no", [], ["deref"]],
+
+        ["u128", "Integer", "u128", "reverse_remainder", "no", [], ["ref"]],
+        ["u128", "&Integer", "u128", "reverse_remainder", "no", [], []],
+        ["&u128", "Integer", "u128", "reverse_remainder", "no", ["deref"], ["ref"]],
+        ["&u128", "&Integer", "u128", "reverse_remainder", "no", ["deref"], []]
+    ]
+}

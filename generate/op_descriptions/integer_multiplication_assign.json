@@ -1,0 +1,55 @@
+{
+    "template": "integer_ops_multiplication_assign.rs.template",
+    "output": "integer/ops/multiplication_assign.rs",
+    "trait": {
+        "name": "MulAssign",
+        "fn_name": "mul_assign",
+        "is_op_assign": true
+    },
+    "instances": [
+        ["Integer", "Integer" , "Integer::multiply_assign", "no", [], ["ref"]],
+        ["Integer", "&Integer", "Integer::multiply_assign", "no", [], []],
+
+        ["Integer", "i8" , "Integer::multiply_c_long_assign", "no", [], []],
+        ["Integer", "&i8", "Integer::multiply_c_long_assign", "no", [], ["deref"]],
+
+        ["Integer", "u8" , "Integer::multiply_c_long_assign", "no", [], []],
+        ["Integer", "&u8", "Integer::multiply_c_long_assign", "no", [], ["deref"]],
+
+        ["Integer", "i16" , "Integer::multiply_c_long_assign", "no", [], []],
+        ["Integer", "&i16", "Integer::multiply_c_long_assign", "no", [], ["deref"]],
+
+        ["Integer", "u16" , "Integer::multiply_c_long_assign", "no", [], []],
+        ["Integer", "&u16", "Integer::multiply_c_long_assign", "no", [], ["deref"]],
+
+        ["Integer", "i32" , "Integer::multiply_c_long_assign", "no", [], []],
+        ["Integer", "&i32", "Integer::multiply_c_long_assign", "no", [], ["deref"]],
+
+        {
+            "condition": "all(target_pointer_width = \"64\", not(windows))",
+            "if_instances": [
+                ["Integer", "u32" , "Integer::multiply_c_long_assign", "no", [], []],
+                ["Integer", "&u32", "Integer::multiply_c_long_assign", "no", [], ["deref"]],
+        
+                ["Integer", "i64" , "Integer::multiply_c_long_assign", "no", [], []],
+                ["Integer", "&i64", "Integer::multiply_c_long_assign", "no", [], ["deref"]]
+            ],
+            "else_instances": [
+                ["Integer", "u32" , "Integer::multiply_assign", "no", [], ["ref", {"convert": "Integer"}]],
+                ["Integer", "&u32", "Integer::multiply_assign", "no", [], ["ref", {"convert": "Integer"}, "deref"]],
+        
+                ["Integer", "i64" , "Integer::multiply_assign", "no", [], ["ref", {"convert": "Integer"}]],
+                ["Integer", "&i64", "Integer::multiply_assign", "no", [], ["ref", {"convert": "Integer"}, "deref"]]
+            ]
+        },
+
+        ["Integer", "u64" , "Integer::multiply_assign", "no", [], ["ref", {"convert": "Integer"}]],
+        ["Integer", "&u64", "Integer::multiply_assign", "no", [], ["ref", {"convert": "Integer"}, "deref"]],
+
+        ["Integer", "i128" , "Integer::multiply_assign", "no", [], ["ref", {"convert": "Integer"}]],
+        ["Integer", "&i128", "Integer::multiply_assign", "no", [], ["ref", {"convert": "Integer"}, "deref"]],
+
+        ["Integer", "u128" , "Integer::multiply_assign", "no", [], ["ref", {"convert": "Integer"}]],
+        ["Integer", "&u128", "Integer::multiply_assign", "no", [], ["ref", {"convert": "Integer"}, "deref"]]
+    ]
+}
