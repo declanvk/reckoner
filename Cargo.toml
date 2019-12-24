@@ -9,7 +9,7 @@ categories = ["science"]
 license = "MIT"
 
 [dependencies]
-imath-sys = { path = "imath-sys/" }
+imath-sys = { version = "0.1.0", path = "imath-sys/" }
 cfg-if = "0.1.10"
 
 [workspace]
