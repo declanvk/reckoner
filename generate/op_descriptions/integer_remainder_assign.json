@@ -1,0 +1,77 @@
+{
+    "template": "integer_ops_remainder_assign.rs.template",
+    "output": "integer/ops/remainder_assign.rs",
+    "trait": {
+        "name": "RemAssign",
+        "fn_name": "rem_assign",
+        "is_op_assign": true
+    },
+    "instances": [
+        ["Integer", "Integer" , "Integer::remainder_assign", "no", [], ["ref"]],
+        ["Integer", "&Integer", "Integer::remainder_assign", "no", [], []],
+
+        ["Integer", "i8" , "Integer::remainder_c_long_assign", "no", [], []],
+        ["Integer", "&i8", "Integer::remainder_c_long_assign", "no", [], ["deref"]],
+        ["i8", "Integer", "c_long_remainder_assign", "no", [], ["ref"]],
+        ["i8", "&Integer", "c_long_remainder_assign", "no", [], []],
+
+        ["Integer", "u8" , "Integer::remainder_c_long_assign", "no", [], []],
+        ["Integer", "&u8", "Integer::remainder_c_long_assign", "no", [], ["deref"]],
+        ["u8", "Integer", "c_long_remainder_assign", "no", [], ["ref"]],
+        ["u8", "&Integer", "c_long_remainder_assign", "no", [], []],
+
+        ["Integer", "i16" , "Integer::remainder_c_long_assign", "no", [], []],
+        ["Integer", "&i16", "Integer::remainder_c_long_assign", "no", [], ["deref"]],
+        ["i16", "Integer", "c_long_remainder_assign", "no", [], ["ref"]],
+        ["i16", "&Integer", "c_long_remainder_assign", "no", [], []],
+
+        ["Integer", "u16" , "Integer::remainder_c_long_assign", "no", [], []],
+        ["Integer", "&u16", "Integer::remainder_c_long_assign", "no", [], ["deref"]],
+        ["u16", "Integer", "c_long_remainder_assign", "no", [], ["ref"]],
+        ["u16", "&Integer", "c_long_remainder_assign", "no", [], []],
+
+        ["Integer", "i32" , "Integer::remainder_c_long_assign", "no", [], []],
+        ["Integer", "&i32", "Integer::remainder_c_long_assign", "no", [], ["deref"]],
+        ["i32", "Integer", "c_long_remainder_assign", "no", [], ["ref"]],
+        ["i32", "&Integer", "c_long_remainder_assign", "no", [], []],
+
+        {
+            "condition": "all(target_pointer_width = \"64\", not(windows))",
+            "if_instances": [
+                ["Integer", "u32" , "Integer::remainder_c_long_assign", "no", [], []],
+                ["Integer", "&u32", "Integer::remainder_c_long_assign", "no", [], ["deref"]],
+        
+                ["Integer", "i64" , "Integer::remainder_c_long_assign", "no", [], []],
+                ["Integer", "&i64", "Integer::remainder_c_long_assign", "no", [], ["deref"]]
+            ],
+            "else_instances": [
+                ["Integer", "u32" , "Integer::remainder_assign", "no", [], ["ref", {"convert": "Integer"}]],
+                ["Integer", "&u32", "Integer::remainder_assign", "no", [], ["ref", {"convert": "Integer"}, "deref"]],
+        
+                ["Integer", "i64" , "Integer::remainder_assign", "no", [], ["ref", {"convert": "Integer"}]],
+                ["Integer", "&i64", "Integer::remainder_assign", "no", [], ["ref", {"convert": "Integer"}, "deref"]]
+            ]
+        },
+
+        ["u32", "Integer", "c_long_remainder_assign", "no", [], ["ref"]],
+        ["u32", "&Integer", "c_long_remainder_assign", "no", [], []],
+
+        ["i64", "Integer", "c_long_remainder_assign", "no", [], ["ref"]],
+        ["i64", "&Integer", "c_long_remainder_assign", "no", [], []],
+
+        ["Integer", "u64" , "Integer::remainder_assign", "no", [], ["ref", {"convert": "Integer"}]],
+        ["Integer", "&u64", "Integer::remainder_assign", "no", [], ["ref", {"convert": "Integer"}, "deref"]],
+        ["u64", "Integer", "c_long_remainder_assign", "no", [], ["ref"]],
+        ["u64", "&Integer", "c_long_remainder_assign", "no", [], []],
+
+        ["Integer", "i128" , "Integer::remainder_assign", "no", [], ["ref", {"convert": "Integer"}]],
+        ["Integer", "&i128", "Integer::remainder_assign", "no", [], ["ref", {"convert": "Integer"}, "deref"]],
+        ["i128", "Integer", "c_long_remainder_assign", "no", [], ["ref"]],
+        ["i128", "&Integer", "c_long_remainder_assign", "no", [], []],
+
+        ["Integer", "u128" , "Integer::remainder_assign", "no", [], ["ref", {"convert": "Integer"}]],
+        ["Integer", "&u128", "Integer::remainder_assign", "no", [], ["ref", {"convert": "Integer"}, "deref"]],
+        ["u128", "Integer", "c_long_remainder_assign", "no", [], ["ref"]],
+        ["u128", "&Integer", "c_long_remainder_assign", "no", [], []]
+    ]
+}

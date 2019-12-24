@@ -1,0 +1,9 @@
+use crate::integer::Integer;
+use core::ops::Rem;
+use super::helpers::reverse_remainder;
+use super::helpers::remainder_reuse;
+use super::helpers::remainder_ref;
+
+// Rem          The remainder operator %.
+
+{}

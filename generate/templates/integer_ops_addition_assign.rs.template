@@ -1,0 +1,6 @@
+use crate::integer::Integer;
+use core::ops::AddAssign;
+
+// AddAssign    The addition assignment operator +=.
+
+{}

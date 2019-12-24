@@ -1,0 +1,141 @@
+{
+    "template": "integer_ops_multiplication.rs.template",
+    "output": "integer/ops/multiplication.rs",
+    "trait": {
+        "name": "Mul",
+        "fn_name": "mul",
+        "is_op_assign": false
+    },
+    "instances": [
+        ["Integer", "Integer", "Integer", "Integer::multiply_assign", "lhs", ["ref_mut"], ["ref"]],
+        ["Integer", "&Integer", "Integer", "Integer::multiply_assign", "lhs", ["ref_mut"], []],
+        ["&Integer", "Integer", "Integer", "reverse_multiply_assign", "rhs", [], ["ref_mut"]],
+        ["&Integer", "&Integer", "Integer", "Integer::multiply", "no", [], []],
+
+        ["Integer", "i8", "Integer", "Integer::multiply_c_long_assign", "lhs", ["ref_mut"], []],
+        ["Integer", "&i8", "Integer", "Integer::multiply_c_long_assign", "lhs", ["ref_mut"], ["deref"]],
+        ["&Integer", "i8", "Integer", "Integer::multiply_c_long", "no", [], []],
+        ["&Integer", "&i8", "Integer", "Integer::multiply_c_long", "no", [], ["deref"]],
+
+        ["i8", "Integer", "Integer", "reverse_multiply_c_long_assign", "rhs", [], ["ref_mut"]],
+        ["i8", "&Integer", "Integer", "reverse_multiply_c_long", "no", [], []],
+        ["&i8", "Integer", "Integer", "reverse_multiply_c_long_assign", "rhs", ["deref"], ["ref_mut"]],
+        ["&i8", "&Integer", "Integer", "reverse_multiply_c_long", "no", ["deref"], []],
+
+        ["Integer", "u8", "Integer", "Integer::multiply_c_long_assign", "lhs", ["ref_mut"], []],
+        ["Integer", "&u8", "Integer", "Integer::multiply_c_long_assign", "lhs", ["ref_mut"], ["deref"]],
+        ["&Integer", "u8", "Integer", "Integer::multiply_c_long", "no", [], []],
+        ["&Integer", "&u8", "Integer", "Integer::multiply_c_long", "no", [], ["deref"]],
+
+        ["u8", "Integer", "Integer", "reverse_multiply_c_long_assign", "rhs", [], ["ref_mut"]],
+        ["u8", "&Integer", "Integer", "reverse_multiply_c_long", "no", [], []],
+        ["&u8", "Integer", "Integer", "reverse_multiply_c_long_assign", "rhs", ["deref"], ["ref_mut"]],
+        ["&u8", "&Integer", "Integer", "reverse_multiply_c_long", "no", ["deref"], []],
+
+        ["Integer", "i16", "Integer", "Integer::multiply_c_long_assign", "lhs", ["ref_mut"], []],
+        ["Integer", "&i16", "Integer", "Integer::multiply_c_long_assign", "lhs", ["ref_mut"], ["deref"]],
+        ["&Integer", "i16", "Integer", "Integer::multiply_c_long", "no", [], []],
+        ["&Integer", "&i16", "Integer", "Integer::multiply_c_long", "no", [], ["deref"]],
+
+        ["i16", "Integer", "Integer", "reverse_multiply_c_long_assign", "rhs", [], ["ref_mut"]],
+        ["i16", "&Integer", "Integer", "reverse_multiply_c_long", "no", [], []],
+        ["&i16", "Integer", "Integer", "reverse_multiply_c_long_assign", "rhs", ["deref"], ["ref_mut"]],
+        ["&i16", "&Integer", "Integer", "reverse_multiply_c_long", "no", ["deref"], []],
+
+        ["Integer", "u16", "Integer", "Integer::multiply_c_long_assign", "lhs", ["ref_mut"], []],
+        ["Integer", "&u16", "Integer", "Integer::multiply_c_long_assign", "lhs", ["ref_mut"], ["deref"]],
+        ["&Integer", "u16", "Integer", "Integer::multiply_c_long", "no", [], []],
+        ["&Integer", "&u16", "Integer", "Integer::multiply_c_long", "no", [], ["deref"]],
+
+        ["u16", "Integer", "Integer", "reverse_multiply_c_long_assign", "rhs", [], ["ref_mut"]],
+        ["u16", "&Integer", "Integer", "reverse_multiply_c_long", "no", [], []],
+        ["&u16", "Integer", "Integer", "reverse_multiply_c_long_assign", "rhs", ["deref"], ["ref_mut"]],
+        ["&u16", "&Integer", "Integer", "reverse_multiply_c_long", "no", ["deref"], []],
+
+        ["Integer", "i32", "Integer", "Integer::multiply_c_long_assign", "lhs", ["ref_mut"], []],
+        ["Integer", "&i32", "Integer", "Integer::multiply_c_long_assign", "lhs", ["ref_mut"], ["deref"]],
+        ["&Integer", "i32", "Integer", "Integer::multiply_c_long", "no", [], []],
+        ["&Integer", "&i32", "Integer", "Integer::multiply_c_long", "no", [], ["deref"]],
+
+        ["i32", "Integer", "Integer", "reverse_multiply_c_long_assign", "rhs", [], ["ref_mut"]],
+        ["i32", "&Integer", "Integer", "reverse_multiply_c_long", "no", [], []],
+        ["&i32", "Integer", "Integer", "reverse_multiply_c_long_assign", "rhs", ["deref"], ["ref_mut"]],
+        ["&i32", "&Integer", "Integer", "reverse_multiply_c_long", "no", ["deref"], []],
+
+        {
+            "condition": "all(target_pointer_width = \"64\", not(windows))",
+            "if_instances": [
+                ["Integer", "u32", "Integer", "Integer::multiply_c_long_assign", "lhs", ["ref_mut"], []],
+                ["Integer", "&u32", "Integer", "Integer::multiply_c_long_assign", "lhs", ["ref_mut"], ["deref"]],
+                ["&Integer", "u32", "Integer", "Integer::multiply_c_long", "no", [], []],
+                ["&Integer", "&u32", "Integer", "Integer::multiply_c_long", "no", [], ["deref"]],
+        
+                ["u32", "Integer", "Integer", "reverse_multiply_c_long_assign", "rhs", [], ["ref_mut"]],
+                ["u32", "&Integer", "Integer", "reverse_multiply_c_long", "no", [], []],
+                ["&u32", "Integer", "Integer", "reverse_multiply_c_long_assign", "rhs", ["deref"], ["ref_mut"]],
+                ["&u32", "&Integer", "Integer", "reverse_multiply_c_long", "no", ["deref"], []],
+
+                ["Integer", "i64", "Integer", "Integer::multiply_c_long_assign", "lhs", ["ref_mut"], []],
+                ["Integer", "&i64", "Integer", "Integer::multiply_c_long_assign", "lhs", ["ref_mut"], ["deref"]],
+                ["&Integer", "i64", "Integer", "Integer::multiply_c_long", "no", [], []],
+                ["&Integer", "&i64", "Integer", "Integer::multiply_c_long", "no", [], ["deref"]],
+        
+                ["i64", "Integer", "Integer", "reverse_multiply_c_long_assign", "rhs", [], ["ref_mut"]],
+                ["i64", "&Integer", "Integer", "reverse_multiply_c_long", "no", [], []],
+                ["&i64", "Integer", "Integer", "reverse_multiply_c_long_assign", "rhs", ["deref"], ["ref_mut"]],
+                ["&i64", "&Integer", "Integer", "reverse_multiply_c_long", "no", ["deref"], []]
+            ],
+            "else_instances": [
+                ["Integer", "u32", "Integer", "Integer::multiply_assign", "lhs", ["ref_mut"], ["ref", {"convert": "Integer"}]],
+                ["Integer", "&u32", "Integer", "Integer::multiply_assign", "lhs", ["ref_mut"], ["ref", {"convert": "Integer"}, "deref"]],
+                ["&Integer", "u32", "Integer", "let mut rhs = Integer::from(rhs);\nreverse_multiply_assign(self, &mut rhs);\nrhs"],
+                ["&Integer", "&u32", "Integer", "let mut rhs = Integer::from(*rhs);\nreverse_multiply_assign(self, &mut rhs);\nrhs"],
+        
+                ["u32", "Integer", "Integer", "reverse_multiply_assign", "rhs", ["ref", {"convert": "Integer"}], ["ref_mut"]],
+                ["u32", "&Integer", "Integer", "let mut lhs = Integer::from(self);\nInteger::multiply_assign(&mut lhs, rhs);\nlhs"],
+                ["&u32", "Integer", "Integer", "reverse_multiply_assign", "rhs", ["ref", {"convert": "Integer"}, "deref"], ["ref_mut"]],
+                ["&u32", "&Integer", "Integer", "let mut lhs = Integer::from(*self);\nInteger::multiply_assign(&mut lhs, rhs);\nlhs"],
+
+                ["Integer", "i64", "Integer", "Integer::multiply_assign", "lhs", ["ref_mut"], ["ref", {"convert": "Integer"}]],
+                ["Integer", "&i64", "Integer", "Integer::multiply_assign", "lhs", ["ref_mut"], ["ref", {"convert": "Integer"}, "deref"]],
+                ["&Integer", "i64", "Integer", "let mut rhs = Integer::from(rhs);\nreverse_multiply_assign(self, &mut rhs);\nrhs"],
+                ["&Integer", "&i64", "Integer", "let mut rhs = Integer::from(*rhs);\nreverse_multiply_assign(self, &mut rhs);\nrhs"],
+        
+                ["i64", "Integer", "Integer", "reverse_multiply_assign", "rhs", ["ref", {"convert": "Integer"}], ["ref_mut"]],
+                ["i64", "&Integer", "Integer", "let mut lhs = Integer::from(self);\nInteger::multiply_assign(&mut lhs, rhs);\nlhs"],
+                ["&i64", "Integer", "Integer", "reverse_multiply_assign", "rhs", ["ref", {"convert": "Integer"}, "deref"], ["ref_mut"]],
+                ["&i64", "&Integer", "Integer", "let mut lhs = Integer::from(*self);\nInteger::multiply_assign(&mut lhs, rhs);\nlhs"]
+            ]
+        },
+
+        ["Integer", "u64", "Integer", "Integer::multiply_assign", "lhs", ["ref_mut"], ["ref", {"convert": "Integer"}]],
+        ["Integer", "&u64", "Integer", "Integer::multiply_assign", "lhs", ["ref_mut"], ["ref", {"convert": "Integer"}, "deref"]],
+        ["&Integer", "u64", "Integer", "let mut rhs = Integer::from(rhs);\nreverse_multiply_assign(self, &mut rhs);\nrhs"],
+        ["&Integer", "&u64", "Integer", "let mut rhs = Integer::from(*rhs);\nreverse_multiply_assign(self, &mut rhs);\nrhs"],
+
+        ["u64", "Integer", "Integer", "reverse_multiply_assign", "rhs", ["ref", {"convert": "Integer"}], ["ref_mut"]],
+        ["u64", "&Integer", "Integer", "let mut lhs = Integer::from(self);\nInteger::multiply_assign(&mut lhs, rhs);\nlhs"],
+        ["&u64", "Integer", "Integer", "reverse_multiply_assign", "rhs", ["ref", {"convert": "Integer"}, "deref"], ["ref_mut"]],
+        ["&u64", "&Integer", "Integer", "let mut lhs = Integer::from(*self);\nInteger::multiply_assign(&mut lhs, rhs);\nlhs"],
+
+        ["Integer", "i128", "Integer", "Integer::multiply_assign", "lhs", ["ref_mut"], ["ref", {"convert": "Integer"}]],
+        ["Integer", "&i128", "Integer", "Integer::multiply_assign", "lhs", ["ref_mut"], ["ref", {"convert": "Integer"}, "deref"]],
+        ["&Integer", "i128", "Integer", "let mut rhs = Integer::from(rhs);\nreverse_multiply_assign(self, &mut rhs);\nrhs"],
+        ["&Integer", "&i128", "Integer", "let mut rhs = Integer::from(*rhs);\nreverse_multiply_assign(self, &mut rhs);\nrhs"],
+
+        ["i128", "Integer", "Integer", "reverse_multiply_assign", "rhs", ["ref", {"convert": "Integer"}], ["ref_mut"]],
+        ["i128", "&Integer", "Integer", "let mut lhs = Integer::from(self);\nInteger::multiply_assign(&mut lhs, rhs);\nlhs"],
+        ["&i128", "Integer", "Integer", "reverse_multiply_assign", "rhs", ["ref", {"convert": "Integer"}, "deref"], ["ref_mut"]],
+        ["&i128", "&Integer", "Integer", "let mut lhs = Integer::from(*self);\nInteger::multiply_assign(&mut lhs, rhs);\nlhs"],
+
+        ["Integer", "u128", "Integer", "Integer::multiply_assign", "lhs", ["ref_mut"], ["ref", {"convert": "Integer"}]],
+        ["Integer", "&u128", "Integer", "Integer::multiply_assign", "lhs", ["ref_mut"], ["ref", {"convert": "Integer"}, "deref"]],
+        ["&Integer", "u128", "Integer", "let mut rhs = Integer::from(rhs);\nreverse_multiply_assign(self, &mut rhs);\nrhs"],
+        ["&Integer", "&u128", "Integer", "let mut rhs = Integer::from(*rhs);\nreverse_multiply_assign(self, &mut rhs);\nrhs"],
+
+        ["u128", "Integer", "Integer", "reverse_multiply_assign", "rhs", ["ref", {"convert": "Integer"}], ["ref_mut"]],
+        ["u128", "&Integer", "Integer", "let mut lhs = Integer::from(self);\nInteger::multiply_assign(&mut lhs, rhs);\nlhs"],
+        ["&u128", "Integer", "Integer", "reverse_multiply_assign", "rhs", ["ref", {"convert": "Integer"}, "deref"], ["ref_mut"]],
+        ["&u128", "&Integer", "Integer", "let mut lhs = Integer::from(*self);\nInteger::multiply_assign(&mut lhs, rhs);\nlhs"]
+    ]
+}
