@@ -2,15 +2,17 @@ use crate::{error::Error, integer::Integer};
 use core::{convert::TryInto, ptr};
 use std::os::raw::c_long;
 
-#[macro_use]
-mod macros;
-
 mod addition;
+mod addition_assign;
 mod division;
+mod division_assign;
 mod multiplication;
+mod multiplication_assign;
 mod negation;
 mod remainder;
+mod remainder_assign;
 mod subtraction;
+mod subtraction_assign;
 
 impl Integer {
     /// Add two integers and return the result
@@ -372,6 +374,96 @@ impl Integer {
             ptr::null_mut(),
             remainder_raw,
         );
+    }
+}
+
+pub(crate) mod helpers {
+    use crate::{error::Error, integer::Integer};
+    use core::convert::TryInto;
+    use std::os::raw::c_long;
+
+    #[inline]
+    pub fn reverse_add_c_long(other: impl Into<c_long>, integer: &Integer) -> Integer {
+        Integer::add_c_long(integer, other)
+    }
+
+    #[inline]
+    pub fn reverse_add_assign(integer: &Integer, other: &mut Integer) {
+        Integer::add_assign(other, integer);
+    }
+
+    #[inline]
+    pub fn reverse_add_c_long_assign(other: impl Into<c_long>, integer: &mut Integer) {
+        Integer::add_c_long_assign(integer, other);
+    }
+
+    #[inline]
+    pub fn reverse_multiply_c_long(other: impl Into<c_long>, integer: &Integer) -> Integer {
+        Integer::multiply_c_long(integer, other)
+    }
+
+    #[inline]
+    pub fn reverse_multiply_assign(integer: &Integer, other: &mut Integer) {
+        Integer::multiply_assign(other, integer);
+    }
+
+    #[inline]
+    pub fn reverse_multiply_c_long_assign(other: impl Into<c_long>, integer: &mut Integer) {
+        Integer::multiply_c_long_assign(integer, other);
+    }
+
+    #[inline]
+    pub fn reverse_remainder<V>(value: V, integer: &Integer) -> V
+    where
+        Integer: TryInto<V> + From<V>,
+    {
+        let mut lhs = Integer::from(value);
+
+        Integer::remainder_assign(&mut lhs, integer);
+
+        lhs.try_into()
+            .map_err(|_| Error::RemainderOutsideBounds)
+            .unwrap()
+    }
+
+    #[inline]
+    pub fn remainder_reuse<V>(mut integer: Integer, rhs: V) -> V
+    where
+        Integer: TryInto<V> + From<V>,
+    {
+        Integer::remainder_assign(&mut integer, &Integer::from(rhs));
+
+        integer
+            .try_into()
+            .map_err(|_| Error::RemainderOutsideBounds)
+            .unwrap()
+    }
+
+    #[inline]
+    pub fn remainder_ref<V>(integer: &Integer, rhs: V) -> V
+    where
+        Integer: TryInto<V> + From<V>,
+    {
+        Integer::remainder(integer, &Integer::from(rhs))
+            .try_into()
+            .map_err(|_| Error::RemainderOutsideBounds)
+            .unwrap()
+    }
+
+    #[inline]
+    pub fn c_long_remainder_assign<V>(value: &mut V, integer: &Integer)
+    where
+        Integer: TryInto<V> + From<V>,
+        V: Copy,
+    {
+        let mut lhs = Integer::from(*value);
+
+        Integer::remainder_assign(&mut lhs, integer);
+
+        *value = lhs
+            .try_into()
+            .map_err(|_| Error::RemainderOutsideBounds)
+            .unwrap();
     }
 }
 
