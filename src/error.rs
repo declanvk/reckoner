@@ -11,10 +11,10 @@ pub(crate) type Result<T> = core::result::Result<T, Error>;
 pub enum Error {
     /// When converting from a string representation, the given string contained
     /// a zero-byte that was not at the end.
-    IntegerReprContainedNul,
-    /// An error occurred when converting a string to an integer value, and the
+    StringReprContainedNul,
+    /// An error occurred when converting a string to a value, and the
     /// output was truncated.
-    IntegerReprTruncated,
+    ReadStringTruncated,
     /// The result of a remainder operation was outside the expected bounds.
     RemainderOutsideBounds,
     /// Could not convert a value to a primitive integer type because it was
@@ -24,32 +24,33 @@ pub enum Error {
     IntParseFailed,
     /// It impossible for this error to occur.
     NoErrorPossible,
+    /// Unknown value for an imath rounding mode
+    UnknownRoundingMode,
 }
 
 impl std::error::Error for Error {}
 
 impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        use Error::*;
-
         match self {
-            IntegerReprContainedNul => {
-                write!(f, "Integer representation contained a 'nul' character.")
+            Error::StringReprContainedNul => {
+                write!(f, "String representation contained a 'nul' character.")
             }
-            IntegerReprTruncated => write!(
+            Error::ReadStringTruncated => write!(
                 f,
-                "During conversion, the integer conversion was not read fully."
+                "During conversion, the value representation was truncated."
             ),
-            RemainderOutsideBounds => write!(
+            Error::RemainderOutsideBounds => write!(
                 f,
                 "The result of a remainder operation was outside the expected bounds."
             ),
-            ConversionOutsideRange => write!(
+            Error::ConversionOutsideRange => write!(
                 f,
                 "Attempted to convert to a primitive integer while outside its valid range."
             ),
-            IntParseFailed => write!(f, "Integer parsing failed."),
-            NoErrorPossible => {
+            Error::IntParseFailed => write!(f, "Integer parsing failed."),
+            Error::UnknownRoundingMode => write!(f, "Unknown value for an imath rounding mode."),
+            Error::NoErrorPossible => {
                 panic!("This error is no supposed to be possible. Please file an issue.")
             }
         }

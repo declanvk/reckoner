@@ -5,5 +5,10 @@
 
 pub(crate) mod error;
 pub(crate) mod integer;
+pub(crate) mod rational;
 
-pub use crate::{error::Error, integer::Integer};
+pub use crate::{
+    error::Error,
+    integer::Integer,
+    rational::{Rational, RoundMode},
+};
