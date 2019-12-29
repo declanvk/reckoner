@@ -73,6 +73,7 @@
 <span id="73">73</span>
 <span id="74">74</span>
 <span id="75">75</span>
+<span id="76">76</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::{
     <span class="ident">convert</span>::<span class="ident">Infallible</span>,
@@ -87,10 +88,10 @@
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Error</span> {
     <span class="doccomment">/// When converting from a string representation, the given string contained</span>
     <span class="doccomment">/// a zero-byte that was not at the end.</span>
-    <span class="ident">IntegerReprContainedNul</span>,
-    <span class="doccomment">/// An error occurred when converting a string to an integer value, and the</span>
+    <span class="ident">StringReprContainedNul</span>,
+    <span class="doccomment">/// An error occurred when converting a string to a value, and the</span>
     <span class="doccomment">/// output was truncated.</span>
-    <span class="ident">IntegerReprTruncated</span>,
+    <span class="ident">ReadStringTruncated</span>,
     <span class="doccomment">/// The result of a remainder operation was outside the expected bounds.</span>
     <span class="ident">RemainderOutsideBounds</span>,
     <span class="doccomment">/// Could not convert a value to a primitive integer type because it was</span>
@@ -100,32 +101,33 @@
     <span class="ident">IntParseFailed</span>,
     <span class="doccomment">/// It impossible for this error to occur.</span>
     <span class="ident">NoErrorPossible</span>,
+    <span class="doccomment">/// Unknown value for an imath rounding mode</span>
+    <span class="ident">UnknownRoundingMode</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">Error</span> {}
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Error</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="kw">use</span> <span class="ident">Error</span>::<span class="kw-2">*</span>;
-
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">IntegerReprContainedNul</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Integer representation contained a &#39;nul&#39; character.&quot;</span>)
+            <span class="ident">Error</span>::<span class="ident">StringReprContainedNul</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;String representation contained a &#39;nul&#39; character.&quot;</span>)
             }
-            <span class="ident">IntegerReprTruncated</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(
+            <span class="ident">Error</span>::<span class="ident">ReadStringTruncated</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(
                 <span class="ident">f</span>,
-                <span class="string">&quot;During conversion, the integer conversion was not read fully.&quot;</span>
+                <span class="string">&quot;During conversion, the value representation was truncated.&quot;</span>
             ),
-            <span class="ident">RemainderOutsideBounds</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(
+            <span class="ident">Error</span>::<span class="ident">RemainderOutsideBounds</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(
                 <span class="ident">f</span>,
                 <span class="string">&quot;The result of a remainder operation was outside the expected bounds.&quot;</span>
             ),
-            <span class="ident">ConversionOutsideRange</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(
+            <span class="ident">Error</span>::<span class="ident">ConversionOutsideRange</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(
                 <span class="ident">f</span>,
                 <span class="string">&quot;Attempted to convert to a primitive integer while outside its valid range.&quot;</span>
             ),
-            <span class="ident">IntParseFailed</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Integer parsing failed.&quot;</span>),
-            <span class="ident">NoErrorPossible</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">Error</span>::<span class="ident">IntParseFailed</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Integer parsing failed.&quot;</span>),
+            <span class="ident">Error</span>::<span class="ident">UnknownRoundingMode</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Unknown value for an imath rounding mode.&quot;</span>),
+            <span class="ident">Error</span>::<span class="ident">NoErrorPossible</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;This error is no supposed to be possible. Please file an issue.&quot;</span>)
             }
         }
