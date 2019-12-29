@@ -17,11 +17,11 @@ mod subtraction_assign;
 impl Integer {
     /// Add two integers and return the result
     pub fn add(&self, other: &Self) -> Self {
-        let self_raw = self.as_mut_ptr();
-        let other_raw = other.as_mut_ptr();
+        let self_raw = self.raw.as_ptr();
+        let other_raw = other.raw.as_ptr();
 
         let result_int = Integer::new();
-        let result_raw = result_int.as_mut_ptr();
+        let result_raw = result_int.raw.as_ptr();
 
         let op_res = unsafe { imath_sys::mp_int_add(self_raw, other_raw, result_raw) };
 
@@ -34,8 +34,8 @@ impl Integer {
 
     /// Add two integers and assign the result to self
     pub fn add_assign(&mut self, other: &Self) {
-        let self_raw = self.as_mut_ptr();
-        let other_raw = other.as_mut_ptr();
+        let self_raw = self.raw.as_ptr();
+        let other_raw = other.raw.as_ptr();
 
         let op_res = unsafe { imath_sys::mp_int_add(self_raw, other_raw, self_raw) };
 
@@ -45,9 +45,9 @@ impl Integer {
     }
 
     pub(crate) fn add_c_long(&self, value: impl Into<c_long>) -> Self {
-        let self_raw = self.as_mut_ptr();
+        let self_raw = self.raw.as_ptr();
         let result_int = Integer::new();
-        let result_raw = result_int.as_mut_ptr();
+        let result_raw = result_int.raw.as_ptr();
 
         let op_res = unsafe { imath_sys::mp_int_add_value(self_raw, value.into(), result_raw) };
 
@@ -59,7 +59,7 @@ impl Integer {
     }
 
     pub(crate) fn add_c_long_assign(&mut self, other: impl Into<c_long>) {
-        let self_raw = self.as_mut_ptr();
+        let self_raw = self.raw.as_ptr();
 
         let op_res = unsafe { imath_sys::mp_int_add_value(self_raw, other.into(), self_raw) };
 
@@ -70,11 +70,11 @@ impl Integer {
 
     /// Subtract two integers and return the result
     pub fn subtract(&self, other: &Self) -> Self {
-        let self_raw = self.as_mut_ptr();
-        let other_raw = other.as_mut_ptr();
+        let self_raw = self.raw.as_ptr();
+        let other_raw = other.raw.as_ptr();
 
         let result_int = Integer::new();
-        let result_raw = result_int.as_mut_ptr();
+        let result_raw = result_int.raw.as_ptr();
 
         let op_res = unsafe { imath_sys::mp_int_sub(self_raw, other_raw, result_raw) };
 
@@ -87,8 +87,8 @@ impl Integer {
 
     /// Subtract two integers and assign the result to self
     pub fn subtract_assign(&mut self, other: &Self) {
-        let self_raw = self.as_mut_ptr();
-        let other_raw = other.as_mut_ptr();
+        let self_raw = self.raw.as_ptr();
+        let other_raw = other.raw.as_ptr();
 
         let op_res = unsafe { imath_sys::mp_int_sub(self_raw, other_raw, self_raw) };
 
@@ -98,9 +98,9 @@ impl Integer {
     }
 
     pub(crate) fn subtract_c_long(&self, value: impl Into<c_long>) -> Self {
-        let self_raw = self.as_mut_ptr();
+        let self_raw = self.raw.as_ptr();
         let result_int = Integer::new();
-        let result_raw = result_int.as_mut_ptr();
+        let result_raw = result_int.raw.as_ptr();
 
         let op_res = unsafe { imath_sys::mp_int_sub_value(self_raw, value.into(), result_raw) };
 
@@ -112,7 +112,7 @@ impl Integer {
     }
 
     pub(crate) fn subtract_c_long_assign(&mut self, other: impl Into<c_long>) {
-        let self_raw = self.as_mut_ptr();
+        let self_raw = self.raw.as_ptr();
 
         let op_res = unsafe { imath_sys::mp_int_sub_value(self_raw, other.into(), self_raw) };
 
@@ -123,11 +123,11 @@ impl Integer {
 
     /// Multiply two integers and return the result
     pub fn multiply(&self, other: &Self) -> Self {
-        let self_raw = self.as_mut_ptr();
-        let other_raw = other.as_mut_ptr();
+        let self_raw = self.raw.as_ptr();
+        let other_raw = other.raw.as_ptr();
 
         let result_int = Integer::new();
-        let result_raw = result_int.as_mut_ptr();
+        let result_raw = result_int.raw.as_ptr();
 
         let op_res = unsafe { imath_sys::mp_int_mul(self_raw, other_raw, result_raw) };
 
@@ -140,8 +140,8 @@ impl Integer {
 
     /// Multiply two integers and assign the result to self
     pub fn multiply_assign(&mut self, other: &Self) {
-        let self_raw = self.as_mut_ptr();
-        let other_raw = other.as_mut_ptr();
+        let self_raw = self.raw.as_ptr();
+        let other_raw = other.raw.as_ptr();
 
         let op_res = unsafe { imath_sys::mp_int_mul(self_raw, other_raw, self_raw) };
 
@@ -151,9 +151,9 @@ impl Integer {
     }
 
     pub(crate) fn multiply_c_long(&self, value: impl Into<c_long>) -> Self {
-        let self_raw = self.as_mut_ptr();
+        let self_raw = self.raw.as_ptr();
         let result_int = Integer::new();
-        let result_raw = result_int.as_mut_ptr();
+        let result_raw = result_int.raw.as_ptr();
 
         let op_res = unsafe { imath_sys::mp_int_mul_value(self_raw, value.into(), result_raw) };
 
@@ -165,7 +165,7 @@ impl Integer {
     }
 
     pub(crate) fn multiply_c_long_assign(&mut self, other: impl Into<c_long>) {
-        let self_raw = self.as_mut_ptr();
+        let self_raw = self.raw.as_ptr();
 
         let op_res = unsafe { imath_sys::mp_int_mul_value(self_raw, other.into(), self_raw) };
 
@@ -176,9 +176,9 @@ impl Integer {
 
     /// Return the additive inverse
     pub fn negate(&self) -> Self {
-        let self_raw = self.as_mut_ptr();
+        let self_raw = self.raw.as_ptr();
         let result_int = Integer::new();
-        let result_raw = result_int.as_mut_ptr();
+        let result_raw = result_int.raw.as_ptr();
 
         let op_res = unsafe { imath_sys::mp_int_neg(self_raw, result_raw) };
 
@@ -191,7 +191,7 @@ impl Integer {
 
     /// Assign the additive inverse to self
     pub fn negate_assign(&mut self) {
-        let self_raw = self.as_mut_ptr();
+        let self_raw = self.raw.as_ptr();
 
         let op_res = unsafe { imath_sys::mp_int_neg(self_raw, self_raw) };
 
@@ -202,9 +202,9 @@ impl Integer {
 
     /// Return the absolute value
     pub fn absolute_value(&self) -> Self {
-        let self_raw = self.as_mut_ptr();
+        let self_raw = self.raw.as_ptr();
         let result_int = Integer::new();
-        let result_raw = result_int.as_mut_ptr();
+        let result_raw = result_int.raw.as_ptr();
 
         let op_res = unsafe { imath_sys::mp_int_abs(self_raw, result_raw) };
 
@@ -217,7 +217,7 @@ impl Integer {
 
     /// Assign the absolute value to self
     pub fn absolute_value_assign(&mut self) {
-        let self_raw = self.as_mut_ptr();
+        let self_raw = self.raw.as_ptr();
 
         let op_res = unsafe { imath_sys::mp_int_abs(self_raw, self_raw) };
 
@@ -234,8 +234,8 @@ impl Integer {
     ) {
         assert!(!(out_quotient.is_null() && out_remainder.is_null()));
 
-        let dividend_raw = dividend.as_mut_ptr();
-        let divisor_raw = divisor.as_mut_ptr();
+        let dividend_raw = dividend.raw.as_ptr();
+        let divisor_raw = divisor.raw.as_ptr();
 
         let op_res = unsafe {
             imath_sys::mp_int_div(dividend_raw, divisor_raw, out_quotient, out_remainder)
@@ -249,9 +249,9 @@ impl Integer {
     /// Divide two integers and return quotient and remainder
     pub fn divide_full(&self, rhs: &Self) -> (Self, Self) {
         let quotient = Integer::new();
-        let quotient_raw = quotient.as_mut_ptr();
+        let quotient_raw = quotient.raw.as_ptr();
         let remainder = Integer::new();
-        let remainder_raw = remainder.as_mut_ptr();
+        let remainder_raw = remainder.raw.as_ptr();
 
         Integer::mp_int_div(self, rhs, quotient_raw, remainder_raw);
 
@@ -261,7 +261,7 @@ impl Integer {
     /// Divide two integers and return only quotient
     pub fn divide(&self, rhs: &Self) -> Self {
         let quotient = Integer::new();
-        let quotient_raw = quotient.as_mut_ptr();
+        let quotient_raw = quotient.raw.as_ptr();
 
         Integer::mp_int_div(self, rhs, quotient_raw, ptr::null_mut());
 
@@ -270,7 +270,7 @@ impl Integer {
 
     /// Divide two integers and assign the result to self
     pub fn divide_assign(&mut self, rhs: &Self) {
-        let quotient_raw = self.as_mut_ptr();
+        let quotient_raw = self.raw.as_ptr();
 
         Integer::mp_int_div(self, rhs, quotient_raw, ptr::null_mut());
     }
@@ -278,7 +278,7 @@ impl Integer {
     /// Divide two integers and return only remainder
     pub fn remainder(&self, rhs: &Self) -> Self {
         let remainder = Integer::new();
-        let remainder_raw = remainder.as_mut_ptr();
+        let remainder_raw = remainder.raw.as_ptr();
 
         Integer::mp_int_div(self, rhs, ptr::null_mut(), remainder_raw);
 
@@ -287,7 +287,7 @@ impl Integer {
 
     /// Divide two integers and assign the remainder to self
     pub fn remainder_assign(&mut self, rhs: &Self) {
-        let remainder_raw = self.as_mut_ptr();
+        let remainder_raw = self.raw.as_ptr();
 
         Integer::mp_int_div(self, rhs, ptr::null_mut(), remainder_raw);
     }
@@ -298,7 +298,7 @@ impl Integer {
         out_quotient: imath_sys::mp_int,
         out_remainder: *mut c_long,
     ) {
-        let divident_raw = dividend.as_mut_ptr();
+        let divident_raw = dividend.raw.as_ptr();
 
         let op_res = unsafe {
             imath_sys::mp_int_div_value(divident_raw, divisor.into(), out_quotient, out_remainder)
@@ -317,7 +317,7 @@ impl Integer {
     {
         let mut remainder: c_long = 0;
         let quotient = Integer::new();
-        let quotient_raw = quotient.as_mut_ptr();
+        let quotient_raw = quotient.raw.as_ptr();
 
         Integer::mp_int_div_value(self, value.into(), quotient_raw, &mut remainder);
 
@@ -334,7 +334,7 @@ impl Integer {
 
     pub(crate) fn divide_c_long(&self, value: impl Into<c_long>) -> Self {
         let quotient = Integer::new();
-        let quotient_raw = quotient.as_mut_ptr();
+        let quotient_raw = quotient.raw.as_ptr();
 
         Integer::mp_int_div_value(self, value, quotient_raw, ptr::null_mut());
 
@@ -342,7 +342,7 @@ impl Integer {
     }
 
     pub(crate) fn divide_c_long_assign(&mut self, value: impl Into<c_long>) {
-        let quotient_raw = self.as_mut_ptr();
+        let quotient_raw = self.raw.as_ptr();
 
         Integer::mp_int_div_value(self, value, quotient_raw, ptr::null_mut());
     }
@@ -366,7 +366,7 @@ impl Integer {
     }
 
     pub(crate) fn remainder_c_long_assign(&mut self, value: impl Into<c_long>) {
-        let remainder_raw = self.as_mut_ptr();
+        let remainder_raw = self.raw.as_ptr();
 
         Integer::mp_int_div(
             self,
