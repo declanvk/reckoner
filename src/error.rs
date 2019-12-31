@@ -3,6 +3,7 @@ use core::{
     fmt,
     num::{ParseIntError, TryFromIntError},
 };
+use std::ffi::CStr;
 
 pub(crate) type Result<T> = core::result::Result<T, Error>;
 
@@ -24,8 +25,15 @@ pub enum Error {
     IntParseFailed,
     /// It impossible for this error to occur.
     NoErrorPossible,
-    /// Unknown value for an imath rounding mode
+    /// Unknown value for an imath rounding mode.
     UnknownRoundingMode,
+    /// Internal error from `imath_sys`.
+    SysError {
+        /// Internal `imath_sys` error code.
+        code: imath_sys::mp_result,
+        /// Custom message to display.
+        msg: Option<&'static str>,
+    },
 }
 
 impl std::error::Error for Error {}
@@ -53,6 +61,22 @@ impl fmt::Display for Error {
             Error::NoErrorPossible => {
                 panic!("This error is no supposed to be possible. Please file an issue.")
             }
+            Error::SysError {
+                code,
+                msg: Some(msg),
+            } => write!(
+                f,
+                "imath error ({:?} \"{}\"): {}",
+                code,
+                get_imath_sys_error_msg(*code),
+                msg
+            ),
+            Error::SysError { code, msg: None } => write!(
+                f,
+                "imath error ({:?} \"{}\")",
+                code,
+                get_imath_sys_error_msg(*code)
+            ),
         }
     }
 }
@@ -73,4 +97,42 @@ impl From<ParseIntError> for Error {
     fn from(_src: ParseIntError) -> Self {
         Error::IntParseFailed
     }
+}
+
+fn get_imath_sys_error_msg(code: imath_sys::mp_result) -> String {
+    // This is safe because the function will always return a cstring with static
+    // lifetime, even if the error code is not a recognized value.
+    let err_char_ptr = unsafe { imath_sys::mp_error_string(code) };
+
+    // This function is safe bc I checked the static string that `mp_error_string`
+    // return and they conform to the condition of ending with nul byte. Other
+    // conditions around lifetimes, and the borrowed cstring being edited are not an
+    // issue because it is converted to a `String` immediately.
+    unsafe { CStr::from_ptr(err_char_ptr) }
+        .to_string_lossy()
+        .into_owned()
+}
+
+macro_rules! imath_check_panic {
+    ($arg:expr) => {
+        // Accessing this is safe bc the MP_OK value is only ever used as an error
+        // condition.
+        if $arg != unsafe { imath_sys::MP_OK } {
+            panic!(Error::SysError {
+                code: $arg,
+                msg: None
+            });
+        }
+    };
+
+    ($arg:expr, $msg:tt) => {
+        // Accessing this is safe bc the MP_OK value is only ever used as an error
+        // condition.
+        if $arg != unsafe { imath_sys::MP_OK } {
+            panic!(Error::SysError {
+                code: $arg,
+                msg: Some($msg)
+            });
+        }
+    };
 }

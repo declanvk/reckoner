@@ -17,215 +17,206 @@ mod subtraction_assign;
 impl Integer {
     /// Add two integers and return the result
     pub fn add(&self, other: &Self) -> Self {
-        let self_raw = self.raw.as_ptr();
-        let other_raw = other.raw.as_ptr();
+        let self_raw = self.as_raw();
+        let other_raw = other.as_raw();
 
         let result_int = Integer::new();
-        let result_raw = result_int.raw.as_ptr();
+        let result_raw = result_int.as_raw();
 
+        // This operation is safe bc `self`, `other`, and `result` have all been
+        // initialized. `result` does not necessarily need to be initialized.
         let op_res = unsafe { imath_sys::mp_int_add(self_raw, other_raw, result_raw) };
 
-        if op_res != unsafe { imath_sys::MP_OK } {
-            panic!("Operation failed! {:?}", op_res);
-        }
+        imath_check_panic!(op_res, "Operation failed!");
 
         result_int
     }
 
     /// Add two integers and assign the result to self
     pub fn add_assign(&mut self, other: &Self) {
-        let self_raw = self.raw.as_ptr();
-        let other_raw = other.raw.as_ptr();
+        let self_raw = self.as_raw();
+        let other_raw = other.as_raw();
 
+        // This operation is safe because `self` and `other` have been initialized and
+        // the result pointer is allowed to alias with either of the arguments.
         let op_res = unsafe { imath_sys::mp_int_add(self_raw, other_raw, self_raw) };
 
-        if op_res != unsafe { imath_sys::MP_OK } {
-            panic!("Operation failed! {:?}", op_res);
-        }
+        imath_check_panic!(op_res, "Operation failed!");
     }
 
     pub(crate) fn add_c_long(&self, value: impl Into<c_long>) -> Self {
-        let self_raw = self.raw.as_ptr();
+        let self_raw = self.as_raw();
         let result_int = Integer::new();
-        let result_raw = result_int.raw.as_ptr();
+        let result_raw = result_int.as_raw();
 
+        // This operation is safe because `self` and `result` have been initialized.
         let op_res = unsafe { imath_sys::mp_int_add_value(self_raw, value.into(), result_raw) };
 
-        if op_res != unsafe { imath_sys::MP_OK } {
-            panic!("Operation failed! {:?}", op_res);
-        }
+        imath_check_panic!(op_res, "Operation failed!");
 
         result_int
     }
 
     pub(crate) fn add_c_long_assign(&mut self, other: impl Into<c_long>) {
-        let self_raw = self.raw.as_ptr();
+        let self_raw = self.as_raw();
 
+        // This operation is safe because `self` has been initialized and the result
+        // pointer is allowed to alias with the integer argument.
         let op_res = unsafe { imath_sys::mp_int_add_value(self_raw, other.into(), self_raw) };
 
-        if op_res != unsafe { imath_sys::MP_OK } {
-            panic!("Operation failed! {:?}", op_res);
-        }
+        imath_check_panic!(op_res, "Operation failed!");
     }
 
     /// Subtract two integers and return the result
     pub fn subtract(&self, other: &Self) -> Self {
-        let self_raw = self.raw.as_ptr();
-        let other_raw = other.raw.as_ptr();
+        let self_raw = self.as_raw();
+        let other_raw = other.as_raw();
 
         let result_int = Integer::new();
-        let result_raw = result_int.raw.as_ptr();
+        let result_raw = result_int.as_raw();
 
+        // This operation is safe bc `self`, `other`, and `result` have all been
+        // initialized. `result` does not necessarily need to be initialized.
         let op_res = unsafe { imath_sys::mp_int_sub(self_raw, other_raw, result_raw) };
 
-        if op_res != unsafe { imath_sys::MP_OK } {
-            panic!("Operation failed! {:?}", op_res);
-        }
+        imath_check_panic!(op_res, "Operation failed!");
 
         result_int
     }
 
     /// Subtract two integers and assign the result to self
     pub fn subtract_assign(&mut self, other: &Self) {
-        let self_raw = self.raw.as_ptr();
-        let other_raw = other.raw.as_ptr();
+        let self_raw = self.as_raw();
+        let other_raw = other.as_raw();
 
         let op_res = unsafe { imath_sys::mp_int_sub(self_raw, other_raw, self_raw) };
 
-        if op_res != unsafe { imath_sys::MP_OK } {
-            panic!("Operation failed! {:?}", op_res);
-        }
+        imath_check_panic!(op_res, "Operation failed!");
     }
 
     pub(crate) fn subtract_c_long(&self, value: impl Into<c_long>) -> Self {
-        let self_raw = self.raw.as_ptr();
+        let self_raw = self.as_raw();
         let result_int = Integer::new();
-        let result_raw = result_int.raw.as_ptr();
+        let result_raw = result_int.as_raw();
 
         let op_res = unsafe { imath_sys::mp_int_sub_value(self_raw, value.into(), result_raw) };
 
-        if op_res != unsafe { imath_sys::MP_OK } {
-            panic!("Operation failed! {:?}", op_res);
-        }
+        imath_check_panic!(op_res, "Operation failed!");
 
         result_int
     }
 
     pub(crate) fn subtract_c_long_assign(&mut self, other: impl Into<c_long>) {
-        let self_raw = self.raw.as_ptr();
+        let self_raw = self.as_raw();
 
         let op_res = unsafe { imath_sys::mp_int_sub_value(self_raw, other.into(), self_raw) };
 
-        if op_res != unsafe { imath_sys::MP_OK } {
-            panic!("Operation failed! {:?}", op_res);
-        }
+        imath_check_panic!(op_res, "Operation failed!");
     }
 
     /// Multiply two integers and return the result
     pub fn multiply(&self, other: &Self) -> Self {
-        let self_raw = self.raw.as_ptr();
-        let other_raw = other.raw.as_ptr();
+        let self_raw = self.as_raw();
+        let other_raw = other.as_raw();
 
         let result_int = Integer::new();
-        let result_raw = result_int.raw.as_ptr();
+        let result_raw = result_int.as_raw();
 
+        // This operation is safe bc `self`, `other`, and `result` have all been
+        // initialized. `result` does not necessarily need to be initialized.
         let op_res = unsafe { imath_sys::mp_int_mul(self_raw, other_raw, result_raw) };
 
-        if op_res != unsafe { imath_sys::MP_OK } {
-            panic!("Operation failed! {:?}", op_res);
-        }
+        imath_check_panic!(op_res, "Operation failed!");
 
         result_int
     }
 
     /// Multiply two integers and assign the result to self
     pub fn multiply_assign(&mut self, other: &Self) {
-        let self_raw = self.raw.as_ptr();
-        let other_raw = other.raw.as_ptr();
+        let self_raw = self.as_raw();
+        let other_raw = other.as_raw();
 
         let op_res = unsafe { imath_sys::mp_int_mul(self_raw, other_raw, self_raw) };
 
-        if op_res != unsafe { imath_sys::MP_OK } {
-            panic!("Operation failed! {:?}", op_res);
-        }
+        imath_check_panic!(op_res, "Operation failed!");
     }
 
     pub(crate) fn multiply_c_long(&self, value: impl Into<c_long>) -> Self {
-        let self_raw = self.raw.as_ptr();
+        let self_raw = self.as_raw();
         let result_int = Integer::new();
-        let result_raw = result_int.raw.as_ptr();
+        let result_raw = result_int.as_raw();
 
         let op_res = unsafe { imath_sys::mp_int_mul_value(self_raw, value.into(), result_raw) };
 
-        if op_res != unsafe { imath_sys::MP_OK } {
-            panic!("Operation failed! {:?}", op_res);
-        }
+        imath_check_panic!(op_res, "Operation failed!");
 
         result_int
     }
 
     pub(crate) fn multiply_c_long_assign(&mut self, other: impl Into<c_long>) {
-        let self_raw = self.raw.as_ptr();
+        let self_raw = self.as_raw();
 
         let op_res = unsafe { imath_sys::mp_int_mul_value(self_raw, other.into(), self_raw) };
 
-        if op_res != unsafe { imath_sys::MP_OK } {
-            panic!("Operation failed! {:?}", op_res);
-        }
+        imath_check_panic!(op_res, "Operation failed!");
     }
 
     /// Return the additive inverse
     pub fn negate(&self) -> Self {
-        let self_raw = self.raw.as_ptr();
+        let self_raw = self.as_raw();
         let result_int = Integer::new();
-        let result_raw = result_int.raw.as_ptr();
+        let result_raw = result_int.as_raw();
 
+        // This operation is safe bc `self`and `result` have all been initialized.
+        // `result` does not necessarily need to be initialized.
         let op_res = unsafe { imath_sys::mp_int_neg(self_raw, result_raw) };
 
-        if op_res != unsafe { imath_sys::MP_OK } {
-            panic!("Operation failed! {:?}", op_res);
-        }
+        imath_check_panic!(op_res, "Operation failed!");
 
         result_int
     }
 
     /// Assign the additive inverse to self
     pub fn negate_assign(&mut self) {
-        let self_raw = self.raw.as_ptr();
+        let self_raw = self.as_raw();
 
         let op_res = unsafe { imath_sys::mp_int_neg(self_raw, self_raw) };
 
-        if op_res != unsafe { imath_sys::MP_OK } {
-            panic!("Operation failed! {:?}", op_res);
-        }
+        imath_check_panic!(op_res, "Operation failed!");
     }
 
     /// Return the absolute value
     pub fn absolute_value(&self) -> Self {
-        let self_raw = self.raw.as_ptr();
+        let self_raw = self.as_raw();
         let result_int = Integer::new();
-        let result_raw = result_int.raw.as_ptr();
+        let result_raw = result_int.as_raw();
 
+        // This operation is safe bc `self`and `result` have all been initialized.
+        // `result` does not necessarily need to be initialized.
         let op_res = unsafe { imath_sys::mp_int_abs(self_raw, result_raw) };
 
-        if op_res != unsafe { imath_sys::MP_OK } {
-            panic!("Operation failed! {:?}", op_res);
-        }
+        imath_check_panic!(op_res, "Operation failed!");
 
         result_int
     }
 
     /// Assign the absolute value to self
     pub fn absolute_value_assign(&mut self) {
-        let self_raw = self.raw.as_ptr();
+        let self_raw = self.as_raw();
 
         let op_res = unsafe { imath_sys::mp_int_abs(self_raw, self_raw) };
 
-        if op_res != unsafe { imath_sys::MP_OK } {
-            panic!("Operation failed! {:?}", op_res);
-        }
+        imath_check_panic!(op_res, "Operation failed!");
     }
 
+    /// Perform integer division operation.
+    ///
+    /// # Safety
+    ///
+    /// `dividend` and `divisor` are allowed to alias for this operation, so
+    /// they may point to the same `Integer`. Either `out_quotient` or
+    /// `out_remainder` may be `null`, but not both. These also may alias with
+    /// either of the input arguments, `dividend` or `divisor`.
     fn mp_int_div(
         dividend: &Integer,
         divisor: &Integer,
@@ -234,24 +225,25 @@ impl Integer {
     ) {
         assert!(!(out_quotient.is_null() && out_remainder.is_null()));
 
-        let dividend_raw = dividend.raw.as_ptr();
-        let divisor_raw = divisor.raw.as_ptr();
+        let dividend_raw = dividend.as_raw();
+        let divisor_raw = divisor.as_raw();
 
+        // This operation is safe bc `dividend`, `divisor` have all been initialized.
+        // Also, runtime checks of `out_quotient` and `out_remainder` ensure that a
+        // result can be written somewhere.
         let op_res = unsafe {
             imath_sys::mp_int_div(dividend_raw, divisor_raw, out_quotient, out_remainder)
         };
 
-        if op_res != unsafe { imath_sys::MP_OK } {
-            panic!("Operation failed! {:?}", op_res);
-        }
+        imath_check_panic!(op_res, "Operation failed!");
     }
 
     /// Divide two integers and return quotient and remainder
     pub fn divide_full(&self, rhs: &Self) -> (Self, Self) {
         let quotient = Integer::new();
-        let quotient_raw = quotient.raw.as_ptr();
+        let quotient_raw = quotient.as_raw();
         let remainder = Integer::new();
-        let remainder_raw = remainder.raw.as_ptr();
+        let remainder_raw = remainder.as_raw();
 
         Integer::mp_int_div(self, rhs, quotient_raw, remainder_raw);
 
@@ -261,7 +253,7 @@ impl Integer {
     /// Divide two integers and return only quotient
     pub fn divide(&self, rhs: &Self) -> Self {
         let quotient = Integer::new();
-        let quotient_raw = quotient.raw.as_ptr();
+        let quotient_raw = quotient.as_raw();
 
         Integer::mp_int_div(self, rhs, quotient_raw, ptr::null_mut());
 
@@ -270,7 +262,7 @@ impl Integer {
 
     /// Divide two integers and assign the result to self
     pub fn divide_assign(&mut self, rhs: &Self) {
-        let quotient_raw = self.raw.as_ptr();
+        let quotient_raw = self.as_raw();
 
         Integer::mp_int_div(self, rhs, quotient_raw, ptr::null_mut());
     }
@@ -278,7 +270,7 @@ impl Integer {
     /// Divide two integers and return only remainder
     pub fn remainder(&self, rhs: &Self) -> Self {
         let remainder = Integer::new();
-        let remainder_raw = remainder.raw.as_ptr();
+        let remainder_raw = remainder.as_raw();
 
         Integer::mp_int_div(self, rhs, ptr::null_mut(), remainder_raw);
 
@@ -287,26 +279,33 @@ impl Integer {
 
     /// Divide two integers and assign the remainder to self
     pub fn remainder_assign(&mut self, rhs: &Self) {
-        let remainder_raw = self.raw.as_ptr();
+        let remainder_raw = self.as_raw();
 
         Integer::mp_int_div(self, rhs, ptr::null_mut(), remainder_raw);
     }
 
+    /// Perform the integer division with primitive value operation.
+    ///
+    /// # Safety
+    ///
+    /// Either `out_quotient` or `out_remainder` may be `null`, but not both.
+    /// These also may alias with the `Integer` input argument, `dividend`.
     fn mp_int_div_value(
         dividend: &Integer,
         divisor: impl Into<c_long>,
         out_quotient: imath_sys::mp_int,
         out_remainder: *mut c_long,
     ) {
-        let divident_raw = dividend.raw.as_ptr();
+        let divident_raw = dividend.as_raw();
 
+        // This operation is safe bc `dividend` has been initialized. Also, runtime
+        // checks of `out_quotient` and `out_remainder` ensure that a result can
+        // be written somewhere.
         let op_res = unsafe {
             imath_sys::mp_int_div_value(divident_raw, divisor.into(), out_quotient, out_remainder)
         };
 
-        if op_res != unsafe { imath_sys::MP_OK } {
-            panic!("Operation failed! {:?}", op_res);
-        }
+        imath_check_panic!(op_res, "Operation failed!");
     }
 
     #[allow(dead_code)]
@@ -317,12 +316,12 @@ impl Integer {
     {
         let mut remainder: c_long = 0;
         let quotient = Integer::new();
-        let quotient_raw = quotient.raw.as_ptr();
+        let quotient_raw = quotient.as_raw();
 
         Integer::mp_int_div_value(self, value.into(), quotient_raw, &mut remainder);
 
-        // This is safe bc the modulo operation will always return within the range
-        // [0, value].
+        // This should not panic bc the modulo operation will always return within the
+        // range [0, value].
         (
             quotient,
             remainder
@@ -334,7 +333,7 @@ impl Integer {
 
     pub(crate) fn divide_c_long(&self, value: impl Into<c_long>) -> Self {
         let quotient = Integer::new();
-        let quotient_raw = quotient.raw.as_ptr();
+        let quotient_raw = quotient.as_raw();
 
         Integer::mp_int_div_value(self, value, quotient_raw, ptr::null_mut());
 
@@ -342,7 +341,7 @@ impl Integer {
     }
 
     pub(crate) fn divide_c_long_assign(&mut self, value: impl Into<c_long>) {
-        let quotient_raw = self.raw.as_ptr();
+        let quotient_raw = self.as_raw();
 
         Integer::mp_int_div_value(self, value, quotient_raw, ptr::null_mut());
     }
@@ -357,8 +356,8 @@ impl Integer {
 
         Integer::mp_int_div_value(self, value, ptr::null_mut(), result_raw);
 
-        // This is safe bc the modulo operation will always return within the range
-        // [0, value].
+        // This will not panic bc the modulo operation will always return within the
+        // range [0, value).
         result
             .try_into()
             .map_err(|_| Error::RemainderOutsideBounds)
@@ -366,7 +365,7 @@ impl Integer {
     }
 
     pub(crate) fn remainder_c_long_assign(&mut self, value: impl Into<c_long>) {
-        let remainder_raw = self.raw.as_ptr();
+        let remainder_raw = self.as_raw();
 
         Integer::mp_int_div(
             self,

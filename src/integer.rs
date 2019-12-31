@@ -42,7 +42,7 @@ impl Integer {
 
     pub(crate) fn copy_init(other: &Self) -> Self {
         let mut init = Integer::uninit();
-        let other_raw = other.raw.as_ptr();
+        let other_raw = other.as_raw();
 
         {
             // This is safe bc init is entirely local. raw_mpz is also scoped to be less
@@ -53,11 +53,7 @@ impl Integer {
             // src value is of the correct type?
             let res = unsafe { imath_sys::mp_int_init_copy(raw_mpz, other_raw) };
 
-            // Accessing this is safe bc the MP_OK value is only ever used as an error
-            // condition.
-            if res != unsafe { imath_sys::MP_OK } {
-                panic!("Value init failed! {:?}", res);
-            }
+            imath_check_panic!(res, "Value init failed!");
         }
 
         // This cast is safe (from MaybeUninit<imath_sys::mpz_t> to imath_sys::mpz_t)
@@ -98,6 +94,11 @@ impl Integer {
         raw.as_ptr()
     }
 
+    // Internal use only
+    pub(crate) fn as_raw(&self) -> *mut imath_sys::mpz_t {
+        self.raw.as_ptr()
+    }
+
     pub(crate) fn from_c_long(src: impl Into<c_long>) -> Self {
         let mut init = Integer::uninit();
 
@@ -110,11 +111,7 @@ impl Integer {
             // src value is of the correct type?
             let res = unsafe { imath_sys::mp_int_init_value(raw_mpz, src.into()) };
 
-            // Accessing this is safe bc the MP_OK value is only ever used as an error
-            // condition.
-            if res != unsafe { imath_sys::MP_OK } {
-                panic!("Value init failed! {:?}", res);
-            }
+            imath_check_panic!(res, "Value init failed!");
         }
 
         // This cast is safe (from MaybeUninit<imath_sys::mpz_t> to imath_sys::mpz_t)
@@ -138,11 +135,7 @@ impl Integer {
             // src value is of the correct type?
             let res_init = unsafe { imath_sys::mp_int_init(raw_mpz) };
 
-            // Accessing this is safe bc the MP_OK value is only ever used as an error
-            // condition.
-            if res_init != unsafe { imath_sys::MP_OK } {
-                panic!("Init failed! {:?}", res_init);
-            }
+            imath_check_panic!(res_init, "Init failed!");
 
             // This is safe bc all the data provided to the function is correctly setup
             // (integer was allocated/initialized, char_ptr is 0-terminated).
@@ -170,7 +163,7 @@ impl Integer {
     // Reports the minimum number of characters required to represent `z` as a
     // zero-terminated string in base-10.
     pub(crate) fn required_display_len(&self) -> usize {
-        let self_raw = self.raw.as_ptr();
+        let self_raw = self.as_raw();
 
         // This is safe bc self has been initialized
         let len = unsafe { imath_sys::mp_int_string_len(self_raw, 10) };
@@ -182,7 +175,7 @@ impl Integer {
 
     pub(crate) fn to_cstring(&self) -> CString {
         let required_len = self.required_display_len();
-        let self_raw = self.raw.as_ptr();
+        let self_raw = self.as_raw();
 
         let mut char_vec: Vec<u8> = Vec::with_capacity(required_len);
         let res = {
@@ -195,11 +188,7 @@ impl Integer {
             }
         };
 
-        // Accessing this is safe bc the MP_OK value is only ever used as an error
-        // condition.
-        if res != unsafe { imath_sys::MP_OK } {
-            panic!("Writing the value as a string failed! {:?}", res);
-        }
+        imath_check_panic!(res, "Writing the value as a string failed!");
 
         // Setting the length is safe bc we now that the `mp_int_to_string`
         // should have used the entire capacity to write to
@@ -219,39 +208,36 @@ impl Integer {
     /// memory is allocated unless `self` has more significant digits than
     /// `other` has allocated.
     pub fn copy_to(&self, other: &mut Self) {
-        let self_raw = self.raw.as_ptr();
-        let other_raw = other.raw.as_ptr();
+        let self_raw = self.as_raw();
+        let other_raw = other.as_raw();
 
         // This is safe bc self has been initialized with a value
         let res = unsafe { imath_sys::mp_int_copy(other_raw, self_raw) };
 
-        if res != unsafe { imath_sys::MP_OK } {
-            panic!("Copying the value failed! {:?}", res);
-        }
+        imath_check_panic!(res, "Copying the value failed!");
     }
 
     #[allow(dead_code)]
     pub(crate) fn set_value(&mut self, value: impl Into<c_long>) {
-        let self_raw = self.raw.as_ptr();
+        let self_raw = self.as_raw();
 
         let res = unsafe { imath_sys::mp_int_set_value(self_raw, value.into()) };
 
-        if res != unsafe { imath_sys::MP_OK } {
-            panic!("Setting the value failed! {:?}", res);
-        }
+        imath_check_panic!(res, "Setting the value directly failed!");
     }
 
     /// Set value of integer to zero
     pub fn zero(&mut self) {
-        let self_raw = self.raw.as_ptr();
+        let self_raw = self.as_raw();
 
+        // This is safe bc `self` has been initialized.
         unsafe { imath_sys::mp_int_zero(self_raw) };
     }
 
     /// Compare two integers
     pub fn compare(&self, rhs: &Self) -> Ordering {
-        let self_raw = self.raw.as_ptr();
-        let rhs_raw = rhs.raw.as_ptr();
+        let self_raw = self.as_raw();
+        let rhs_raw = rhs.as_raw();
 
         // This is safe bc both self & rhs have been initialized correctly
         let raw_cmp = unsafe { imath_sys::mp_int_compare(self_raw, rhs_raw) };
@@ -261,8 +247,8 @@ impl Integer {
 
     /// Compare the magnitude of two integers, not taking sign into account.
     pub fn compare_magnitude(&self, rhs: &Self) -> Ordering {
-        let self_raw = self.raw.as_ptr();
-        let rhs_raw = rhs.raw.as_ptr();
+        let self_raw = self.as_raw();
+        let rhs_raw = rhs.as_raw();
 
         // This is safe bc both self & rhs have been initialized correctly
         let raw_cmp = unsafe { imath_sys::mp_int_compare_unsigned(self_raw, rhs_raw) };
@@ -272,7 +258,7 @@ impl Integer {
 
     /// Compare an integer to zero.
     pub fn compare_zero(&self) -> Ordering {
-        let self_raw = self.raw.as_ptr();
+        let self_raw = self.as_raw();
 
         // This is safe bc both self has been initialized correctly
         let raw_cmp = unsafe { imath_sys::mp_int_compare_zero(self_raw) };
@@ -281,7 +267,7 @@ impl Integer {
     }
 
     pub(crate) fn compare_c_long(&self, value: impl Into<c_long>) -> Ordering {
-        let self_raw = self.raw.as_ptr();
+        let self_raw = self.as_raw();
         let value = value.into();
 
         // This is safe bc both self has been initialized correctly
@@ -292,7 +278,7 @@ impl Integer {
 
     #[allow(dead_code)]
     pub(crate) fn compare_c_ulong(&self, value: impl Into<c_ulong>) -> Ordering {
-        let self_raw = self.raw.as_ptr();
+        let self_raw = self.as_raw();
         let value = value.into();
 
         // This is safe bc both self has been initialized correctly
@@ -302,7 +288,7 @@ impl Integer {
     }
 
     pub(crate) fn try_into_c_long(&self) -> Result<c_long> {
-        let self_raw = self.raw.as_ptr();
+        let self_raw = self.as_raw();
         let mut out: c_long = 0;
         let out_raw = (&mut out) as *mut _;
 
@@ -333,7 +319,7 @@ impl fmt::Debug for Integer {
             alloc,
             used,
             sign,
-        } = unsafe { *self.raw.as_ptr() };
+        } = unsafe { *self.as_raw() };
 
         write!(
             f,
@@ -370,7 +356,7 @@ impl FromStr for Integer {
 impl Drop for Integer {
     fn drop(&mut self) {
         unsafe {
-            let raw = self.raw.as_ptr();
+            let raw = self.as_raw();
 
             // This will ensure that the memory holding the integer data (the digits?) is
             // not leaked.
