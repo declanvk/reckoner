@@ -2,6 +2,8 @@ use crate::{error::Error, integer::Integer};
 use core::{convert::TryFrom, fmt, mem, mem::MaybeUninit, ptr, ptr::NonNull, str::FromStr};
 use std::{alloc, ffi::CString, os::raw::c_long};
 
+pub(crate) mod ops;
+
 /// Multiple precision rational value. Always heap allocated, not safe for
 /// sharing across threads.
 #[repr(transparent)]
@@ -11,34 +13,28 @@ pub struct Rational {
     raw: NonNull<imath_sys::mpq_t>,
 }
 
-fn uninit_rat() -> Box<MaybeUninit<imath_sys::mpq_t>> {
-    // Replace with Box::new_uninit when it is stable (1.40 maybe?).
-    let layout = alloc::Layout::new::<MaybeUninit<imath_sys::mpq_t>>();
-    let ptr = unsafe { alloc::alloc(layout) };
-    // This cast is safe bc the layout was specified for
-    // MaybeUninit<imath_sys::mpq_t>
-    unsafe { Box::from_raw(ptr.cast()) }
-}
-
 impl Rational {
-    /// Create a new
+    pub(crate) fn uninit() -> Box<MaybeUninit<imath_sys::mpq_t>> {
+        // Replace with Box::new_uninit when it is stable (1.41 maybe?).
+        let layout = alloc::Layout::new::<MaybeUninit<imath_sys::mpq_t>>();
+        let ptr = unsafe { alloc::alloc(layout) };
+        // This cast is safe bc the layout was specified for
+        // MaybeUninit<imath_sys::mpq_t>
+        unsafe { Box::from_raw(ptr.cast()) }
+    }
+
+    /// Create a new rational with a default value of zero (0/1).
     pub fn new() -> Self {
-        let mut init = uninit_rat();
+        let mut init = Rational::uninit();
 
         {
-            // This pointer is initentionally scoped such that it is not valid past the
-            // initialization of the rational value.
             let raw_mpq = init.as_mut_ptr();
 
             // This function call is safe because the mp_rat_init function only requires
             // that the mpq_t struct has been correctly allocated.
             let res = unsafe { imath_sys::mp_rat_init(raw_mpq) };
 
-            // Accessing this is safe bc the MP_OK value is only ever used as an error
-            // condition.
-            if res != unsafe { imath_sys::MP_OK } {
-                panic!("Rational init failed! {:?}", res);
-            }
+            imath_check_panic!(res, "Rational init failed!");
         }
 
         // This cast is safe (from MaybeUninit<imath_sys::mpq_t> to imath_sys::mpq_t)
@@ -47,23 +43,17 @@ impl Rational {
     }
 
     pub(crate) fn copy_init(other: &Self) -> Self {
-        let mut init = uninit_rat();
-        let other_raw = other.raw.as_ptr();
+        let mut init = Rational::uninit();
+        let other_raw = other.as_raw();
 
         {
-            // This pointer is initentionally scoped such that it is not valid past the
-            // initialization of the rational value.
             let raw_mpq = init.as_mut_ptr();
 
             // This function call is safe because the mpq_t struct has been correctly
             // allocated and `other_raw` has been successfully initialized.
             let res = unsafe { imath_sys::mp_rat_init_copy(raw_mpq, other_raw) };
 
-            // Accessing this is safe bc the MP_OK value is only ever used as an error
-            // condition.
-            if res != unsafe { imath_sys::MP_OK } {
-                panic!("Rational init failed! {:?}", res);
-            }
+            imath_check_panic!(res, "Rational init failed!");
         }
 
         // This cast is safe (from MaybeUninit<imath_sys::mpq_t> to imath_sys::mpq_t)
@@ -104,35 +94,34 @@ impl Rational {
         raw.as_ptr()
     }
 
+    // Internal use only
+    pub(crate) fn as_raw(&self) -> *mut imath_sys::mpq_t {
+        self.raw.as_ptr()
+    }
+
     /// Reduces `r` in-place to lowest terms and canonical form.
     ///
     /// Zero is represented as 0/1, one as 1/1, and signs are adjusted so that
     /// the sign of the value is carried by the numerator.
     pub fn reduce(&mut self) {
-        let self_raw = self.raw.as_ptr();
+        let self_raw = self.as_raw();
 
         let res = unsafe { imath_sys::mp_rat_reduce(self_raw) };
 
-        if res != unsafe { imath_sys::MP_OK } {
-            panic!("Reducing rational value failed! {:?}", res);
-        }
+        imath_check_panic!(res, "Reducing rational value failed!");
     }
 
     /// Return a copy of the numerator of the rational value
     pub fn numerator(&self) -> Integer {
         let mut numer = Integer::new();
-        let self_raw = self.raw.as_ptr();
+        let self_raw = self.as_raw();
 
         {
             let raw_int = Integer::into_raw(numer);
 
             let res = unsafe { imath_sys::mp_rat_numer(self_raw, raw_int) };
 
-            // Accessing this is safe bc the MP_OK value is only ever used as an error
-            // condition.
-            if res != unsafe { imath_sys::MP_OK } {
-                panic!("Value init failed! {:?}", res);
-            }
+            imath_check_panic!(res, "Value init failed!");
 
             // This is safe because the `raw_int` ptr is created directly from an
             // `Integer::into_raw` call.
@@ -145,18 +134,15 @@ impl Rational {
     /// Return a copy of the denominator of the rational value
     pub fn denominator(&self) -> Integer {
         let mut denom = Integer::new();
-        let self_raw = self.raw.as_ptr();
+        let self_raw = self.as_raw();
 
         {
             let raw_int = Integer::into_raw(denom);
 
+            // This function call is safe as self_raw and raw_int have been initialized.
             let res = unsafe { imath_sys::mp_rat_denom(self_raw, raw_int) };
 
-            // Accessing this is safe bc the MP_OK value is only ever used as an error
-            // condition.
-            if res != unsafe { imath_sys::MP_OK } {
-                panic!("Value init failed! {:?}", res);
-            }
+            imath_check_panic!(res, "Value init failed!");
 
             // This is safe because the `raw_int` ptr is created directly from an
             // `Integer::into_raw` call.
@@ -170,15 +156,13 @@ impl Rational {
     /// memory is allocated unless `self` has more significant digits than
     /// `other` has allocated.
     pub fn copy_to(&self, other: &mut Self) {
-        let self_raw = self.raw.as_ptr();
-        let other_raw = other.raw.as_ptr();
+        let self_raw = self.as_raw();
+        let other_raw = other.as_raw();
 
         // This is safe bc self has been initialized with a value
         let res = unsafe { imath_sys::mp_rat_copy(other_raw, self_raw) };
 
-        if res != unsafe { imath_sys::MP_OK } {
-            panic!("Copying the value failed! {:?}", res);
-        }
+        imath_check_panic!(res, "Copying the value failed!");
     }
 
     pub(crate) fn from_string_repr(src: &str) -> Result<Self, Error> {
@@ -186,22 +170,16 @@ impl Rational {
             CString::new(src.to_string()).map_err(|_| Error::StringReprContainedNul)?;
         let char_ptr = string_repr.into_raw();
 
-        let mut init = uninit_rat();
+        let mut init = Rational::uninit();
 
         {
-            // This is safe bc init is entirely local. raw_mpz is also scoped to be less
-            // than the lifetime of the value init
             let raw_mpq = init.as_mut_ptr();
 
             // This is safe bc a valid structure is provided to the unsafe methods. And the
             // src value is of the correct type?
             let res_init = unsafe { imath_sys::mp_rat_init(raw_mpq) };
 
-            // Accessing this is safe bc the MP_OK value is only ever used as an error
-            // condition.
-            if res_init != unsafe { imath_sys::MP_OK } {
-                panic!("Init failed! {:?}", res_init);
-            }
+            imath_check_panic!(res_init, "Init failed!");
 
             // This is safe bc all the data provided to the function is correctly setup
             // (rational was allocated/initialized, char_ptr is 0-terminated).
@@ -229,9 +207,10 @@ impl Rational {
     // zero-terminated string in base-10.
     #[allow(dead_code)]
     pub(crate) fn required_display_len(&self) -> usize {
-        let self_raw = self.raw.as_ptr();
+        let self_raw = self.as_raw();
 
-        // This is safe bc self has been initialized
+        // This is safe bc self_raw has been initialized and 10 is within the range
+        // `[MP_MIN_RADIX, MP_MAX_RADIX]`
         let len = unsafe { imath_sys::mp_rat_string_len(self_raw, 10) };
 
         // The output of the call is an i32, check that it is gte zero.
@@ -241,7 +220,7 @@ impl Rational {
 
     pub(crate) fn to_cstring(&self) -> CString {
         let required_len = self.required_display_len();
-        let self_raw = self.raw.as_ptr();
+        let self_raw = self.as_raw();
 
         let mut char_vec: Vec<u8> = Vec::with_capacity(required_len);
         let res = {
@@ -254,11 +233,7 @@ impl Rational {
             }
         };
 
-        // Accessing this is safe bc the MP_OK value is only ever used as an error
-        // condition.
-        if res != unsafe { imath_sys::MP_OK } {
-            panic!("Writing the value as a string failed! {:?}", res);
-        }
+        imath_check_panic!(res, "Writing the value as a string failed!");
 
         // Setting the length is safe bc we now that the `mp_int_to_string`
         // should have used the entire capacity to write to
@@ -276,13 +251,11 @@ impl Rational {
 
     #[allow(dead_code)]
     pub(crate) fn set_value(&mut self, numer: impl Into<c_long>, denom: impl Into<c_long>) {
-        let self_raw = self.raw.as_ptr();
+        let self_raw = self.as_raw();
 
         let res = unsafe { imath_sys::mp_rat_set_value(self_raw, numer.into(), denom.into()) };
 
-        if res != unsafe { imath_sys::MP_OK } {
-            panic!("Setting the value failed! {:?}", res);
-        }
+        imath_check_panic!(res, "Setting the value failed!");
     }
 }
 
@@ -341,7 +314,7 @@ impl Clone for Rational {
 impl Drop for Rational {
     fn drop(&mut self) {
         unsafe {
-            let raw = self.raw.as_ptr();
+            let raw = self.as_raw();
 
             // This will ensure that the memory holding the rational data (the digits?) is
             // not leaked.
