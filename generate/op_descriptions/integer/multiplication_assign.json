@@ -1,5 +1,5 @@
 {
-    "template": "integer_ops_multiplication_assign.rs.template",
+    "template": "integer/ops/multiplication_assign.rs.template",
     "output": "integer/ops/multiplication_assign.rs",
     "trait": {
         "name": "MulAssign",

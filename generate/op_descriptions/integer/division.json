@@ -1,5 +1,5 @@
 {
-    "template": "integer_ops_division.rs.template",
+    "template": "integer/ops/division.rs.template",
     "output": "integer/ops/division.rs",
     "trait": {
         "name": "Div",

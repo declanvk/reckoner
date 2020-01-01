@@ -1,5 +1,5 @@
 {
-    "template": "integer_ops_remainder.rs.template",
+    "template": "integer/ops/remainder.rs.template",
     "output": "integer/ops/remainder.rs",
     "trait": {
         "name": "Rem",
