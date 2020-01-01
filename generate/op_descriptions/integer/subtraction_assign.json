@@ -1,5 +1,5 @@
 {
-    "template": "integer_ops_subtraction_assign.rs.template",
+    "template": "integer/ops/subtraction_assign.rs.template",
     "output": "integer/ops/subtraction_assign.rs",
     "trait": {
         "name": "SubAssign",

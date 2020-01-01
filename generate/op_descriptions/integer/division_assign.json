@@ -1,5 +1,5 @@
 {
-    "template": "integer_ops_division_assign.rs.template",
+    "template": "integer/ops/division_assign.rs.template",
     "output": "integer/ops/division_assign.rs",
     "trait": {
         "name": "DivAssign",

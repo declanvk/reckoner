@@ -1,5 +1,5 @@
 {
-    "template": "integer_ops_addition_assign.rs.template",
+    "template": "integer/ops/addition_assign.rs.template",
     "output": "integer/ops/addition_assign.rs",
     "trait": {
         "name": "AddAssign",

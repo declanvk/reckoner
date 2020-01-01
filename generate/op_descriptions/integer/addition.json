@@ -1,5 +1,5 @@
 {
-    "template": "integer_ops_addition.rs.template",
+    "template": "integer/ops/addition.rs.template",
     "output": "integer/ops/addition.rs",
     "trait": {
         "name": "Add",

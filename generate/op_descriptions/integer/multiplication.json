@@ -1,5 +1,5 @@
 {
-    "template": "integer_ops_multiplication.rs.template",
+    "template": "integer/ops/multiplication.rs.template",
     "output": "integer/ops/multiplication.rs",
     "trait": {
         "name": "Mul",

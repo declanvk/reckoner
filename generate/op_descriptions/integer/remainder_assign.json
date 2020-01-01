@@ -1,5 +1,5 @@
 {
-    "template": "integer_ops_remainder_assign.rs.template",
+    "template": "integer/ops/remainder_assign.rs.template",
     "output": "integer/ops/remainder_assign.rs",
     "trait": {
         "name": "RemAssign",
