@@ -1,4 +1,4 @@
-#![deny(missing_docs)]
+#![deny(missing_docs, clippy::missing_safety_doc)]
 
 //! Arbitrary precision integer and rational arithmetic library wrapping
 //! [`imath`](https://github.com/creachadair/imath/)

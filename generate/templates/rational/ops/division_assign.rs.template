@@ -1,0 +1,7 @@
+use crate::rational::Rational;
+use crate::integer::Integer;
+use core::ops::DivAssign;
+
+// DivAssign          The division assignment operator /=.
+
+{}

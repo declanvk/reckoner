@@ -1,0 +1,8 @@
+use crate::rational::Rational;
+use crate::integer::Integer;
+use core::ops::MulAssign;
+use super::helpers::multiply_assign_into_rational;
+
+// MulAssign    The multiplication assignment operator *=.
+
+{}
