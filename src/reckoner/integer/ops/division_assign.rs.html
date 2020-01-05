@@ -202,105 +202,97 @@
 <span id="202">202</span>
 <span id="203">203</span>
 <span id="204">204</span>
-<span id="205">205</span>
-<span id="206">206</span>
-<span id="207">207</span>
-<span id="208">208</span>
-<span id="209">209</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">integer</span>::<span class="ident">Integer</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::<span class="ident">DivAssign</span>;
 
 <span class="comment">// DivAssign          The division assignment operator /=.</span>
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;Integer::divide_assign&#39;, u&#39;no&#39;, [], [u&#39;ref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;Integer&#39;, &#39;Integer::divide_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">Integer</span>) {
         <span class="ident">Integer</span>::<span class="ident">divide_assign</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">rhs</span>)
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer::divide_assign&#39;, u&#39;no&#39;, [], []]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;Integer&#39;, &#39;Integer::divide_assign&#39;, &#39;no&#39;, [], []]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">Integer</span>) {
         <span class="ident">Integer</span>::<span class="ident">divide_assign</span>(<span class="self">self</span>, <span class="ident">rhs</span>)
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;i8&#39;, u&#39;Integer::divide_c_long_assign&#39;, u&#39;no&#39;, [], []]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;i8&#39;, &#39;Integer::divide_c_long_assign&#39;, &#39;no&#39;, [], []]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="ident">i8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">i8</span>) {
         <span class="ident">Integer</span>::<span class="ident">divide_c_long_assign</span>(<span class="self">self</span>, <span class="ident">rhs</span>)
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;i8&#39;, u&#39;Integer::divide_c_long_assign&#39;, u&#39;no&#39;, [], [u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;i8&#39;, &#39;Integer::divide_c_long_assign&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">i8</span>) {
         <span class="ident">Integer</span>::<span class="ident">divide_c_long_assign</span>(<span class="self">self</span>, <span class="kw-2">*</span><span class="ident">rhs</span>)
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;u8&#39;, u&#39;Integer::divide_c_long_assign&#39;, u&#39;no&#39;, [], []]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;u8&#39;, &#39;Integer::divide_c_long_assign&#39;, &#39;no&#39;, [], []]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">u8</span>) {
         <span class="ident">Integer</span>::<span class="ident">divide_c_long_assign</span>(<span class="self">self</span>, <span class="ident">rhs</span>)
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;u8&#39;, u&#39;Integer::divide_c_long_assign&#39;, u&#39;no&#39;, [], [u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;u8&#39;, &#39;Integer::divide_c_long_assign&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">u8</span>) {
         <span class="ident">Integer</span>::<span class="ident">divide_c_long_assign</span>(<span class="self">self</span>, <span class="kw-2">*</span><span class="ident">rhs</span>)
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;i16&#39;, u&#39;Integer::divide_c_long_assign&#39;, u&#39;no&#39;, [], []]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;i16&#39;, &#39;Integer::divide_c_long_assign&#39;, &#39;no&#39;, [], []]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="ident">i16</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">i16</span>) {
         <span class="ident">Integer</span>::<span class="ident">divide_c_long_assign</span>(<span class="self">self</span>, <span class="ident">rhs</span>)
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;i16&#39;, u&#39;Integer::divide_c_long_assign&#39;, u&#39;no&#39;, [],</span>
-<span class="comment">// [u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;i16&#39;, &#39;Integer::divide_c_long_assign&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i16</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">i16</span>) {
         <span class="ident">Integer</span>::<span class="ident">divide_c_long_assign</span>(<span class="self">self</span>, <span class="kw-2">*</span><span class="ident">rhs</span>)
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;u16&#39;, u&#39;Integer::divide_c_long_assign&#39;, u&#39;no&#39;, [], []]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;u16&#39;, &#39;Integer::divide_c_long_assign&#39;, &#39;no&#39;, [], []]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">u16</span>) {
         <span class="ident">Integer</span>::<span class="ident">divide_c_long_assign</span>(<span class="self">self</span>, <span class="ident">rhs</span>)
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;u16&#39;, u&#39;Integer::divide_c_long_assign&#39;, u&#39;no&#39;, [],</span>
-<span class="comment">// [u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;u16&#39;, &#39;Integer::divide_c_long_assign&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">u16</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">u16</span>) {
         <span class="ident">Integer</span>::<span class="ident">divide_c_long_assign</span>(<span class="self">self</span>, <span class="kw-2">*</span><span class="ident">rhs</span>)
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;i32&#39;, u&#39;Integer::divide_c_long_assign&#39;, u&#39;no&#39;, [], []]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;i32&#39;, &#39;Integer::divide_c_long_assign&#39;, &#39;no&#39;, [], []]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">i32</span>) {
         <span class="ident">Integer</span>::<span class="ident">divide_c_long_assign</span>(<span class="self">self</span>, <span class="ident">rhs</span>)
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;i32&#39;, u&#39;Integer::divide_c_long_assign&#39;, u&#39;no&#39;, [],</span>
-<span class="comment">// [u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;i32&#39;, &#39;Integer::divide_c_long_assign&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">i32</span>) {
         <span class="ident">Integer</span>::<span class="ident">divide_c_long_assign</span>(<span class="self">self</span>, <span class="kw-2">*</span><span class="ident">rhs</span>)
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;u32&#39;, u&#39;Integer::divide_c_long_assign&#39;, u&#39;no&#39;, [], []]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;u32&#39;, &#39;Integer::divide_c_long_assign&#39;, &#39;no&#39;, [], []]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">u32</span>) {
@@ -308,8 +300,7 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;u32&#39;, u&#39;Integer::divide_c_long_assign&#39;, u&#39;no&#39;, [],</span>
-<span class="comment">// [u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;u32&#39;, &#39;Integer::divide_c_long_assign&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">u32</span>) {
@@ -317,7 +308,7 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;i64&#39;, u&#39;Integer::divide_c_long_assign&#39;, u&#39;no&#39;, [], []]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;i64&#39;, &#39;Integer::divide_c_long_assign&#39;, &#39;no&#39;, [], []]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">i64</span>) {
@@ -325,8 +316,7 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;i64&#39;, u&#39;Integer::divide_c_long_assign&#39;, u&#39;no&#39;, [],</span>
-<span class="comment">// [u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;i64&#39;, &#39;Integer::divide_c_long_assign&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">i64</span>) {
@@ -334,8 +324,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;u32&#39;, u&#39;Integer::divide_assign&#39;, u&#39;no&#39;, [], [u&#39;ref&#39;,</span>
-<span class="comment">// {u&#39;convert&#39;: u&#39;Integer&#39;}]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;u32&#39;, &#39;Integer::divide_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:</span>
+<span class="comment">// &#39;Integer&#39;}]]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>))))]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">u32</span>) {
@@ -343,8 +333,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;u32&#39;, u&#39;Integer::divide_assign&#39;, u&#39;no&#39;, [], [u&#39;ref&#39;,</span>
-<span class="comment">// {u&#39;convert&#39;: u&#39;Integer&#39;}, u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;u32&#39;, &#39;Integer::divide_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:</span>
+<span class="comment">// &#39;Integer&#39;}, &#39;deref&#39;]]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>))))]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">u32</span>) {
@@ -352,8 +342,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;i64&#39;, u&#39;Integer::divide_assign&#39;, u&#39;no&#39;, [], [u&#39;ref&#39;,</span>
-<span class="comment">// {u&#39;convert&#39;: u&#39;Integer&#39;}]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;i64&#39;, &#39;Integer::divide_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:</span>
+<span class="comment">// &#39;Integer&#39;}]]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>))))]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">i64</span>) {
@@ -361,8 +351,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;i64&#39;, u&#39;Integer::divide_assign&#39;, u&#39;no&#39;, [], [u&#39;ref&#39;,</span>
-<span class="comment">// {u&#39;convert&#39;: u&#39;Integer&#39;}, u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;i64&#39;, &#39;Integer::divide_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:</span>
+<span class="comment">// &#39;Integer&#39;}, &#39;deref&#39;]]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>))))]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">i64</span>) {
@@ -370,48 +360,48 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;u64&#39;, u&#39;Integer::divide_assign&#39;, u&#39;no&#39;, [], [u&#39;ref&#39;,</span>
-<span class="comment">// {u&#39;convert&#39;: u&#39;Integer&#39;}]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;u64&#39;, &#39;Integer::divide_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:</span>
+<span class="comment">// &#39;Integer&#39;}]]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">u64</span>) {
         <span class="ident">Integer</span>::<span class="ident">divide_assign</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">Integer</span>::<span class="ident">from</span>(<span class="ident">rhs</span>))
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;u64&#39;, u&#39;Integer::divide_assign&#39;, u&#39;no&#39;, [], [u&#39;ref&#39;,</span>
-<span class="comment">// {u&#39;convert&#39;: u&#39;Integer&#39;}, u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;u64&#39;, &#39;Integer::divide_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:</span>
+<span class="comment">// &#39;Integer&#39;}, &#39;deref&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">u64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">u64</span>) {
         <span class="ident">Integer</span>::<span class="ident">divide_assign</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">Integer</span>::<span class="ident">from</span>(<span class="kw-2">*</span><span class="ident">rhs</span>))
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;i128&#39;, u&#39;Integer::divide_assign&#39;, u&#39;no&#39;, [], [u&#39;ref&#39;,</span>
-<span class="comment">// {u&#39;convert&#39;: u&#39;Integer&#39;}]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;i128&#39;, &#39;Integer::divide_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:</span>
+<span class="comment">// &#39;Integer&#39;}]]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="ident">i128</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">i128</span>) {
         <span class="ident">Integer</span>::<span class="ident">divide_assign</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">Integer</span>::<span class="ident">from</span>(<span class="ident">rhs</span>))
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;i128&#39;, u&#39;Integer::divide_assign&#39;, u&#39;no&#39;, [], [u&#39;ref&#39;,</span>
-<span class="comment">// {u&#39;convert&#39;: u&#39;Integer&#39;}, u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;i128&#39;, &#39;Integer::divide_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:</span>
+<span class="comment">// &#39;Integer&#39;}, &#39;deref&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i128</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">i128</span>) {
         <span class="ident">Integer</span>::<span class="ident">divide_assign</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">Integer</span>::<span class="ident">from</span>(<span class="kw-2">*</span><span class="ident">rhs</span>))
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;u128&#39;, u&#39;Integer::divide_assign&#39;, u&#39;no&#39;, [], [u&#39;ref&#39;,</span>
-<span class="comment">// {u&#39;convert&#39;: u&#39;Integer&#39;}]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;u128&#39;, &#39;Integer::divide_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:</span>
+<span class="comment">// &#39;Integer&#39;}]]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="ident">u128</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">u128</span>) {
         <span class="ident">Integer</span>::<span class="ident">divide_assign</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">Integer</span>::<span class="ident">from</span>(<span class="ident">rhs</span>))
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;u128&#39;, u&#39;Integer::divide_assign&#39;, u&#39;no&#39;, [], [u&#39;ref&#39;,</span>
-<span class="comment">// {u&#39;convert&#39;: u&#39;Integer&#39;}, u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;u128&#39;, &#39;Integer::divide_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:</span>
+<span class="comment">// &#39;Integer&#39;}, &#39;deref&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">u128</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">u128</span>) {
         <span class="ident">Integer</span>::<span class="ident">divide_assign</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">Integer</span>::<span class="ident">from</span>(<span class="kw-2">*</span><span class="ident">rhs</span>))

@@ -1097,20 +1097,6 @@
 <span id="1097">1097</span>
 <span id="1098">1098</span>
 <span id="1099">1099</span>
-<span id="1100">1100</span>
-<span id="1101">1101</span>
-<span id="1102">1102</span>
-<span id="1103">1103</span>
-<span id="1104">1104</span>
-<span id="1105">1105</span>
-<span id="1106">1106</span>
-<span id="1107">1107</span>
-<span id="1108">1108</span>
-<span id="1109">1109</span>
-<span id="1110">1110</span>
-<span id="1111">1111</span>
-<span id="1112">1112</span>
-<span id="1113">1113</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">helpers</span>::{<span class="ident">reverse_add_assign</span>, <span class="ident">reverse_add_c_long</span>, <span class="ident">reverse_add_c_long_assign</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">integer</span>::<span class="ident">Integer</span>;
@@ -1118,8 +1104,8 @@
 
 <span class="comment">// Add          The addition operator +.</span>
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;Integer::add_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], [u&#39;ref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;Integer::add_assign&#39;, &#39;lhs&#39;, [&#39;ref_mut&#39;],</span>
+<span class="comment">// [&#39;ref&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1129,8 +1115,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;Integer::add_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], []]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;Integer::add_assign&#39;, &#39;lhs&#39;, [&#39;ref_mut&#39;],</span>
+<span class="comment">// []]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1140,8 +1126,8 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_assign&#39;, u&#39;rhs&#39;, [],</span>
-<span class="comment">// [u&#39;ref_mut&#39;]]</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_assign&#39;, &#39;rhs&#39;, [],</span>
+<span class="comment">// [&#39;ref_mut&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1151,7 +1137,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;Integer::add&#39;, u&#39;no&#39;, [], []]</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;Integer::add&#39;, &#39;no&#39;, [], []]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1160,8 +1146,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;i8&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], []]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;i8&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;lhs&#39;,</span>
+<span class="comment">// [&#39;ref_mut&#39;], []]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">i8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1171,8 +1157,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;i8&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], [u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;i8&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;lhs&#39;,</span>
+<span class="comment">// [&#39;ref_mut&#39;], [&#39;deref&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1182,7 +1168,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;i8&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long&#39;, u&#39;no&#39;, [], []]</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;i8&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long&#39;, &#39;no&#39;, [], []]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">i8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1191,8 +1177,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;&amp;i8&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long&#39;, u&#39;no&#39;, [],</span>
-<span class="comment">// [u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;&amp;i8&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1201,8 +1186,8 @@
     }
 }
 
-<span class="comment">// [u&#39;i8&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long_assign&#39;, u&#39;rhs&#39;, [],</span>
-<span class="comment">// [u&#39;ref_mut&#39;]]</span>
+<span class="comment">// [&#39;i8&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long_assign&#39;, &#39;rhs&#39;, [],</span>
+<span class="comment">// [&#39;ref_mut&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">i8</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1212,7 +1197,7 @@
     }
 }
 
-<span class="comment">// [u&#39;i8&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long&#39;, u&#39;no&#39;, [], []]</span>
+<span class="comment">// [&#39;i8&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long&#39;, &#39;no&#39;, [], []]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">i8</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1221,8 +1206,8 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;i8&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long_assign&#39;, u&#39;rhs&#39;,</span>
-<span class="comment">// [u&#39;deref&#39;], [u&#39;ref_mut&#39;]]</span>
+<span class="comment">// [&#39;&amp;i8&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long_assign&#39;, &#39;rhs&#39;, [&#39;deref&#39;],</span>
+<span class="comment">// [&#39;ref_mut&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">i8</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1232,8 +1217,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;i8&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long&#39;, u&#39;no&#39;, [u&#39;deref&#39;],</span>
-<span class="comment">// []]</span>
+<span class="comment">// [&#39;&amp;i8&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long&#39;, &#39;no&#39;, [&#39;deref&#39;], []]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">i8</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1242,8 +1226,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;u8&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], []]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;u8&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;lhs&#39;,</span>
+<span class="comment">// [&#39;ref_mut&#39;], []]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1253,8 +1237,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;u8&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], [u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;u8&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;lhs&#39;,</span>
+<span class="comment">// [&#39;ref_mut&#39;], [&#39;deref&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1264,7 +1248,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;u8&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long&#39;, u&#39;no&#39;, [], []]</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;u8&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long&#39;, &#39;no&#39;, [], []]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1273,8 +1257,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;&amp;u8&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long&#39;, u&#39;no&#39;, [],</span>
-<span class="comment">// [u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;&amp;u8&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1283,8 +1266,8 @@
     }
 }
 
-<span class="comment">// [u&#39;u8&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long_assign&#39;, u&#39;rhs&#39;, [],</span>
-<span class="comment">// [u&#39;ref_mut&#39;]]</span>
+<span class="comment">// [&#39;u8&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long_assign&#39;, &#39;rhs&#39;, [],</span>
+<span class="comment">// [&#39;ref_mut&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">u8</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1294,7 +1277,7 @@
     }
 }
 
-<span class="comment">// [u&#39;u8&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long&#39;, u&#39;no&#39;, [], []]</span>
+<span class="comment">// [&#39;u8&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long&#39;, &#39;no&#39;, [], []]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">u8</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1303,8 +1286,8 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;u8&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long_assign&#39;, u&#39;rhs&#39;,</span>
-<span class="comment">// [u&#39;deref&#39;], [u&#39;ref_mut&#39;]]</span>
+<span class="comment">// [&#39;&amp;u8&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long_assign&#39;, &#39;rhs&#39;, [&#39;deref&#39;],</span>
+<span class="comment">// [&#39;ref_mut&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">u8</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1314,8 +1297,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;u8&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long&#39;, u&#39;no&#39;, [u&#39;deref&#39;],</span>
-<span class="comment">// []]</span>
+<span class="comment">// [&#39;&amp;u8&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long&#39;, &#39;no&#39;, [&#39;deref&#39;], []]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">u8</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1324,8 +1306,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;i16&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], []]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;i16&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;lhs&#39;,</span>
+<span class="comment">// [&#39;ref_mut&#39;], []]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">i16</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1335,8 +1317,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;i16&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], [u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;i16&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;lhs&#39;,</span>
+<span class="comment">// [&#39;ref_mut&#39;], [&#39;deref&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i16</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1346,7 +1328,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;i16&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long&#39;, u&#39;no&#39;, [], []]</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;i16&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long&#39;, &#39;no&#39;, [], []]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">i16</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1355,8 +1337,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;&amp;i16&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long&#39;, u&#39;no&#39;, [],</span>
-<span class="comment">// [u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;&amp;i16&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i16</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1365,8 +1346,8 @@
     }
 }
 
-<span class="comment">// [u&#39;i16&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long_assign&#39;, u&#39;rhs&#39;, [],</span>
-<span class="comment">// [u&#39;ref_mut&#39;]]</span>
+<span class="comment">// [&#39;i16&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long_assign&#39;, &#39;rhs&#39;, [],</span>
+<span class="comment">// [&#39;ref_mut&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">i16</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1376,7 +1357,7 @@
     }
 }
 
-<span class="comment">// [u&#39;i16&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long&#39;, u&#39;no&#39;, [], []]</span>
+<span class="comment">// [&#39;i16&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long&#39;, &#39;no&#39;, [], []]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">i16</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1385,8 +1366,8 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;i16&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long_assign&#39;, u&#39;rhs&#39;,</span>
-<span class="comment">// [u&#39;deref&#39;], [u&#39;ref_mut&#39;]]</span>
+<span class="comment">// [&#39;&amp;i16&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long_assign&#39;, &#39;rhs&#39;, [&#39;deref&#39;],</span>
+<span class="comment">// [&#39;ref_mut&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">i16</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1396,8 +1377,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;i16&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long&#39;, u&#39;no&#39;, [u&#39;deref&#39;],</span>
-<span class="comment">// []]</span>
+<span class="comment">// [&#39;&amp;i16&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long&#39;, &#39;no&#39;, [&#39;deref&#39;], []]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">i16</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1406,8 +1386,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;u16&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], []]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;u16&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;lhs&#39;,</span>
+<span class="comment">// [&#39;ref_mut&#39;], []]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1417,8 +1397,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;u16&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], [u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;u16&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;lhs&#39;,</span>
+<span class="comment">// [&#39;ref_mut&#39;], [&#39;deref&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">u16</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1428,7 +1408,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;u16&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long&#39;, u&#39;no&#39;, [], []]</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;u16&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long&#39;, &#39;no&#39;, [], []]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1437,8 +1417,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;&amp;u16&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long&#39;, u&#39;no&#39;, [],</span>
-<span class="comment">// [u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;&amp;u16&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">u16</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1447,8 +1426,8 @@
     }
 }
 
-<span class="comment">// [u&#39;u16&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long_assign&#39;, u&#39;rhs&#39;, [],</span>
-<span class="comment">// [u&#39;ref_mut&#39;]]</span>
+<span class="comment">// [&#39;u16&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long_assign&#39;, &#39;rhs&#39;, [],</span>
+<span class="comment">// [&#39;ref_mut&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">u16</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1458,7 +1437,7 @@
     }
 }
 
-<span class="comment">// [u&#39;u16&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long&#39;, u&#39;no&#39;, [], []]</span>
+<span class="comment">// [&#39;u16&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long&#39;, &#39;no&#39;, [], []]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">u16</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1467,8 +1446,8 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;u16&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long_assign&#39;, u&#39;rhs&#39;,</span>
-<span class="comment">// [u&#39;deref&#39;], [u&#39;ref_mut&#39;]]</span>
+<span class="comment">// [&#39;&amp;u16&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long_assign&#39;, &#39;rhs&#39;, [&#39;deref&#39;],</span>
+<span class="comment">// [&#39;ref_mut&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">u16</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1478,8 +1457,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;u16&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long&#39;, u&#39;no&#39;, [u&#39;deref&#39;],</span>
-<span class="comment">// []]</span>
+<span class="comment">// [&#39;&amp;u16&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long&#39;, &#39;no&#39;, [&#39;deref&#39;], []]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">u16</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1488,8 +1466,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;i32&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], []]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;i32&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;lhs&#39;,</span>
+<span class="comment">// [&#39;ref_mut&#39;], []]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1499,8 +1477,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;i32&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], [u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;i32&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;lhs&#39;,</span>
+<span class="comment">// [&#39;ref_mut&#39;], [&#39;deref&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1510,7 +1488,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;i32&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long&#39;, u&#39;no&#39;, [], []]</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;i32&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long&#39;, &#39;no&#39;, [], []]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1519,8 +1497,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;&amp;i32&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long&#39;, u&#39;no&#39;, [],</span>
-<span class="comment">// [u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;&amp;i32&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1529,8 +1506,8 @@
     }
 }
 
-<span class="comment">// [u&#39;i32&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long_assign&#39;, u&#39;rhs&#39;, [],</span>
-<span class="comment">// [u&#39;ref_mut&#39;]]</span>
+<span class="comment">// [&#39;i32&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long_assign&#39;, &#39;rhs&#39;, [],</span>
+<span class="comment">// [&#39;ref_mut&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">i32</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1540,7 +1517,7 @@
     }
 }
 
-<span class="comment">// [u&#39;i32&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long&#39;, u&#39;no&#39;, [], []]</span>
+<span class="comment">// [&#39;i32&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long&#39;, &#39;no&#39;, [], []]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">i32</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1549,8 +1526,8 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;i32&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long_assign&#39;, u&#39;rhs&#39;,</span>
-<span class="comment">// [u&#39;deref&#39;], [u&#39;ref_mut&#39;]]</span>
+<span class="comment">// [&#39;&amp;i32&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long_assign&#39;, &#39;rhs&#39;, [&#39;deref&#39;],</span>
+<span class="comment">// [&#39;ref_mut&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">i32</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1560,8 +1537,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;i32&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long&#39;, u&#39;no&#39;, [u&#39;deref&#39;],</span>
-<span class="comment">// []]</span>
+<span class="comment">// [&#39;&amp;i32&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long&#39;, &#39;no&#39;, [&#39;deref&#39;], []]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">i32</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1570,8 +1546,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;u32&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], []]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;u32&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;lhs&#39;,</span>
+<span class="comment">// [&#39;ref_mut&#39;], []]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1582,8 +1558,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;u32&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], [u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;u32&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;lhs&#39;,</span>
+<span class="comment">// [&#39;ref_mut&#39;], [&#39;deref&#39;]]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1594,7 +1570,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;u32&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long&#39;, u&#39;no&#39;, [], []]</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;u32&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long&#39;, &#39;no&#39;, [], []]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1604,8 +1580,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;&amp;u32&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long&#39;, u&#39;no&#39;, [],</span>
-<span class="comment">// [u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;&amp;u32&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1615,8 +1590,8 @@
     }
 }
 
-<span class="comment">// [u&#39;u32&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long_assign&#39;, u&#39;rhs&#39;, [],</span>
-<span class="comment">// [u&#39;ref_mut&#39;]]</span>
+<span class="comment">// [&#39;u32&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long_assign&#39;, &#39;rhs&#39;, [],</span>
+<span class="comment">// [&#39;ref_mut&#39;]]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">u32</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1627,7 +1602,7 @@
     }
 }
 
-<span class="comment">// [u&#39;u32&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long&#39;, u&#39;no&#39;, [], []]</span>
+<span class="comment">// [&#39;u32&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long&#39;, &#39;no&#39;, [], []]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">u32</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1637,8 +1612,8 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;u32&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long_assign&#39;, u&#39;rhs&#39;,</span>
-<span class="comment">// [u&#39;deref&#39;], [u&#39;ref_mut&#39;]]</span>
+<span class="comment">// [&#39;&amp;u32&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long_assign&#39;, &#39;rhs&#39;, [&#39;deref&#39;],</span>
+<span class="comment">// [&#39;ref_mut&#39;]]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">u32</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1649,8 +1624,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;u32&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long&#39;, u&#39;no&#39;, [u&#39;deref&#39;],</span>
-<span class="comment">// []]</span>
+<span class="comment">// [&#39;&amp;u32&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long&#39;, &#39;no&#39;, [&#39;deref&#39;], []]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">u32</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1660,8 +1634,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;i64&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], []]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;i64&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;lhs&#39;,</span>
+<span class="comment">// [&#39;ref_mut&#39;], []]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1672,8 +1646,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;i64&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], [u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;i64&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;lhs&#39;,</span>
+<span class="comment">// [&#39;ref_mut&#39;], [&#39;deref&#39;]]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1684,7 +1658,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;i64&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long&#39;, u&#39;no&#39;, [], []]</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;i64&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long&#39;, &#39;no&#39;, [], []]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1694,8 +1668,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;&amp;i64&#39;, u&#39;Integer&#39;, u&#39;Integer::add_c_long&#39;, u&#39;no&#39;, [],</span>
-<span class="comment">// [u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;&amp;i64&#39;, &#39;Integer&#39;, &#39;Integer::add_c_long&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1705,8 +1678,8 @@
     }
 }
 
-<span class="comment">// [u&#39;i64&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long_assign&#39;, u&#39;rhs&#39;, [],</span>
-<span class="comment">// [u&#39;ref_mut&#39;]]</span>
+<span class="comment">// [&#39;i64&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long_assign&#39;, &#39;rhs&#39;, [],</span>
+<span class="comment">// [&#39;ref_mut&#39;]]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">i64</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1717,7 +1690,7 @@
     }
 }
 
-<span class="comment">// [u&#39;i64&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long&#39;, u&#39;no&#39;, [], []]</span>
+<span class="comment">// [&#39;i64&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long&#39;, &#39;no&#39;, [], []]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">i64</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1727,8 +1700,8 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;i64&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long_assign&#39;, u&#39;rhs&#39;,</span>
-<span class="comment">// [u&#39;deref&#39;], [u&#39;ref_mut&#39;]]</span>
+<span class="comment">// [&#39;&amp;i64&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long_assign&#39;, &#39;rhs&#39;, [&#39;deref&#39;],</span>
+<span class="comment">// [&#39;ref_mut&#39;]]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">i64</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1739,8 +1712,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;i64&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_c_long&#39;, u&#39;no&#39;, [u&#39;deref&#39;],</span>
-<span class="comment">// []]</span>
+<span class="comment">// [&#39;&amp;i64&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_c_long&#39;, &#39;no&#39;, [&#39;deref&#39;], []]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">i64</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1750,8 +1722,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;u32&#39;, u&#39;Integer&#39;, u&#39;Integer::add_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], [u&#39;ref&#39;, {u&#39;convert&#39;: u&#39;Integer&#39;}]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;u32&#39;, &#39;Integer&#39;, &#39;Integer::add_assign&#39;, &#39;lhs&#39;, [&#39;ref_mut&#39;],</span>
+<span class="comment">// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}]]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>))))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1762,8 +1734,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;u32&#39;, u&#39;Integer&#39;, u&#39;Integer::add_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], [u&#39;ref&#39;, {u&#39;convert&#39;: u&#39;Integer&#39;}, u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;u32&#39;, &#39;Integer&#39;, &#39;Integer::add_assign&#39;, &#39;lhs&#39;, [&#39;ref_mut&#39;],</span>
+<span class="comment">// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;]]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>))))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1774,7 +1746,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;u32&#39;, u&#39;Integer&#39;, u&#39;let mut rhs =</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;u32&#39;, &#39;Integer&#39;, &#39;let mut rhs =</span>
 <span class="comment">// Integer::from(rhs);\nreverse_add_assign(self, &amp;mut rhs);\nrhs&#39;]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>))))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
@@ -1787,7 +1759,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;&amp;u32&#39;, u&#39;Integer&#39;, u&#39;let mut rhs =</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;&amp;u32&#39;, &#39;Integer&#39;, &#39;let mut rhs =</span>
 <span class="comment">// Integer::from(*rhs);\nreverse_add_assign(self, &amp;mut rhs);\nrhs&#39;]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>))))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
@@ -1800,8 +1772,8 @@
     }
 }
 
-<span class="comment">// [u&#39;u32&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_assign&#39;, u&#39;rhs&#39;, [u&#39;ref&#39;,</span>
-<span class="comment">// {u&#39;convert&#39;: u&#39;Integer&#39;}], [u&#39;ref_mut&#39;]]</span>
+<span class="comment">// [&#39;u32&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_assign&#39;, &#39;rhs&#39;, [&#39;ref&#39;,</span>
+<span class="comment">// {&#39;convert&#39;: &#39;Integer&#39;}], [&#39;ref_mut&#39;]]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>))))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">u32</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1812,7 +1784,7 @@
     }
 }
 
-<span class="comment">// [u&#39;u32&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;let mut lhs =</span>
+<span class="comment">// [&#39;u32&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;let mut lhs =</span>
 <span class="comment">// Integer::from(self);\nInteger::add_assign(&amp;mut lhs, rhs);\nlhs&#39;]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>))))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">u32</span> {
@@ -1825,8 +1797,8 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;u32&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_assign&#39;, u&#39;rhs&#39;, [u&#39;ref&#39;,</span>
-<span class="comment">// {u&#39;convert&#39;: u&#39;Integer&#39;}, u&#39;deref&#39;], [u&#39;ref_mut&#39;]]</span>
+<span class="comment">// [&#39;&amp;u32&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_assign&#39;, &#39;rhs&#39;, [&#39;ref&#39;,</span>
+<span class="comment">// {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;], [&#39;ref_mut&#39;]]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>))))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">u32</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1837,7 +1809,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;u32&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;let mut lhs =</span>
+<span class="comment">// [&#39;&amp;u32&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;let mut lhs =</span>
 <span class="comment">// Integer::from(*self);\nInteger::add_assign(&amp;mut lhs, rhs);\nlhs&#39;]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>))))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">u32</span> {
@@ -1850,8 +1822,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;i64&#39;, u&#39;Integer&#39;, u&#39;Integer::add_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], [u&#39;ref&#39;, {u&#39;convert&#39;: u&#39;Integer&#39;}]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;i64&#39;, &#39;Integer&#39;, &#39;Integer::add_assign&#39;, &#39;lhs&#39;, [&#39;ref_mut&#39;],</span>
+<span class="comment">// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}]]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>))))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1862,8 +1834,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;i64&#39;, u&#39;Integer&#39;, u&#39;Integer::add_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], [u&#39;ref&#39;, {u&#39;convert&#39;: u&#39;Integer&#39;}, u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;i64&#39;, &#39;Integer&#39;, &#39;Integer::add_assign&#39;, &#39;lhs&#39;, [&#39;ref_mut&#39;],</span>
+<span class="comment">// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;]]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>))))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1874,7 +1846,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;i64&#39;, u&#39;Integer&#39;, u&#39;let mut rhs =</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;i64&#39;, &#39;Integer&#39;, &#39;let mut rhs =</span>
 <span class="comment">// Integer::from(rhs);\nreverse_add_assign(self, &amp;mut rhs);\nrhs&#39;]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>))))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
@@ -1887,7 +1859,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;&amp;i64&#39;, u&#39;Integer&#39;, u&#39;let mut rhs =</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;&amp;i64&#39;, &#39;Integer&#39;, &#39;let mut rhs =</span>
 <span class="comment">// Integer::from(*rhs);\nreverse_add_assign(self, &amp;mut rhs);\nrhs&#39;]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>))))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
@@ -1900,8 +1872,8 @@
     }
 }
 
-<span class="comment">// [u&#39;i64&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_assign&#39;, u&#39;rhs&#39;, [u&#39;ref&#39;,</span>
-<span class="comment">// {u&#39;convert&#39;: u&#39;Integer&#39;}], [u&#39;ref_mut&#39;]]</span>
+<span class="comment">// [&#39;i64&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_assign&#39;, &#39;rhs&#39;, [&#39;ref&#39;,</span>
+<span class="comment">// {&#39;convert&#39;: &#39;Integer&#39;}], [&#39;ref_mut&#39;]]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>))))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">i64</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1912,7 +1884,7 @@
     }
 }
 
-<span class="comment">// [u&#39;i64&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;let mut lhs =</span>
+<span class="comment">// [&#39;i64&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;let mut lhs =</span>
 <span class="comment">// Integer::from(self);\nInteger::add_assign(&amp;mut lhs, rhs);\nlhs&#39;]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>))))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">i64</span> {
@@ -1925,8 +1897,8 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;i64&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_assign&#39;, u&#39;rhs&#39;, [u&#39;ref&#39;,</span>
-<span class="comment">// {u&#39;convert&#39;: u&#39;Integer&#39;}, u&#39;deref&#39;], [u&#39;ref_mut&#39;]]</span>
+<span class="comment">// [&#39;&amp;i64&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_assign&#39;, &#39;rhs&#39;, [&#39;ref&#39;,</span>
+<span class="comment">// {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;], [&#39;ref_mut&#39;]]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>))))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">i64</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1937,7 +1909,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;i64&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;let mut lhs =</span>
+<span class="comment">// [&#39;&amp;i64&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;let mut lhs =</span>
 <span class="comment">// Integer::from(*self);\nInteger::add_assign(&amp;mut lhs, rhs);\nlhs&#39;]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>))))]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">i64</span> {
@@ -1950,8 +1922,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;u64&#39;, u&#39;Integer&#39;, u&#39;Integer::add_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], [u&#39;ref&#39;, {u&#39;convert&#39;: u&#39;Integer&#39;}]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;u64&#39;, &#39;Integer&#39;, &#39;Integer::add_assign&#39;, &#39;lhs&#39;, [&#39;ref_mut&#39;],</span>
+<span class="comment">// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1961,8 +1933,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;u64&#39;, u&#39;Integer&#39;, u&#39;Integer::add_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], [u&#39;ref&#39;, {u&#39;convert&#39;: u&#39;Integer&#39;}, u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;u64&#39;, &#39;Integer&#39;, &#39;Integer::add_assign&#39;, &#39;lhs&#39;, [&#39;ref_mut&#39;],</span>
+<span class="comment">// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">u64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -1972,7 +1944,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;u64&#39;, u&#39;Integer&#39;, u&#39;let mut rhs =</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;u64&#39;, &#39;Integer&#39;, &#39;let mut rhs =</span>
 <span class="comment">// Integer::from(rhs);\nreverse_add_assign(self, &amp;mut rhs);\nrhs&#39;]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1984,7 +1956,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;&amp;u64&#39;, u&#39;Integer&#39;, u&#39;let mut rhs =</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;&amp;u64&#39;, &#39;Integer&#39;, &#39;let mut rhs =</span>
 <span class="comment">// Integer::from(*rhs);\nreverse_add_assign(self, &amp;mut rhs);\nrhs&#39;]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">u64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -1996,8 +1968,8 @@
     }
 }
 
-<span class="comment">// [u&#39;u64&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_assign&#39;, u&#39;rhs&#39;, [u&#39;ref&#39;,</span>
-<span class="comment">// {u&#39;convert&#39;: u&#39;Integer&#39;}], [u&#39;ref_mut&#39;]]</span>
+<span class="comment">// [&#39;u64&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_assign&#39;, &#39;rhs&#39;, [&#39;ref&#39;,</span>
+<span class="comment">// {&#39;convert&#39;: &#39;Integer&#39;}], [&#39;ref_mut&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">u64</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -2007,7 +1979,7 @@
     }
 }
 
-<span class="comment">// [u&#39;u64&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;let mut lhs =</span>
+<span class="comment">// [&#39;u64&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;let mut lhs =</span>
 <span class="comment">// Integer::from(self);\nInteger::add_assign(&amp;mut lhs, rhs);\nlhs&#39;]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">u64</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -2019,8 +1991,8 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;u64&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_assign&#39;, u&#39;rhs&#39;, [u&#39;ref&#39;,</span>
-<span class="comment">// {u&#39;convert&#39;: u&#39;Integer&#39;}, u&#39;deref&#39;], [u&#39;ref_mut&#39;]]</span>
+<span class="comment">// [&#39;&amp;u64&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_assign&#39;, &#39;rhs&#39;, [&#39;ref&#39;,</span>
+<span class="comment">// {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;], [&#39;ref_mut&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">u64</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -2030,7 +2002,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;u64&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;let mut lhs =</span>
+<span class="comment">// [&#39;&amp;u64&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;let mut lhs =</span>
 <span class="comment">// Integer::from(*self);\nInteger::add_assign(&amp;mut lhs, rhs);\nlhs&#39;]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">u64</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -2042,8 +2014,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;i128&#39;, u&#39;Integer&#39;, u&#39;Integer::add_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], [u&#39;ref&#39;, {u&#39;convert&#39;: u&#39;Integer&#39;}]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;i128&#39;, &#39;Integer&#39;, &#39;Integer::add_assign&#39;, &#39;lhs&#39;, [&#39;ref_mut&#39;],</span>
+<span class="comment">// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">i128</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -2053,8 +2025,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;i128&#39;, u&#39;Integer&#39;, u&#39;Integer::add_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], [u&#39;ref&#39;, {u&#39;convert&#39;: u&#39;Integer&#39;}, u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;i128&#39;, &#39;Integer&#39;, &#39;Integer::add_assign&#39;, &#39;lhs&#39;, [&#39;ref_mut&#39;],</span>
+<span class="comment">// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i128</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -2064,7 +2036,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;i128&#39;, u&#39;Integer&#39;, u&#39;let mut rhs =</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;i128&#39;, &#39;Integer&#39;, &#39;let mut rhs =</span>
 <span class="comment">// Integer::from(rhs);\nreverse_add_assign(self, &amp;mut rhs);\nrhs&#39;]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">i128</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -2076,7 +2048,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;&amp;i128&#39;, u&#39;Integer&#39;, u&#39;let mut rhs =</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;&amp;i128&#39;, &#39;Integer&#39;, &#39;let mut rhs =</span>
 <span class="comment">// Integer::from(*rhs);\nreverse_add_assign(self, &amp;mut rhs);\nrhs&#39;]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i128</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -2088,8 +2060,8 @@
     }
 }
 
-<span class="comment">// [u&#39;i128&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_assign&#39;, u&#39;rhs&#39;, [u&#39;ref&#39;,</span>
-<span class="comment">// {u&#39;convert&#39;: u&#39;Integer&#39;}], [u&#39;ref_mut&#39;]]</span>
+<span class="comment">// [&#39;i128&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_assign&#39;, &#39;rhs&#39;, [&#39;ref&#39;,</span>
+<span class="comment">// {&#39;convert&#39;: &#39;Integer&#39;}], [&#39;ref_mut&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">i128</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -2099,7 +2071,7 @@
     }
 }
 
-<span class="comment">// [u&#39;i128&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;let mut lhs =</span>
+<span class="comment">// [&#39;i128&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;let mut lhs =</span>
 <span class="comment">// Integer::from(self);\nInteger::add_assign(&amp;mut lhs, rhs);\nlhs&#39;]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">i128</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -2111,8 +2083,8 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;i128&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_assign&#39;, u&#39;rhs&#39;, [u&#39;ref&#39;,</span>
-<span class="comment">// {u&#39;convert&#39;: u&#39;Integer&#39;}, u&#39;deref&#39;], [u&#39;ref_mut&#39;]]</span>
+<span class="comment">// [&#39;&amp;i128&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_assign&#39;, &#39;rhs&#39;, [&#39;ref&#39;,</span>
+<span class="comment">// {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;], [&#39;ref_mut&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">i128</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -2122,7 +2094,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;i128&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;let mut lhs =</span>
+<span class="comment">// [&#39;&amp;i128&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;let mut lhs =</span>
 <span class="comment">// Integer::from(*self);\nInteger::add_assign(&amp;mut lhs, rhs);\nlhs&#39;]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">i128</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -2134,8 +2106,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;u128&#39;, u&#39;Integer&#39;, u&#39;Integer::add_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], [u&#39;ref&#39;, {u&#39;convert&#39;: u&#39;Integer&#39;}]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;u128&#39;, &#39;Integer&#39;, &#39;Integer::add_assign&#39;, &#39;lhs&#39;, [&#39;ref_mut&#39;],</span>
+<span class="comment">// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">u128</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -2145,8 +2117,8 @@
     }
 }
 
-<span class="comment">// [u&#39;Integer&#39;, u&#39;&amp;u128&#39;, u&#39;Integer&#39;, u&#39;Integer::add_assign&#39;, u&#39;lhs&#39;,</span>
-<span class="comment">// [u&#39;ref_mut&#39;], [u&#39;ref&#39;, {u&#39;convert&#39;: u&#39;Integer&#39;}, u&#39;deref&#39;]]</span>
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;u128&#39;, &#39;Integer&#39;, &#39;Integer::add_assign&#39;, &#39;lhs&#39;, [&#39;ref_mut&#39;],</span>
+<span class="comment">// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">u128</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -2156,7 +2128,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;u128&#39;, u&#39;Integer&#39;, u&#39;let mut rhs =</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;u128&#39;, &#39;Integer&#39;, &#39;let mut rhs =</span>
 <span class="comment">// Integer::from(rhs);\nreverse_add_assign(self, &amp;mut rhs);\nrhs&#39;]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">u128</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -2168,7 +2140,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;Integer&#39;, u&#39;&amp;u128&#39;, u&#39;Integer&#39;, u&#39;let mut rhs =</span>
+<span class="comment">// [&#39;&amp;Integer&#39;, &#39;&amp;u128&#39;, &#39;Integer&#39;, &#39;let mut rhs =</span>
 <span class="comment">// Integer::from(*rhs);\nreverse_add_assign(self, &amp;mut rhs);\nrhs&#39;]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">u128</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -2180,8 +2152,8 @@
     }
 }
 
-<span class="comment">// [u&#39;u128&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_assign&#39;, u&#39;rhs&#39;, [u&#39;ref&#39;,</span>
-<span class="comment">// {u&#39;convert&#39;: u&#39;Integer&#39;}], [u&#39;ref_mut&#39;]]</span>
+<span class="comment">// [&#39;u128&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_assign&#39;, &#39;rhs&#39;, [&#39;ref&#39;,</span>
+<span class="comment">// {&#39;convert&#39;: &#39;Integer&#39;}], [&#39;ref_mut&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">u128</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -2191,7 +2163,7 @@
     }
 }
 
-<span class="comment">// [u&#39;u128&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;let mut lhs =</span>
+<span class="comment">// [&#39;u128&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;let mut lhs =</span>
 <span class="comment">// Integer::from(self);\nInteger::add_assign(&amp;mut lhs, rhs);\nlhs&#39;]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">u128</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
@@ -2203,8 +2175,8 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;u128&#39;, u&#39;Integer&#39;, u&#39;Integer&#39;, u&#39;reverse_add_assign&#39;, u&#39;rhs&#39;, [u&#39;ref&#39;,</span>
-<span class="comment">// {u&#39;convert&#39;: u&#39;Integer&#39;}, u&#39;deref&#39;], [u&#39;ref_mut&#39;]]</span>
+<span class="comment">// [&#39;&amp;u128&#39;, &#39;Integer&#39;, &#39;Integer&#39;, &#39;reverse_add_assign&#39;, &#39;rhs&#39;, [&#39;ref&#39;,</span>
+<span class="comment">// {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;], [&#39;ref_mut&#39;]]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">u128</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;
 
@@ -2214,7 +2186,7 @@
     }
 }
 
-<span class="comment">// [u&#39;&amp;u128&#39;, u&#39;&amp;Integer&#39;, u&#39;Integer&#39;, u&#39;let mut lhs =</span>
+<span class="comment">// [&#39;&amp;u128&#39;, &#39;&amp;Integer&#39;, &#39;Integer&#39;, &#39;let mut lhs =</span>
 <span class="comment">// Integer::from(*self);\nInteger::add_assign(&amp;mut lhs, rhs);\nlhs&#39;]</span>
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">u128</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Integer</span>;

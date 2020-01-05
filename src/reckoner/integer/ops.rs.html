@@ -619,7 +619,6 @@
 <span id="619">619</span>
 <span id="620">620</span>
 <span id="621">621</span>
-<span id="622">622</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">error</span>::<span class="ident">Error</span>, <span class="ident">integer</span>::<span class="ident">Integer</span>};
 <span class="kw">use</span> <span class="ident">core</span>::{<span class="ident">convert</span>::<span class="ident">TryInto</span>, <span class="ident">ptr</span>};
@@ -640,215 +639,206 @@
 <span class="kw">impl</span> <span class="ident">Integer</span> {
     <span class="doccomment">/// Add two integers and return the result</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
-        <span class="kw">let</span> <span class="ident">other_raw</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+        <span class="kw">let</span> <span class="ident">other_raw</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">as_raw</span>();
 
         <span class="kw">let</span> <span class="ident">result_int</span> <span class="op">=</span> <span class="ident">Integer</span>::<span class="ident">new</span>();
-        <span class="kw">let</span> <span class="ident">result_raw</span> <span class="op">=</span> <span class="ident">result_int</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">result_raw</span> <span class="op">=</span> <span class="ident">result_int</span>.<span class="ident">as_raw</span>();
 
+        <span class="comment">// This operation is safe bc `self`, `other`, and `result` have all been</span>
+        <span class="comment">// initialized. `result` does not necessarily need to be initialized.</span>
         <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_add</span>(<span class="ident">self_raw</span>, <span class="ident">other_raw</span>, <span class="ident">result_raw</span>) };
 
-        <span class="kw">if</span> <span class="ident">op_res</span> <span class="op">!</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">MP_OK</span> } {
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Operation failed! {:?}&quot;</span>, <span class="ident">op_res</span>);
-        }
+        <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
 
         <span class="ident">result_int</span>
     }
 
     <span class="doccomment">/// Add two integers and assign the result to self</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
-        <span class="kw">let</span> <span class="ident">other_raw</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+        <span class="kw">let</span> <span class="ident">other_raw</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">as_raw</span>();
 
+        <span class="comment">// This operation is safe because `self` and `other` have been initialized and</span>
+        <span class="comment">// the result pointer is allowed to alias with either of the arguments.</span>
         <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_add</span>(<span class="ident">self_raw</span>, <span class="ident">other_raw</span>, <span class="ident">self_raw</span>) };
 
-        <span class="kw">if</span> <span class="ident">op_res</span> <span class="op">!</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">MP_OK</span> } {
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Operation failed! {:?}&quot;</span>, <span class="ident">op_res</span>);
-        }
+        <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">add_c_long</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
         <span class="kw">let</span> <span class="ident">result_int</span> <span class="op">=</span> <span class="ident">Integer</span>::<span class="ident">new</span>();
-        <span class="kw">let</span> <span class="ident">result_raw</span> <span class="op">=</span> <span class="ident">result_int</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">result_raw</span> <span class="op">=</span> <span class="ident">result_int</span>.<span class="ident">as_raw</span>();
 
+        <span class="comment">// This operation is safe because `self` and `result` have been initialized.</span>
         <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_add_value</span>(<span class="ident">self_raw</span>, <span class="ident">value</span>.<span class="ident">into</span>(), <span class="ident">result_raw</span>) };
 
-        <span class="kw">if</span> <span class="ident">op_res</span> <span class="op">!</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">MP_OK</span> } {
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Operation failed! {:?}&quot;</span>, <span class="ident">op_res</span>);
-        }
+        <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
 
         <span class="ident">result_int</span>
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">add_c_long_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>) {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
 
+        <span class="comment">// This operation is safe because `self` has been initialized and the result</span>
+        <span class="comment">// pointer is allowed to alias with the integer argument.</span>
         <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_add_value</span>(<span class="ident">self_raw</span>, <span class="ident">other</span>.<span class="ident">into</span>(), <span class="ident">self_raw</span>) };
 
-        <span class="kw">if</span> <span class="ident">op_res</span> <span class="op">!</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">MP_OK</span> } {
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Operation failed! {:?}&quot;</span>, <span class="ident">op_res</span>);
-        }
+        <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
     }
 
     <span class="doccomment">/// Subtract two integers and return the result</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">subtract</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
-        <span class="kw">let</span> <span class="ident">other_raw</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+        <span class="kw">let</span> <span class="ident">other_raw</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">as_raw</span>();
 
         <span class="kw">let</span> <span class="ident">result_int</span> <span class="op">=</span> <span class="ident">Integer</span>::<span class="ident">new</span>();
-        <span class="kw">let</span> <span class="ident">result_raw</span> <span class="op">=</span> <span class="ident">result_int</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">result_raw</span> <span class="op">=</span> <span class="ident">result_int</span>.<span class="ident">as_raw</span>();
 
+        <span class="comment">// This operation is safe bc `self`, `other`, and `result` have all been</span>
+        <span class="comment">// initialized. `result` does not necessarily need to be initialized.</span>
         <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_sub</span>(<span class="ident">self_raw</span>, <span class="ident">other_raw</span>, <span class="ident">result_raw</span>) };
 
-        <span class="kw">if</span> <span class="ident">op_res</span> <span class="op">!</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">MP_OK</span> } {
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Operation failed! {:?}&quot;</span>, <span class="ident">op_res</span>);
-        }
+        <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
 
         <span class="ident">result_int</span>
     }
 
     <span class="doccomment">/// Subtract two integers and assign the result to self</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">subtract_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
-        <span class="kw">let</span> <span class="ident">other_raw</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+        <span class="kw">let</span> <span class="ident">other_raw</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">as_raw</span>();
 
         <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_sub</span>(<span class="ident">self_raw</span>, <span class="ident">other_raw</span>, <span class="ident">self_raw</span>) };
 
-        <span class="kw">if</span> <span class="ident">op_res</span> <span class="op">!</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">MP_OK</span> } {
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Operation failed! {:?}&quot;</span>, <span class="ident">op_res</span>);
-        }
+        <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">subtract_c_long</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
         <span class="kw">let</span> <span class="ident">result_int</span> <span class="op">=</span> <span class="ident">Integer</span>::<span class="ident">new</span>();
-        <span class="kw">let</span> <span class="ident">result_raw</span> <span class="op">=</span> <span class="ident">result_int</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">result_raw</span> <span class="op">=</span> <span class="ident">result_int</span>.<span class="ident">as_raw</span>();
 
         <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_sub_value</span>(<span class="ident">self_raw</span>, <span class="ident">value</span>.<span class="ident">into</span>(), <span class="ident">result_raw</span>) };
 
-        <span class="kw">if</span> <span class="ident">op_res</span> <span class="op">!</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">MP_OK</span> } {
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Operation failed! {:?}&quot;</span>, <span class="ident">op_res</span>);
-        }
+        <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
 
         <span class="ident">result_int</span>
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">subtract_c_long_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>) {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
 
         <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_sub_value</span>(<span class="ident">self_raw</span>, <span class="ident">other</span>.<span class="ident">into</span>(), <span class="ident">self_raw</span>) };
 
-        <span class="kw">if</span> <span class="ident">op_res</span> <span class="op">!</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">MP_OK</span> } {
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Operation failed! {:?}&quot;</span>, <span class="ident">op_res</span>);
-        }
+        <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
     }
 
     <span class="doccomment">/// Multiply two integers and return the result</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">multiply</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
-        <span class="kw">let</span> <span class="ident">other_raw</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+        <span class="kw">let</span> <span class="ident">other_raw</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">as_raw</span>();
 
         <span class="kw">let</span> <span class="ident">result_int</span> <span class="op">=</span> <span class="ident">Integer</span>::<span class="ident">new</span>();
-        <span class="kw">let</span> <span class="ident">result_raw</span> <span class="op">=</span> <span class="ident">result_int</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">result_raw</span> <span class="op">=</span> <span class="ident">result_int</span>.<span class="ident">as_raw</span>();
 
+        <span class="comment">// This operation is safe bc `self`, `other`, and `result` have all been</span>
+        <span class="comment">// initialized. `result` does not necessarily need to be initialized.</span>
         <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_mul</span>(<span class="ident">self_raw</span>, <span class="ident">other_raw</span>, <span class="ident">result_raw</span>) };
 
-        <span class="kw">if</span> <span class="ident">op_res</span> <span class="op">!</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">MP_OK</span> } {
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Operation failed! {:?}&quot;</span>, <span class="ident">op_res</span>);
-        }
+        <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
 
         <span class="ident">result_int</span>
     }
 
     <span class="doccomment">/// Multiply two integers and assign the result to self</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">multiply_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
-        <span class="kw">let</span> <span class="ident">other_raw</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+        <span class="kw">let</span> <span class="ident">other_raw</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">as_raw</span>();
 
         <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_mul</span>(<span class="ident">self_raw</span>, <span class="ident">other_raw</span>, <span class="ident">self_raw</span>) };
 
-        <span class="kw">if</span> <span class="ident">op_res</span> <span class="op">!</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">MP_OK</span> } {
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Operation failed! {:?}&quot;</span>, <span class="ident">op_res</span>);
-        }
+        <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">multiply_c_long</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
         <span class="kw">let</span> <span class="ident">result_int</span> <span class="op">=</span> <span class="ident">Integer</span>::<span class="ident">new</span>();
-        <span class="kw">let</span> <span class="ident">result_raw</span> <span class="op">=</span> <span class="ident">result_int</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">result_raw</span> <span class="op">=</span> <span class="ident">result_int</span>.<span class="ident">as_raw</span>();
 
         <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_mul_value</span>(<span class="ident">self_raw</span>, <span class="ident">value</span>.<span class="ident">into</span>(), <span class="ident">result_raw</span>) };
 
-        <span class="kw">if</span> <span class="ident">op_res</span> <span class="op">!</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">MP_OK</span> } {
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Operation failed! {:?}&quot;</span>, <span class="ident">op_res</span>);
-        }
+        <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
 
         <span class="ident">result_int</span>
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">multiply_c_long_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>) {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
 
         <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_mul_value</span>(<span class="ident">self_raw</span>, <span class="ident">other</span>.<span class="ident">into</span>(), <span class="ident">self_raw</span>) };
 
-        <span class="kw">if</span> <span class="ident">op_res</span> <span class="op">!</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">MP_OK</span> } {
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Operation failed! {:?}&quot;</span>, <span class="ident">op_res</span>);
-        }
+        <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
     }
 
     <span class="doccomment">/// Return the additive inverse</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">negate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
         <span class="kw">let</span> <span class="ident">result_int</span> <span class="op">=</span> <span class="ident">Integer</span>::<span class="ident">new</span>();
-        <span class="kw">let</span> <span class="ident">result_raw</span> <span class="op">=</span> <span class="ident">result_int</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">result_raw</span> <span class="op">=</span> <span class="ident">result_int</span>.<span class="ident">as_raw</span>();
 
+        <span class="comment">// This operation is safe bc `self`and `result` have all been initialized.</span>
+        <span class="comment">// `result` does not necessarily need to be initialized.</span>
         <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_neg</span>(<span class="ident">self_raw</span>, <span class="ident">result_raw</span>) };
 
-        <span class="kw">if</span> <span class="ident">op_res</span> <span class="op">!</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">MP_OK</span> } {
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Operation failed! {:?}&quot;</span>, <span class="ident">op_res</span>);
-        }
+        <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
 
         <span class="ident">result_int</span>
     }
 
     <span class="doccomment">/// Assign the additive inverse to self</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">negate_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
 
         <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_neg</span>(<span class="ident">self_raw</span>, <span class="ident">self_raw</span>) };
 
-        <span class="kw">if</span> <span class="ident">op_res</span> <span class="op">!</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">MP_OK</span> } {
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Operation failed! {:?}&quot;</span>, <span class="ident">op_res</span>);
-        }
+        <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
     }
 
     <span class="doccomment">/// Return the absolute value</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">absolute_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
         <span class="kw">let</span> <span class="ident">result_int</span> <span class="op">=</span> <span class="ident">Integer</span>::<span class="ident">new</span>();
-        <span class="kw">let</span> <span class="ident">result_raw</span> <span class="op">=</span> <span class="ident">result_int</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">result_raw</span> <span class="op">=</span> <span class="ident">result_int</span>.<span class="ident">as_raw</span>();
 
+        <span class="comment">// This operation is safe bc `self`and `result` have all been initialized.</span>
+        <span class="comment">// `result` does not necessarily need to be initialized.</span>
         <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_abs</span>(<span class="ident">self_raw</span>, <span class="ident">result_raw</span>) };
 
-        <span class="kw">if</span> <span class="ident">op_res</span> <span class="op">!</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">MP_OK</span> } {
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Operation failed! {:?}&quot;</span>, <span class="ident">op_res</span>);
-        }
+        <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
 
         <span class="ident">result_int</span>
     }
 
     <span class="doccomment">/// Assign the absolute value to self</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">absolute_value_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
 
         <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_abs</span>(<span class="ident">self_raw</span>, <span class="ident">self_raw</span>) };
 
-        <span class="kw">if</span> <span class="ident">op_res</span> <span class="op">!</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">MP_OK</span> } {
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Operation failed! {:?}&quot;</span>, <span class="ident">op_res</span>);
-        }
+        <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
     }
 
+    <span class="doccomment">/// Perform integer division operation.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Safety</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// `dividend` and `divisor` are allowed to alias for this operation, so</span>
+    <span class="doccomment">/// they may point to the same `Integer`. Either `out_quotient` or</span>
+    <span class="doccomment">/// `out_remainder` may be `null`, but not both. These also may alias with</span>
+    <span class="doccomment">/// either of the input arguments, `dividend` or `divisor`.</span>
     <span class="kw">fn</span> <span class="ident">mp_int_div</span>(
         <span class="ident">dividend</span>: <span class="kw-2">&amp;</span><span class="ident">Integer</span>,
         <span class="ident">divisor</span>: <span class="kw-2">&amp;</span><span class="ident">Integer</span>,
@@ -857,24 +847,25 @@
     ) {
         <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span>(<span class="ident">out_quotient</span>.<span class="ident">is_null</span>() <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">out_remainder</span>.<span class="ident">is_null</span>()));
 
-        <span class="kw">let</span> <span class="ident">dividend_raw</span> <span class="op">=</span> <span class="ident">dividend</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
-        <span class="kw">let</span> <span class="ident">divisor_raw</span> <span class="op">=</span> <span class="ident">divisor</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">dividend_raw</span> <span class="op">=</span> <span class="ident">dividend</span>.<span class="ident">as_raw</span>();
+        <span class="kw">let</span> <span class="ident">divisor_raw</span> <span class="op">=</span> <span class="ident">divisor</span>.<span class="ident">as_raw</span>();
 
+        <span class="comment">// This operation is safe bc `dividend`, `divisor` have all been initialized.</span>
+        <span class="comment">// Also, runtime checks of `out_quotient` and `out_remainder` ensure that a</span>
+        <span class="comment">// result can be written somewhere.</span>
         <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> {
             <span class="ident">imath_sys</span>::<span class="ident">mp_int_div</span>(<span class="ident">dividend_raw</span>, <span class="ident">divisor_raw</span>, <span class="ident">out_quotient</span>, <span class="ident">out_remainder</span>)
         };
 
-        <span class="kw">if</span> <span class="ident">op_res</span> <span class="op">!</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">MP_OK</span> } {
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Operation failed! {:?}&quot;</span>, <span class="ident">op_res</span>);
-        }
+        <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
     }
 
     <span class="doccomment">/// Divide two integers and return quotient and remainder</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">divide_full</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>) {
         <span class="kw">let</span> <span class="ident">quotient</span> <span class="op">=</span> <span class="ident">Integer</span>::<span class="ident">new</span>();
-        <span class="kw">let</span> <span class="ident">quotient_raw</span> <span class="op">=</span> <span class="ident">quotient</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">quotient_raw</span> <span class="op">=</span> <span class="ident">quotient</span>.<span class="ident">as_raw</span>();
         <span class="kw">let</span> <span class="ident">remainder</span> <span class="op">=</span> <span class="ident">Integer</span>::<span class="ident">new</span>();
-        <span class="kw">let</span> <span class="ident">remainder_raw</span> <span class="op">=</span> <span class="ident">remainder</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">remainder_raw</span> <span class="op">=</span> <span class="ident">remainder</span>.<span class="ident">as_raw</span>();
 
         <span class="ident">Integer</span>::<span class="ident">mp_int_div</span>(<span class="self">self</span>, <span class="ident">rhs</span>, <span class="ident">quotient_raw</span>, <span class="ident">remainder_raw</span>);
 
@@ -884,7 +875,7 @@
     <span class="doccomment">/// Divide two integers and return only quotient</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">divide</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">quotient</span> <span class="op">=</span> <span class="ident">Integer</span>::<span class="ident">new</span>();
-        <span class="kw">let</span> <span class="ident">quotient_raw</span> <span class="op">=</span> <span class="ident">quotient</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">quotient_raw</span> <span class="op">=</span> <span class="ident">quotient</span>.<span class="ident">as_raw</span>();
 
         <span class="ident">Integer</span>::<span class="ident">mp_int_div</span>(<span class="self">self</span>, <span class="ident">rhs</span>, <span class="ident">quotient_raw</span>, <span class="ident">ptr</span>::<span class="ident">null_mut</span>());
 
@@ -893,7 +884,7 @@
 
     <span class="doccomment">/// Divide two integers and assign the result to self</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">divide_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) {
-        <span class="kw">let</span> <span class="ident">quotient_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">quotient_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
 
         <span class="ident">Integer</span>::<span class="ident">mp_int_div</span>(<span class="self">self</span>, <span class="ident">rhs</span>, <span class="ident">quotient_raw</span>, <span class="ident">ptr</span>::<span class="ident">null_mut</span>());
     }
@@ -901,7 +892,7 @@
     <span class="doccomment">/// Divide two integers and return only remainder</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remainder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">remainder</span> <span class="op">=</span> <span class="ident">Integer</span>::<span class="ident">new</span>();
-        <span class="kw">let</span> <span class="ident">remainder_raw</span> <span class="op">=</span> <span class="ident">remainder</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">remainder_raw</span> <span class="op">=</span> <span class="ident">remainder</span>.<span class="ident">as_raw</span>();
 
         <span class="ident">Integer</span>::<span class="ident">mp_int_div</span>(<span class="self">self</span>, <span class="ident">rhs</span>, <span class="ident">ptr</span>::<span class="ident">null_mut</span>(), <span class="ident">remainder_raw</span>);
 
@@ -910,26 +901,33 @@
 
     <span class="doccomment">/// Divide two integers and assign the remainder to self</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remainder_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) {
-        <span class="kw">let</span> <span class="ident">remainder_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">remainder_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
 
         <span class="ident">Integer</span>::<span class="ident">mp_int_div</span>(<span class="self">self</span>, <span class="ident">rhs</span>, <span class="ident">ptr</span>::<span class="ident">null_mut</span>(), <span class="ident">remainder_raw</span>);
     }
 
+    <span class="doccomment">/// Perform the integer division with primitive value operation.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Safety</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Either `out_quotient` or `out_remainder` may be `null`, but not both.</span>
+    <span class="doccomment">/// These also may alias with the `Integer` input argument, `dividend`.</span>
     <span class="kw">fn</span> <span class="ident">mp_int_div_value</span>(
         <span class="ident">dividend</span>: <span class="kw-2">&amp;</span><span class="ident">Integer</span>,
         <span class="ident">divisor</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>,
         <span class="ident">out_quotient</span>: <span class="ident">imath_sys</span>::<span class="ident">mp_int</span>,
         <span class="ident">out_remainder</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_long</span>,
     ) {
-        <span class="kw">let</span> <span class="ident">divident_raw</span> <span class="op">=</span> <span class="ident">dividend</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">divident_raw</span> <span class="op">=</span> <span class="ident">dividend</span>.<span class="ident">as_raw</span>();
 
+        <span class="comment">// This operation is safe bc `dividend` has been initialized. Also, runtime</span>
+        <span class="comment">// checks of `out_quotient` and `out_remainder` ensure that a result can</span>
+        <span class="comment">// be written somewhere.</span>
         <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> {
             <span class="ident">imath_sys</span>::<span class="ident">mp_int_div_value</span>(<span class="ident">divident_raw</span>, <span class="ident">divisor</span>.<span class="ident">into</span>(), <span class="ident">out_quotient</span>, <span class="ident">out_remainder</span>)
         };
 
-        <span class="kw">if</span> <span class="ident">op_res</span> <span class="op">!</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">MP_OK</span> } {
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Operation failed! {:?}&quot;</span>, <span class="ident">op_res</span>);
-        }
+        <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
     }
 
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
@@ -940,12 +938,12 @@
     {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">remainder</span>: <span class="ident">c_long</span> <span class="op">=</span> <span class="number">0</span>;
         <span class="kw">let</span> <span class="ident">quotient</span> <span class="op">=</span> <span class="ident">Integer</span>::<span class="ident">new</span>();
-        <span class="kw">let</span> <span class="ident">quotient_raw</span> <span class="op">=</span> <span class="ident">quotient</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">quotient_raw</span> <span class="op">=</span> <span class="ident">quotient</span>.<span class="ident">as_raw</span>();
 
         <span class="ident">Integer</span>::<span class="ident">mp_int_div_value</span>(<span class="self">self</span>, <span class="ident">value</span>.<span class="ident">into</span>(), <span class="ident">quotient_raw</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">remainder</span>);
 
-        <span class="comment">// This is safe bc the modulo operation will always return within the range</span>
-        <span class="comment">// [0, value].</span>
+        <span class="comment">// This should not panic bc the modulo operation will always return within the</span>
+        <span class="comment">// range [0, value].</span>
         (
             <span class="ident">quotient</span>,
             <span class="ident">remainder</span>
@@ -957,7 +955,7 @@
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">divide_c_long</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">quotient</span> <span class="op">=</span> <span class="ident">Integer</span>::<span class="ident">new</span>();
-        <span class="kw">let</span> <span class="ident">quotient_raw</span> <span class="op">=</span> <span class="ident">quotient</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">quotient_raw</span> <span class="op">=</span> <span class="ident">quotient</span>.<span class="ident">as_raw</span>();
 
         <span class="ident">Integer</span>::<span class="ident">mp_int_div_value</span>(<span class="self">self</span>, <span class="ident">value</span>, <span class="ident">quotient_raw</span>, <span class="ident">ptr</span>::<span class="ident">null_mut</span>());
 
@@ -965,7 +963,7 @@
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">divide_c_long_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>) {
-        <span class="kw">let</span> <span class="ident">quotient_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">quotient_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
 
         <span class="ident">Integer</span>::<span class="ident">mp_int_div_value</span>(<span class="self">self</span>, <span class="ident">value</span>, <span class="ident">quotient_raw</span>, <span class="ident">ptr</span>::<span class="ident">null_mut</span>());
     }
@@ -980,8 +978,8 @@
 
         <span class="ident">Integer</span>::<span class="ident">mp_int_div_value</span>(<span class="self">self</span>, <span class="ident">value</span>, <span class="ident">ptr</span>::<span class="ident">null_mut</span>(), <span class="ident">result_raw</span>);
 
-        <span class="comment">// This is safe bc the modulo operation will always return within the range</span>
-        <span class="comment">// [0, value].</span>
+        <span class="comment">// This will not panic bc the modulo operation will always return within the</span>
+        <span class="comment">// range [0, value).</span>
         <span class="ident">result</span>
             .<span class="ident">try_into</span>()
             .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Error</span>::<span class="ident">RemainderOutsideBounds</span>)
@@ -989,7 +987,7 @@
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">remainder_c_long_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>) {
-        <span class="kw">let</span> <span class="ident">remainder_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>();
+        <span class="kw">let</span> <span class="ident">remainder_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
 
         <span class="ident">Integer</span>::<span class="ident">mp_int_div</span>(
             <span class="self">self</span>,
