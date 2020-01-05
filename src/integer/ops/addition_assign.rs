@@ -3,91 +3,91 @@ use core::ops::AddAssign;
 
 // AddAssign    The addition assignment operator +=.
 
-// [u'Integer', u'Integer', u'Integer::add_assign', u'no', [], [u'ref']]
+// ['Integer', 'Integer', 'Integer::add_assign', 'no', [], ['ref']]
 impl AddAssign<Integer> for Integer {
     fn add_assign(&mut self, rhs: Integer) {
         Integer::add_assign(self, &rhs)
     }
 }
 
-// [u'Integer', u'&Integer', u'Integer::add_assign', u'no', [], []]
+// ['Integer', '&Integer', 'Integer::add_assign', 'no', [], []]
 impl AddAssign<&Integer> for Integer {
     fn add_assign(&mut self, rhs: &Integer) {
         Integer::add_assign(self, rhs)
     }
 }
 
-// [u'Integer', u'i8', u'Integer::add_c_long_assign', u'no', [], []]
+// ['Integer', 'i8', 'Integer::add_c_long_assign', 'no', [], []]
 impl AddAssign<i8> for Integer {
     fn add_assign(&mut self, rhs: i8) {
         Integer::add_c_long_assign(self, rhs)
     }
 }
 
-// [u'Integer', u'&i8', u'Integer::add_c_long_assign', u'no', [], [u'deref']]
+// ['Integer', '&i8', 'Integer::add_c_long_assign', 'no', [], ['deref']]
 impl AddAssign<&i8> for Integer {
     fn add_assign(&mut self, rhs: &i8) {
         Integer::add_c_long_assign(self, *rhs)
     }
 }
 
-// [u'Integer', u'u8', u'Integer::add_c_long_assign', u'no', [], []]
+// ['Integer', 'u8', 'Integer::add_c_long_assign', 'no', [], []]
 impl AddAssign<u8> for Integer {
     fn add_assign(&mut self, rhs: u8) {
         Integer::add_c_long_assign(self, rhs)
     }
 }
 
-// [u'Integer', u'&u8', u'Integer::add_c_long_assign', u'no', [], [u'deref']]
+// ['Integer', '&u8', 'Integer::add_c_long_assign', 'no', [], ['deref']]
 impl AddAssign<&u8> for Integer {
     fn add_assign(&mut self, rhs: &u8) {
         Integer::add_c_long_assign(self, *rhs)
     }
 }
 
-// [u'Integer', u'i16', u'Integer::add_c_long_assign', u'no', [], []]
+// ['Integer', 'i16', 'Integer::add_c_long_assign', 'no', [], []]
 impl AddAssign<i16> for Integer {
     fn add_assign(&mut self, rhs: i16) {
         Integer::add_c_long_assign(self, rhs)
     }
 }
 
-// [u'Integer', u'&i16', u'Integer::add_c_long_assign', u'no', [], [u'deref']]
+// ['Integer', '&i16', 'Integer::add_c_long_assign', 'no', [], ['deref']]
 impl AddAssign<&i16> for Integer {
     fn add_assign(&mut self, rhs: &i16) {
         Integer::add_c_long_assign(self, *rhs)
     }
 }
 
-// [u'Integer', u'u16', u'Integer::add_c_long_assign', u'no', [], []]
+// ['Integer', 'u16', 'Integer::add_c_long_assign', 'no', [], []]
 impl AddAssign<u16> for Integer {
     fn add_assign(&mut self, rhs: u16) {
         Integer::add_c_long_assign(self, rhs)
     }
 }
 
-// [u'Integer', u'&u16', u'Integer::add_c_long_assign', u'no', [], [u'deref']]
+// ['Integer', '&u16', 'Integer::add_c_long_assign', 'no', [], ['deref']]
 impl AddAssign<&u16> for Integer {
     fn add_assign(&mut self, rhs: &u16) {
         Integer::add_c_long_assign(self, *rhs)
     }
 }
 
-// [u'Integer', u'i32', u'Integer::add_c_long_assign', u'no', [], []]
+// ['Integer', 'i32', 'Integer::add_c_long_assign', 'no', [], []]
 impl AddAssign<i32> for Integer {
     fn add_assign(&mut self, rhs: i32) {
         Integer::add_c_long_assign(self, rhs)
     }
 }
 
-// [u'Integer', u'&i32', u'Integer::add_c_long_assign', u'no', [], [u'deref']]
+// ['Integer', '&i32', 'Integer::add_c_long_assign', 'no', [], ['deref']]
 impl AddAssign<&i32> for Integer {
     fn add_assign(&mut self, rhs: &i32) {
         Integer::add_c_long_assign(self, *rhs)
     }
 }
 
-// [u'Integer', u'u32', u'Integer::add_c_long_assign', u'no', [], []]
+// ['Integer', 'u32', 'Integer::add_c_long_assign', 'no', [], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl AddAssign<u32> for Integer {
     fn add_assign(&mut self, rhs: u32) {
@@ -95,7 +95,7 @@ impl AddAssign<u32> for Integer {
     }
 }
 
-// [u'Integer', u'&u32', u'Integer::add_c_long_assign', u'no', [], [u'deref']]
+// ['Integer', '&u32', 'Integer::add_c_long_assign', 'no', [], ['deref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl AddAssign<&u32> for Integer {
     fn add_assign(&mut self, rhs: &u32) {
@@ -103,7 +103,7 @@ impl AddAssign<&u32> for Integer {
     }
 }
 
-// [u'Integer', u'i64', u'Integer::add_c_long_assign', u'no', [], []]
+// ['Integer', 'i64', 'Integer::add_c_long_assign', 'no', [], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl AddAssign<i64> for Integer {
     fn add_assign(&mut self, rhs: i64) {
@@ -111,7 +111,7 @@ impl AddAssign<i64> for Integer {
     }
 }
 
-// [u'Integer', u'&i64', u'Integer::add_c_long_assign', u'no', [], [u'deref']]
+// ['Integer', '&i64', 'Integer::add_c_long_assign', 'no', [], ['deref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl AddAssign<&i64> for Integer {
     fn add_assign(&mut self, rhs: &i64) {
@@ -119,8 +119,8 @@ impl AddAssign<&i64> for Integer {
     }
 }
 
-// [u'Integer', u'u32', u'Integer::add_assign', u'no', [], [u'ref', {u'convert':
-// u'Integer'}]]
+// ['Integer', 'u32', 'Integer::add_assign', 'no', [], ['ref', {'convert':
+// 'Integer'}]]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl AddAssign<u32> for Integer {
     fn add_assign(&mut self, rhs: u32) {
@@ -128,8 +128,8 @@ impl AddAssign<u32> for Integer {
     }
 }
 
-// [u'Integer', u'&u32', u'Integer::add_assign', u'no', [], [u'ref',
-// {u'convert': u'Integer'}, u'deref']]
+// ['Integer', '&u32', 'Integer::add_assign', 'no', [], ['ref', {'convert':
+// 'Integer'}, 'deref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl AddAssign<&u32> for Integer {
     fn add_assign(&mut self, rhs: &u32) {
@@ -137,8 +137,8 @@ impl AddAssign<&u32> for Integer {
     }
 }
 
-// [u'Integer', u'i64', u'Integer::add_assign', u'no', [], [u'ref', {u'convert':
-// u'Integer'}]]
+// ['Integer', 'i64', 'Integer::add_assign', 'no', [], ['ref', {'convert':
+// 'Integer'}]]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl AddAssign<i64> for Integer {
     fn add_assign(&mut self, rhs: i64) {
@@ -146,8 +146,8 @@ impl AddAssign<i64> for Integer {
     }
 }
 
-// [u'Integer', u'&i64', u'Integer::add_assign', u'no', [], [u'ref',
-// {u'convert': u'Integer'}, u'deref']]
+// ['Integer', '&i64', 'Integer::add_assign', 'no', [], ['ref', {'convert':
+// 'Integer'}, 'deref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl AddAssign<&i64> for Integer {
     fn add_assign(&mut self, rhs: &i64) {
@@ -155,48 +155,48 @@ impl AddAssign<&i64> for Integer {
     }
 }
 
-// [u'Integer', u'u64', u'Integer::add_assign', u'no', [], [u'ref', {u'convert':
-// u'Integer'}]]
+// ['Integer', 'u64', 'Integer::add_assign', 'no', [], ['ref', {'convert':
+// 'Integer'}]]
 impl AddAssign<u64> for Integer {
     fn add_assign(&mut self, rhs: u64) {
         Integer::add_assign(self, &Integer::from(rhs))
     }
 }
 
-// [u'Integer', u'&u64', u'Integer::add_assign', u'no', [], [u'ref',
-// {u'convert': u'Integer'}, u'deref']]
+// ['Integer', '&u64', 'Integer::add_assign', 'no', [], ['ref', {'convert':
+// 'Integer'}, 'deref']]
 impl AddAssign<&u64> for Integer {
     fn add_assign(&mut self, rhs: &u64) {
         Integer::add_assign(self, &Integer::from(*rhs))
     }
 }
 
-// [u'Integer', u'i128', u'Integer::add_assign', u'no', [], [u'ref',
-// {u'convert': u'Integer'}]]
+// ['Integer', 'i128', 'Integer::add_assign', 'no', [], ['ref', {'convert':
+// 'Integer'}]]
 impl AddAssign<i128> for Integer {
     fn add_assign(&mut self, rhs: i128) {
         Integer::add_assign(self, &Integer::from(rhs))
     }
 }
 
-// [u'Integer', u'&i128', u'Integer::add_assign', u'no', [], [u'ref',
-// {u'convert': u'Integer'}, u'deref']]
+// ['Integer', '&i128', 'Integer::add_assign', 'no', [], ['ref', {'convert':
+// 'Integer'}, 'deref']]
 impl AddAssign<&i128> for Integer {
     fn add_assign(&mut self, rhs: &i128) {
         Integer::add_assign(self, &Integer::from(*rhs))
     }
 }
 
-// [u'Integer', u'u128', u'Integer::add_assign', u'no', [], [u'ref',
-// {u'convert': u'Integer'}]]
+// ['Integer', 'u128', 'Integer::add_assign', 'no', [], ['ref', {'convert':
+// 'Integer'}]]
 impl AddAssign<u128> for Integer {
     fn add_assign(&mut self, rhs: u128) {
         Integer::add_assign(self, &Integer::from(rhs))
     }
 }
 
-// [u'Integer', u'&u128', u'Integer::add_assign', u'no', [], [u'ref',
-// {u'convert': u'Integer'}, u'deref']]
+// ['Integer', '&u128', 'Integer::add_assign', 'no', [], ['ref', {'convert':
+// 'Integer'}, 'deref']]
 impl AddAssign<&u128> for Integer {
     fn add_assign(&mut self, rhs: &u128) {
         Integer::add_assign(self, &Integer::from(*rhs))

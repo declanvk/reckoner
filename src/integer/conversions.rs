@@ -227,6 +227,7 @@ cfg_if::cfg_if! {
                 src.to_string().parse().map_err(|_| Error::ConversionOutsideRange)
             }
         }
+
         impl TryFrom<&Integer> for u32 {
             type Error = Error;
             fn try_from(src: &Integer) -> Result<Self, Self::Error> {
@@ -253,6 +254,7 @@ cfg_if::cfg_if! {
                 src.to_string().parse().map_err(|_| Error::ConversionOutsideRange)
             }
         }
+
         impl TryFrom<&Integer> for i64 {
             type Error = Error;
             fn try_from(src: &Integer) -> Result<Self, Self::Error> {

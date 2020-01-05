@@ -1,8 +1,12 @@
-use crate::{error::Error, integer::Integer};
-use core::{convert::TryFrom, fmt, mem, mem::MaybeUninit, ptr, ptr::NonNull, str::FromStr};
+use crate::{
+    error::{Error, Result},
+    integer::Integer,
+};
+use core::{
+    cmp::Ordering, convert::TryFrom, fmt, mem, mem::MaybeUninit, ptr, ptr::NonNull, str::FromStr,
+};
 use std::{alloc, ffi::CString, os::raw::c_long};
 
-pub(crate) mod ops;
 
 /// Multiple precision rational value. Always heap allocated, not safe for
 /// sharing across threads.
@@ -111,6 +115,14 @@ impl Rational {
         imath_check_panic!(res, "Reducing rational value failed!");
     }
 
+    /// Set value of integer to zero
+    pub fn zero(&mut self) {
+        let self_raw = self.as_raw();
+
+        // This is safe bc `self` has been initialized.
+        unsafe { imath_sys::mp_rat_zero(self_raw) };
+    }
+
     /// Return a copy of the numerator of the rational value
     pub fn numerator(&self) -> Integer {
         let mut numer = Integer::new();
@@ -165,7 +177,7 @@ impl Rational {
         imath_check_panic!(res, "Copying the value failed!");
     }
 
-    pub(crate) fn from_string_repr(src: &str) -> Result<Self, Error> {
+    pub(crate) fn from_string_repr(src: impl ToString) -> Result<Self> {
         let string_repr =
             CString::new(src.to_string()).map_err(|_| Error::StringReprContainedNul)?;
         let char_ptr = string_repr.into_raw();
@@ -203,9 +215,8 @@ impl Rational {
         )
     }
 
-    // Reports the minimum number of characters required to represent `z` as a
+    // Reports the minimum number of characters required to represent `self` as a
     // zero-terminated string in base-10.
-    #[allow(dead_code)]
     pub(crate) fn required_display_len(&self) -> usize {
         let self_raw = self.as_raw();
 
@@ -218,11 +229,28 @@ impl Rational {
         len as usize
     }
 
+    // Reports the minimum number of characters required to represent `z` as a
+    // zero-terminated decimal string in base-10.
+    pub(crate) fn required_decimal_display_len(&self, max_precision: u16) -> usize {
+        let self_raw = self.as_raw();
+
+        // This is safe bc self_raw has been initialized and 10 is within the range
+        // `[MP_MIN_RADIX, MP_MAX_RADIX]`
+        let len = unsafe { imath_sys::mp_rat_decimal_len(self_raw, 10, max_precision.into()) };
+
+        // The output of the call is an i32, check that it is gte zero.
+        assert!(len >= 0);
+        len as usize
+    }
+
     pub(crate) fn to_cstring(&self) -> CString {
         let required_len = self.required_display_len();
         let self_raw = self.as_raw();
 
         let mut char_vec: Vec<u8> = Vec::with_capacity(required_len);
+        // Initialize all to zero
+        char_vec.resize_with(required_len, Default::default);
+
         let res = {
             let char_ptr = char_vec.as_mut_ptr();
             let cap = char_vec.capacity();
@@ -235,7 +263,7 @@ impl Rational {
 
         imath_check_panic!(res, "Writing the value as a string failed!");
 
-        // Setting the length is safe bc we now that the `mp_int_to_string`
+        // Setting the length is safe bc we now that the `mp_rat_to_string`
         // should have used the entire capacity to write to
         // string.
         unsafe {
@@ -243,13 +271,70 @@ impl Rational {
         }
 
         // At this point, char_vec is a zero-terminated vector containing a string
-        // representation of the integer.
+        // representation of the rational value.
         let without_nul = &char_vec.as_slice()[..(required_len - 1)];
 
         CString::new(without_nul).expect("Failed to produce a valid CString")
     }
 
-    #[allow(dead_code)]
+    /// Converts the value of `self` to a string in base-10 decimal-point
+    /// notation.  It generates `max_precision` digits of precision and takes a
+    /// `RoundMode` argument that determines how the ratio will be converted to
+    /// decimal.
+    pub fn to_decimal_string(&self, rounding_mode: RoundMode, max_precision: u16) -> String {
+        let required_len = self.required_decimal_display_len(max_precision);
+        let self_raw = self.as_raw();
+
+        let mut char_vec: Vec<u8> = Vec::with_capacity(required_len);
+        // Initialize all to zero
+        char_vec.resize_with(required_len, Default::default);
+
+        let res = {
+            let char_ptr = char_vec.as_mut_ptr();
+            let cap = char_vec.capacity();
+
+            debug_assert_eq!(required_len, cap);
+            unsafe {
+                imath_sys::mp_rat_to_decimal(
+                    self_raw,
+                    10,
+                    max_precision.into(),
+                    rounding_mode.into(),
+                    char_ptr as *mut _,
+                    required_len as i32,
+                )
+            }
+        };
+
+        imath_check_panic!(res, "Writing the value as a string failed!");
+
+        // Setting the length is safe bc we now that the `mp_rat_to_decimal`
+        // should have used the entire capacity to write to
+        // string.
+        unsafe {
+            char_vec.set_len(required_len);
+        }
+
+        // At this point, char_vec is a zero-terminated (possibly with many zeros)
+        // string containing a decimal representation of the rational value.
+        let (non_zero_idx, _) = char_vec
+            .iter()
+            .enumerate()
+            .rfind(|(_, c)| **c != 0)
+            .unwrap();
+        let without_nul = &char_vec.as_slice()[..=non_zero_idx];
+
+        CString::new(without_nul)
+            .unwrap_or_else(|err| {
+                panic!(
+                    "Failed to produce a valid CString. {} {:?}\n{}",
+                    non_zero_idx, char_vec, err
+                )
+            })
+            .to_string_lossy()
+            .into_owned()
+    }
+
     pub(crate) fn set_value(&mut self, numer: impl Into<c_long>, denom: impl Into<c_long>) {
         let self_raw = self.as_raw();
 
@@ -272,7 +357,7 @@ impl Rational {
 impl FromStr for Rational {
     type Err = Error;
 
-    fn from_str(s: &str) -> Result<Self, Error> {
+    fn from_str(s: &str) -> Result<Self> {
         Rational::from_string_repr(s)
     }
 }
@@ -327,16 +412,28 @@ impl Drop for Rational {
     }
 }
 
-/// This is the different ways to round a rational number when converting to a
-/// decimal format.
+// Ratios usually must be rounded when they are being converted for output
+/// as a decimal value.  There are four rounding modes currently
+/// supported.
 pub enum RoundMode {
     /// Truncates the value toward zero.
+    ///
+    /// For example, 12.009 to 2 decimal places becomes 12.00.
     Down,
     /// Rounds the value away from zero.
+    ///
+    /// For example, 12.001 to 2 decimal places becomes 12.01, but 12.000 to 2
+    /// decimal places remains 12.00.
     Up,
     /// Rounds the value to nearest digit, half rounds upward.
+    ///
+    /// For example, 12.005 to 2 decimal places becomes 12.01, but 12.004 to 2
+    /// decimal places becomes 12.00.
     HalfUp,
     /// Rounds the value to nearest digit, half goes toward zero.
+    ///
+    /// For example, 12.005 to 2 decimal places becomes 12.00, but 12.006 to 2
+    /// decimal places becomes 12.01.
     HalfDown,
 }
 
@@ -355,7 +452,7 @@ impl Into<imath_sys::mp_round_mode> for RoundMode {
 impl TryFrom<imath_sys::mp_round_mode> for RoundMode {
     type Error = Error;
 
-    fn try_from(src: imath_sys::mp_round_mode) -> Result<Self, Error> {
+    fn try_from(src: imath_sys::mp_round_mode) -> Result<Self> {
         use RoundMode::*;
         match src {
             imath_sys::mp_round_mode_MP_ROUND_DOWN => Ok(Down),
@@ -401,6 +498,50 @@ mod test {
 
         assert_eq!(rat.numerator(), Integer::from(2469));
         assert_eq!(rat.denominator(), Integer::from(2000));
+    }
+
+    #[test]
+    fn rational_to_decimal() {
+        let mut rat = Rational::new();
+        rat.set_value(2, 3);
+
+        assert_eq!(rat.to_decimal_string(RoundMode::Down, 3), "0.666");
+        assert_eq!(
+            rat.to_decimal_string(RoundMode::Down, 15),
+            "0.666666666666666"
+        );
+
+        rat.set_value(2, 1);
+
+        assert_eq!(rat.to_decimal_string(RoundMode::Down, 3), "2.000");
+        assert_eq!(
+            rat.to_decimal_string(RoundMode::Down, 15),
+            "2.000000000000000"
+        );
+
+        rat.zero();
+
+        assert_eq!(rat.to_decimal_string(RoundMode::Down, 3), "0.000");
+        assert_eq!(
+            rat.to_decimal_string(RoundMode::Down, 15),
+            "0.000000000000000"
+        );
+
+        rat.set_value(9, 1000);
+        assert_eq!(rat.to_decimal_string(RoundMode::Down, 2), "0.00");
+
+        rat.set_value(1, 1000);
+        assert_eq!(rat.to_decimal_string(RoundMode::Up, 2), "0.01");
+
+        rat.set_value(5, 1000);
+        assert_eq!(rat.to_decimal_string(RoundMode::HalfUp, 2), "0.01");
+        rat.set_value(4, 1000);
+        assert_eq!(rat.to_decimal_string(RoundMode::HalfUp, 2), "0.00");
+
+        rat.set_value(5, 1000);
+        assert_eq!(rat.to_decimal_string(RoundMode::HalfDown, 2), "0.00");
+        rat.set_value(6, 1000);
+        assert_eq!(rat.to_decimal_string(RoundMode::HalfDown, 2), "0.01");
     }
 
     #[test]

@@ -6,8 +6,8 @@ use core::ops::Mul;
 
 // Mul          The multiplication operator *.
 
-// [u'Integer', u'Integer', u'Integer', u'Integer::multiply_assign', u'lhs',
-// [u'ref_mut'], [u'ref']]
+// ['Integer', 'Integer', 'Integer', 'Integer::multiply_assign', 'lhs',
+// ['ref_mut'], ['ref']]
 impl Mul<Integer> for Integer {
     type Output = Integer;
 
@@ -17,8 +17,8 @@ impl Mul<Integer> for Integer {
     }
 }
 
-// [u'Integer', u'&Integer', u'Integer', u'Integer::multiply_assign', u'lhs',
-// [u'ref_mut'], []]
+// ['Integer', '&Integer', 'Integer', 'Integer::multiply_assign', 'lhs',
+// ['ref_mut'], []]
 impl Mul<&Integer> for Integer {
     type Output = Integer;
 
@@ -28,8 +28,8 @@ impl Mul<&Integer> for Integer {
     }
 }
 
-// [u'&Integer', u'Integer', u'Integer', u'reverse_multiply_assign', u'rhs', [],
-// [u'ref_mut']]
+// ['&Integer', 'Integer', 'Integer', 'reverse_multiply_assign', 'rhs', [],
+// ['ref_mut']]
 impl Mul<Integer> for &Integer {
     type Output = Integer;
 
@@ -39,7 +39,7 @@ impl Mul<Integer> for &Integer {
     }
 }
 
-// [u'&Integer', u'&Integer', u'Integer', u'Integer::multiply', u'no', [], []]
+// ['&Integer', '&Integer', 'Integer', 'Integer::multiply', 'no', [], []]
 impl Mul<&Integer> for &Integer {
     type Output = Integer;
 
@@ -48,8 +48,8 @@ impl Mul<&Integer> for &Integer {
     }
 }
 
-// [u'Integer', u'i8', u'Integer', u'Integer::multiply_c_long_assign', u'lhs',
-// [u'ref_mut'], []]
+// ['Integer', 'i8', 'Integer', 'Integer::multiply_c_long_assign', 'lhs',
+// ['ref_mut'], []]
 impl Mul<i8> for Integer {
     type Output = Integer;
 
@@ -59,8 +59,8 @@ impl Mul<i8> for Integer {
     }
 }
 
-// [u'Integer', u'&i8', u'Integer', u'Integer::multiply_c_long_assign', u'lhs',
-// [u'ref_mut'], [u'deref']]
+// ['Integer', '&i8', 'Integer', 'Integer::multiply_c_long_assign', 'lhs',
+// ['ref_mut'], ['deref']]
 impl Mul<&i8> for Integer {
     type Output = Integer;
 
@@ -70,7 +70,7 @@ impl Mul<&i8> for Integer {
     }
 }
 
-// [u'&Integer', u'i8', u'Integer', u'Integer::multiply_c_long', u'no', [], []]
+// ['&Integer', 'i8', 'Integer', 'Integer::multiply_c_long', 'no', [], []]
 impl Mul<i8> for &Integer {
     type Output = Integer;
 
@@ -79,8 +79,8 @@ impl Mul<i8> for &Integer {
     }
 }
 
-// [u'&Integer', u'&i8', u'Integer', u'Integer::multiply_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&i8', 'Integer', 'Integer::multiply_c_long', 'no', [],
+// ['deref']]
 impl Mul<&i8> for &Integer {
     type Output = Integer;
 
@@ -89,8 +89,8 @@ impl Mul<&i8> for &Integer {
     }
 }
 
-// [u'i8', u'Integer', u'Integer', u'reverse_multiply_c_long_assign', u'rhs',
-// [], [u'ref_mut']]
+// ['i8', 'Integer', 'Integer', 'reverse_multiply_c_long_assign', 'rhs', [],
+// ['ref_mut']]
 impl Mul<Integer> for i8 {
     type Output = Integer;
 
@@ -100,7 +100,7 @@ impl Mul<Integer> for i8 {
     }
 }
 
-// [u'i8', u'&Integer', u'Integer', u'reverse_multiply_c_long', u'no', [], []]
+// ['i8', '&Integer', 'Integer', 'reverse_multiply_c_long', 'no', [], []]
 impl Mul<&Integer> for i8 {
     type Output = Integer;
 
@@ -109,8 +109,8 @@ impl Mul<&Integer> for i8 {
     }
 }
 
-// [u'&i8', u'Integer', u'Integer', u'reverse_multiply_c_long_assign', u'rhs',
-// [u'deref'], [u'ref_mut']]
+// ['&i8', 'Integer', 'Integer', 'reverse_multiply_c_long_assign', 'rhs',
+// ['deref'], ['ref_mut']]
 impl Mul<Integer> for &i8 {
     type Output = Integer;
 
@@ -120,8 +120,8 @@ impl Mul<Integer> for &i8 {
     }
 }
 
-// [u'&i8', u'&Integer', u'Integer', u'reverse_multiply_c_long', u'no',
-// [u'deref'], []]
+// ['&i8', '&Integer', 'Integer', 'reverse_multiply_c_long', 'no', ['deref'],
+// []]
 impl Mul<&Integer> for &i8 {
     type Output = Integer;
 
@@ -130,8 +130,8 @@ impl Mul<&Integer> for &i8 {
     }
 }
 
-// [u'Integer', u'u8', u'Integer', u'Integer::multiply_c_long_assign', u'lhs',
-// [u'ref_mut'], []]
+// ['Integer', 'u8', 'Integer', 'Integer::multiply_c_long_assign', 'lhs',
+// ['ref_mut'], []]
 impl Mul<u8> for Integer {
     type Output = Integer;
 
@@ -141,8 +141,8 @@ impl Mul<u8> for Integer {
     }
 }
 
-// [u'Integer', u'&u8', u'Integer', u'Integer::multiply_c_long_assign', u'lhs',
-// [u'ref_mut'], [u'deref']]
+// ['Integer', '&u8', 'Integer', 'Integer::multiply_c_long_assign', 'lhs',
+// ['ref_mut'], ['deref']]
 impl Mul<&u8> for Integer {
     type Output = Integer;
 
@@ -152,7 +152,7 @@ impl Mul<&u8> for Integer {
     }
 }
 
-// [u'&Integer', u'u8', u'Integer', u'Integer::multiply_c_long', u'no', [], []]
+// ['&Integer', 'u8', 'Integer', 'Integer::multiply_c_long', 'no', [], []]
 impl Mul<u8> for &Integer {
     type Output = Integer;
 
@@ -161,8 +161,8 @@ impl Mul<u8> for &Integer {
     }
 }
 
-// [u'&Integer', u'&u8', u'Integer', u'Integer::multiply_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&u8', 'Integer', 'Integer::multiply_c_long', 'no', [],
+// ['deref']]
 impl Mul<&u8> for &Integer {
     type Output = Integer;
 
@@ -171,8 +171,8 @@ impl Mul<&u8> for &Integer {
     }
 }
 
-// [u'u8', u'Integer', u'Integer', u'reverse_multiply_c_long_assign', u'rhs',
-// [], [u'ref_mut']]
+// ['u8', 'Integer', 'Integer', 'reverse_multiply_c_long_assign', 'rhs', [],
+// ['ref_mut']]
 impl Mul<Integer> for u8 {
     type Output = Integer;
 
@@ -182,7 +182,7 @@ impl Mul<Integer> for u8 {
     }
 }
 
-// [u'u8', u'&Integer', u'Integer', u'reverse_multiply_c_long', u'no', [], []]
+// ['u8', '&Integer', 'Integer', 'reverse_multiply_c_long', 'no', [], []]
 impl Mul<&Integer> for u8 {
     type Output = Integer;
 
@@ -191,8 +191,8 @@ impl Mul<&Integer> for u8 {
     }
 }
 
-// [u'&u8', u'Integer', u'Integer', u'reverse_multiply_c_long_assign', u'rhs',
-// [u'deref'], [u'ref_mut']]
+// ['&u8', 'Integer', 'Integer', 'reverse_multiply_c_long_assign', 'rhs',
+// ['deref'], ['ref_mut']]
 impl Mul<Integer> for &u8 {
     type Output = Integer;
 
@@ -202,8 +202,8 @@ impl Mul<Integer> for &u8 {
     }
 }
 
-// [u'&u8', u'&Integer', u'Integer', u'reverse_multiply_c_long', u'no',
-// [u'deref'], []]
+// ['&u8', '&Integer', 'Integer', 'reverse_multiply_c_long', 'no', ['deref'],
+// []]
 impl Mul<&Integer> for &u8 {
     type Output = Integer;
 
@@ -212,8 +212,8 @@ impl Mul<&Integer> for &u8 {
     }
 }
 
-// [u'Integer', u'i16', u'Integer', u'Integer::multiply_c_long_assign', u'lhs',
-// [u'ref_mut'], []]
+// ['Integer', 'i16', 'Integer', 'Integer::multiply_c_long_assign', 'lhs',
+// ['ref_mut'], []]
 impl Mul<i16> for Integer {
     type Output = Integer;
 
@@ -223,8 +223,8 @@ impl Mul<i16> for Integer {
     }
 }
 
-// [u'Integer', u'&i16', u'Integer', u'Integer::multiply_c_long_assign', u'lhs',
-// [u'ref_mut'], [u'deref']]
+// ['Integer', '&i16', 'Integer', 'Integer::multiply_c_long_assign', 'lhs',
+// ['ref_mut'], ['deref']]
 impl Mul<&i16> for Integer {
     type Output = Integer;
 
@@ -234,7 +234,7 @@ impl Mul<&i16> for Integer {
     }
 }
 
-// [u'&Integer', u'i16', u'Integer', u'Integer::multiply_c_long', u'no', [], []]
+// ['&Integer', 'i16', 'Integer', 'Integer::multiply_c_long', 'no', [], []]
 impl Mul<i16> for &Integer {
     type Output = Integer;
 
@@ -243,8 +243,8 @@ impl Mul<i16> for &Integer {
     }
 }
 
-// [u'&Integer', u'&i16', u'Integer', u'Integer::multiply_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&i16', 'Integer', 'Integer::multiply_c_long', 'no', [],
+// ['deref']]
 impl Mul<&i16> for &Integer {
     type Output = Integer;
 
@@ -253,8 +253,8 @@ impl Mul<&i16> for &Integer {
     }
 }
 
-// [u'i16', u'Integer', u'Integer', u'reverse_multiply_c_long_assign', u'rhs',
-// [], [u'ref_mut']]
+// ['i16', 'Integer', 'Integer', 'reverse_multiply_c_long_assign', 'rhs', [],
+// ['ref_mut']]
 impl Mul<Integer> for i16 {
     type Output = Integer;
 
@@ -264,7 +264,7 @@ impl Mul<Integer> for i16 {
     }
 }
 
-// [u'i16', u'&Integer', u'Integer', u'reverse_multiply_c_long', u'no', [], []]
+// ['i16', '&Integer', 'Integer', 'reverse_multiply_c_long', 'no', [], []]
 impl Mul<&Integer> for i16 {
     type Output = Integer;
 
@@ -273,8 +273,8 @@ impl Mul<&Integer> for i16 {
     }
 }
 
-// [u'&i16', u'Integer', u'Integer', u'reverse_multiply_c_long_assign', u'rhs',
-// [u'deref'], [u'ref_mut']]
+// ['&i16', 'Integer', 'Integer', 'reverse_multiply_c_long_assign', 'rhs',
+// ['deref'], ['ref_mut']]
 impl Mul<Integer> for &i16 {
     type Output = Integer;
 
@@ -284,8 +284,8 @@ impl Mul<Integer> for &i16 {
     }
 }
 
-// [u'&i16', u'&Integer', u'Integer', u'reverse_multiply_c_long', u'no',
-// [u'deref'], []]
+// ['&i16', '&Integer', 'Integer', 'reverse_multiply_c_long', 'no', ['deref'],
+// []]
 impl Mul<&Integer> for &i16 {
     type Output = Integer;
 
@@ -294,8 +294,8 @@ impl Mul<&Integer> for &i16 {
     }
 }
 
-// [u'Integer', u'u16', u'Integer', u'Integer::multiply_c_long_assign', u'lhs',
-// [u'ref_mut'], []]
+// ['Integer', 'u16', 'Integer', 'Integer::multiply_c_long_assign', 'lhs',
+// ['ref_mut'], []]
 impl Mul<u16> for Integer {
     type Output = Integer;
 
@@ -305,8 +305,8 @@ impl Mul<u16> for Integer {
     }
 }
 
-// [u'Integer', u'&u16', u'Integer', u'Integer::multiply_c_long_assign', u'lhs',
-// [u'ref_mut'], [u'deref']]
+// ['Integer', '&u16', 'Integer', 'Integer::multiply_c_long_assign', 'lhs',
+// ['ref_mut'], ['deref']]
 impl Mul<&u16> for Integer {
     type Output = Integer;
 
@@ -316,7 +316,7 @@ impl Mul<&u16> for Integer {
     }
 }
 
-// [u'&Integer', u'u16', u'Integer', u'Integer::multiply_c_long', u'no', [], []]
+// ['&Integer', 'u16', 'Integer', 'Integer::multiply_c_long', 'no', [], []]
 impl Mul<u16> for &Integer {
     type Output = Integer;
 
@@ -325,8 +325,8 @@ impl Mul<u16> for &Integer {
     }
 }
 
-// [u'&Integer', u'&u16', u'Integer', u'Integer::multiply_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&u16', 'Integer', 'Integer::multiply_c_long', 'no', [],
+// ['deref']]
 impl Mul<&u16> for &Integer {
     type Output = Integer;
 
@@ -335,8 +335,8 @@ impl Mul<&u16> for &Integer {
     }
 }
 
-// [u'u16', u'Integer', u'Integer', u'reverse_multiply_c_long_assign', u'rhs',
-// [], [u'ref_mut']]
+// ['u16', 'Integer', 'Integer', 'reverse_multiply_c_long_assign', 'rhs', [],
+// ['ref_mut']]
 impl Mul<Integer> for u16 {
     type Output = Integer;
 
@@ -346,7 +346,7 @@ impl Mul<Integer> for u16 {
     }
 }
 
-// [u'u16', u'&Integer', u'Integer', u'reverse_multiply_c_long', u'no', [], []]
+// ['u16', '&Integer', 'Integer', 'reverse_multiply_c_long', 'no', [], []]
 impl Mul<&Integer> for u16 {
     type Output = Integer;
 
@@ -355,8 +355,8 @@ impl Mul<&Integer> for u16 {
     }
 }
 
-// [u'&u16', u'Integer', u'Integer', u'reverse_multiply_c_long_assign', u'rhs',
-// [u'deref'], [u'ref_mut']]
+// ['&u16', 'Integer', 'Integer', 'reverse_multiply_c_long_assign', 'rhs',
+// ['deref'], ['ref_mut']]
 impl Mul<Integer> for &u16 {
     type Output = Integer;
 
@@ -366,8 +366,8 @@ impl Mul<Integer> for &u16 {
     }
 }
 
-// [u'&u16', u'&Integer', u'Integer', u'reverse_multiply_c_long', u'no',
-// [u'deref'], []]
+// ['&u16', '&Integer', 'Integer', 'reverse_multiply_c_long', 'no', ['deref'],
+// []]
 impl Mul<&Integer> for &u16 {
     type Output = Integer;
 
@@ -376,8 +376,8 @@ impl Mul<&Integer> for &u16 {
     }
 }
 
-// [u'Integer', u'i32', u'Integer', u'Integer::multiply_c_long_assign', u'lhs',
-// [u'ref_mut'], []]
+// ['Integer', 'i32', 'Integer', 'Integer::multiply_c_long_assign', 'lhs',
+// ['ref_mut'], []]
 impl Mul<i32> for Integer {
     type Output = Integer;
 
@@ -387,8 +387,8 @@ impl Mul<i32> for Integer {
     }
 }
 
-// [u'Integer', u'&i32', u'Integer', u'Integer::multiply_c_long_assign', u'lhs',
-// [u'ref_mut'], [u'deref']]
+// ['Integer', '&i32', 'Integer', 'Integer::multiply_c_long_assign', 'lhs',
+// ['ref_mut'], ['deref']]
 impl Mul<&i32> for Integer {
     type Output = Integer;
 
@@ -398,7 +398,7 @@ impl Mul<&i32> for Integer {
     }
 }
 
-// [u'&Integer', u'i32', u'Integer', u'Integer::multiply_c_long', u'no', [], []]
+// ['&Integer', 'i32', 'Integer', 'Integer::multiply_c_long', 'no', [], []]
 impl Mul<i32> for &Integer {
     type Output = Integer;
 
@@ -407,8 +407,8 @@ impl Mul<i32> for &Integer {
     }
 }
 
-// [u'&Integer', u'&i32', u'Integer', u'Integer::multiply_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&i32', 'Integer', 'Integer::multiply_c_long', 'no', [],
+// ['deref']]
 impl Mul<&i32> for &Integer {
     type Output = Integer;
 
@@ -417,8 +417,8 @@ impl Mul<&i32> for &Integer {
     }
 }
 
-// [u'i32', u'Integer', u'Integer', u'reverse_multiply_c_long_assign', u'rhs',
-// [], [u'ref_mut']]
+// ['i32', 'Integer', 'Integer', 'reverse_multiply_c_long_assign', 'rhs', [],
+// ['ref_mut']]
 impl Mul<Integer> for i32 {
     type Output = Integer;
 
@@ -428,7 +428,7 @@ impl Mul<Integer> for i32 {
     }
 }
 
-// [u'i32', u'&Integer', u'Integer', u'reverse_multiply_c_long', u'no', [], []]
+// ['i32', '&Integer', 'Integer', 'reverse_multiply_c_long', 'no', [], []]
 impl Mul<&Integer> for i32 {
     type Output = Integer;
 
@@ -437,8 +437,8 @@ impl Mul<&Integer> for i32 {
     }
 }
 
-// [u'&i32', u'Integer', u'Integer', u'reverse_multiply_c_long_assign', u'rhs',
-// [u'deref'], [u'ref_mut']]
+// ['&i32', 'Integer', 'Integer', 'reverse_multiply_c_long_assign', 'rhs',
+// ['deref'], ['ref_mut']]
 impl Mul<Integer> for &i32 {
     type Output = Integer;
 
@@ -448,8 +448,8 @@ impl Mul<Integer> for &i32 {
     }
 }
 
-// [u'&i32', u'&Integer', u'Integer', u'reverse_multiply_c_long', u'no',
-// [u'deref'], []]
+// ['&i32', '&Integer', 'Integer', 'reverse_multiply_c_long', 'no', ['deref'],
+// []]
 impl Mul<&Integer> for &i32 {
     type Output = Integer;
 
@@ -458,8 +458,8 @@ impl Mul<&Integer> for &i32 {
     }
 }
 
-// [u'Integer', u'u32', u'Integer', u'Integer::multiply_c_long_assign', u'lhs',
-// [u'ref_mut'], []]
+// ['Integer', 'u32', 'Integer', 'Integer::multiply_c_long_assign', 'lhs',
+// ['ref_mut'], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Mul<u32> for Integer {
     type Output = Integer;
@@ -470,8 +470,8 @@ impl Mul<u32> for Integer {
     }
 }
 
-// [u'Integer', u'&u32', u'Integer', u'Integer::multiply_c_long_assign', u'lhs',
-// [u'ref_mut'], [u'deref']]
+// ['Integer', '&u32', 'Integer', 'Integer::multiply_c_long_assign', 'lhs',
+// ['ref_mut'], ['deref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Mul<&u32> for Integer {
     type Output = Integer;
@@ -482,7 +482,7 @@ impl Mul<&u32> for Integer {
     }
 }
 
-// [u'&Integer', u'u32', u'Integer', u'Integer::multiply_c_long', u'no', [], []]
+// ['&Integer', 'u32', 'Integer', 'Integer::multiply_c_long', 'no', [], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Mul<u32> for &Integer {
     type Output = Integer;
@@ -492,8 +492,8 @@ impl Mul<u32> for &Integer {
     }
 }
 
-// [u'&Integer', u'&u32', u'Integer', u'Integer::multiply_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&u32', 'Integer', 'Integer::multiply_c_long', 'no', [],
+// ['deref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Mul<&u32> for &Integer {
     type Output = Integer;
@@ -503,8 +503,8 @@ impl Mul<&u32> for &Integer {
     }
 }
 
-// [u'u32', u'Integer', u'Integer', u'reverse_multiply_c_long_assign', u'rhs',
-// [], [u'ref_mut']]
+// ['u32', 'Integer', 'Integer', 'reverse_multiply_c_long_assign', 'rhs', [],
+// ['ref_mut']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Mul<Integer> for u32 {
     type Output = Integer;
@@ -515,7 +515,7 @@ impl Mul<Integer> for u32 {
     }
 }
 
-// [u'u32', u'&Integer', u'Integer', u'reverse_multiply_c_long', u'no', [], []]
+// ['u32', '&Integer', 'Integer', 'reverse_multiply_c_long', 'no', [], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Mul<&Integer> for u32 {
     type Output = Integer;
@@ -525,8 +525,8 @@ impl Mul<&Integer> for u32 {
     }
 }
 
-// [u'&u32', u'Integer', u'Integer', u'reverse_multiply_c_long_assign', u'rhs',
-// [u'deref'], [u'ref_mut']]
+// ['&u32', 'Integer', 'Integer', 'reverse_multiply_c_long_assign', 'rhs',
+// ['deref'], ['ref_mut']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Mul<Integer> for &u32 {
     type Output = Integer;
@@ -537,8 +537,8 @@ impl Mul<Integer> for &u32 {
     }
 }
 
-// [u'&u32', u'&Integer', u'Integer', u'reverse_multiply_c_long', u'no',
-// [u'deref'], []]
+// ['&u32', '&Integer', 'Integer', 'reverse_multiply_c_long', 'no', ['deref'],
+// []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Mul<&Integer> for &u32 {
     type Output = Integer;
@@ -548,8 +548,8 @@ impl Mul<&Integer> for &u32 {
     }
 }
 
-// [u'Integer', u'i64', u'Integer', u'Integer::multiply_c_long_assign', u'lhs',
-// [u'ref_mut'], []]
+// ['Integer', 'i64', 'Integer', 'Integer::multiply_c_long_assign', 'lhs',
+// ['ref_mut'], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Mul<i64> for Integer {
     type Output = Integer;
@@ -560,8 +560,8 @@ impl Mul<i64> for Integer {
     }
 }
 
-// [u'Integer', u'&i64', u'Integer', u'Integer::multiply_c_long_assign', u'lhs',
-// [u'ref_mut'], [u'deref']]
+// ['Integer', '&i64', 'Integer', 'Integer::multiply_c_long_assign', 'lhs',
+// ['ref_mut'], ['deref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Mul<&i64> for Integer {
     type Output = Integer;
@@ -572,7 +572,7 @@ impl Mul<&i64> for Integer {
     }
 }
 
-// [u'&Integer', u'i64', u'Integer', u'Integer::multiply_c_long', u'no', [], []]
+// ['&Integer', 'i64', 'Integer', 'Integer::multiply_c_long', 'no', [], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Mul<i64> for &Integer {
     type Output = Integer;
@@ -582,8 +582,8 @@ impl Mul<i64> for &Integer {
     }
 }
 
-// [u'&Integer', u'&i64', u'Integer', u'Integer::multiply_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&i64', 'Integer', 'Integer::multiply_c_long', 'no', [],
+// ['deref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Mul<&i64> for &Integer {
     type Output = Integer;
@@ -593,8 +593,8 @@ impl Mul<&i64> for &Integer {
     }
 }
 
-// [u'i64', u'Integer', u'Integer', u'reverse_multiply_c_long_assign', u'rhs',
-// [], [u'ref_mut']]
+// ['i64', 'Integer', 'Integer', 'reverse_multiply_c_long_assign', 'rhs', [],
+// ['ref_mut']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Mul<Integer> for i64 {
     type Output = Integer;
@@ -605,7 +605,7 @@ impl Mul<Integer> for i64 {
     }
 }
 
-// [u'i64', u'&Integer', u'Integer', u'reverse_multiply_c_long', u'no', [], []]
+// ['i64', '&Integer', 'Integer', 'reverse_multiply_c_long', 'no', [], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Mul<&Integer> for i64 {
     type Output = Integer;
@@ -615,8 +615,8 @@ impl Mul<&Integer> for i64 {
     }
 }
 
-// [u'&i64', u'Integer', u'Integer', u'reverse_multiply_c_long_assign', u'rhs',
-// [u'deref'], [u'ref_mut']]
+// ['&i64', 'Integer', 'Integer', 'reverse_multiply_c_long_assign', 'rhs',
+// ['deref'], ['ref_mut']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Mul<Integer> for &i64 {
     type Output = Integer;
@@ -627,8 +627,8 @@ impl Mul<Integer> for &i64 {
     }
 }
 
-// [u'&i64', u'&Integer', u'Integer', u'reverse_multiply_c_long', u'no',
-// [u'deref'], []]
+// ['&i64', '&Integer', 'Integer', 'reverse_multiply_c_long', 'no', ['deref'],
+// []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Mul<&Integer> for &i64 {
     type Output = Integer;
@@ -638,8 +638,8 @@ impl Mul<&Integer> for &i64 {
     }
 }
 
-// [u'Integer', u'u32', u'Integer', u'Integer::multiply_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}]]
+// ['Integer', 'u32', 'Integer', 'Integer::multiply_assign', 'lhs', ['ref_mut'],
+// ['ref', {'convert': 'Integer'}]]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<u32> for Integer {
     type Output = Integer;
@@ -650,8 +650,8 @@ impl Mul<u32> for Integer {
     }
 }
 
-// [u'Integer', u'&u32', u'Integer', u'Integer::multiply_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}, u'deref']]
+// ['Integer', '&u32', 'Integer', 'Integer::multiply_assign', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}, 'deref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<&u32> for Integer {
     type Output = Integer;
@@ -662,7 +662,7 @@ impl Mul<&u32> for Integer {
     }
 }
 
-// [u'&Integer', u'u32', u'Integer', u'let mut rhs =
+// ['&Integer', 'u32', 'Integer', 'let mut rhs =
 // Integer::from(rhs);\nreverse_multiply_assign(self, &mut rhs);\nrhs']
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<u32> for &Integer {
@@ -675,7 +675,7 @@ impl Mul<u32> for &Integer {
     }
 }
 
-// [u'&Integer', u'&u32', u'Integer', u'let mut rhs =
+// ['&Integer', '&u32', 'Integer', 'let mut rhs =
 // Integer::from(*rhs);\nreverse_multiply_assign(self, &mut rhs);\nrhs']
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<&u32> for &Integer {
@@ -688,8 +688,8 @@ impl Mul<&u32> for &Integer {
     }
 }
 
-// [u'u32', u'Integer', u'Integer', u'reverse_multiply_assign', u'rhs', [u'ref',
-// {u'convert': u'Integer'}], [u'ref_mut']]
+// ['u32', 'Integer', 'Integer', 'reverse_multiply_assign', 'rhs', ['ref',
+// {'convert': 'Integer'}], ['ref_mut']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<Integer> for u32 {
     type Output = Integer;
@@ -700,7 +700,7 @@ impl Mul<Integer> for u32 {
     }
 }
 
-// [u'u32', u'&Integer', u'Integer', u'let mut lhs =
+// ['u32', '&Integer', 'Integer', 'let mut lhs =
 // Integer::from(self);\nInteger::multiply_assign(&mut lhs, rhs);\nlhs']
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<&Integer> for u32 {
@@ -713,8 +713,8 @@ impl Mul<&Integer> for u32 {
     }
 }
 
-// [u'&u32', u'Integer', u'Integer', u'reverse_multiply_assign', u'rhs',
-// [u'ref', {u'convert': u'Integer'}, u'deref'], [u'ref_mut']]
+// ['&u32', 'Integer', 'Integer', 'reverse_multiply_assign', 'rhs', ['ref',
+// {'convert': 'Integer'}, 'deref'], ['ref_mut']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<Integer> for &u32 {
     type Output = Integer;
@@ -725,7 +725,7 @@ impl Mul<Integer> for &u32 {
     }
 }
 
-// [u'&u32', u'&Integer', u'Integer', u'let mut lhs =
+// ['&u32', '&Integer', 'Integer', 'let mut lhs =
 // Integer::from(*self);\nInteger::multiply_assign(&mut lhs, rhs);\nlhs']
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<&Integer> for &u32 {
@@ -738,8 +738,8 @@ impl Mul<&Integer> for &u32 {
     }
 }
 
-// [u'Integer', u'i64', u'Integer', u'Integer::multiply_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}]]
+// ['Integer', 'i64', 'Integer', 'Integer::multiply_assign', 'lhs', ['ref_mut'],
+// ['ref', {'convert': 'Integer'}]]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<i64> for Integer {
     type Output = Integer;
@@ -750,8 +750,8 @@ impl Mul<i64> for Integer {
     }
 }
 
-// [u'Integer', u'&i64', u'Integer', u'Integer::multiply_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}, u'deref']]
+// ['Integer', '&i64', 'Integer', 'Integer::multiply_assign', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}, 'deref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<&i64> for Integer {
     type Output = Integer;
@@ -762,7 +762,7 @@ impl Mul<&i64> for Integer {
     }
 }
 
-// [u'&Integer', u'i64', u'Integer', u'let mut rhs =
+// ['&Integer', 'i64', 'Integer', 'let mut rhs =
 // Integer::from(rhs);\nreverse_multiply_assign(self, &mut rhs);\nrhs']
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<i64> for &Integer {
@@ -775,7 +775,7 @@ impl Mul<i64> for &Integer {
     }
 }
 
-// [u'&Integer', u'&i64', u'Integer', u'let mut rhs =
+// ['&Integer', '&i64', 'Integer', 'let mut rhs =
 // Integer::from(*rhs);\nreverse_multiply_assign(self, &mut rhs);\nrhs']
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<&i64> for &Integer {
@@ -788,8 +788,8 @@ impl Mul<&i64> for &Integer {
     }
 }
 
-// [u'i64', u'Integer', u'Integer', u'reverse_multiply_assign', u'rhs', [u'ref',
-// {u'convert': u'Integer'}], [u'ref_mut']]
+// ['i64', 'Integer', 'Integer', 'reverse_multiply_assign', 'rhs', ['ref',
+// {'convert': 'Integer'}], ['ref_mut']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<Integer> for i64 {
     type Output = Integer;
@@ -800,7 +800,7 @@ impl Mul<Integer> for i64 {
     }
 }
 
-// [u'i64', u'&Integer', u'Integer', u'let mut lhs =
+// ['i64', '&Integer', 'Integer', 'let mut lhs =
 // Integer::from(self);\nInteger::multiply_assign(&mut lhs, rhs);\nlhs']
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<&Integer> for i64 {
@@ -813,8 +813,8 @@ impl Mul<&Integer> for i64 {
     }
 }
 
-// [u'&i64', u'Integer', u'Integer', u'reverse_multiply_assign', u'rhs',
-// [u'ref', {u'convert': u'Integer'}, u'deref'], [u'ref_mut']]
+// ['&i64', 'Integer', 'Integer', 'reverse_multiply_assign', 'rhs', ['ref',
+// {'convert': 'Integer'}, 'deref'], ['ref_mut']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<Integer> for &i64 {
     type Output = Integer;
@@ -825,7 +825,7 @@ impl Mul<Integer> for &i64 {
     }
 }
 
-// [u'&i64', u'&Integer', u'Integer', u'let mut lhs =
+// ['&i64', '&Integer', 'Integer', 'let mut lhs =
 // Integer::from(*self);\nInteger::multiply_assign(&mut lhs, rhs);\nlhs']
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Mul<&Integer> for &i64 {
@@ -838,8 +838,8 @@ impl Mul<&Integer> for &i64 {
     }
 }
 
-// [u'Integer', u'u64', u'Integer', u'Integer::multiply_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}]]
+// ['Integer', 'u64', 'Integer', 'Integer::multiply_assign', 'lhs', ['ref_mut'],
+// ['ref', {'convert': 'Integer'}]]
 impl Mul<u64> for Integer {
     type Output = Integer;
 
@@ -849,8 +849,8 @@ impl Mul<u64> for Integer {
     }
 }
 
-// [u'Integer', u'&u64', u'Integer', u'Integer::multiply_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}, u'deref']]
+// ['Integer', '&u64', 'Integer', 'Integer::multiply_assign', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}, 'deref']]
 impl Mul<&u64> for Integer {
     type Output = Integer;
 
@@ -860,7 +860,7 @@ impl Mul<&u64> for Integer {
     }
 }
 
-// [u'&Integer', u'u64', u'Integer', u'let mut rhs =
+// ['&Integer', 'u64', 'Integer', 'let mut rhs =
 // Integer::from(rhs);\nreverse_multiply_assign(self, &mut rhs);\nrhs']
 impl Mul<u64> for &Integer {
     type Output = Integer;
@@ -872,7 +872,7 @@ impl Mul<u64> for &Integer {
     }
 }
 
-// [u'&Integer', u'&u64', u'Integer', u'let mut rhs =
+// ['&Integer', '&u64', 'Integer', 'let mut rhs =
 // Integer::from(*rhs);\nreverse_multiply_assign(self, &mut rhs);\nrhs']
 impl Mul<&u64> for &Integer {
     type Output = Integer;
@@ -884,8 +884,8 @@ impl Mul<&u64> for &Integer {
     }
 }
 
-// [u'u64', u'Integer', u'Integer', u'reverse_multiply_assign', u'rhs', [u'ref',
-// {u'convert': u'Integer'}], [u'ref_mut']]
+// ['u64', 'Integer', 'Integer', 'reverse_multiply_assign', 'rhs', ['ref',
+// {'convert': 'Integer'}], ['ref_mut']]
 impl Mul<Integer> for u64 {
     type Output = Integer;
 
@@ -895,7 +895,7 @@ impl Mul<Integer> for u64 {
     }
 }
 
-// [u'u64', u'&Integer', u'Integer', u'let mut lhs =
+// ['u64', '&Integer', 'Integer', 'let mut lhs =
 // Integer::from(self);\nInteger::multiply_assign(&mut lhs, rhs);\nlhs']
 impl Mul<&Integer> for u64 {
     type Output = Integer;
@@ -907,8 +907,8 @@ impl Mul<&Integer> for u64 {
     }
 }
 
-// [u'&u64', u'Integer', u'Integer', u'reverse_multiply_assign', u'rhs',
-// [u'ref', {u'convert': u'Integer'}, u'deref'], [u'ref_mut']]
+// ['&u64', 'Integer', 'Integer', 'reverse_multiply_assign', 'rhs', ['ref',
+// {'convert': 'Integer'}, 'deref'], ['ref_mut']]
 impl Mul<Integer> for &u64 {
     type Output = Integer;
 
@@ -918,7 +918,7 @@ impl Mul<Integer> for &u64 {
     }
 }
 
-// [u'&u64', u'&Integer', u'Integer', u'let mut lhs =
+// ['&u64', '&Integer', 'Integer', 'let mut lhs =
 // Integer::from(*self);\nInteger::multiply_assign(&mut lhs, rhs);\nlhs']
 impl Mul<&Integer> for &u64 {
     type Output = Integer;
@@ -930,8 +930,8 @@ impl Mul<&Integer> for &u64 {
     }
 }
 
-// [u'Integer', u'i128', u'Integer', u'Integer::multiply_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}]]
+// ['Integer', 'i128', 'Integer', 'Integer::multiply_assign', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}]]
 impl Mul<i128> for Integer {
     type Output = Integer;
 
@@ -941,8 +941,8 @@ impl Mul<i128> for Integer {
     }
 }
 
-// [u'Integer', u'&i128', u'Integer', u'Integer::multiply_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}, u'deref']]
+// ['Integer', '&i128', 'Integer', 'Integer::multiply_assign', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}, 'deref']]
 impl Mul<&i128> for Integer {
     type Output = Integer;
 
@@ -952,7 +952,7 @@ impl Mul<&i128> for Integer {
     }
 }
 
-// [u'&Integer', u'i128', u'Integer', u'let mut rhs =
+// ['&Integer', 'i128', 'Integer', 'let mut rhs =
 // Integer::from(rhs);\nreverse_multiply_assign(self, &mut rhs);\nrhs']
 impl Mul<i128> for &Integer {
     type Output = Integer;
@@ -964,7 +964,7 @@ impl Mul<i128> for &Integer {
     }
 }
 
-// [u'&Integer', u'&i128', u'Integer', u'let mut rhs =
+// ['&Integer', '&i128', 'Integer', 'let mut rhs =
 // Integer::from(*rhs);\nreverse_multiply_assign(self, &mut rhs);\nrhs']
 impl Mul<&i128> for &Integer {
     type Output = Integer;
@@ -976,8 +976,8 @@ impl Mul<&i128> for &Integer {
     }
 }
 
-// [u'i128', u'Integer', u'Integer', u'reverse_multiply_assign', u'rhs',
-// [u'ref', {u'convert': u'Integer'}], [u'ref_mut']]
+// ['i128', 'Integer', 'Integer', 'reverse_multiply_assign', 'rhs', ['ref',
+// {'convert': 'Integer'}], ['ref_mut']]
 impl Mul<Integer> for i128 {
     type Output = Integer;
 
@@ -987,7 +987,7 @@ impl Mul<Integer> for i128 {
     }
 }
 
-// [u'i128', u'&Integer', u'Integer', u'let mut lhs =
+// ['i128', '&Integer', 'Integer', 'let mut lhs =
 // Integer::from(self);\nInteger::multiply_assign(&mut lhs, rhs);\nlhs']
 impl Mul<&Integer> for i128 {
     type Output = Integer;
@@ -999,8 +999,8 @@ impl Mul<&Integer> for i128 {
     }
 }
 
-// [u'&i128', u'Integer', u'Integer', u'reverse_multiply_assign', u'rhs',
-// [u'ref', {u'convert': u'Integer'}, u'deref'], [u'ref_mut']]
+// ['&i128', 'Integer', 'Integer', 'reverse_multiply_assign', 'rhs', ['ref',
+// {'convert': 'Integer'}, 'deref'], ['ref_mut']]
 impl Mul<Integer> for &i128 {
     type Output = Integer;
 
@@ -1010,7 +1010,7 @@ impl Mul<Integer> for &i128 {
     }
 }
 
-// [u'&i128', u'&Integer', u'Integer', u'let mut lhs =
+// ['&i128', '&Integer', 'Integer', 'let mut lhs =
 // Integer::from(*self);\nInteger::multiply_assign(&mut lhs, rhs);\nlhs']
 impl Mul<&Integer> for &i128 {
     type Output = Integer;
@@ -1022,8 +1022,8 @@ impl Mul<&Integer> for &i128 {
     }
 }
 
-// [u'Integer', u'u128', u'Integer', u'Integer::multiply_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}]]
+// ['Integer', 'u128', 'Integer', 'Integer::multiply_assign', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}]]
 impl Mul<u128> for Integer {
     type Output = Integer;
 
@@ -1033,8 +1033,8 @@ impl Mul<u128> for Integer {
     }
 }
 
-// [u'Integer', u'&u128', u'Integer', u'Integer::multiply_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}, u'deref']]
+// ['Integer', '&u128', 'Integer', 'Integer::multiply_assign', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}, 'deref']]
 impl Mul<&u128> for Integer {
     type Output = Integer;
 
@@ -1044,7 +1044,7 @@ impl Mul<&u128> for Integer {
     }
 }
 
-// [u'&Integer', u'u128', u'Integer', u'let mut rhs =
+// ['&Integer', 'u128', 'Integer', 'let mut rhs =
 // Integer::from(rhs);\nreverse_multiply_assign(self, &mut rhs);\nrhs']
 impl Mul<u128> for &Integer {
     type Output = Integer;
@@ -1056,7 +1056,7 @@ impl Mul<u128> for &Integer {
     }
 }
 
-// [u'&Integer', u'&u128', u'Integer', u'let mut rhs =
+// ['&Integer', '&u128', 'Integer', 'let mut rhs =
 // Integer::from(*rhs);\nreverse_multiply_assign(self, &mut rhs);\nrhs']
 impl Mul<&u128> for &Integer {
     type Output = Integer;
@@ -1068,8 +1068,8 @@ impl Mul<&u128> for &Integer {
     }
 }
 
-// [u'u128', u'Integer', u'Integer', u'reverse_multiply_assign', u'rhs',
-// [u'ref', {u'convert': u'Integer'}], [u'ref_mut']]
+// ['u128', 'Integer', 'Integer', 'reverse_multiply_assign', 'rhs', ['ref',
+// {'convert': 'Integer'}], ['ref_mut']]
 impl Mul<Integer> for u128 {
     type Output = Integer;
 
@@ -1079,7 +1079,7 @@ impl Mul<Integer> for u128 {
     }
 }
 
-// [u'u128', u'&Integer', u'Integer', u'let mut lhs =
+// ['u128', '&Integer', 'Integer', 'let mut lhs =
 // Integer::from(self);\nInteger::multiply_assign(&mut lhs, rhs);\nlhs']
 impl Mul<&Integer> for u128 {
     type Output = Integer;
@@ -1091,8 +1091,8 @@ impl Mul<&Integer> for u128 {
     }
 }
 
-// [u'&u128', u'Integer', u'Integer', u'reverse_multiply_assign', u'rhs',
-// [u'ref', {u'convert': u'Integer'}, u'deref'], [u'ref_mut']]
+// ['&u128', 'Integer', 'Integer', 'reverse_multiply_assign', 'rhs', ['ref',
+// {'convert': 'Integer'}, 'deref'], ['ref_mut']]
 impl Mul<Integer> for &u128 {
     type Output = Integer;
 
@@ -1102,7 +1102,7 @@ impl Mul<Integer> for &u128 {
     }
 }
 
-// [u'&u128', u'&Integer', u'Integer', u'let mut lhs =
+// ['&u128', '&Integer', 'Integer', 'let mut lhs =
 // Integer::from(*self);\nInteger::multiply_assign(&mut lhs, rhs);\nlhs']
 impl Mul<&Integer> for &u128 {
     type Output = Integer;

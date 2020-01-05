@@ -4,8 +4,8 @@ use core::ops::Rem;
 
 // Rem          The remainder operator %.
 
-// [u'Integer', u'Integer', u'Integer', u'Integer::remainder_assign', u'lhs',
-// [u'ref_mut'], [u'ref']]
+// ['Integer', 'Integer', 'Integer', 'Integer::remainder_assign', 'lhs',
+// ['ref_mut'], ['ref']]
 impl Rem<Integer> for Integer {
     type Output = Integer;
 
@@ -15,8 +15,8 @@ impl Rem<Integer> for Integer {
     }
 }
 
-// [u'Integer', u'&Integer', u'Integer', u'Integer::remainder_assign', u'lhs',
-// [u'ref_mut'], []]
+// ['Integer', '&Integer', 'Integer', 'Integer::remainder_assign', 'lhs',
+// ['ref_mut'], []]
 impl Rem<&Integer> for Integer {
     type Output = Integer;
 
@@ -26,8 +26,7 @@ impl Rem<&Integer> for Integer {
     }
 }
 
-// [u'&Integer', u'Integer', u'Integer', u'Integer::remainder', u'no', [],
-// [u'ref']]
+// ['&Integer', 'Integer', 'Integer', 'Integer::remainder', 'no', [], ['ref']]
 impl Rem<Integer> for &Integer {
     type Output = Integer;
 
@@ -36,7 +35,7 @@ impl Rem<Integer> for &Integer {
     }
 }
 
-// [u'&Integer', u'&Integer', u'Integer', u'Integer::remainder', u'no', [], []]
+// ['&Integer', '&Integer', 'Integer', 'Integer::remainder', 'no', [], []]
 impl Rem<&Integer> for &Integer {
     type Output = Integer;
 
@@ -45,7 +44,7 @@ impl Rem<&Integer> for &Integer {
     }
 }
 
-// [u'Integer', u'i8', u'i8', u'Integer::remainder_c_long', u'no', [u'ref'], []]
+// ['Integer', 'i8', 'i8', 'Integer::remainder_c_long', 'no', ['ref'], []]
 impl Rem<i8> for Integer {
     type Output = i8;
 
@@ -54,8 +53,8 @@ impl Rem<i8> for Integer {
     }
 }
 
-// [u'Integer', u'&i8', u'i8', u'Integer::remainder_c_long', u'no', [u'ref'],
-// [u'deref']]
+// ['Integer', '&i8', 'i8', 'Integer::remainder_c_long', 'no', ['ref'],
+// ['deref']]
 impl Rem<&i8> for Integer {
     type Output = i8;
 
@@ -64,7 +63,7 @@ impl Rem<&i8> for Integer {
     }
 }
 
-// [u'&Integer', u'i8', u'i8', u'Integer::remainder_c_long', u'no', [], []]
+// ['&Integer', 'i8', 'i8', 'Integer::remainder_c_long', 'no', [], []]
 impl Rem<i8> for &Integer {
     type Output = i8;
 
@@ -73,8 +72,7 @@ impl Rem<i8> for &Integer {
     }
 }
 
-// [u'&Integer', u'&i8', u'i8', u'Integer::remainder_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&i8', 'i8', 'Integer::remainder_c_long', 'no', [], ['deref']]
 impl Rem<&i8> for &Integer {
     type Output = i8;
 
@@ -83,7 +81,7 @@ impl Rem<&i8> for &Integer {
     }
 }
 
-// [u'i8', u'Integer', u'i8', u'reverse_remainder', u'no', [], [u'ref']]
+// ['i8', 'Integer', 'i8', 'reverse_remainder', 'no', [], ['ref']]
 impl Rem<Integer> for i8 {
     type Output = i8;
 
@@ -92,7 +90,7 @@ impl Rem<Integer> for i8 {
     }
 }
 
-// [u'i8', u'&Integer', u'i8', u'reverse_remainder', u'no', [], []]
+// ['i8', '&Integer', 'i8', 'reverse_remainder', 'no', [], []]
 impl Rem<&Integer> for i8 {
     type Output = i8;
 
@@ -101,8 +99,7 @@ impl Rem<&Integer> for i8 {
     }
 }
 
-// [u'&i8', u'Integer', u'i8', u'reverse_remainder', u'no', [u'deref'],
-// [u'ref']]
+// ['&i8', 'Integer', 'i8', 'reverse_remainder', 'no', ['deref'], ['ref']]
 impl Rem<Integer> for &i8 {
     type Output = i8;
 
@@ -111,7 +108,7 @@ impl Rem<Integer> for &i8 {
     }
 }
 
-// [u'&i8', u'&Integer', u'i8', u'reverse_remainder', u'no', [u'deref'], []]
+// ['&i8', '&Integer', 'i8', 'reverse_remainder', 'no', ['deref'], []]
 impl Rem<&Integer> for &i8 {
     type Output = i8;
 
@@ -120,7 +117,7 @@ impl Rem<&Integer> for &i8 {
     }
 }
 
-// [u'Integer', u'u8', u'u8', u'Integer::remainder_c_long', u'no', [u'ref'], []]
+// ['Integer', 'u8', 'u8', 'Integer::remainder_c_long', 'no', ['ref'], []]
 impl Rem<u8> for Integer {
     type Output = u8;
 
@@ -129,8 +126,8 @@ impl Rem<u8> for Integer {
     }
 }
 
-// [u'Integer', u'&u8', u'u8', u'Integer::remainder_c_long', u'no', [u'ref'],
-// [u'deref']]
+// ['Integer', '&u8', 'u8', 'Integer::remainder_c_long', 'no', ['ref'],
+// ['deref']]
 impl Rem<&u8> for Integer {
     type Output = u8;
 
@@ -139,7 +136,7 @@ impl Rem<&u8> for Integer {
     }
 }
 
-// [u'&Integer', u'u8', u'u8', u'Integer::remainder_c_long', u'no', [], []]
+// ['&Integer', 'u8', 'u8', 'Integer::remainder_c_long', 'no', [], []]
 impl Rem<u8> for &Integer {
     type Output = u8;
 
@@ -148,8 +145,7 @@ impl Rem<u8> for &Integer {
     }
 }
 
-// [u'&Integer', u'&u8', u'u8', u'Integer::remainder_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&u8', 'u8', 'Integer::remainder_c_long', 'no', [], ['deref']]
 impl Rem<&u8> for &Integer {
     type Output = u8;
 
@@ -158,7 +154,7 @@ impl Rem<&u8> for &Integer {
     }
 }
 
-// [u'u8', u'Integer', u'u8', u'reverse_remainder', u'no', [], [u'ref']]
+// ['u8', 'Integer', 'u8', 'reverse_remainder', 'no', [], ['ref']]
 impl Rem<Integer> for u8 {
     type Output = u8;
 
@@ -167,7 +163,7 @@ impl Rem<Integer> for u8 {
     }
 }
 
-// [u'u8', u'&Integer', u'u8', u'reverse_remainder', u'no', [], []]
+// ['u8', '&Integer', 'u8', 'reverse_remainder', 'no', [], []]
 impl Rem<&Integer> for u8 {
     type Output = u8;
 
@@ -176,8 +172,7 @@ impl Rem<&Integer> for u8 {
     }
 }
 
-// [u'&u8', u'Integer', u'u8', u'reverse_remainder', u'no', [u'deref'],
-// [u'ref']]
+// ['&u8', 'Integer', 'u8', 'reverse_remainder', 'no', ['deref'], ['ref']]
 impl Rem<Integer> for &u8 {
     type Output = u8;
 
@@ -186,7 +181,7 @@ impl Rem<Integer> for &u8 {
     }
 }
 
-// [u'&u8', u'&Integer', u'u8', u'reverse_remainder', u'no', [u'deref'], []]
+// ['&u8', '&Integer', 'u8', 'reverse_remainder', 'no', ['deref'], []]
 impl Rem<&Integer> for &u8 {
     type Output = u8;
 
@@ -195,8 +190,7 @@ impl Rem<&Integer> for &u8 {
     }
 }
 
-// [u'Integer', u'i16', u'i16', u'Integer::remainder_c_long', u'no', [u'ref'],
-// []]
+// ['Integer', 'i16', 'i16', 'Integer::remainder_c_long', 'no', ['ref'], []]
 impl Rem<i16> for Integer {
     type Output = i16;
 
@@ -205,8 +199,8 @@ impl Rem<i16> for Integer {
     }
 }
 
-// [u'Integer', u'&i16', u'i16', u'Integer::remainder_c_long', u'no', [u'ref'],
-// [u'deref']]
+// ['Integer', '&i16', 'i16', 'Integer::remainder_c_long', 'no', ['ref'],
+// ['deref']]
 impl Rem<&i16> for Integer {
     type Output = i16;
 
@@ -215,7 +209,7 @@ impl Rem<&i16> for Integer {
     }
 }
 
-// [u'&Integer', u'i16', u'i16', u'Integer::remainder_c_long', u'no', [], []]
+// ['&Integer', 'i16', 'i16', 'Integer::remainder_c_long', 'no', [], []]
 impl Rem<i16> for &Integer {
     type Output = i16;
 
@@ -224,8 +218,7 @@ impl Rem<i16> for &Integer {
     }
 }
 
-// [u'&Integer', u'&i16', u'i16', u'Integer::remainder_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&i16', 'i16', 'Integer::remainder_c_long', 'no', [], ['deref']]
 impl Rem<&i16> for &Integer {
     type Output = i16;
 
@@ -234,7 +227,7 @@ impl Rem<&i16> for &Integer {
     }
 }
 
-// [u'i16', u'Integer', u'i16', u'reverse_remainder', u'no', [], [u'ref']]
+// ['i16', 'Integer', 'i16', 'reverse_remainder', 'no', [], ['ref']]
 impl Rem<Integer> for i16 {
     type Output = i16;
 
@@ -243,7 +236,7 @@ impl Rem<Integer> for i16 {
     }
 }
 
-// [u'i16', u'&Integer', u'i16', u'reverse_remainder', u'no', [], []]
+// ['i16', '&Integer', 'i16', 'reverse_remainder', 'no', [], []]
 impl Rem<&Integer> for i16 {
     type Output = i16;
 
@@ -252,8 +245,7 @@ impl Rem<&Integer> for i16 {
     }
 }
 
-// [u'&i16', u'Integer', u'i16', u'reverse_remainder', u'no', [u'deref'],
-// [u'ref']]
+// ['&i16', 'Integer', 'i16', 'reverse_remainder', 'no', ['deref'], ['ref']]
 impl Rem<Integer> for &i16 {
     type Output = i16;
 
@@ -262,7 +254,7 @@ impl Rem<Integer> for &i16 {
     }
 }
 
-// [u'&i16', u'&Integer', u'i16', u'reverse_remainder', u'no', [u'deref'], []]
+// ['&i16', '&Integer', 'i16', 'reverse_remainder', 'no', ['deref'], []]
 impl Rem<&Integer> for &i16 {
     type Output = i16;
 
@@ -271,8 +263,7 @@ impl Rem<&Integer> for &i16 {
     }
 }
 
-// [u'Integer', u'u16', u'u16', u'Integer::remainder_c_long', u'no', [u'ref'],
-// []]
+// ['Integer', 'u16', 'u16', 'Integer::remainder_c_long', 'no', ['ref'], []]
 impl Rem<u16> for Integer {
     type Output = u16;
 
@@ -281,8 +272,8 @@ impl Rem<u16> for Integer {
     }
 }
 
-// [u'Integer', u'&u16', u'u16', u'Integer::remainder_c_long', u'no', [u'ref'],
-// [u'deref']]
+// ['Integer', '&u16', 'u16', 'Integer::remainder_c_long', 'no', ['ref'],
+// ['deref']]
 impl Rem<&u16> for Integer {
     type Output = u16;
 
@@ -291,7 +282,7 @@ impl Rem<&u16> for Integer {
     }
 }
 
-// [u'&Integer', u'u16', u'u16', u'Integer::remainder_c_long', u'no', [], []]
+// ['&Integer', 'u16', 'u16', 'Integer::remainder_c_long', 'no', [], []]
 impl Rem<u16> for &Integer {
     type Output = u16;
 
@@ -300,8 +291,7 @@ impl Rem<u16> for &Integer {
     }
 }
 
-// [u'&Integer', u'&u16', u'u16', u'Integer::remainder_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&u16', 'u16', 'Integer::remainder_c_long', 'no', [], ['deref']]
 impl Rem<&u16> for &Integer {
     type Output = u16;
 
@@ -310,7 +300,7 @@ impl Rem<&u16> for &Integer {
     }
 }
 
-// [u'u16', u'Integer', u'u16', u'reverse_remainder', u'no', [], [u'ref']]
+// ['u16', 'Integer', 'u16', 'reverse_remainder', 'no', [], ['ref']]
 impl Rem<Integer> for u16 {
     type Output = u16;
 
@@ -319,7 +309,7 @@ impl Rem<Integer> for u16 {
     }
 }
 
-// [u'u16', u'&Integer', u'u16', u'reverse_remainder', u'no', [], []]
+// ['u16', '&Integer', 'u16', 'reverse_remainder', 'no', [], []]
 impl Rem<&Integer> for u16 {
     type Output = u16;
 
@@ -328,8 +318,7 @@ impl Rem<&Integer> for u16 {
     }
 }
 
-// [u'&u16', u'Integer', u'u16', u'reverse_remainder', u'no', [u'deref'],
-// [u'ref']]
+// ['&u16', 'Integer', 'u16', 'reverse_remainder', 'no', ['deref'], ['ref']]
 impl Rem<Integer> for &u16 {
     type Output = u16;
 
@@ -338,7 +327,7 @@ impl Rem<Integer> for &u16 {
     }
 }
 
-// [u'&u16', u'&Integer', u'u16', u'reverse_remainder', u'no', [u'deref'], []]
+// ['&u16', '&Integer', 'u16', 'reverse_remainder', 'no', ['deref'], []]
 impl Rem<&Integer> for &u16 {
     type Output = u16;
 
@@ -347,8 +336,7 @@ impl Rem<&Integer> for &u16 {
     }
 }
 
-// [u'Integer', u'i32', u'i32', u'Integer::remainder_c_long', u'no', [u'ref'],
-// []]
+// ['Integer', 'i32', 'i32', 'Integer::remainder_c_long', 'no', ['ref'], []]
 impl Rem<i32> for Integer {
     type Output = i32;
 
@@ -357,8 +345,8 @@ impl Rem<i32> for Integer {
     }
 }
 
-// [u'Integer', u'&i32', u'i32', u'Integer::remainder_c_long', u'no', [u'ref'],
-// [u'deref']]
+// ['Integer', '&i32', 'i32', 'Integer::remainder_c_long', 'no', ['ref'],
+// ['deref']]
 impl Rem<&i32> for Integer {
     type Output = i32;
 
@@ -367,7 +355,7 @@ impl Rem<&i32> for Integer {
     }
 }
 
-// [u'&Integer', u'i32', u'i32', u'Integer::remainder_c_long', u'no', [], []]
+// ['&Integer', 'i32', 'i32', 'Integer::remainder_c_long', 'no', [], []]
 impl Rem<i32> for &Integer {
     type Output = i32;
 
@@ -376,8 +364,7 @@ impl Rem<i32> for &Integer {
     }
 }
 
-// [u'&Integer', u'&i32', u'i32', u'Integer::remainder_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&i32', 'i32', 'Integer::remainder_c_long', 'no', [], ['deref']]
 impl Rem<&i32> for &Integer {
     type Output = i32;
 
@@ -386,7 +373,7 @@ impl Rem<&i32> for &Integer {
     }
 }
 
-// [u'i32', u'Integer', u'i32', u'reverse_remainder', u'no', [], [u'ref']]
+// ['i32', 'Integer', 'i32', 'reverse_remainder', 'no', [], ['ref']]
 impl Rem<Integer> for i32 {
     type Output = i32;
 
@@ -395,7 +382,7 @@ impl Rem<Integer> for i32 {
     }
 }
 
-// [u'i32', u'&Integer', u'i32', u'reverse_remainder', u'no', [], []]
+// ['i32', '&Integer', 'i32', 'reverse_remainder', 'no', [], []]
 impl Rem<&Integer> for i32 {
     type Output = i32;
 
@@ -404,8 +391,7 @@ impl Rem<&Integer> for i32 {
     }
 }
 
-// [u'&i32', u'Integer', u'i32', u'reverse_remainder', u'no', [u'deref'],
-// [u'ref']]
+// ['&i32', 'Integer', 'i32', 'reverse_remainder', 'no', ['deref'], ['ref']]
 impl Rem<Integer> for &i32 {
     type Output = i32;
 
@@ -414,7 +400,7 @@ impl Rem<Integer> for &i32 {
     }
 }
 
-// [u'&i32', u'&Integer', u'i32', u'reverse_remainder', u'no', [u'deref'], []]
+// ['&i32', '&Integer', 'i32', 'reverse_remainder', 'no', ['deref'], []]
 impl Rem<&Integer> for &i32 {
     type Output = i32;
 
@@ -423,8 +409,7 @@ impl Rem<&Integer> for &i32 {
     }
 }
 
-// [u'Integer', u'u32', u'u32', u'Integer::remainder_c_long', u'no', [u'ref'],
-// []]
+// ['Integer', 'u32', 'u32', 'Integer::remainder_c_long', 'no', ['ref'], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Rem<u32> for Integer {
     type Output = u32;
@@ -434,8 +419,8 @@ impl Rem<u32> for Integer {
     }
 }
 
-// [u'Integer', u'&u32', u'u32', u'Integer::remainder_c_long', u'no', [u'ref'],
-// [u'deref']]
+// ['Integer', '&u32', 'u32', 'Integer::remainder_c_long', 'no', ['ref'],
+// ['deref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Rem<&u32> for Integer {
     type Output = u32;
@@ -445,7 +430,7 @@ impl Rem<&u32> for Integer {
     }
 }
 
-// [u'&Integer', u'u32', u'u32', u'Integer::remainder_c_long', u'no', [], []]
+// ['&Integer', 'u32', 'u32', 'Integer::remainder_c_long', 'no', [], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Rem<u32> for &Integer {
     type Output = u32;
@@ -455,8 +440,7 @@ impl Rem<u32> for &Integer {
     }
 }
 
-// [u'&Integer', u'&u32', u'u32', u'Integer::remainder_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&u32', 'u32', 'Integer::remainder_c_long', 'no', [], ['deref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Rem<&u32> for &Integer {
     type Output = u32;
@@ -466,7 +450,7 @@ impl Rem<&u32> for &Integer {
     }
 }
 
-// [u'u32', u'Integer', u'u32', u'reverse_remainder', u'no', [], [u'ref']]
+// ['u32', 'Integer', 'u32', 'reverse_remainder', 'no', [], ['ref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Rem<Integer> for u32 {
     type Output = u32;
@@ -476,7 +460,7 @@ impl Rem<Integer> for u32 {
     }
 }
 
-// [u'u32', u'&Integer', u'u32', u'reverse_remainder', u'no', [], []]
+// ['u32', '&Integer', 'u32', 'reverse_remainder', 'no', [], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Rem<&Integer> for u32 {
     type Output = u32;
@@ -486,8 +470,7 @@ impl Rem<&Integer> for u32 {
     }
 }
 
-// [u'&u32', u'Integer', u'u32', u'reverse_remainder', u'no', [u'deref'],
-// [u'ref']]
+// ['&u32', 'Integer', 'u32', 'reverse_remainder', 'no', ['deref'], ['ref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Rem<Integer> for &u32 {
     type Output = u32;
@@ -497,7 +480,7 @@ impl Rem<Integer> for &u32 {
     }
 }
 
-// [u'&u32', u'&Integer', u'u32', u'reverse_remainder', u'no', [u'deref'], []]
+// ['&u32', '&Integer', 'u32', 'reverse_remainder', 'no', ['deref'], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Rem<&Integer> for &u32 {
     type Output = u32;
@@ -507,8 +490,7 @@ impl Rem<&Integer> for &u32 {
     }
 }
 
-// [u'Integer', u'i64', u'i64', u'Integer::remainder_c_long', u'no', [u'ref'],
-// []]
+// ['Integer', 'i64', 'i64', 'Integer::remainder_c_long', 'no', ['ref'], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Rem<i64> for Integer {
     type Output = i64;
@@ -518,8 +500,8 @@ impl Rem<i64> for Integer {
     }
 }
 
-// [u'Integer', u'&i64', u'i64', u'Integer::remainder_c_long', u'no', [u'ref'],
-// [u'deref']]
+// ['Integer', '&i64', 'i64', 'Integer::remainder_c_long', 'no', ['ref'],
+// ['deref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Rem<&i64> for Integer {
     type Output = i64;
@@ -529,7 +511,7 @@ impl Rem<&i64> for Integer {
     }
 }
 
-// [u'&Integer', u'i64', u'i64', u'Integer::remainder_c_long', u'no', [], []]
+// ['&Integer', 'i64', 'i64', 'Integer::remainder_c_long', 'no', [], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Rem<i64> for &Integer {
     type Output = i64;
@@ -539,8 +521,7 @@ impl Rem<i64> for &Integer {
     }
 }
 
-// [u'&Integer', u'&i64', u'i64', u'Integer::remainder_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&i64', 'i64', 'Integer::remainder_c_long', 'no', [], ['deref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Rem<&i64> for &Integer {
     type Output = i64;
@@ -550,7 +531,7 @@ impl Rem<&i64> for &Integer {
     }
 }
 
-// [u'i64', u'Integer', u'i64', u'reverse_remainder', u'no', [], [u'ref']]
+// ['i64', 'Integer', 'i64', 'reverse_remainder', 'no', [], ['ref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Rem<Integer> for i64 {
     type Output = i64;
@@ -560,7 +541,7 @@ impl Rem<Integer> for i64 {
     }
 }
 
-// [u'i64', u'&Integer', u'i64', u'reverse_remainder', u'no', [], []]
+// ['i64', '&Integer', 'i64', 'reverse_remainder', 'no', [], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Rem<&Integer> for i64 {
     type Output = i64;
@@ -570,8 +551,7 @@ impl Rem<&Integer> for i64 {
     }
 }
 
-// [u'&i64', u'Integer', u'i64', u'reverse_remainder', u'no', [u'deref'],
-// [u'ref']]
+// ['&i64', 'Integer', 'i64', 'reverse_remainder', 'no', ['deref'], ['ref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Rem<Integer> for &i64 {
     type Output = i64;
@@ -581,7 +561,7 @@ impl Rem<Integer> for &i64 {
     }
 }
 
-// [u'&i64', u'&Integer', u'i64', u'reverse_remainder', u'no', [u'deref'], []]
+// ['&i64', '&Integer', 'i64', 'reverse_remainder', 'no', ['deref'], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Rem<&Integer> for &i64 {
     type Output = i64;
@@ -591,7 +571,7 @@ impl Rem<&Integer> for &i64 {
     }
 }
 
-// [u'Integer', u'u32', u'u32', u'remainder_reuse', u'no', [], []]
+// ['Integer', 'u32', 'u32', 'remainder_reuse', 'no', [], []]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Rem<u32> for Integer {
     type Output = u32;
@@ -601,7 +581,7 @@ impl Rem<u32> for Integer {
     }
 }
 
-// [u'Integer', u'&u32', u'u32', u'remainder_reuse', u'no', [], [u'deref']]
+// ['Integer', '&u32', 'u32', 'remainder_reuse', 'no', [], ['deref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Rem<&u32> for Integer {
     type Output = u32;
@@ -611,7 +591,7 @@ impl Rem<&u32> for Integer {
     }
 }
 
-// [u'&Integer', u'u32', u'u32', u'remainder_ref', u'no', [], []]
+// ['&Integer', 'u32', 'u32', 'remainder_ref', 'no', [], []]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Rem<u32> for &Integer {
     type Output = u32;
@@ -621,7 +601,7 @@ impl Rem<u32> for &Integer {
     }
 }
 
-// [u'&Integer', u'&u32', u'u32', u'remainder_ref', u'no', [], [u'deref']]
+// ['&Integer', '&u32', 'u32', 'remainder_ref', 'no', [], ['deref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Rem<&u32> for &Integer {
     type Output = u32;
@@ -631,7 +611,7 @@ impl Rem<&u32> for &Integer {
     }
 }
 
-// [u'u32', u'Integer', u'u32', u'reverse_remainder', u'no', [], [u'ref']]
+// ['u32', 'Integer', 'u32', 'reverse_remainder', 'no', [], ['ref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Rem<Integer> for u32 {
     type Output = u32;
@@ -641,7 +621,7 @@ impl Rem<Integer> for u32 {
     }
 }
 
-// [u'u32', u'&Integer', u'u32', u'reverse_remainder', u'no', [], []]
+// ['u32', '&Integer', 'u32', 'reverse_remainder', 'no', [], []]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Rem<&Integer> for u32 {
     type Output = u32;
@@ -651,8 +631,7 @@ impl Rem<&Integer> for u32 {
     }
 }
 
-// [u'&u32', u'Integer', u'u32', u'reverse_remainder', u'no', [u'deref'],
-// [u'ref']]
+// ['&u32', 'Integer', 'u32', 'reverse_remainder', 'no', ['deref'], ['ref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Rem<Integer> for &u32 {
     type Output = u32;
@@ -662,7 +641,7 @@ impl Rem<Integer> for &u32 {
     }
 }
 
-// [u'&u32', u'&Integer', u'u32', u'reverse_remainder', u'no', [u'deref'], []]
+// ['&u32', '&Integer', 'u32', 'reverse_remainder', 'no', ['deref'], []]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Rem<&Integer> for &u32 {
     type Output = u32;
@@ -672,7 +651,7 @@ impl Rem<&Integer> for &u32 {
     }
 }
 
-// [u'Integer', u'i64', u'i64', u'remainder_reuse', u'no', [], []]
+// ['Integer', 'i64', 'i64', 'remainder_reuse', 'no', [], []]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Rem<i64> for Integer {
     type Output = i64;
@@ -682,7 +661,7 @@ impl Rem<i64> for Integer {
     }
 }
 
-// [u'Integer', u'&i64', u'i64', u'remainder_reuse', u'no', [], [u'deref']]
+// ['Integer', '&i64', 'i64', 'remainder_reuse', 'no', [], ['deref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Rem<&i64> for Integer {
     type Output = i64;
@@ -692,7 +671,7 @@ impl Rem<&i64> for Integer {
     }
 }
 
-// [u'&Integer', u'i64', u'i64', u'remainder_ref', u'no', [], []]
+// ['&Integer', 'i64', 'i64', 'remainder_ref', 'no', [], []]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Rem<i64> for &Integer {
     type Output = i64;
@@ -702,7 +681,7 @@ impl Rem<i64> for &Integer {
     }
 }
 
-// [u'&Integer', u'&i64', u'i64', u'remainder_ref', u'no', [], [u'deref']]
+// ['&Integer', '&i64', 'i64', 'remainder_ref', 'no', [], ['deref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Rem<&i64> for &Integer {
     type Output = i64;
@@ -712,7 +691,7 @@ impl Rem<&i64> for &Integer {
     }
 }
 
-// [u'i64', u'Integer', u'i64', u'reverse_remainder', u'no', [], [u'ref']]
+// ['i64', 'Integer', 'i64', 'reverse_remainder', 'no', [], ['ref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Rem<Integer> for i64 {
     type Output = i64;
@@ -722,7 +701,7 @@ impl Rem<Integer> for i64 {
     }
 }
 
-// [u'i64', u'&Integer', u'i64', u'reverse_remainder', u'no', [], []]
+// ['i64', '&Integer', 'i64', 'reverse_remainder', 'no', [], []]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Rem<&Integer> for i64 {
     type Output = i64;
@@ -732,8 +711,7 @@ impl Rem<&Integer> for i64 {
     }
 }
 
-// [u'&i64', u'Integer', u'i64', u'reverse_remainder', u'no', [u'deref'],
-// [u'ref']]
+// ['&i64', 'Integer', 'i64', 'reverse_remainder', 'no', ['deref'], ['ref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Rem<Integer> for &i64 {
     type Output = i64;
@@ -743,7 +721,7 @@ impl Rem<Integer> for &i64 {
     }
 }
 
-// [u'&i64', u'&Integer', u'i64', u'reverse_remainder', u'no', [u'deref'], []]
+// ['&i64', '&Integer', 'i64', 'reverse_remainder', 'no', ['deref'], []]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Rem<&Integer> for &i64 {
     type Output = i64;
@@ -753,7 +731,7 @@ impl Rem<&Integer> for &i64 {
     }
 }
 
-// [u'Integer', u'u64', u'u64', u'remainder_reuse', u'no', [], []]
+// ['Integer', 'u64', 'u64', 'remainder_reuse', 'no', [], []]
 impl Rem<u64> for Integer {
     type Output = u64;
 
@@ -762,7 +740,7 @@ impl Rem<u64> for Integer {
     }
 }
 
-// [u'Integer', u'&u64', u'u64', u'remainder_reuse', u'no', [], [u'deref']]
+// ['Integer', '&u64', 'u64', 'remainder_reuse', 'no', [], ['deref']]
 impl Rem<&u64> for Integer {
     type Output = u64;
 
@@ -771,7 +749,7 @@ impl Rem<&u64> for Integer {
     }
 }
 
-// [u'&Integer', u'u64', u'u64', u'remainder_ref', u'no', [], []]
+// ['&Integer', 'u64', 'u64', 'remainder_ref', 'no', [], []]
 impl Rem<u64> for &Integer {
     type Output = u64;
 
@@ -780,7 +758,7 @@ impl Rem<u64> for &Integer {
     }
 }
 
-// [u'&Integer', u'&u64', u'u64', u'remainder_ref', u'no', [], [u'deref']]
+// ['&Integer', '&u64', 'u64', 'remainder_ref', 'no', [], ['deref']]
 impl Rem<&u64> for &Integer {
     type Output = u64;
 
@@ -789,7 +767,7 @@ impl Rem<&u64> for &Integer {
     }
 }
 
-// [u'u64', u'Integer', u'u64', u'reverse_remainder', u'no', [], [u'ref']]
+// ['u64', 'Integer', 'u64', 'reverse_remainder', 'no', [], ['ref']]
 impl Rem<Integer> for u64 {
     type Output = u64;
 
@@ -798,7 +776,7 @@ impl Rem<Integer> for u64 {
     }
 }
 
-// [u'u64', u'&Integer', u'u64', u'reverse_remainder', u'no', [], []]
+// ['u64', '&Integer', 'u64', 'reverse_remainder', 'no', [], []]
 impl Rem<&Integer> for u64 {
     type Output = u64;
 
@@ -807,8 +785,7 @@ impl Rem<&Integer> for u64 {
     }
 }
 
-// [u'&u64', u'Integer', u'u64', u'reverse_remainder', u'no', [u'deref'],
-// [u'ref']]
+// ['&u64', 'Integer', 'u64', 'reverse_remainder', 'no', ['deref'], ['ref']]
 impl Rem<Integer> for &u64 {
     type Output = u64;
 
@@ -817,7 +794,7 @@ impl Rem<Integer> for &u64 {
     }
 }
 
-// [u'&u64', u'&Integer', u'u64', u'reverse_remainder', u'no', [u'deref'], []]
+// ['&u64', '&Integer', 'u64', 'reverse_remainder', 'no', ['deref'], []]
 impl Rem<&Integer> for &u64 {
     type Output = u64;
 
@@ -826,7 +803,7 @@ impl Rem<&Integer> for &u64 {
     }
 }
 
-// [u'Integer', u'i128', u'i128', u'remainder_reuse', u'no', [], []]
+// ['Integer', 'i128', 'i128', 'remainder_reuse', 'no', [], []]
 impl Rem<i128> for Integer {
     type Output = i128;
 
@@ -835,7 +812,7 @@ impl Rem<i128> for Integer {
     }
 }
 
-// [u'Integer', u'&i128', u'i128', u'remainder_reuse', u'no', [], [u'deref']]
+// ['Integer', '&i128', 'i128', 'remainder_reuse', 'no', [], ['deref']]
 impl Rem<&i128> for Integer {
     type Output = i128;
 
@@ -844,7 +821,7 @@ impl Rem<&i128> for Integer {
     }
 }
 
-// [u'&Integer', u'i128', u'i128', u'remainder_ref', u'no', [], []]
+// ['&Integer', 'i128', 'i128', 'remainder_ref', 'no', [], []]
 impl Rem<i128> for &Integer {
     type Output = i128;
 
@@ -853,7 +830,7 @@ impl Rem<i128> for &Integer {
     }
 }
 
-// [u'&Integer', u'&i128', u'i128', u'remainder_ref', u'no', [], [u'deref']]
+// ['&Integer', '&i128', 'i128', 'remainder_ref', 'no', [], ['deref']]
 impl Rem<&i128> for &Integer {
     type Output = i128;
 
@@ -862,7 +839,7 @@ impl Rem<&i128> for &Integer {
     }
 }
 
-// [u'i128', u'Integer', u'i128', u'reverse_remainder', u'no', [], [u'ref']]
+// ['i128', 'Integer', 'i128', 'reverse_remainder', 'no', [], ['ref']]
 impl Rem<Integer> for i128 {
     type Output = i128;
 
@@ -871,7 +848,7 @@ impl Rem<Integer> for i128 {
     }
 }
 
-// [u'i128', u'&Integer', u'i128', u'reverse_remainder', u'no', [], []]
+// ['i128', '&Integer', 'i128', 'reverse_remainder', 'no', [], []]
 impl Rem<&Integer> for i128 {
     type Output = i128;
 
@@ -880,8 +857,7 @@ impl Rem<&Integer> for i128 {
     }
 }
 
-// [u'&i128', u'Integer', u'i128', u'reverse_remainder', u'no', [u'deref'],
-// [u'ref']]
+// ['&i128', 'Integer', 'i128', 'reverse_remainder', 'no', ['deref'], ['ref']]
 impl Rem<Integer> for &i128 {
     type Output = i128;
 
@@ -890,7 +866,7 @@ impl Rem<Integer> for &i128 {
     }
 }
 
-// [u'&i128', u'&Integer', u'i128', u'reverse_remainder', u'no', [u'deref'], []]
+// ['&i128', '&Integer', 'i128', 'reverse_remainder', 'no', ['deref'], []]
 impl Rem<&Integer> for &i128 {
     type Output = i128;
 
@@ -899,7 +875,7 @@ impl Rem<&Integer> for &i128 {
     }
 }
 
-// [u'Integer', u'u128', u'u128', u'remainder_reuse', u'no', [], []]
+// ['Integer', 'u128', 'u128', 'remainder_reuse', 'no', [], []]
 impl Rem<u128> for Integer {
     type Output = u128;
 
@@ -908,7 +884,7 @@ impl Rem<u128> for Integer {
     }
 }
 
-// [u'Integer', u'&u128', u'u128', u'remainder_reuse', u'no', [], [u'deref']]
+// ['Integer', '&u128', 'u128', 'remainder_reuse', 'no', [], ['deref']]
 impl Rem<&u128> for Integer {
     type Output = u128;
 
@@ -917,7 +893,7 @@ impl Rem<&u128> for Integer {
     }
 }
 
-// [u'&Integer', u'u128', u'u128', u'remainder_ref', u'no', [], []]
+// ['&Integer', 'u128', 'u128', 'remainder_ref', 'no', [], []]
 impl Rem<u128> for &Integer {
     type Output = u128;
 
@@ -926,7 +902,7 @@ impl Rem<u128> for &Integer {
     }
 }
 
-// [u'&Integer', u'&u128', u'u128', u'remainder_ref', u'no', [], [u'deref']]
+// ['&Integer', '&u128', 'u128', 'remainder_ref', 'no', [], ['deref']]
 impl Rem<&u128> for &Integer {
     type Output = u128;
 
@@ -935,7 +911,7 @@ impl Rem<&u128> for &Integer {
     }
 }
 
-// [u'u128', u'Integer', u'u128', u'reverse_remainder', u'no', [], [u'ref']]
+// ['u128', 'Integer', 'u128', 'reverse_remainder', 'no', [], ['ref']]
 impl Rem<Integer> for u128 {
     type Output = u128;
 
@@ -944,7 +920,7 @@ impl Rem<Integer> for u128 {
     }
 }
 
-// [u'u128', u'&Integer', u'u128', u'reverse_remainder', u'no', [], []]
+// ['u128', '&Integer', 'u128', 'reverse_remainder', 'no', [], []]
 impl Rem<&Integer> for u128 {
     type Output = u128;
 
@@ -953,8 +929,7 @@ impl Rem<&Integer> for u128 {
     }
 }
 
-// [u'&u128', u'Integer', u'u128', u'reverse_remainder', u'no', [u'deref'],
-// [u'ref']]
+// ['&u128', 'Integer', 'u128', 'reverse_remainder', 'no', ['deref'], ['ref']]
 impl Rem<Integer> for &u128 {
     type Output = u128;
 
@@ -963,7 +938,7 @@ impl Rem<Integer> for &u128 {
     }
 }
 
-// [u'&u128', u'&Integer', u'u128', u'reverse_remainder', u'no', [u'deref'], []]
+// ['&u128', '&Integer', 'u128', 'reverse_remainder', 'no', ['deref'], []]
 impl Rem<&Integer> for &u128 {
     type Output = u128;
 

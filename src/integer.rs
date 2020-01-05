@@ -178,6 +178,9 @@ impl Integer {
         let self_raw = self.as_raw();
 
         let mut char_vec: Vec<u8> = Vec::with_capacity(required_len);
+        // Initialize all to zero
+        char_vec.resize_with(required_len, Default::default);
+
         let res = {
             let char_ptr = char_vec.as_mut_ptr();
             let cap = char_vec.capacity();
@@ -292,8 +295,12 @@ impl Integer {
         let mut out: c_long = 0;
         let out_raw = (&mut out) as *mut _;
 
+        // This is safe bc `self` has been initialized and `out_raw` points to an actual
+        // integer.
         let res = unsafe { imath_sys::mp_int_to_int(self_raw, out_raw) };
 
+        // Accessing this is safe bc the MP_OK value is only ever used as an error
+        // condition.
         if res == unsafe { imath_sys::MP_OK } {
             Ok(out)
         } else {
