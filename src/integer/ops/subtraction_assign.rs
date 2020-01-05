@@ -3,96 +3,91 @@ use core::ops::SubAssign;
 
 // SubAssign          The subtraction assignment operator -=.
 
-// [u'Integer', u'Integer', u'Integer::subtract_assign', u'no', [], [u'ref']]
+// ['Integer', 'Integer', 'Integer::subtract_assign', 'no', [], ['ref']]
 impl SubAssign<Integer> for Integer {
     fn sub_assign(&mut self, rhs: Integer) {
         Integer::subtract_assign(self, &rhs)
     }
 }
 
-// [u'Integer', u'&Integer', u'Integer::subtract_assign', u'no', [], []]
+// ['Integer', '&Integer', 'Integer::subtract_assign', 'no', [], []]
 impl SubAssign<&Integer> for Integer {
     fn sub_assign(&mut self, rhs: &Integer) {
         Integer::subtract_assign(self, rhs)
     }
 }
 
-// [u'Integer', u'i8', u'Integer::subtract_c_long_assign', u'no', [], []]
+// ['Integer', 'i8', 'Integer::subtract_c_long_assign', 'no', [], []]
 impl SubAssign<i8> for Integer {
     fn sub_assign(&mut self, rhs: i8) {
         Integer::subtract_c_long_assign(self, rhs)
     }
 }
 
-// [u'Integer', u'&i8', u'Integer::subtract_c_long_assign', u'no', [],
-// [u'deref']]
+// ['Integer', '&i8', 'Integer::subtract_c_long_assign', 'no', [], ['deref']]
 impl SubAssign<&i8> for Integer {
     fn sub_assign(&mut self, rhs: &i8) {
         Integer::subtract_c_long_assign(self, *rhs)
     }
 }
 
-// [u'Integer', u'u8', u'Integer::subtract_c_long_assign', u'no', [], []]
+// ['Integer', 'u8', 'Integer::subtract_c_long_assign', 'no', [], []]
 impl SubAssign<u8> for Integer {
     fn sub_assign(&mut self, rhs: u8) {
         Integer::subtract_c_long_assign(self, rhs)
     }
 }
 
-// [u'Integer', u'&u8', u'Integer::subtract_c_long_assign', u'no', [],
-// [u'deref']]
+// ['Integer', '&u8', 'Integer::subtract_c_long_assign', 'no', [], ['deref']]
 impl SubAssign<&u8> for Integer {
     fn sub_assign(&mut self, rhs: &u8) {
         Integer::subtract_c_long_assign(self, *rhs)
     }
 }
 
-// [u'Integer', u'i16', u'Integer::subtract_c_long_assign', u'no', [], []]
+// ['Integer', 'i16', 'Integer::subtract_c_long_assign', 'no', [], []]
 impl SubAssign<i16> for Integer {
     fn sub_assign(&mut self, rhs: i16) {
         Integer::subtract_c_long_assign(self, rhs)
     }
 }
 
-// [u'Integer', u'&i16', u'Integer::subtract_c_long_assign', u'no', [],
-// [u'deref']]
+// ['Integer', '&i16', 'Integer::subtract_c_long_assign', 'no', [], ['deref']]
 impl SubAssign<&i16> for Integer {
     fn sub_assign(&mut self, rhs: &i16) {
         Integer::subtract_c_long_assign(self, *rhs)
     }
 }
 
-// [u'Integer', u'u16', u'Integer::subtract_c_long_assign', u'no', [], []]
+// ['Integer', 'u16', 'Integer::subtract_c_long_assign', 'no', [], []]
 impl SubAssign<u16> for Integer {
     fn sub_assign(&mut self, rhs: u16) {
         Integer::subtract_c_long_assign(self, rhs)
     }
 }
 
-// [u'Integer', u'&u16', u'Integer::subtract_c_long_assign', u'no', [],
-// [u'deref']]
+// ['Integer', '&u16', 'Integer::subtract_c_long_assign', 'no', [], ['deref']]
 impl SubAssign<&u16> for Integer {
     fn sub_assign(&mut self, rhs: &u16) {
         Integer::subtract_c_long_assign(self, *rhs)
     }
 }
 
-// [u'Integer', u'i32', u'Integer::subtract_c_long_assign', u'no', [], []]
+// ['Integer', 'i32', 'Integer::subtract_c_long_assign', 'no', [], []]
 impl SubAssign<i32> for Integer {
     fn sub_assign(&mut self, rhs: i32) {
         Integer::subtract_c_long_assign(self, rhs)
     }
 }
 
-// [u'Integer', u'&i32', u'Integer::subtract_c_long_assign', u'no', [],
-// [u'deref']]
+// ['Integer', '&i32', 'Integer::subtract_c_long_assign', 'no', [], ['deref']]
 impl SubAssign<&i32> for Integer {
     fn sub_assign(&mut self, rhs: &i32) {
         Integer::subtract_c_long_assign(self, *rhs)
     }
 }
 
-// [u'Integer', u'u32', u'Integer::subtract_c_long_assign', u'no', [], []]
+// ['Integer', 'u32', 'Integer::subtract_c_long_assign', 'no', [], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl SubAssign<u32> for Integer {
     fn sub_assign(&mut self, rhs: u32) {
@@ -100,8 +95,7 @@ impl SubAssign<u32> for Integer {
     }
 }
 
-// [u'Integer', u'&u32', u'Integer::subtract_c_long_assign', u'no', [],
-// [u'deref']]
+// ['Integer', '&u32', 'Integer::subtract_c_long_assign', 'no', [], ['deref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl SubAssign<&u32> for Integer {
     fn sub_assign(&mut self, rhs: &u32) {
@@ -109,7 +103,7 @@ impl SubAssign<&u32> for Integer {
     }
 }
 
-// [u'Integer', u'i64', u'Integer::subtract_c_long_assign', u'no', [], []]
+// ['Integer', 'i64', 'Integer::subtract_c_long_assign', 'no', [], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl SubAssign<i64> for Integer {
     fn sub_assign(&mut self, rhs: i64) {
@@ -117,8 +111,7 @@ impl SubAssign<i64> for Integer {
     }
 }
 
-// [u'Integer', u'&i64', u'Integer::subtract_c_long_assign', u'no', [],
-// [u'deref']]
+// ['Integer', '&i64', 'Integer::subtract_c_long_assign', 'no', [], ['deref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl SubAssign<&i64> for Integer {
     fn sub_assign(&mut self, rhs: &i64) {
@@ -126,8 +119,8 @@ impl SubAssign<&i64> for Integer {
     }
 }
 
-// [u'Integer', u'u32', u'Integer::subtract_assign', u'no', [], [u'ref',
-// {u'convert': u'Integer'}]]
+// ['Integer', 'u32', 'Integer::subtract_assign', 'no', [], ['ref', {'convert':
+// 'Integer'}]]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl SubAssign<u32> for Integer {
     fn sub_assign(&mut self, rhs: u32) {
@@ -135,8 +128,8 @@ impl SubAssign<u32> for Integer {
     }
 }
 
-// [u'Integer', u'&u32', u'Integer::subtract_assign', u'no', [], [u'ref',
-// {u'convert': u'Integer'}, u'deref']]
+// ['Integer', '&u32', 'Integer::subtract_assign', 'no', [], ['ref', {'convert':
+// 'Integer'}, 'deref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl SubAssign<&u32> for Integer {
     fn sub_assign(&mut self, rhs: &u32) {
@@ -144,8 +137,8 @@ impl SubAssign<&u32> for Integer {
     }
 }
 
-// [u'Integer', u'i64', u'Integer::subtract_assign', u'no', [], [u'ref',
-// {u'convert': u'Integer'}]]
+// ['Integer', 'i64', 'Integer::subtract_assign', 'no', [], ['ref', {'convert':
+// 'Integer'}]]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl SubAssign<i64> for Integer {
     fn sub_assign(&mut self, rhs: i64) {
@@ -153,8 +146,8 @@ impl SubAssign<i64> for Integer {
     }
 }
 
-// [u'Integer', u'&i64', u'Integer::subtract_assign', u'no', [], [u'ref',
-// {u'convert': u'Integer'}, u'deref']]
+// ['Integer', '&i64', 'Integer::subtract_assign', 'no', [], ['ref', {'convert':
+// 'Integer'}, 'deref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl SubAssign<&i64> for Integer {
     fn sub_assign(&mut self, rhs: &i64) {
@@ -162,48 +155,48 @@ impl SubAssign<&i64> for Integer {
     }
 }
 
-// [u'Integer', u'u64', u'Integer::subtract_assign', u'no', [], [u'ref',
-// {u'convert': u'Integer'}]]
+// ['Integer', 'u64', 'Integer::subtract_assign', 'no', [], ['ref', {'convert':
+// 'Integer'}]]
 impl SubAssign<u64> for Integer {
     fn sub_assign(&mut self, rhs: u64) {
         Integer::subtract_assign(self, &Integer::from(rhs))
     }
 }
 
-// [u'Integer', u'&u64', u'Integer::subtract_assign', u'no', [], [u'ref',
-// {u'convert': u'Integer'}, u'deref']]
+// ['Integer', '&u64', 'Integer::subtract_assign', 'no', [], ['ref', {'convert':
+// 'Integer'}, 'deref']]
 impl SubAssign<&u64> for Integer {
     fn sub_assign(&mut self, rhs: &u64) {
         Integer::subtract_assign(self, &Integer::from(*rhs))
     }
 }
 
-// [u'Integer', u'i128', u'Integer::subtract_assign', u'no', [], [u'ref',
-// {u'convert': u'Integer'}]]
+// ['Integer', 'i128', 'Integer::subtract_assign', 'no', [], ['ref', {'convert':
+// 'Integer'}]]
 impl SubAssign<i128> for Integer {
     fn sub_assign(&mut self, rhs: i128) {
         Integer::subtract_assign(self, &Integer::from(rhs))
     }
 }
 
-// [u'Integer', u'&i128', u'Integer::subtract_assign', u'no', [], [u'ref',
-// {u'convert': u'Integer'}, u'deref']]
+// ['Integer', '&i128', 'Integer::subtract_assign', 'no', [], ['ref',
+// {'convert': 'Integer'}, 'deref']]
 impl SubAssign<&i128> for Integer {
     fn sub_assign(&mut self, rhs: &i128) {
         Integer::subtract_assign(self, &Integer::from(*rhs))
     }
 }
 
-// [u'Integer', u'u128', u'Integer::subtract_assign', u'no', [], [u'ref',
-// {u'convert': u'Integer'}]]
+// ['Integer', 'u128', 'Integer::subtract_assign', 'no', [], ['ref', {'convert':
+// 'Integer'}]]
 impl SubAssign<u128> for Integer {
     fn sub_assign(&mut self, rhs: u128) {
         Integer::subtract_assign(self, &Integer::from(rhs))
     }
 }
 
-// [u'Integer', u'&u128', u'Integer::subtract_assign', u'no', [], [u'ref',
-// {u'convert': u'Integer'}, u'deref']]
+// ['Integer', '&u128', 'Integer::subtract_assign', 'no', [], ['ref',
+// {'convert': 'Integer'}, 'deref']]
 impl SubAssign<&u128> for Integer {
     fn sub_assign(&mut self, rhs: &u128) {
         Integer::subtract_assign(self, &Integer::from(*rhs))

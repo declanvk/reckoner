@@ -3,8 +3,8 @@ use core::ops::Div;
 
 // Div          The division operator /.
 
-// [u'Integer', u'Integer', u'Integer', u'Integer::divide_assign', u'lhs',
-// [u'ref_mut'], [u'ref']]
+// ['Integer', 'Integer', 'Integer', 'Integer::divide_assign', 'lhs',
+// ['ref_mut'], ['ref']]
 impl Div<Integer> for Integer {
     type Output = Integer;
 
@@ -14,8 +14,8 @@ impl Div<Integer> for Integer {
     }
 }
 
-// [u'Integer', u'&Integer', u'Integer', u'Integer::divide_assign', u'lhs',
-// [u'ref_mut'], []]
+// ['Integer', '&Integer', 'Integer', 'Integer::divide_assign', 'lhs',
+// ['ref_mut'], []]
 impl Div<&Integer> for Integer {
     type Output = Integer;
 
@@ -25,8 +25,7 @@ impl Div<&Integer> for Integer {
     }
 }
 
-// [u'&Integer', u'Integer', u'Integer', u'Integer::divide', u'no', [],
-// [u'ref']]
+// ['&Integer', 'Integer', 'Integer', 'Integer::divide', 'no', [], ['ref']]
 impl Div<Integer> for &Integer {
     type Output = Integer;
 
@@ -35,7 +34,7 @@ impl Div<Integer> for &Integer {
     }
 }
 
-// [u'&Integer', u'&Integer', u'Integer', u'Integer::divide', u'no', [], []]
+// ['&Integer', '&Integer', 'Integer', 'Integer::divide', 'no', [], []]
 impl Div<&Integer> for &Integer {
     type Output = Integer;
 
@@ -44,8 +43,8 @@ impl Div<&Integer> for &Integer {
     }
 }
 
-// [u'Integer', u'i8', u'Integer', u'Integer::divide_c_long_assign', u'lhs',
-// [u'ref_mut'], []]
+// ['Integer', 'i8', 'Integer', 'Integer::divide_c_long_assign', 'lhs',
+// ['ref_mut'], []]
 impl Div<i8> for Integer {
     type Output = Integer;
 
@@ -55,8 +54,8 @@ impl Div<i8> for Integer {
     }
 }
 
-// [u'Integer', u'&i8', u'Integer', u'Integer::divide_c_long_assign', u'lhs',
-// [u'ref_mut'], [u'deref']]
+// ['Integer', '&i8', 'Integer', 'Integer::divide_c_long_assign', 'lhs',
+// ['ref_mut'], ['deref']]
 impl Div<&i8> for Integer {
     type Output = Integer;
 
@@ -66,7 +65,7 @@ impl Div<&i8> for Integer {
     }
 }
 
-// [u'&Integer', u'i8', u'Integer', u'Integer::divide_c_long', u'no', [], []]
+// ['&Integer', 'i8', 'Integer', 'Integer::divide_c_long', 'no', [], []]
 impl Div<i8> for &Integer {
     type Output = Integer;
 
@@ -75,8 +74,7 @@ impl Div<i8> for &Integer {
     }
 }
 
-// [u'&Integer', u'&i8', u'Integer', u'Integer::divide_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&i8', 'Integer', 'Integer::divide_c_long', 'no', [], ['deref']]
 impl Div<&i8> for &Integer {
     type Output = Integer;
 
@@ -85,8 +83,8 @@ impl Div<&i8> for &Integer {
     }
 }
 
-// [u'i8', u'Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}], [u'ref']]
+// ['i8', 'Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}], ['ref']]
 impl Div<Integer> for i8 {
     type Output = Integer;
 
@@ -95,8 +93,8 @@ impl Div<Integer> for i8 {
     }
 }
 
-// [u'i8', u'&Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}], []]
+// ['i8', '&Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}], []]
 impl Div<&Integer> for i8 {
     type Output = Integer;
 
@@ -105,8 +103,8 @@ impl Div<&Integer> for i8 {
     }
 }
 
-// [u'&i8', u'Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], [u'ref']]
+// ['&i8', 'Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], ['ref']]
 impl Div<Integer> for &i8 {
     type Output = Integer;
 
@@ -115,8 +113,8 @@ impl Div<Integer> for &i8 {
     }
 }
 
-// [u'&i8', u'&Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], []]
+// ['&i8', '&Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], []]
 impl Div<&Integer> for &i8 {
     type Output = Integer;
 
@@ -125,8 +123,8 @@ impl Div<&Integer> for &i8 {
     }
 }
 
-// [u'Integer', u'u8', u'Integer', u'Integer::divide_c_long_assign', u'lhs',
-// [u'ref_mut'], []]
+// ['Integer', 'u8', 'Integer', 'Integer::divide_c_long_assign', 'lhs',
+// ['ref_mut'], []]
 impl Div<u8> for Integer {
     type Output = Integer;
 
@@ -136,8 +134,8 @@ impl Div<u8> for Integer {
     }
 }
 
-// [u'Integer', u'&u8', u'Integer', u'Integer::divide_c_long_assign', u'lhs',
-// [u'ref_mut'], [u'deref']]
+// ['Integer', '&u8', 'Integer', 'Integer::divide_c_long_assign', 'lhs',
+// ['ref_mut'], ['deref']]
 impl Div<&u8> for Integer {
     type Output = Integer;
 
@@ -147,7 +145,7 @@ impl Div<&u8> for Integer {
     }
 }
 
-// [u'&Integer', u'u8', u'Integer', u'Integer::divide_c_long', u'no', [], []]
+// ['&Integer', 'u8', 'Integer', 'Integer::divide_c_long', 'no', [], []]
 impl Div<u8> for &Integer {
     type Output = Integer;
 
@@ -156,8 +154,7 @@ impl Div<u8> for &Integer {
     }
 }
 
-// [u'&Integer', u'&u8', u'Integer', u'Integer::divide_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&u8', 'Integer', 'Integer::divide_c_long', 'no', [], ['deref']]
 impl Div<&u8> for &Integer {
     type Output = Integer;
 
@@ -166,8 +163,8 @@ impl Div<&u8> for &Integer {
     }
 }
 
-// [u'u8', u'Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}], [u'ref']]
+// ['u8', 'Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}], ['ref']]
 impl Div<Integer> for u8 {
     type Output = Integer;
 
@@ -176,8 +173,8 @@ impl Div<Integer> for u8 {
     }
 }
 
-// [u'u8', u'&Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}], []]
+// ['u8', '&Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}], []]
 impl Div<&Integer> for u8 {
     type Output = Integer;
 
@@ -186,8 +183,8 @@ impl Div<&Integer> for u8 {
     }
 }
 
-// [u'&u8', u'Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], [u'ref']]
+// ['&u8', 'Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], ['ref']]
 impl Div<Integer> for &u8 {
     type Output = Integer;
 
@@ -196,8 +193,8 @@ impl Div<Integer> for &u8 {
     }
 }
 
-// [u'&u8', u'&Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], []]
+// ['&u8', '&Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], []]
 impl Div<&Integer> for &u8 {
     type Output = Integer;
 
@@ -206,8 +203,8 @@ impl Div<&Integer> for &u8 {
     }
 }
 
-// [u'Integer', u'i16', u'Integer', u'Integer::divide_c_long_assign', u'lhs',
-// [u'ref_mut'], []]
+// ['Integer', 'i16', 'Integer', 'Integer::divide_c_long_assign', 'lhs',
+// ['ref_mut'], []]
 impl Div<i16> for Integer {
     type Output = Integer;
 
@@ -217,8 +214,8 @@ impl Div<i16> for Integer {
     }
 }
 
-// [u'Integer', u'&i16', u'Integer', u'Integer::divide_c_long_assign', u'lhs',
-// [u'ref_mut'], [u'deref']]
+// ['Integer', '&i16', 'Integer', 'Integer::divide_c_long_assign', 'lhs',
+// ['ref_mut'], ['deref']]
 impl Div<&i16> for Integer {
     type Output = Integer;
 
@@ -228,7 +225,7 @@ impl Div<&i16> for Integer {
     }
 }
 
-// [u'&Integer', u'i16', u'Integer', u'Integer::divide_c_long', u'no', [], []]
+// ['&Integer', 'i16', 'Integer', 'Integer::divide_c_long', 'no', [], []]
 impl Div<i16> for &Integer {
     type Output = Integer;
 
@@ -237,8 +234,8 @@ impl Div<i16> for &Integer {
     }
 }
 
-// [u'&Integer', u'&i16', u'Integer', u'Integer::divide_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&i16', 'Integer', 'Integer::divide_c_long', 'no', [],
+// ['deref']]
 impl Div<&i16> for &Integer {
     type Output = Integer;
 
@@ -247,8 +244,8 @@ impl Div<&i16> for &Integer {
     }
 }
 
-// [u'i16', u'Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}], [u'ref']]
+// ['i16', 'Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}], ['ref']]
 impl Div<Integer> for i16 {
     type Output = Integer;
 
@@ -257,8 +254,8 @@ impl Div<Integer> for i16 {
     }
 }
 
-// [u'i16', u'&Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}], []]
+// ['i16', '&Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}], []]
 impl Div<&Integer> for i16 {
     type Output = Integer;
 
@@ -267,8 +264,8 @@ impl Div<&Integer> for i16 {
     }
 }
 
-// [u'&i16', u'Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], [u'ref']]
+// ['&i16', 'Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], ['ref']]
 impl Div<Integer> for &i16 {
     type Output = Integer;
 
@@ -277,8 +274,8 @@ impl Div<Integer> for &i16 {
     }
 }
 
-// [u'&i16', u'&Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], []]
+// ['&i16', '&Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], []]
 impl Div<&Integer> for &i16 {
     type Output = Integer;
 
@@ -287,8 +284,8 @@ impl Div<&Integer> for &i16 {
     }
 }
 
-// [u'Integer', u'u16', u'Integer', u'Integer::divide_c_long_assign', u'lhs',
-// [u'ref_mut'], []]
+// ['Integer', 'u16', 'Integer', 'Integer::divide_c_long_assign', 'lhs',
+// ['ref_mut'], []]
 impl Div<u16> for Integer {
     type Output = Integer;
 
@@ -298,8 +295,8 @@ impl Div<u16> for Integer {
     }
 }
 
-// [u'Integer', u'&u16', u'Integer', u'Integer::divide_c_long_assign', u'lhs',
-// [u'ref_mut'], [u'deref']]
+// ['Integer', '&u16', 'Integer', 'Integer::divide_c_long_assign', 'lhs',
+// ['ref_mut'], ['deref']]
 impl Div<&u16> for Integer {
     type Output = Integer;
 
@@ -309,7 +306,7 @@ impl Div<&u16> for Integer {
     }
 }
 
-// [u'&Integer', u'u16', u'Integer', u'Integer::divide_c_long', u'no', [], []]
+// ['&Integer', 'u16', 'Integer', 'Integer::divide_c_long', 'no', [], []]
 impl Div<u16> for &Integer {
     type Output = Integer;
 
@@ -318,8 +315,8 @@ impl Div<u16> for &Integer {
     }
 }
 
-// [u'&Integer', u'&u16', u'Integer', u'Integer::divide_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&u16', 'Integer', 'Integer::divide_c_long', 'no', [],
+// ['deref']]
 impl Div<&u16> for &Integer {
     type Output = Integer;
 
@@ -328,8 +325,8 @@ impl Div<&u16> for &Integer {
     }
 }
 
-// [u'u16', u'Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}], [u'ref']]
+// ['u16', 'Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}], ['ref']]
 impl Div<Integer> for u16 {
     type Output = Integer;
 
@@ -338,8 +335,8 @@ impl Div<Integer> for u16 {
     }
 }
 
-// [u'u16', u'&Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}], []]
+// ['u16', '&Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}], []]
 impl Div<&Integer> for u16 {
     type Output = Integer;
 
@@ -348,8 +345,8 @@ impl Div<&Integer> for u16 {
     }
 }
 
-// [u'&u16', u'Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], [u'ref']]
+// ['&u16', 'Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], ['ref']]
 impl Div<Integer> for &u16 {
     type Output = Integer;
 
@@ -358,8 +355,8 @@ impl Div<Integer> for &u16 {
     }
 }
 
-// [u'&u16', u'&Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], []]
+// ['&u16', '&Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], []]
 impl Div<&Integer> for &u16 {
     type Output = Integer;
 
@@ -368,8 +365,8 @@ impl Div<&Integer> for &u16 {
     }
 }
 
-// [u'Integer', u'i32', u'Integer', u'Integer::divide_c_long_assign', u'lhs',
-// [u'ref_mut'], []]
+// ['Integer', 'i32', 'Integer', 'Integer::divide_c_long_assign', 'lhs',
+// ['ref_mut'], []]
 impl Div<i32> for Integer {
     type Output = Integer;
 
@@ -379,8 +376,8 @@ impl Div<i32> for Integer {
     }
 }
 
-// [u'Integer', u'&i32', u'Integer', u'Integer::divide_c_long_assign', u'lhs',
-// [u'ref_mut'], [u'deref']]
+// ['Integer', '&i32', 'Integer', 'Integer::divide_c_long_assign', 'lhs',
+// ['ref_mut'], ['deref']]
 impl Div<&i32> for Integer {
     type Output = Integer;
 
@@ -390,7 +387,7 @@ impl Div<&i32> for Integer {
     }
 }
 
-// [u'&Integer', u'i32', u'Integer', u'Integer::divide_c_long', u'no', [], []]
+// ['&Integer', 'i32', 'Integer', 'Integer::divide_c_long', 'no', [], []]
 impl Div<i32> for &Integer {
     type Output = Integer;
 
@@ -399,8 +396,8 @@ impl Div<i32> for &Integer {
     }
 }
 
-// [u'&Integer', u'&i32', u'Integer', u'Integer::divide_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&i32', 'Integer', 'Integer::divide_c_long', 'no', [],
+// ['deref']]
 impl Div<&i32> for &Integer {
     type Output = Integer;
 
@@ -409,8 +406,8 @@ impl Div<&i32> for &Integer {
     }
 }
 
-// [u'i32', u'Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}], [u'ref']]
+// ['i32', 'Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}], ['ref']]
 impl Div<Integer> for i32 {
     type Output = Integer;
 
@@ -419,8 +416,8 @@ impl Div<Integer> for i32 {
     }
 }
 
-// [u'i32', u'&Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}], []]
+// ['i32', '&Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}], []]
 impl Div<&Integer> for i32 {
     type Output = Integer;
 
@@ -429,8 +426,8 @@ impl Div<&Integer> for i32 {
     }
 }
 
-// [u'&i32', u'Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], [u'ref']]
+// ['&i32', 'Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], ['ref']]
 impl Div<Integer> for &i32 {
     type Output = Integer;
 
@@ -439,8 +436,8 @@ impl Div<Integer> for &i32 {
     }
 }
 
-// [u'&i32', u'&Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], []]
+// ['&i32', '&Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], []]
 impl Div<&Integer> for &i32 {
     type Output = Integer;
 
@@ -449,8 +446,8 @@ impl Div<&Integer> for &i32 {
     }
 }
 
-// [u'Integer', u'u32', u'Integer', u'Integer::divide_c_long_assign', u'lhs',
-// [u'ref_mut'], []]
+// ['Integer', 'u32', 'Integer', 'Integer::divide_c_long_assign', 'lhs',
+// ['ref_mut'], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Div<u32> for Integer {
     type Output = Integer;
@@ -461,8 +458,8 @@ impl Div<u32> for Integer {
     }
 }
 
-// [u'Integer', u'&u32', u'Integer', u'Integer::divide_c_long_assign', u'lhs',
-// [u'ref_mut'], [u'deref']]
+// ['Integer', '&u32', 'Integer', 'Integer::divide_c_long_assign', 'lhs',
+// ['ref_mut'], ['deref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Div<&u32> for Integer {
     type Output = Integer;
@@ -473,7 +470,7 @@ impl Div<&u32> for Integer {
     }
 }
 
-// [u'&Integer', u'u32', u'Integer', u'Integer::divide_c_long', u'no', [], []]
+// ['&Integer', 'u32', 'Integer', 'Integer::divide_c_long', 'no', [], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Div<u32> for &Integer {
     type Output = Integer;
@@ -483,8 +480,8 @@ impl Div<u32> for &Integer {
     }
 }
 
-// [u'&Integer', u'&u32', u'Integer', u'Integer::divide_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&u32', 'Integer', 'Integer::divide_c_long', 'no', [],
+// ['deref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Div<&u32> for &Integer {
     type Output = Integer;
@@ -494,8 +491,8 @@ impl Div<&u32> for &Integer {
     }
 }
 
-// [u'u32', u'Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}], [u'ref']]
+// ['u32', 'Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}], ['ref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Div<Integer> for u32 {
     type Output = Integer;
@@ -505,8 +502,8 @@ impl Div<Integer> for u32 {
     }
 }
 
-// [u'u32', u'&Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}], []]
+// ['u32', '&Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Div<&Integer> for u32 {
     type Output = Integer;
@@ -516,8 +513,8 @@ impl Div<&Integer> for u32 {
     }
 }
 
-// [u'&u32', u'Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], [u'ref']]
+// ['&u32', 'Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], ['ref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Div<Integer> for &u32 {
     type Output = Integer;
@@ -527,8 +524,8 @@ impl Div<Integer> for &u32 {
     }
 }
 
-// [u'&u32', u'&Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], []]
+// ['&u32', '&Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Div<&Integer> for &u32 {
     type Output = Integer;
@@ -538,8 +535,8 @@ impl Div<&Integer> for &u32 {
     }
 }
 
-// [u'Integer', u'i64', u'Integer', u'Integer::divide_c_long_assign', u'lhs',
-// [u'ref_mut'], []]
+// ['Integer', 'i64', 'Integer', 'Integer::divide_c_long_assign', 'lhs',
+// ['ref_mut'], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Div<i64> for Integer {
     type Output = Integer;
@@ -550,8 +547,8 @@ impl Div<i64> for Integer {
     }
 }
 
-// [u'Integer', u'&i64', u'Integer', u'Integer::divide_c_long_assign', u'lhs',
-// [u'ref_mut'], [u'deref']]
+// ['Integer', '&i64', 'Integer', 'Integer::divide_c_long_assign', 'lhs',
+// ['ref_mut'], ['deref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Div<&i64> for Integer {
     type Output = Integer;
@@ -562,7 +559,7 @@ impl Div<&i64> for Integer {
     }
 }
 
-// [u'&Integer', u'i64', u'Integer', u'Integer::divide_c_long', u'no', [], []]
+// ['&Integer', 'i64', 'Integer', 'Integer::divide_c_long', 'no', [], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Div<i64> for &Integer {
     type Output = Integer;
@@ -572,8 +569,8 @@ impl Div<i64> for &Integer {
     }
 }
 
-// [u'&Integer', u'&i64', u'Integer', u'Integer::divide_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&i64', 'Integer', 'Integer::divide_c_long', 'no', [],
+// ['deref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Div<&i64> for &Integer {
     type Output = Integer;
@@ -583,8 +580,8 @@ impl Div<&i64> for &Integer {
     }
 }
 
-// [u'i64', u'Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}], [u'ref']]
+// ['i64', 'Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}], ['ref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Div<Integer> for i64 {
     type Output = Integer;
@@ -594,8 +591,8 @@ impl Div<Integer> for i64 {
     }
 }
 
-// [u'i64', u'&Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}], []]
+// ['i64', '&Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Div<&Integer> for i64 {
     type Output = Integer;
@@ -605,8 +602,8 @@ impl Div<&Integer> for i64 {
     }
 }
 
-// [u'&i64', u'Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], [u'ref']]
+// ['&i64', 'Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], ['ref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Div<Integer> for &i64 {
     type Output = Integer;
@@ -616,8 +613,8 @@ impl Div<Integer> for &i64 {
     }
 }
 
-// [u'&i64', u'&Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], []]
+// ['&i64', '&Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Div<&Integer> for &i64 {
     type Output = Integer;
@@ -627,8 +624,8 @@ impl Div<&Integer> for &i64 {
     }
 }
 
-// [u'Integer', u'u32', u'Integer', u'Integer::divide_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}]]
+// ['Integer', 'u32', 'Integer', 'Integer::divide_assign', 'lhs', ['ref_mut'],
+// ['ref', {'convert': 'Integer'}]]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Div<u32> for Integer {
     type Output = Integer;
@@ -639,8 +636,8 @@ impl Div<u32> for Integer {
     }
 }
 
-// [u'Integer', u'&u32', u'Integer', u'Integer::divide_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}, u'deref']]
+// ['Integer', '&u32', 'Integer', 'Integer::divide_assign', 'lhs', ['ref_mut'],
+// ['ref', {'convert': 'Integer'}, 'deref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Div<&u32> for Integer {
     type Output = Integer;
@@ -651,8 +648,8 @@ impl Div<&u32> for Integer {
     }
 }
 
-// [u'&Integer', u'u32', u'Integer', u'Integer::divide', u'no', [], [u'ref',
-// {u'convert': u'Integer'}]]
+// ['&Integer', 'u32', 'Integer', 'Integer::divide', 'no', [], ['ref',
+// {'convert': 'Integer'}]]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Div<u32> for &Integer {
     type Output = Integer;
@@ -662,8 +659,8 @@ impl Div<u32> for &Integer {
     }
 }
 
-// [u'&Integer', u'&u32', u'Integer', u'Integer::divide', u'no', [], [u'ref',
-// {u'convert': u'Integer'}, u'deref']]
+// ['&Integer', '&u32', 'Integer', 'Integer::divide', 'no', [], ['ref',
+// {'convert': 'Integer'}, 'deref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Div<&u32> for &Integer {
     type Output = Integer;
@@ -673,8 +670,8 @@ impl Div<&u32> for &Integer {
     }
 }
 
-// [u'u32', u'Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}], [u'ref']]
+// ['u32', 'Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}], ['ref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Div<Integer> for u32 {
     type Output = Integer;
@@ -684,8 +681,8 @@ impl Div<Integer> for u32 {
     }
 }
 
-// [u'u32', u'&Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}], []]
+// ['u32', '&Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}], []]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Div<&Integer> for u32 {
     type Output = Integer;
@@ -695,8 +692,8 @@ impl Div<&Integer> for u32 {
     }
 }
 
-// [u'&u32', u'Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], [u'ref']]
+// ['&u32', 'Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], ['ref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Div<Integer> for &u32 {
     type Output = Integer;
@@ -706,8 +703,8 @@ impl Div<Integer> for &u32 {
     }
 }
 
-// [u'&u32', u'&Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], []]
+// ['&u32', '&Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], []]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Div<&Integer> for &u32 {
     type Output = Integer;
@@ -717,8 +714,8 @@ impl Div<&Integer> for &u32 {
     }
 }
 
-// [u'Integer', u'i64', u'Integer', u'Integer::divide_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}]]
+// ['Integer', 'i64', 'Integer', 'Integer::divide_assign', 'lhs', ['ref_mut'],
+// ['ref', {'convert': 'Integer'}]]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Div<i64> for Integer {
     type Output = Integer;
@@ -729,8 +726,8 @@ impl Div<i64> for Integer {
     }
 }
 
-// [u'Integer', u'&i64', u'Integer', u'Integer::divide_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}, u'deref']]
+// ['Integer', '&i64', 'Integer', 'Integer::divide_assign', 'lhs', ['ref_mut'],
+// ['ref', {'convert': 'Integer'}, 'deref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Div<&i64> for Integer {
     type Output = Integer;
@@ -741,8 +738,8 @@ impl Div<&i64> for Integer {
     }
 }
 
-// [u'&Integer', u'i64', u'Integer', u'Integer::divide', u'no', [], [u'ref',
-// {u'convert': u'Integer'}]]
+// ['&Integer', 'i64', 'Integer', 'Integer::divide', 'no', [], ['ref',
+// {'convert': 'Integer'}]]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Div<i64> for &Integer {
     type Output = Integer;
@@ -752,8 +749,8 @@ impl Div<i64> for &Integer {
     }
 }
 
-// [u'&Integer', u'&i64', u'Integer', u'Integer::divide', u'no', [], [u'ref',
-// {u'convert': u'Integer'}, u'deref']]
+// ['&Integer', '&i64', 'Integer', 'Integer::divide', 'no', [], ['ref',
+// {'convert': 'Integer'}, 'deref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Div<&i64> for &Integer {
     type Output = Integer;
@@ -763,8 +760,8 @@ impl Div<&i64> for &Integer {
     }
 }
 
-// [u'i64', u'Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}], [u'ref']]
+// ['i64', 'Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}], ['ref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Div<Integer> for i64 {
     type Output = Integer;
@@ -774,8 +771,8 @@ impl Div<Integer> for i64 {
     }
 }
 
-// [u'i64', u'&Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}], []]
+// ['i64', '&Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}], []]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Div<&Integer> for i64 {
     type Output = Integer;
@@ -785,8 +782,8 @@ impl Div<&Integer> for i64 {
     }
 }
 
-// [u'&i64', u'Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], [u'ref']]
+// ['&i64', 'Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], ['ref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Div<Integer> for &i64 {
     type Output = Integer;
@@ -796,8 +793,8 @@ impl Div<Integer> for &i64 {
     }
 }
 
-// [u'&i64', u'&Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], []]
+// ['&i64', '&Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], []]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Div<&Integer> for &i64 {
     type Output = Integer;
@@ -807,8 +804,8 @@ impl Div<&Integer> for &i64 {
     }
 }
 
-// [u'Integer', u'u64', u'Integer', u'Integer::divide_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}]]
+// ['Integer', 'u64', 'Integer', 'Integer::divide_assign', 'lhs', ['ref_mut'],
+// ['ref', {'convert': 'Integer'}]]
 impl Div<u64> for Integer {
     type Output = Integer;
 
@@ -818,8 +815,8 @@ impl Div<u64> for Integer {
     }
 }
 
-// [u'Integer', u'&u64', u'Integer', u'Integer::divide_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}, u'deref']]
+// ['Integer', '&u64', 'Integer', 'Integer::divide_assign', 'lhs', ['ref_mut'],
+// ['ref', {'convert': 'Integer'}, 'deref']]
 impl Div<&u64> for Integer {
     type Output = Integer;
 
@@ -829,8 +826,8 @@ impl Div<&u64> for Integer {
     }
 }
 
-// [u'&Integer', u'u64', u'Integer', u'Integer::divide', u'no', [], [u'ref',
-// {u'convert': u'Integer'}]]
+// ['&Integer', 'u64', 'Integer', 'Integer::divide', 'no', [], ['ref',
+// {'convert': 'Integer'}]]
 impl Div<u64> for &Integer {
     type Output = Integer;
 
@@ -839,8 +836,8 @@ impl Div<u64> for &Integer {
     }
 }
 
-// [u'&Integer', u'&u64', u'Integer', u'Integer::divide', u'no', [], [u'ref',
-// {u'convert': u'Integer'}, u'deref']]
+// ['&Integer', '&u64', 'Integer', 'Integer::divide', 'no', [], ['ref',
+// {'convert': 'Integer'}, 'deref']]
 impl Div<&u64> for &Integer {
     type Output = Integer;
 
@@ -849,8 +846,8 @@ impl Div<&u64> for &Integer {
     }
 }
 
-// [u'u64', u'Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}], [u'ref']]
+// ['u64', 'Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}], ['ref']]
 impl Div<Integer> for u64 {
     type Output = Integer;
 
@@ -859,8 +856,8 @@ impl Div<Integer> for u64 {
     }
 }
 
-// [u'u64', u'&Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}], []]
+// ['u64', '&Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}], []]
 impl Div<&Integer> for u64 {
     type Output = Integer;
 
@@ -869,8 +866,8 @@ impl Div<&Integer> for u64 {
     }
 }
 
-// [u'&u64', u'Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], [u'ref']]
+// ['&u64', 'Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], ['ref']]
 impl Div<Integer> for &u64 {
     type Output = Integer;
 
@@ -879,8 +876,8 @@ impl Div<Integer> for &u64 {
     }
 }
 
-// [u'&u64', u'&Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], []]
+// ['&u64', '&Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], []]
 impl Div<&Integer> for &u64 {
     type Output = Integer;
 
@@ -889,8 +886,8 @@ impl Div<&Integer> for &u64 {
     }
 }
 
-// [u'Integer', u'i128', u'Integer', u'Integer::divide_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}]]
+// ['Integer', 'i128', 'Integer', 'Integer::divide_assign', 'lhs', ['ref_mut'],
+// ['ref', {'convert': 'Integer'}]]
 impl Div<i128> for Integer {
     type Output = Integer;
 
@@ -900,8 +897,8 @@ impl Div<i128> for Integer {
     }
 }
 
-// [u'Integer', u'&i128', u'Integer', u'Integer::divide_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}, u'deref']]
+// ['Integer', '&i128', 'Integer', 'Integer::divide_assign', 'lhs', ['ref_mut'],
+// ['ref', {'convert': 'Integer'}, 'deref']]
 impl Div<&i128> for Integer {
     type Output = Integer;
 
@@ -911,8 +908,8 @@ impl Div<&i128> for Integer {
     }
 }
 
-// [u'&Integer', u'i128', u'Integer', u'Integer::divide', u'no', [], [u'ref',
-// {u'convert': u'Integer'}]]
+// ['&Integer', 'i128', 'Integer', 'Integer::divide', 'no', [], ['ref',
+// {'convert': 'Integer'}]]
 impl Div<i128> for &Integer {
     type Output = Integer;
 
@@ -921,8 +918,8 @@ impl Div<i128> for &Integer {
     }
 }
 
-// [u'&Integer', u'&i128', u'Integer', u'Integer::divide', u'no', [], [u'ref',
-// {u'convert': u'Integer'}, u'deref']]
+// ['&Integer', '&i128', 'Integer', 'Integer::divide', 'no', [], ['ref',
+// {'convert': 'Integer'}, 'deref']]
 impl Div<&i128> for &Integer {
     type Output = Integer;
 
@@ -931,8 +928,8 @@ impl Div<&i128> for &Integer {
     }
 }
 
-// [u'i128', u'Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}], [u'ref']]
+// ['i128', 'Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}], ['ref']]
 impl Div<Integer> for i128 {
     type Output = Integer;
 
@@ -941,8 +938,8 @@ impl Div<Integer> for i128 {
     }
 }
 
-// [u'i128', u'&Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}], []]
+// ['i128', '&Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}], []]
 impl Div<&Integer> for i128 {
     type Output = Integer;
 
@@ -951,8 +948,8 @@ impl Div<&Integer> for i128 {
     }
 }
 
-// [u'&i128', u'Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], [u'ref']]
+// ['&i128', 'Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], ['ref']]
 impl Div<Integer> for &i128 {
     type Output = Integer;
 
@@ -961,8 +958,8 @@ impl Div<Integer> for &i128 {
     }
 }
 
-// [u'&i128', u'&Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], []]
+// ['&i128', '&Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], []]
 impl Div<&Integer> for &i128 {
     type Output = Integer;
 
@@ -971,8 +968,8 @@ impl Div<&Integer> for &i128 {
     }
 }
 
-// [u'Integer', u'u128', u'Integer', u'Integer::divide_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}]]
+// ['Integer', 'u128', 'Integer', 'Integer::divide_assign', 'lhs', ['ref_mut'],
+// ['ref', {'convert': 'Integer'}]]
 impl Div<u128> for Integer {
     type Output = Integer;
 
@@ -982,8 +979,8 @@ impl Div<u128> for Integer {
     }
 }
 
-// [u'Integer', u'&u128', u'Integer', u'Integer::divide_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}, u'deref']]
+// ['Integer', '&u128', 'Integer', 'Integer::divide_assign', 'lhs', ['ref_mut'],
+// ['ref', {'convert': 'Integer'}, 'deref']]
 impl Div<&u128> for Integer {
     type Output = Integer;
 
@@ -993,8 +990,8 @@ impl Div<&u128> for Integer {
     }
 }
 
-// [u'&Integer', u'u128', u'Integer', u'Integer::divide', u'no', [], [u'ref',
-// {u'convert': u'Integer'}]]
+// ['&Integer', 'u128', 'Integer', 'Integer::divide', 'no', [], ['ref',
+// {'convert': 'Integer'}]]
 impl Div<u128> for &Integer {
     type Output = Integer;
 
@@ -1003,8 +1000,8 @@ impl Div<u128> for &Integer {
     }
 }
 
-// [u'&Integer', u'&u128', u'Integer', u'Integer::divide', u'no', [], [u'ref',
-// {u'convert': u'Integer'}, u'deref']]
+// ['&Integer', '&u128', 'Integer', 'Integer::divide', 'no', [], ['ref',
+// {'convert': 'Integer'}, 'deref']]
 impl Div<&u128> for &Integer {
     type Output = Integer;
 
@@ -1013,8 +1010,8 @@ impl Div<&u128> for &Integer {
     }
 }
 
-// [u'u128', u'Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}], [u'ref']]
+// ['u128', 'Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}], ['ref']]
 impl Div<Integer> for u128 {
     type Output = Integer;
 
@@ -1023,8 +1020,8 @@ impl Div<Integer> for u128 {
     }
 }
 
-// [u'u128', u'&Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}], []]
+// ['u128', '&Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}], []]
 impl Div<&Integer> for u128 {
     type Output = Integer;
 
@@ -1033,8 +1030,8 @@ impl Div<&Integer> for u128 {
     }
 }
 
-// [u'&u128', u'Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], [u'ref']]
+// ['&u128', 'Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], ['ref']]
 impl Div<Integer> for &u128 {
     type Output = Integer;
 
@@ -1043,8 +1040,8 @@ impl Div<Integer> for &u128 {
     }
 }
 
-// [u'&u128', u'&Integer', u'Integer', u'Integer::divide', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], []]
+// ['&u128', '&Integer', 'Integer', 'Integer::divide', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], []]
 impl Div<&Integer> for &u128 {
     type Output = Integer;
 

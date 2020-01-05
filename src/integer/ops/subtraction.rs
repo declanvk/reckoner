@@ -3,8 +3,8 @@ use core::ops::Sub;
 
 // Sub          The subtraction operator -.
 
-// [u'Integer', u'Integer', u'Integer', u'Integer::subtract_assign', u'lhs',
-// [u'ref_mut'], [u'ref']]
+// ['Integer', 'Integer', 'Integer', 'Integer::subtract_assign', 'lhs',
+// ['ref_mut'], ['ref']]
 impl Sub<Integer> for Integer {
     type Output = Integer;
 
@@ -14,8 +14,8 @@ impl Sub<Integer> for Integer {
     }
 }
 
-// [u'Integer', u'&Integer', u'Integer', u'Integer::subtract_assign', u'lhs',
-// [u'ref_mut'], []]
+// ['Integer', '&Integer', 'Integer', 'Integer::subtract_assign', 'lhs',
+// ['ref_mut'], []]
 impl Sub<&Integer> for Integer {
     type Output = Integer;
 
@@ -25,8 +25,7 @@ impl Sub<&Integer> for Integer {
     }
 }
 
-// [u'&Integer', u'Integer', u'Integer', u'Integer::subtract', u'no', [],
-// [u'ref']]
+// ['&Integer', 'Integer', 'Integer', 'Integer::subtract', 'no', [], ['ref']]
 impl Sub<Integer> for &Integer {
     type Output = Integer;
 
@@ -35,7 +34,7 @@ impl Sub<Integer> for &Integer {
     }
 }
 
-// [u'&Integer', u'&Integer', u'Integer', u'Integer::subtract', u'no', [], []]
+// ['&Integer', '&Integer', 'Integer', 'Integer::subtract', 'no', [], []]
 impl Sub<&Integer> for &Integer {
     type Output = Integer;
 
@@ -44,8 +43,8 @@ impl Sub<&Integer> for &Integer {
     }
 }
 
-// [u'Integer', u'i8', u'Integer', u'Integer::subtract_c_long_assign', u'lhs',
-// [u'ref_mut'], []]
+// ['Integer', 'i8', 'Integer', 'Integer::subtract_c_long_assign', 'lhs',
+// ['ref_mut'], []]
 impl Sub<i8> for Integer {
     type Output = Integer;
 
@@ -55,8 +54,8 @@ impl Sub<i8> for Integer {
     }
 }
 
-// [u'Integer', u'&i8', u'Integer', u'Integer::subtract_c_long_assign', u'lhs',
-// [u'ref_mut'], [u'deref']]
+// ['Integer', '&i8', 'Integer', 'Integer::subtract_c_long_assign', 'lhs',
+// ['ref_mut'], ['deref']]
 impl Sub<&i8> for Integer {
     type Output = Integer;
 
@@ -66,7 +65,7 @@ impl Sub<&i8> for Integer {
     }
 }
 
-// [u'&Integer', u'i8', u'Integer', u'Integer::subtract_c_long', u'no', [], []]
+// ['&Integer', 'i8', 'Integer', 'Integer::subtract_c_long', 'no', [], []]
 impl Sub<i8> for &Integer {
     type Output = Integer;
 
@@ -75,8 +74,8 @@ impl Sub<i8> for &Integer {
     }
 }
 
-// [u'&Integer', u'&i8', u'Integer', u'Integer::subtract_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&i8', 'Integer', 'Integer::subtract_c_long', 'no', [],
+// ['deref']]
 impl Sub<&i8> for &Integer {
     type Output = Integer;
 
@@ -85,8 +84,8 @@ impl Sub<&i8> for &Integer {
     }
 }
 
-// [u'i8', u'Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}], [u'ref']]
+// ['i8', 'Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}], ['ref']]
 impl Sub<Integer> for i8 {
     type Output = Integer;
 
@@ -95,8 +94,8 @@ impl Sub<Integer> for i8 {
     }
 }
 
-// [u'i8', u'&Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}], []]
+// ['i8', '&Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}], []]
 impl Sub<&Integer> for i8 {
     type Output = Integer;
 
@@ -105,8 +104,8 @@ impl Sub<&Integer> for i8 {
     }
 }
 
-// [u'&i8', u'Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], [u'ref']]
+// ['&i8', 'Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], ['ref']]
 impl Sub<Integer> for &i8 {
     type Output = Integer;
 
@@ -115,8 +114,8 @@ impl Sub<Integer> for &i8 {
     }
 }
 
-// [u'&i8', u'&Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], []]
+// ['&i8', '&Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], []]
 impl Sub<&Integer> for &i8 {
     type Output = Integer;
 
@@ -125,8 +124,8 @@ impl Sub<&Integer> for &i8 {
     }
 }
 
-// [u'Integer', u'u8', u'Integer', u'Integer::subtract_c_long_assign', u'lhs',
-// [u'ref_mut'], []]
+// ['Integer', 'u8', 'Integer', 'Integer::subtract_c_long_assign', 'lhs',
+// ['ref_mut'], []]
 impl Sub<u8> for Integer {
     type Output = Integer;
 
@@ -136,8 +135,8 @@ impl Sub<u8> for Integer {
     }
 }
 
-// [u'Integer', u'&u8', u'Integer', u'Integer::subtract_c_long_assign', u'lhs',
-// [u'ref_mut'], [u'deref']]
+// ['Integer', '&u8', 'Integer', 'Integer::subtract_c_long_assign', 'lhs',
+// ['ref_mut'], ['deref']]
 impl Sub<&u8> for Integer {
     type Output = Integer;
 
@@ -147,7 +146,7 @@ impl Sub<&u8> for Integer {
     }
 }
 
-// [u'&Integer', u'u8', u'Integer', u'Integer::subtract_c_long', u'no', [], []]
+// ['&Integer', 'u8', 'Integer', 'Integer::subtract_c_long', 'no', [], []]
 impl Sub<u8> for &Integer {
     type Output = Integer;
 
@@ -156,8 +155,8 @@ impl Sub<u8> for &Integer {
     }
 }
 
-// [u'&Integer', u'&u8', u'Integer', u'Integer::subtract_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&u8', 'Integer', 'Integer::subtract_c_long', 'no', [],
+// ['deref']]
 impl Sub<&u8> for &Integer {
     type Output = Integer;
 
@@ -166,8 +165,8 @@ impl Sub<&u8> for &Integer {
     }
 }
 
-// [u'u8', u'Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}], [u'ref']]
+// ['u8', 'Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}], ['ref']]
 impl Sub<Integer> for u8 {
     type Output = Integer;
 
@@ -176,8 +175,8 @@ impl Sub<Integer> for u8 {
     }
 }
 
-// [u'u8', u'&Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}], []]
+// ['u8', '&Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}], []]
 impl Sub<&Integer> for u8 {
     type Output = Integer;
 
@@ -186,8 +185,8 @@ impl Sub<&Integer> for u8 {
     }
 }
 
-// [u'&u8', u'Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], [u'ref']]
+// ['&u8', 'Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], ['ref']]
 impl Sub<Integer> for &u8 {
     type Output = Integer;
 
@@ -196,8 +195,8 @@ impl Sub<Integer> for &u8 {
     }
 }
 
-// [u'&u8', u'&Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], []]
+// ['&u8', '&Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], []]
 impl Sub<&Integer> for &u8 {
     type Output = Integer;
 
@@ -206,8 +205,8 @@ impl Sub<&Integer> for &u8 {
     }
 }
 
-// [u'Integer', u'i16', u'Integer', u'Integer::subtract_c_long_assign', u'lhs',
-// [u'ref_mut'], []]
+// ['Integer', 'i16', 'Integer', 'Integer::subtract_c_long_assign', 'lhs',
+// ['ref_mut'], []]
 impl Sub<i16> for Integer {
     type Output = Integer;
 
@@ -217,8 +216,8 @@ impl Sub<i16> for Integer {
     }
 }
 
-// [u'Integer', u'&i16', u'Integer', u'Integer::subtract_c_long_assign', u'lhs',
-// [u'ref_mut'], [u'deref']]
+// ['Integer', '&i16', 'Integer', 'Integer::subtract_c_long_assign', 'lhs',
+// ['ref_mut'], ['deref']]
 impl Sub<&i16> for Integer {
     type Output = Integer;
 
@@ -228,7 +227,7 @@ impl Sub<&i16> for Integer {
     }
 }
 
-// [u'&Integer', u'i16', u'Integer', u'Integer::subtract_c_long', u'no', [], []]
+// ['&Integer', 'i16', 'Integer', 'Integer::subtract_c_long', 'no', [], []]
 impl Sub<i16> for &Integer {
     type Output = Integer;
 
@@ -237,8 +236,8 @@ impl Sub<i16> for &Integer {
     }
 }
 
-// [u'&Integer', u'&i16', u'Integer', u'Integer::subtract_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&i16', 'Integer', 'Integer::subtract_c_long', 'no', [],
+// ['deref']]
 impl Sub<&i16> for &Integer {
     type Output = Integer;
 
@@ -247,8 +246,8 @@ impl Sub<&i16> for &Integer {
     }
 }
 
-// [u'i16', u'Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}], [u'ref']]
+// ['i16', 'Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}], ['ref']]
 impl Sub<Integer> for i16 {
     type Output = Integer;
 
@@ -257,8 +256,8 @@ impl Sub<Integer> for i16 {
     }
 }
 
-// [u'i16', u'&Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}], []]
+// ['i16', '&Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}], []]
 impl Sub<&Integer> for i16 {
     type Output = Integer;
 
@@ -267,8 +266,8 @@ impl Sub<&Integer> for i16 {
     }
 }
 
-// [u'&i16', u'Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], [u'ref']]
+// ['&i16', 'Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], ['ref']]
 impl Sub<Integer> for &i16 {
     type Output = Integer;
 
@@ -277,8 +276,8 @@ impl Sub<Integer> for &i16 {
     }
 }
 
-// [u'&i16', u'&Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], []]
+// ['&i16', '&Integer', 'Integer', 'Integer::subtract', 'no', ['ref',
+// {'convert': 'Integer'}, 'deref'], []]
 impl Sub<&Integer> for &i16 {
     type Output = Integer;
 
@@ -287,8 +286,8 @@ impl Sub<&Integer> for &i16 {
     }
 }
 
-// [u'Integer', u'u16', u'Integer', u'Integer::subtract_c_long_assign', u'lhs',
-// [u'ref_mut'], []]
+// ['Integer', 'u16', 'Integer', 'Integer::subtract_c_long_assign', 'lhs',
+// ['ref_mut'], []]
 impl Sub<u16> for Integer {
     type Output = Integer;
 
@@ -298,8 +297,8 @@ impl Sub<u16> for Integer {
     }
 }
 
-// [u'Integer', u'&u16', u'Integer', u'Integer::subtract_c_long_assign', u'lhs',
-// [u'ref_mut'], [u'deref']]
+// ['Integer', '&u16', 'Integer', 'Integer::subtract_c_long_assign', 'lhs',
+// ['ref_mut'], ['deref']]
 impl Sub<&u16> for Integer {
     type Output = Integer;
 
@@ -309,7 +308,7 @@ impl Sub<&u16> for Integer {
     }
 }
 
-// [u'&Integer', u'u16', u'Integer', u'Integer::subtract_c_long', u'no', [], []]
+// ['&Integer', 'u16', 'Integer', 'Integer::subtract_c_long', 'no', [], []]
 impl Sub<u16> for &Integer {
     type Output = Integer;
 
@@ -318,8 +317,8 @@ impl Sub<u16> for &Integer {
     }
 }
 
-// [u'&Integer', u'&u16', u'Integer', u'Integer::subtract_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&u16', 'Integer', 'Integer::subtract_c_long', 'no', [],
+// ['deref']]
 impl Sub<&u16> for &Integer {
     type Output = Integer;
 
@@ -328,8 +327,8 @@ impl Sub<&u16> for &Integer {
     }
 }
 
-// [u'u16', u'Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}], [u'ref']]
+// ['u16', 'Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}], ['ref']]
 impl Sub<Integer> for u16 {
     type Output = Integer;
 
@@ -338,8 +337,8 @@ impl Sub<Integer> for u16 {
     }
 }
 
-// [u'u16', u'&Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}], []]
+// ['u16', '&Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}], []]
 impl Sub<&Integer> for u16 {
     type Output = Integer;
 
@@ -348,8 +347,8 @@ impl Sub<&Integer> for u16 {
     }
 }
 
-// [u'&u16', u'Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], [u'ref']]
+// ['&u16', 'Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], ['ref']]
 impl Sub<Integer> for &u16 {
     type Output = Integer;
 
@@ -358,8 +357,8 @@ impl Sub<Integer> for &u16 {
     }
 }
 
-// [u'&u16', u'&Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], []]
+// ['&u16', '&Integer', 'Integer', 'Integer::subtract', 'no', ['ref',
+// {'convert': 'Integer'}, 'deref'], []]
 impl Sub<&Integer> for &u16 {
     type Output = Integer;
 
@@ -368,8 +367,8 @@ impl Sub<&Integer> for &u16 {
     }
 }
 
-// [u'Integer', u'i32', u'Integer', u'Integer::subtract_c_long_assign', u'lhs',
-// [u'ref_mut'], []]
+// ['Integer', 'i32', 'Integer', 'Integer::subtract_c_long_assign', 'lhs',
+// ['ref_mut'], []]
 impl Sub<i32> for Integer {
     type Output = Integer;
 
@@ -379,8 +378,8 @@ impl Sub<i32> for Integer {
     }
 }
 
-// [u'Integer', u'&i32', u'Integer', u'Integer::subtract_c_long_assign', u'lhs',
-// [u'ref_mut'], [u'deref']]
+// ['Integer', '&i32', 'Integer', 'Integer::subtract_c_long_assign', 'lhs',
+// ['ref_mut'], ['deref']]
 impl Sub<&i32> for Integer {
     type Output = Integer;
 
@@ -390,7 +389,7 @@ impl Sub<&i32> for Integer {
     }
 }
 
-// [u'&Integer', u'i32', u'Integer', u'Integer::subtract_c_long', u'no', [], []]
+// ['&Integer', 'i32', 'Integer', 'Integer::subtract_c_long', 'no', [], []]
 impl Sub<i32> for &Integer {
     type Output = Integer;
 
@@ -399,8 +398,8 @@ impl Sub<i32> for &Integer {
     }
 }
 
-// [u'&Integer', u'&i32', u'Integer', u'Integer::subtract_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&i32', 'Integer', 'Integer::subtract_c_long', 'no', [],
+// ['deref']]
 impl Sub<&i32> for &Integer {
     type Output = Integer;
 
@@ -409,8 +408,8 @@ impl Sub<&i32> for &Integer {
     }
 }
 
-// [u'i32', u'Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}], [u'ref']]
+// ['i32', 'Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}], ['ref']]
 impl Sub<Integer> for i32 {
     type Output = Integer;
 
@@ -419,8 +418,8 @@ impl Sub<Integer> for i32 {
     }
 }
 
-// [u'i32', u'&Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}], []]
+// ['i32', '&Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}], []]
 impl Sub<&Integer> for i32 {
     type Output = Integer;
 
@@ -429,8 +428,8 @@ impl Sub<&Integer> for i32 {
     }
 }
 
-// [u'&i32', u'Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], [u'ref']]
+// ['&i32', 'Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], ['ref']]
 impl Sub<Integer> for &i32 {
     type Output = Integer;
 
@@ -439,8 +438,8 @@ impl Sub<Integer> for &i32 {
     }
 }
 
-// [u'&i32', u'&Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], []]
+// ['&i32', '&Integer', 'Integer', 'Integer::subtract', 'no', ['ref',
+// {'convert': 'Integer'}, 'deref'], []]
 impl Sub<&Integer> for &i32 {
     type Output = Integer;
 
@@ -449,8 +448,8 @@ impl Sub<&Integer> for &i32 {
     }
 }
 
-// [u'Integer', u'u32', u'Integer', u'Integer::subtract_c_long_assign', u'lhs',
-// [u'ref_mut'], []]
+// ['Integer', 'u32', 'Integer', 'Integer::subtract_c_long_assign', 'lhs',
+// ['ref_mut'], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Sub<u32> for Integer {
     type Output = Integer;
@@ -461,8 +460,8 @@ impl Sub<u32> for Integer {
     }
 }
 
-// [u'Integer', u'&u32', u'Integer', u'Integer::subtract_c_long_assign', u'lhs',
-// [u'ref_mut'], [u'deref']]
+// ['Integer', '&u32', 'Integer', 'Integer::subtract_c_long_assign', 'lhs',
+// ['ref_mut'], ['deref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Sub<&u32> for Integer {
     type Output = Integer;
@@ -473,7 +472,7 @@ impl Sub<&u32> for Integer {
     }
 }
 
-// [u'&Integer', u'u32', u'Integer', u'Integer::subtract_c_long', u'no', [], []]
+// ['&Integer', 'u32', 'Integer', 'Integer::subtract_c_long', 'no', [], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Sub<u32> for &Integer {
     type Output = Integer;
@@ -483,8 +482,8 @@ impl Sub<u32> for &Integer {
     }
 }
 
-// [u'&Integer', u'&u32', u'Integer', u'Integer::subtract_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&u32', 'Integer', 'Integer::subtract_c_long', 'no', [],
+// ['deref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Sub<&u32> for &Integer {
     type Output = Integer;
@@ -494,8 +493,8 @@ impl Sub<&u32> for &Integer {
     }
 }
 
-// [u'u32', u'Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}], [u'ref']]
+// ['u32', 'Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}], ['ref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Sub<Integer> for u32 {
     type Output = Integer;
@@ -505,8 +504,8 @@ impl Sub<Integer> for u32 {
     }
 }
 
-// [u'u32', u'&Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}], []]
+// ['u32', '&Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Sub<&Integer> for u32 {
     type Output = Integer;
@@ -516,8 +515,8 @@ impl Sub<&Integer> for u32 {
     }
 }
 
-// [u'&u32', u'Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], [u'ref']]
+// ['&u32', 'Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], ['ref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Sub<Integer> for &u32 {
     type Output = Integer;
@@ -527,8 +526,8 @@ impl Sub<Integer> for &u32 {
     }
 }
 
-// [u'&u32', u'&Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], []]
+// ['&u32', '&Integer', 'Integer', 'Integer::subtract', 'no', ['ref',
+// {'convert': 'Integer'}, 'deref'], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Sub<&Integer> for &u32 {
     type Output = Integer;
@@ -538,8 +537,8 @@ impl Sub<&Integer> for &u32 {
     }
 }
 
-// [u'Integer', u'i64', u'Integer', u'Integer::subtract_c_long_assign', u'lhs',
-// [u'ref_mut'], []]
+// ['Integer', 'i64', 'Integer', 'Integer::subtract_c_long_assign', 'lhs',
+// ['ref_mut'], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Sub<i64> for Integer {
     type Output = Integer;
@@ -550,8 +549,8 @@ impl Sub<i64> for Integer {
     }
 }
 
-// [u'Integer', u'&i64', u'Integer', u'Integer::subtract_c_long_assign', u'lhs',
-// [u'ref_mut'], [u'deref']]
+// ['Integer', '&i64', 'Integer', 'Integer::subtract_c_long_assign', 'lhs',
+// ['ref_mut'], ['deref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Sub<&i64> for Integer {
     type Output = Integer;
@@ -562,7 +561,7 @@ impl Sub<&i64> for Integer {
     }
 }
 
-// [u'&Integer', u'i64', u'Integer', u'Integer::subtract_c_long', u'no', [], []]
+// ['&Integer', 'i64', 'Integer', 'Integer::subtract_c_long', 'no', [], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Sub<i64> for &Integer {
     type Output = Integer;
@@ -572,8 +571,8 @@ impl Sub<i64> for &Integer {
     }
 }
 
-// [u'&Integer', u'&i64', u'Integer', u'Integer::subtract_c_long', u'no', [],
-// [u'deref']]
+// ['&Integer', '&i64', 'Integer', 'Integer::subtract_c_long', 'no', [],
+// ['deref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Sub<&i64> for &Integer {
     type Output = Integer;
@@ -583,8 +582,8 @@ impl Sub<&i64> for &Integer {
     }
 }
 
-// [u'i64', u'Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}], [u'ref']]
+// ['i64', 'Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}], ['ref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Sub<Integer> for i64 {
     type Output = Integer;
@@ -594,8 +593,8 @@ impl Sub<Integer> for i64 {
     }
 }
 
-// [u'i64', u'&Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}], []]
+// ['i64', '&Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Sub<&Integer> for i64 {
     type Output = Integer;
@@ -605,8 +604,8 @@ impl Sub<&Integer> for i64 {
     }
 }
 
-// [u'&i64', u'Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], [u'ref']]
+// ['&i64', 'Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], ['ref']]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Sub<Integer> for &i64 {
     type Output = Integer;
@@ -616,8 +615,8 @@ impl Sub<Integer> for &i64 {
     }
 }
 
-// [u'&i64', u'&Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], []]
+// ['&i64', '&Integer', 'Integer', 'Integer::subtract', 'no', ['ref',
+// {'convert': 'Integer'}, 'deref'], []]
 #[cfg(all(target_pointer_width = "64", not(windows)))]
 impl Sub<&Integer> for &i64 {
     type Output = Integer;
@@ -627,8 +626,8 @@ impl Sub<&Integer> for &i64 {
     }
 }
 
-// [u'Integer', u'u32', u'Integer', u'Integer::subtract_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}]]
+// ['Integer', 'u32', 'Integer', 'Integer::subtract_assign', 'lhs', ['ref_mut'],
+// ['ref', {'convert': 'Integer'}]]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Sub<u32> for Integer {
     type Output = Integer;
@@ -639,8 +638,8 @@ impl Sub<u32> for Integer {
     }
 }
 
-// [u'Integer', u'&u32', u'Integer', u'Integer::subtract_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}, u'deref']]
+// ['Integer', '&u32', 'Integer', 'Integer::subtract_assign', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}, 'deref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Sub<&u32> for Integer {
     type Output = Integer;
@@ -651,8 +650,8 @@ impl Sub<&u32> for Integer {
     }
 }
 
-// [u'&Integer', u'u32', u'Integer', u'Integer::subtract', u'no', [], [u'ref',
-// {u'convert': u'Integer'}]]
+// ['&Integer', 'u32', 'Integer', 'Integer::subtract', 'no', [], ['ref',
+// {'convert': 'Integer'}]]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Sub<u32> for &Integer {
     type Output = Integer;
@@ -662,8 +661,8 @@ impl Sub<u32> for &Integer {
     }
 }
 
-// [u'&Integer', u'&u32', u'Integer', u'Integer::subtract', u'no', [], [u'ref',
-// {u'convert': u'Integer'}, u'deref']]
+// ['&Integer', '&u32', 'Integer', 'Integer::subtract', 'no', [], ['ref',
+// {'convert': 'Integer'}, 'deref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Sub<&u32> for &Integer {
     type Output = Integer;
@@ -673,8 +672,8 @@ impl Sub<&u32> for &Integer {
     }
 }
 
-// [u'u32', u'Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}], [u'ref']]
+// ['u32', 'Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}], ['ref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Sub<Integer> for u32 {
     type Output = Integer;
@@ -684,8 +683,8 @@ impl Sub<Integer> for u32 {
     }
 }
 
-// [u'u32', u'&Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}], []]
+// ['u32', '&Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}], []]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Sub<&Integer> for u32 {
     type Output = Integer;
@@ -695,8 +694,8 @@ impl Sub<&Integer> for u32 {
     }
 }
 
-// [u'&u32', u'Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], [u'ref']]
+// ['&u32', 'Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], ['ref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Sub<Integer> for &u32 {
     type Output = Integer;
@@ -706,8 +705,8 @@ impl Sub<Integer> for &u32 {
     }
 }
 
-// [u'&u32', u'&Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], []]
+// ['&u32', '&Integer', 'Integer', 'Integer::subtract', 'no', ['ref',
+// {'convert': 'Integer'}, 'deref'], []]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Sub<&Integer> for &u32 {
     type Output = Integer;
@@ -717,8 +716,8 @@ impl Sub<&Integer> for &u32 {
     }
 }
 
-// [u'Integer', u'i64', u'Integer', u'Integer::subtract_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}]]
+// ['Integer', 'i64', 'Integer', 'Integer::subtract_assign', 'lhs', ['ref_mut'],
+// ['ref', {'convert': 'Integer'}]]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Sub<i64> for Integer {
     type Output = Integer;
@@ -729,8 +728,8 @@ impl Sub<i64> for Integer {
     }
 }
 
-// [u'Integer', u'&i64', u'Integer', u'Integer::subtract_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}, u'deref']]
+// ['Integer', '&i64', 'Integer', 'Integer::subtract_assign', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}, 'deref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Sub<&i64> for Integer {
     type Output = Integer;
@@ -741,8 +740,8 @@ impl Sub<&i64> for Integer {
     }
 }
 
-// [u'&Integer', u'i64', u'Integer', u'Integer::subtract', u'no', [], [u'ref',
-// {u'convert': u'Integer'}]]
+// ['&Integer', 'i64', 'Integer', 'Integer::subtract', 'no', [], ['ref',
+// {'convert': 'Integer'}]]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Sub<i64> for &Integer {
     type Output = Integer;
@@ -752,8 +751,8 @@ impl Sub<i64> for &Integer {
     }
 }
 
-// [u'&Integer', u'&i64', u'Integer', u'Integer::subtract', u'no', [], [u'ref',
-// {u'convert': u'Integer'}, u'deref']]
+// ['&Integer', '&i64', 'Integer', 'Integer::subtract', 'no', [], ['ref',
+// {'convert': 'Integer'}, 'deref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Sub<&i64> for &Integer {
     type Output = Integer;
@@ -763,8 +762,8 @@ impl Sub<&i64> for &Integer {
     }
 }
 
-// [u'i64', u'Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}], [u'ref']]
+// ['i64', 'Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}], ['ref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Sub<Integer> for i64 {
     type Output = Integer;
@@ -774,8 +773,8 @@ impl Sub<Integer> for i64 {
     }
 }
 
-// [u'i64', u'&Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}], []]
+// ['i64', '&Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}], []]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Sub<&Integer> for i64 {
     type Output = Integer;
@@ -785,8 +784,8 @@ impl Sub<&Integer> for i64 {
     }
 }
 
-// [u'&i64', u'Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], [u'ref']]
+// ['&i64', 'Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], ['ref']]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Sub<Integer> for &i64 {
     type Output = Integer;
@@ -796,8 +795,8 @@ impl Sub<Integer> for &i64 {
     }
 }
 
-// [u'&i64', u'&Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], []]
+// ['&i64', '&Integer', 'Integer', 'Integer::subtract', 'no', ['ref',
+// {'convert': 'Integer'}, 'deref'], []]
 #[cfg(not(all(target_pointer_width = "64", not(windows))))]
 impl Sub<&Integer> for &i64 {
     type Output = Integer;
@@ -807,8 +806,8 @@ impl Sub<&Integer> for &i64 {
     }
 }
 
-// [u'Integer', u'u64', u'Integer', u'Integer::subtract_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}]]
+// ['Integer', 'u64', 'Integer', 'Integer::subtract_assign', 'lhs', ['ref_mut'],
+// ['ref', {'convert': 'Integer'}]]
 impl Sub<u64> for Integer {
     type Output = Integer;
 
@@ -818,8 +817,8 @@ impl Sub<u64> for Integer {
     }
 }
 
-// [u'Integer', u'&u64', u'Integer', u'Integer::subtract_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}, u'deref']]
+// ['Integer', '&u64', 'Integer', 'Integer::subtract_assign', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}, 'deref']]
 impl Sub<&u64> for Integer {
     type Output = Integer;
 
@@ -829,8 +828,8 @@ impl Sub<&u64> for Integer {
     }
 }
 
-// [u'&Integer', u'u64', u'Integer', u'Integer::subtract', u'no', [], [u'ref',
-// {u'convert': u'Integer'}]]
+// ['&Integer', 'u64', 'Integer', 'Integer::subtract', 'no', [], ['ref',
+// {'convert': 'Integer'}]]
 impl Sub<u64> for &Integer {
     type Output = Integer;
 
@@ -839,8 +838,8 @@ impl Sub<u64> for &Integer {
     }
 }
 
-// [u'&Integer', u'&u64', u'Integer', u'Integer::subtract', u'no', [], [u'ref',
-// {u'convert': u'Integer'}, u'deref']]
+// ['&Integer', '&u64', 'Integer', 'Integer::subtract', 'no', [], ['ref',
+// {'convert': 'Integer'}, 'deref']]
 impl Sub<&u64> for &Integer {
     type Output = Integer;
 
@@ -849,8 +848,8 @@ impl Sub<&u64> for &Integer {
     }
 }
 
-// [u'u64', u'Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}], [u'ref']]
+// ['u64', 'Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}], ['ref']]
 impl Sub<Integer> for u64 {
     type Output = Integer;
 
@@ -859,8 +858,8 @@ impl Sub<Integer> for u64 {
     }
 }
 
-// [u'u64', u'&Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}], []]
+// ['u64', '&Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}], []]
 impl Sub<&Integer> for u64 {
     type Output = Integer;
 
@@ -869,8 +868,8 @@ impl Sub<&Integer> for u64 {
     }
 }
 
-// [u'&u64', u'Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], [u'ref']]
+// ['&u64', 'Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}, 'deref'], ['ref']]
 impl Sub<Integer> for &u64 {
     type Output = Integer;
 
@@ -879,8 +878,8 @@ impl Sub<Integer> for &u64 {
     }
 }
 
-// [u'&u64', u'&Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], []]
+// ['&u64', '&Integer', 'Integer', 'Integer::subtract', 'no', ['ref',
+// {'convert': 'Integer'}, 'deref'], []]
 impl Sub<&Integer> for &u64 {
     type Output = Integer;
 
@@ -889,8 +888,8 @@ impl Sub<&Integer> for &u64 {
     }
 }
 
-// [u'Integer', u'i128', u'Integer', u'Integer::subtract_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}]]
+// ['Integer', 'i128', 'Integer', 'Integer::subtract_assign', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}]]
 impl Sub<i128> for Integer {
     type Output = Integer;
 
@@ -900,8 +899,8 @@ impl Sub<i128> for Integer {
     }
 }
 
-// [u'Integer', u'&i128', u'Integer', u'Integer::subtract_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}, u'deref']]
+// ['Integer', '&i128', 'Integer', 'Integer::subtract_assign', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}, 'deref']]
 impl Sub<&i128> for Integer {
     type Output = Integer;
 
@@ -911,8 +910,8 @@ impl Sub<&i128> for Integer {
     }
 }
 
-// [u'&Integer', u'i128', u'Integer', u'Integer::subtract', u'no', [], [u'ref',
-// {u'convert': u'Integer'}]]
+// ['&Integer', 'i128', 'Integer', 'Integer::subtract', 'no', [], ['ref',
+// {'convert': 'Integer'}]]
 impl Sub<i128> for &Integer {
     type Output = Integer;
 
@@ -921,8 +920,8 @@ impl Sub<i128> for &Integer {
     }
 }
 
-// [u'&Integer', u'&i128', u'Integer', u'Integer::subtract', u'no', [], [u'ref',
-// {u'convert': u'Integer'}, u'deref']]
+// ['&Integer', '&i128', 'Integer', 'Integer::subtract', 'no', [], ['ref',
+// {'convert': 'Integer'}, 'deref']]
 impl Sub<&i128> for &Integer {
     type Output = Integer;
 
@@ -931,8 +930,8 @@ impl Sub<&i128> for &Integer {
     }
 }
 
-// [u'i128', u'Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}], [u'ref']]
+// ['i128', 'Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}], ['ref']]
 impl Sub<Integer> for i128 {
     type Output = Integer;
 
@@ -941,8 +940,8 @@ impl Sub<Integer> for i128 {
     }
 }
 
-// [u'i128', u'&Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}], []]
+// ['i128', '&Integer', 'Integer', 'Integer::subtract', 'no', ['ref',
+// {'convert': 'Integer'}], []]
 impl Sub<&Integer> for i128 {
     type Output = Integer;
 
@@ -951,8 +950,8 @@ impl Sub<&Integer> for i128 {
     }
 }
 
-// [u'&i128', u'Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], [u'ref']]
+// ['&i128', 'Integer', 'Integer', 'Integer::subtract', 'no', ['ref',
+// {'convert': 'Integer'}, 'deref'], ['ref']]
 impl Sub<Integer> for &i128 {
     type Output = Integer;
 
@@ -961,8 +960,8 @@ impl Sub<Integer> for &i128 {
     }
 }
 
-// [u'&i128', u'&Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], []]
+// ['&i128', '&Integer', 'Integer', 'Integer::subtract', 'no', ['ref',
+// {'convert': 'Integer'}, 'deref'], []]
 impl Sub<&Integer> for &i128 {
     type Output = Integer;
 
@@ -971,8 +970,8 @@ impl Sub<&Integer> for &i128 {
     }
 }
 
-// [u'Integer', u'u128', u'Integer', u'Integer::subtract_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}]]
+// ['Integer', 'u128', 'Integer', 'Integer::subtract_assign', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}]]
 impl Sub<u128> for Integer {
     type Output = Integer;
 
@@ -982,8 +981,8 @@ impl Sub<u128> for Integer {
     }
 }
 
-// [u'Integer', u'&u128', u'Integer', u'Integer::subtract_assign', u'lhs',
-// [u'ref_mut'], [u'ref', {u'convert': u'Integer'}, u'deref']]
+// ['Integer', '&u128', 'Integer', 'Integer::subtract_assign', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}, 'deref']]
 impl Sub<&u128> for Integer {
     type Output = Integer;
 
@@ -993,8 +992,8 @@ impl Sub<&u128> for Integer {
     }
 }
 
-// [u'&Integer', u'u128', u'Integer', u'Integer::subtract', u'no', [], [u'ref',
-// {u'convert': u'Integer'}]]
+// ['&Integer', 'u128', 'Integer', 'Integer::subtract', 'no', [], ['ref',
+// {'convert': 'Integer'}]]
 impl Sub<u128> for &Integer {
     type Output = Integer;
 
@@ -1003,8 +1002,8 @@ impl Sub<u128> for &Integer {
     }
 }
 
-// [u'&Integer', u'&u128', u'Integer', u'Integer::subtract', u'no', [], [u'ref',
-// {u'convert': u'Integer'}, u'deref']]
+// ['&Integer', '&u128', 'Integer', 'Integer::subtract', 'no', [], ['ref',
+// {'convert': 'Integer'}, 'deref']]
 impl Sub<&u128> for &Integer {
     type Output = Integer;
 
@@ -1013,8 +1012,8 @@ impl Sub<&u128> for &Integer {
     }
 }
 
-// [u'u128', u'Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}], [u'ref']]
+// ['u128', 'Integer', 'Integer', 'Integer::subtract', 'no', ['ref', {'convert':
+// 'Integer'}], ['ref']]
 impl Sub<Integer> for u128 {
     type Output = Integer;
 
@@ -1023,8 +1022,8 @@ impl Sub<Integer> for u128 {
     }
 }
 
-// [u'u128', u'&Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}], []]
+// ['u128', '&Integer', 'Integer', 'Integer::subtract', 'no', ['ref',
+// {'convert': 'Integer'}], []]
 impl Sub<&Integer> for u128 {
     type Output = Integer;
 
@@ -1033,8 +1032,8 @@ impl Sub<&Integer> for u128 {
     }
 }
 
-// [u'&u128', u'Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], [u'ref']]
+// ['&u128', 'Integer', 'Integer', 'Integer::subtract', 'no', ['ref',
+// {'convert': 'Integer'}, 'deref'], ['ref']]
 impl Sub<Integer> for &u128 {
     type Output = Integer;
 
@@ -1043,8 +1042,8 @@ impl Sub<Integer> for &u128 {
     }
 }
 
-// [u'&u128', u'&Integer', u'Integer', u'Integer::subtract', u'no', [u'ref',
-// {u'convert': u'Integer'}, u'deref'], []]
+// ['&u128', '&Integer', 'Integer', 'Integer::subtract', 'no', ['ref',
+// {'convert': 'Integer'}, 'deref'], []]
 impl Sub<&Integer> for &u128 {
     type Output = Integer;
 
