@@ -1,0 +1,46 @@
+{
+    "template": "rational/ops/division_assign.rs.template",
+    "output": "rational/ops/division_assign.rs",
+    "trait": {
+        "name": "DivAssign",
+        "fn_name": "div_assign",
+        "is_op_assign": true
+    },
+    "instances": [
+        ["Rational", "Rational" , "Rational::divide_assign", "no", [], ["ref"]],
+        ["Rational", "&Rational", "Rational::divide_assign", "no", [], []],
+
+        ["Rational", "Integer" , "Rational::divide_assign_integer", "no", [], ["ref"]],
+        ["Rational", "&Integer", "Rational::divide_assign_integer", "no", [], []],
+
+        ["Rational", "i8" , "Rational::divide_assign_integer", "no", [], ["ref", { "convert": "Integer" }]],
+        ["Rational", "&i8", "Rational::divide_assign_integer", "no", [], ["ref", { "convert": "Integer" }, "deref"]],
+
+        ["Rational", "u8" , "Rational::divide_assign_integer", "no", [], ["ref", { "convert": "Integer" }]],
+        ["Rational", "&u8", "Rational::divide_assign_integer", "no", [], ["ref", { "convert": "Integer" }, "deref"]],
+
+        ["Rational", "i16" , "Rational::divide_assign_integer", "no", [], ["ref", { "convert": "Integer" }]],
+        ["Rational", "&i16", "Rational::divide_assign_integer", "no", [], ["ref", { "convert": "Integer" }, "deref"]],
+
+        ["Rational", "u16" , "Rational::divide_assign_integer", "no", [], ["ref", { "convert": "Integer" }]],
+        ["Rational", "&u16", "Rational::divide_assign_integer", "no", [], ["ref", { "convert": "Integer" }, "deref"]],
+
+        ["Rational", "i32" , "Rational::divide_assign_integer", "no", [], ["ref", { "convert": "Integer" }]],
+        ["Rational", "&i32", "Rational::divide_assign_integer", "no", [], ["ref", { "convert": "Integer" }, "deref"]],
+
+        ["Rational", "u32" , "Rational::divide_assign_integer", "no", [], ["ref", { "convert": "Integer" }]],
+        ["Rational", "&u32", "Rational::divide_assign_integer", "no", [], ["ref", { "convert": "Integer" }, "deref"]],
+
+        ["Rational", "i64" , "Rational::divide_assign_integer", "no", [], ["ref", { "convert": "Integer" }]],
+        ["Rational", "&i64", "Rational::divide_assign_integer", "no", [], ["ref", { "convert": "Integer" }, "deref"]],
+
+        ["Rational", "u64" , "Rational::divide_assign_integer", "no", [], ["ref", { "convert": "Integer" }]],
+        ["Rational", "&u64", "Rational::divide_assign_integer", "no", [], ["ref", { "convert": "Integer" }, "deref"]],
+
+        ["Rational", "i128" , "Rational::divide_assign_integer", "no", [], ["ref", { "convert": "Integer" }]],
+        ["Rational", "&i128", "Rational::divide_assign_integer", "no", [], ["ref", { "convert": "Integer" }, "deref"]],
+
+        ["Rational", "u128" , "Rational::divide_assign_integer", "no", [], ["ref", { "convert": "Integer" }]],
+        ["Rational", "&u128", "Rational::divide_assign_integer", "no", [], ["ref", { "convert": "Integer" }, "deref"]]
+    ]
+}

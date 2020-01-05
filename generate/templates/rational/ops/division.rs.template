@@ -1,0 +1,8 @@
+use crate::rational::Rational;
+use crate::integer::Integer;
+use core::ops::Div;
+use super::helpers::divide_reuse_lhs;
+
+// Div          The division operator /.
+
+{}

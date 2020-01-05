@@ -1,0 +1,46 @@
+{
+    "template": "rational/ops/addition_assign.rs.template",
+    "output": "rational/ops/addition_assign.rs",
+    "trait": {
+        "name": "AddAssign",
+        "fn_name": "add_assign",
+        "is_op_assign": true
+    },
+    "instances": [
+        ["Rational", "Rational" , "Rational::add_assign", "no", [], ["ref"]],
+        ["Rational", "&Rational", "Rational::add_assign", "no", [], []],
+
+        ["Rational", "Integer" , "Rational::add_assign_integer", "no", [], ["ref"]],
+        ["Rational", "&Integer", "Rational::add_assign_integer", "no", [], []],
+
+        ["Rational", "i8" , "add_assign_into_rational", "no", [], []],
+        ["Rational", "&i8", "add_assign_into_rational", "no", [], ["deref"]],
+
+        ["Rational", "u8" , "add_assign_into_rational", "no", [], []],
+        ["Rational", "&u8", "add_assign_into_rational", "no", [], ["deref"]],
+
+        ["Rational", "i16" , "add_assign_into_rational", "no", [], []],
+        ["Rational", "&i16", "add_assign_into_rational", "no", [], ["deref"]],
+
+        ["Rational", "u16" , "add_assign_into_rational", "no", [], []],
+        ["Rational", "&u16", "add_assign_into_rational", "no", [], ["deref"]],
+
+        ["Rational", "i32" , "add_assign_into_rational", "no", [], []],
+        ["Rational", "&i32", "add_assign_into_rational", "no", [], ["deref"]],
+
+        ["Rational", "u32" , "add_assign_into_rational", "no", [], []],
+        ["Rational", "&u32", "add_assign_into_rational", "no", [], ["deref"]],
+
+        ["Rational", "i64" , "add_assign_into_rational", "no", [], []],
+        ["Rational", "&i64", "add_assign_into_rational", "no", [], ["deref"]],
+
+        ["Rational", "u64" , "add_assign_into_rational", "no", [], []],
+        ["Rational", "&u64", "add_assign_into_rational", "no", [], ["deref"]],
+
+        ["Rational", "i128" , "add_assign_into_rational", "no", [], []],
+        ["Rational", "&i128", "add_assign_into_rational", "no", [], ["deref"]],
+
+        ["Rational", "u128" , "add_assign_into_rational", "no", [], []],
+        ["Rational", "&u128", "add_assign_into_rational", "no", [], ["deref"]]
+    ]
+}

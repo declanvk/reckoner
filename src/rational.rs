@@ -7,6 +7,9 @@ use core::{
 };
 use std::{alloc, ffi::CString, os::raw::c_long};
 
+pub(crate) mod comparisons;
+pub(crate) mod conversions;
+pub mod ops;
 
 /// Multiple precision rational value. Always heap allocated, not safe for
 /// sharing across threads.
@@ -121,6 +124,46 @@ impl Rational {
 
         // This is safe bc `self` has been initialized.
         unsafe { imath_sys::mp_rat_zero(self_raw) };
+    }
+
+    /// Returns true if the denominator is 1.
+    pub fn is_integer(&self) -> bool {
+        let self_raw = self.as_raw();
+
+        // This is safe bc `self` has been initialized.
+        unsafe { imath_sys::mp_rat_is_integer(self_raw) }
+    }
+
+    /// Compare two rationals
+    pub fn compare(&self, rhs: &Self) -> Ordering {
+        let self_raw = self.as_raw();
+        let rhs_raw = rhs.as_raw();
+
+        // This is safe bc both self & rhs have been initialized correctly
+        let raw_cmp = unsafe { imath_sys::mp_rat_compare(self_raw, rhs_raw) };
+
+        raw_cmp.cmp(&0)
+    }
+
+    /// Compare the magnitude of two rationals, not taking sign into account.
+    pub fn compare_magnitude(&self, rhs: &Self) -> Ordering {
+        let self_raw = self.as_raw();
+        let rhs_raw = rhs.as_raw();
+
+        // This is safe bc both self & rhs have been initialized correctly
+        let raw_cmp = unsafe { imath_sys::mp_rat_compare_unsigned(self_raw, rhs_raw) };
+
+        raw_cmp.cmp(&0)
+    }
+
+    /// Compare a rational to zero.
+    pub fn compare_zero(&self) -> Ordering {
+        let self_raw = self.as_raw();
+
+        // This is safe bc both self has been initialized correctly
+        let raw_cmp = unsafe { imath_sys::mp_rat_compare_zero(self_raw) };
+
+        raw_cmp.cmp(&0)
     }
 
     /// Return a copy of the numerator of the rational value
@@ -341,6 +384,58 @@ impl Rational {
         let res = unsafe { imath_sys::mp_rat_set_value(self_raw, numer.into(), denom.into()) };
 
         imath_check_panic!(res, "Setting the value failed!");
+    }
+
+    pub(crate) fn set_numerator(&mut self, numer: &Integer) {
+        let self_raw = self.as_raw();
+        let int_raw = numer.as_raw();
+        // TODO: Use `&raw` when it hits stable
+        // This is correct bc the `num` field is the first field in the `mpz_t` struct,
+        // which is also `repr(C)`.
+        let num_raw = self_raw.cast::<imath_sys::mpz_t>();
+
+        let res = unsafe { imath_sys::mp_int_copy(int_raw, num_raw) };
+
+        imath_check_panic!(res, "Setting the numerator failed!");
+    }
+
+    #[allow(dead_code)]
+    pub(crate) fn set_denominator(&mut self, denom: &Integer) {
+        let self_raw = self.as_raw();
+        let denom_raw = denom.as_raw();
+        // TODO: Use `&raw` when it hits stable
+        // This is safe because the layout of the `mpq_t` struct is repr(C) and just two
+        // `mpz_t` in a row. The alignment of `mpz_t` is 8, and the size is 32, so the
+        // offset for the `den` field should also be 32, equivalent to one `mpz_t`.
+        let den_raw = unsafe { self_raw.cast::<imath_sys::mpz_t>().offset(1) };
+
+        // This is safe because both `self` and `denom` have been initialized, and the
+        // `den_raw` pointer points correctly to the `den` field of the `mpq_t` struct.
+        let res = unsafe { imath_sys::mp_int_copy(denom_raw, den_raw) };
+
+        imath_check_panic!(res, "Setting the denominator failed!");
+    }
+
+    pub(crate) fn try_into_c_long(&self) -> Result<(c_long, c_long)> {
+        let self_raw = self.as_raw();
+
+        let mut numerator: c_long = 0;
+        let numerator_raw = (&mut numerator) as *mut _;
+
+        let mut denominator: c_long = 0;
+        let denominator_raw = (&mut denominator) as *mut _;
+
+        // This is safe bc `self` has been initialized and
+        // `numerator_raw`/`denominator_raw` point to actual integers.
+        let res = unsafe { imath_sys::mp_rat_to_ints(self_raw, numerator_raw, denominator_raw) };
+
+        // Accessing this is safe bc the MP_OK value is only ever used as an error
+        // condition.
+        if res == unsafe { imath_sys::MP_OK } {
+            Ok((numerator, denominator))
+        } else {
+            Err(Error::ConversionOutsideRange)
+        }
     }
 }
 

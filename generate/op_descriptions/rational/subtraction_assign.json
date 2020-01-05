@@ -1,0 +1,46 @@
+{
+    "template": "rational/ops/subtraction_assign.rs.template",
+    "output": "rational/ops/subtraction_assign.rs",
+    "trait": {
+        "name": "SubAssign",
+        "fn_name": "sub_assign",
+        "is_op_assign": true
+    },
+    "instances": [
+        ["Rational", "Rational" , "Rational::subtract_assign", "no", [], ["ref"]],
+        ["Rational", "&Rational", "Rational::subtract_assign", "no", [], []],
+
+        ["Rational", "Integer" , "Rational::subtract_assign_integer", "no", [], ["ref"]],
+        ["Rational", "&Integer", "Rational::subtract_assign_integer", "no", [], []],
+
+        ["Rational", "i8" , "Rational::subtract_assign_integer", "no", [], ["ref", { "convert": "Integer" }]],
+        ["Rational", "&i8", "Rational::subtract_assign_integer", "no", [], ["ref", { "convert": "Integer" }, "deref"]],
+
+        ["Rational", "u8" , "Rational::subtract_assign_integer", "no", [], ["ref", { "convert": "Integer" }]],
+        ["Rational", "&u8", "Rational::subtract_assign_integer", "no", [], ["ref", { "convert": "Integer" }, "deref"]],
+
+        ["Rational", "i16" , "Rational::subtract_assign_integer", "no", [], ["ref", { "convert": "Integer" }]],
+        ["Rational", "&i16", "Rational::subtract_assign_integer", "no", [], ["ref", { "convert": "Integer" }, "deref"]],
+
+        ["Rational", "u16" , "Rational::subtract_assign_integer", "no", [], ["ref", { "convert": "Integer" }]],
+        ["Rational", "&u16", "Rational::subtract_assign_integer", "no", [], ["ref", { "convert": "Integer" }, "deref"]],
+
+        ["Rational", "i32" , "Rational::subtract_assign_integer", "no", [], ["ref", { "convert": "Integer" }]],
+        ["Rational", "&i32", "Rational::subtract_assign_integer", "no", [], ["ref", { "convert": "Integer" }, "deref"]],
+
+        ["Rational", "u32" , "Rational::subtract_assign_integer", "no", [], ["ref", { "convert": "Integer" }]],
+        ["Rational", "&u32", "Rational::subtract_assign_integer", "no", [], ["ref", { "convert": "Integer" }, "deref"]],
+
+        ["Rational", "i64" , "Rational::subtract_assign_integer", "no", [], ["ref", { "convert": "Integer" }]],
+        ["Rational", "&i64", "Rational::subtract_assign_integer", "no", [], ["ref", { "convert": "Integer" }, "deref"]],
+
+        ["Rational", "u64" , "Rational::subtract_assign_integer", "no", [], ["ref", { "convert": "Integer" }]],
+        ["Rational", "&u64", "Rational::subtract_assign_integer", "no", [], ["ref", { "convert": "Integer" }, "deref"]],
+
+        ["Rational", "i128" , "Rational::subtract_assign_integer", "no", [], ["ref", { "convert": "Integer" }]],
+        ["Rational", "&i128", "Rational::subtract_assign_integer", "no", [], ["ref", { "convert": "Integer" }, "deref"]],
+
+        ["Rational", "u128" , "Rational::subtract_assign_integer", "no", [], ["ref", { "convert": "Integer" }]],
+        ["Rational", "&u128", "Rational::subtract_assign_integer", "no", [], ["ref", { "convert": "Integer" }, "deref"]]
+    ]
+}

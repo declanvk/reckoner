@@ -1,0 +1,8 @@
+use crate::rational::Rational;
+use crate::integer::Integer;
+use core::ops::AddAssign;
+use super::helpers::add_assign_into_rational;
+
+// AddAssign    The addition assignment operator +=.
+
+{}

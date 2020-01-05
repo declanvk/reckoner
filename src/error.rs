@@ -28,12 +28,14 @@ pub enum Error {
     /// Unknown value for an imath rounding mode.
     UnknownRoundingMode,
     /// Internal error from `imath_sys`.
-    SysError {
+    IMath {
         /// Internal `imath_sys` error code.
         code: imath_sys::mp_result,
         /// Custom message to display.
         msg: Option<&'static str>,
     },
+    /// The rational value is not a canonical integer, in the form `n/1`.
+    NotCanonicalInteger,
 }
 
 impl std::error::Error for Error {}
@@ -58,10 +60,11 @@ impl fmt::Display for Error {
             ),
             Error::IntParseFailed => write!(f, "Integer parsing failed."),
             Error::UnknownRoundingMode => write!(f, "Unknown value for an imath rounding mode."),
-            Error::NoErrorPossible => {
-                panic!("This error is no supposed to be possible. Please file an issue.")
-            }
-            Error::SysError {
+            Error::NoErrorPossible => write!(
+                f,
+                "This error is not supposed to be possible. Please file an issue."
+            ),
+            Error::IMath {
                 code,
                 msg: Some(msg),
             } => write!(
@@ -71,11 +74,15 @@ impl fmt::Display for Error {
                 get_imath_sys_error_msg(*code),
                 msg
             ),
-            Error::SysError { code, msg: None } => write!(
+            Error::IMath { code, msg: None } => write!(
                 f,
                 "imath error ({:?} \"{}\")",
                 code,
                 get_imath_sys_error_msg(*code)
+            ),
+            Error::NotCanonicalInteger => write!(
+                f,
+                "The rational value is not a canonical integer, in the form `n/1`."
             ),
         }
     }
@@ -118,10 +125,13 @@ macro_rules! imath_check_panic {
         // Accessing this is safe bc the MP_OK value is only ever used as an error
         // condition.
         if $arg != unsafe { imath_sys::MP_OK } {
-            panic!(Error::SysError {
-                code: $arg,
-                msg: None
-            });
+            panic!(
+                "{}",
+                Error::IMath {
+                    code: $arg,
+                    msg: None
+                }
+            );
         }
     };
 
@@ -129,10 +139,13 @@ macro_rules! imath_check_panic {
         // Accessing this is safe bc the MP_OK value is only ever used as an error
         // condition.
         if $arg != unsafe { imath_sys::MP_OK } {
-            panic!(Error::SysError {
-                code: $arg,
-                msg: Some($msg)
-            });
+            panic!(
+                "{}",
+                Error::IMath {
+                    code: $arg,
+                    msg: Some($msg)
+                }
+            );
         }
     };
 }

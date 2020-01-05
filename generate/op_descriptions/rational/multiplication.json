@@ -1,0 +1,125 @@
+{
+    "template": "rational/ops/multiplication.rs.template",
+    "output": "rational/ops/multiplication.rs",
+    "trait": {
+        "name": "Mul",
+        "fn_name": "mul",
+        "is_op_assign": false
+    },
+    "instances": [
+        ["Rational", "Rational", "Rational", "multiply_reuse_lhs", "no", [], ["ref"]],
+        ["Rational", "&Rational", "Rational", "multiply_reuse_lhs", "no", [], []],
+        ["&Rational", "Rational", "Rational", "multiply_reuse_rhs", "no", [], []],
+        ["&Rational", "&Rational", "Rational", "Rational::multiply", "no", [], []],
+
+        ["Rational", "Integer", "Rational", "multiply_reuse_lhs", "no", [], ["ref", {"convert": "Rational"}]],
+        ["Rational", "&Integer", "Rational", "multiply_reuse_lhs", "no", [], ["ref", {"convert": "Rational"}]],
+        ["&Rational", "Integer", "Rational", "multiply_reuse_rhs", "no", [], []],
+        ["&Rational", "&Integer", "Rational", "multiply_reuse_rhs", "no", [], []],
+
+        ["Integer", "Rational", "Rational", "multiply_reuse_rhs", "no", ["ref", {"convert": "Rational"}], []],
+        ["Integer", "&Rational", "Rational", "multiply_reuse_lhs", "no", [], []],
+        ["&Integer", "Rational", "Rational", "multiply_reuse_rhs", "no", ["ref", {"convert": "Rational"}], []],
+        ["&Integer", "&Rational", "Rational", "multiply_reuse_lhs", "no", [], []],
+
+        ["Rational", "i8", "Rational", "multiply_reuse_lhs", "no", [], ["ref", {"convert": "Rational"}]],
+        ["Rational", "&i8", "Rational", "multiply_reuse_lhs", "no", [], ["ref", {"convert": "Rational"}]],
+        ["&Rational", "i8", "Rational", "multiply_reuse_rhs", "no", [], []],
+        ["&Rational", "&i8", "Rational", "multiply_reuse_rhs", "no", [], []],
+
+        ["i8", "Rational", "Rational", "multiply_reuse_rhs", "no", ["ref", {"convert": "Rational"}], []],
+        ["i8", "&Rational", "Rational", "multiply_reuse_lhs", "no", [], []],
+        ["&i8", "Rational", "Rational", "multiply_reuse_rhs", "no", ["ref", {"convert": "Rational"}], []],
+        ["&i8", "&Rational", "Rational", "multiply_reuse_lhs", "no", [], []],
+
+        ["Rational", "u8", "Rational", "multiply_reuse_lhs", "no", [], ["ref", {"convert": "Rational"}]],
+        ["Rational", "&u8", "Rational", "multiply_reuse_lhs", "no", [], ["ref", {"convert": "Rational"}]],
+        ["&Rational", "u8", "Rational", "multiply_reuse_rhs", "no", [], []],
+        ["&Rational", "&u8", "Rational", "multiply_reuse_rhs", "no", [], []],
+
+        ["u8", "Rational", "Rational", "multiply_reuse_rhs", "no", ["ref", {"convert": "Rational"}], []],
+        ["u8", "&Rational", "Rational", "multiply_reuse_lhs", "no", [], []],
+        ["&u8", "Rational", "Rational", "multiply_reuse_rhs", "no", ["ref", {"convert": "Rational"}], []],
+        ["&u8", "&Rational", "Rational", "multiply_reuse_lhs", "no", [], []],
+
+        ["Rational", "i16", "Rational", "multiply_reuse_lhs", "no", [], ["ref", {"convert": "Rational"}]],
+        ["Rational", "&i16", "Rational", "multiply_reuse_lhs", "no", [], ["ref", {"convert": "Rational"}]],
+        ["&Rational", "i16", "Rational", "multiply_reuse_rhs", "no", [], []],
+        ["&Rational", "&i16", "Rational", "multiply_reuse_rhs", "no", [], []],
+
+        ["i16", "Rational", "Rational", "multiply_reuse_rhs", "no", ["ref", {"convert": "Rational"}], []],
+        ["i16", "&Rational", "Rational", "multiply_reuse_lhs", "no", [], []],
+        ["&i16", "Rational", "Rational", "multiply_reuse_rhs", "no", ["ref", {"convert": "Rational"}], []],
+        ["&i16", "&Rational", "Rational", "multiply_reuse_lhs", "no", [], []],
+
+        ["Rational", "u16", "Rational", "multiply_reuse_lhs", "no", [], ["ref", {"convert": "Rational"}]],
+        ["Rational", "&u16", "Rational", "multiply_reuse_lhs", "no", [], ["ref", {"convert": "Rational"}]],
+        ["&Rational", "u16", "Rational", "multiply_reuse_rhs", "no", [], []],
+        ["&Rational", "&u16", "Rational", "multiply_reuse_rhs", "no", [], []],
+
+        ["u16", "Rational", "Rational", "multiply_reuse_rhs", "no", ["ref", {"convert": "Rational"}], []],
+        ["u16", "&Rational", "Rational", "multiply_reuse_lhs", "no", [], []],
+        ["&u16", "Rational", "Rational", "multiply_reuse_rhs", "no", ["ref", {"convert": "Rational"}], []],
+        ["&u16", "&Rational", "Rational", "multiply_reuse_lhs", "no", [], []],
+
+        ["Rational", "i32", "Rational", "multiply_reuse_lhs", "no", [], ["ref", {"convert": "Rational"}]],
+        ["Rational", "&i32", "Rational", "multiply_reuse_lhs", "no", [], ["ref", {"convert": "Rational"}]],
+        ["&Rational", "i32", "Rational", "multiply_reuse_rhs", "no", [], []],
+        ["&Rational", "&i32", "Rational", "multiply_reuse_rhs", "no", [], []],
+
+        ["i32", "Rational", "Rational", "multiply_reuse_rhs", "no", ["ref", {"convert": "Rational"}], []],
+        ["i32", "&Rational", "Rational", "multiply_reuse_lhs", "no", [], []],
+        ["&i32", "Rational", "Rational", "multiply_reuse_rhs", "no", ["ref", {"convert": "Rational"}], []],
+        ["&i32", "&Rational", "Rational", "multiply_reuse_lhs", "no", [], []],
+
+        ["Rational", "u32", "Rational", "multiply_reuse_lhs", "no", [], ["ref", {"convert": "Rational"}]],
+        ["Rational", "&u32", "Rational", "multiply_reuse_lhs", "no", [], ["ref", {"convert": "Rational"}]],
+        ["&Rational", "u32", "Rational", "multiply_reuse_rhs", "no", [], []],
+        ["&Rational", "&u32", "Rational", "multiply_reuse_rhs", "no", [], []],
+
+        ["u32", "Rational", "Rational", "multiply_reuse_rhs", "no", ["ref", {"convert": "Rational"}], []],
+        ["u32", "&Rational", "Rational", "multiply_reuse_lhs", "no", [], []],
+        ["&u32", "Rational", "Rational", "multiply_reuse_rhs", "no", ["ref", {"convert": "Rational"}], []],
+        ["&u32", "&Rational", "Rational", "multiply_reuse_lhs", "no", [], []],
+
+        ["Rational", "i64", "Rational", "multiply_reuse_lhs", "no", [], ["ref", {"convert": "Rational"}]],
+        ["Rational", "&i64", "Rational", "multiply_reuse_lhs", "no", [], ["ref", {"convert": "Rational"}]],
+        ["&Rational", "i64", "Rational", "multiply_reuse_rhs", "no", [], []],
+        ["&Rational", "&i64", "Rational", "multiply_reuse_rhs", "no", [], []],
+
+        ["i64", "Rational", "Rational", "multiply_reuse_rhs", "no", ["ref", {"convert": "Rational"}], []],
+        ["i64", "&Rational", "Rational", "multiply_reuse_lhs", "no", [], []],
+        ["&i64", "Rational", "Rational", "multiply_reuse_rhs", "no", ["ref", {"convert": "Rational"}], []],
+        ["&i64", "&Rational", "Rational", "multiply_reuse_lhs", "no", [], []],
+
+        ["Rational", "u64", "Rational", "multiply_reuse_lhs", "no", [], ["ref", {"convert": "Rational"}]],
+        ["Rational", "&u64", "Rational", "multiply_reuse_lhs", "no", [], ["ref", {"convert": "Rational"}]],
+        ["&Rational", "u64", "Rational", "multiply_reuse_rhs", "no", [], []],
+        ["&Rational", "&u64", "Rational", "multiply_reuse_rhs", "no", [], []],
+
+        ["u64", "Rational", "Rational", "multiply_reuse_rhs", "no", ["ref", {"convert": "Rational"}], []],
+        ["u64", "&Rational", "Rational", "multiply_reuse_lhs", "no", [], []],
+        ["&u64", "Rational", "Rational", "multiply_reuse_rhs", "no", ["ref", {"convert": "Rational"}], []],
+        ["&u64", "&Rational", "Rational", "multiply_reuse_lhs", "no", [], []],
+
+        ["Rational", "i128", "Rational", "multiply_reuse_lhs", "no", [], ["ref", {"convert": "Rational"}]],
+        ["Rational", "&i128", "Rational", "multiply_reuse_lhs", "no", [], ["ref", {"convert": "Rational"}]],
+        ["&Rational", "i128", "Rational", "multiply_reuse_rhs", "no", [], []],
+        ["&Rational", "&i128", "Rational", "multiply_reuse_rhs", "no", [], []],
+
+        ["i128", "Rational", "Rational", "multiply_reuse_rhs", "no", ["ref", {"convert": "Rational"}], []],
+        ["i128", "&Rational", "Rational", "multiply_reuse_lhs", "no", [], []],
+        ["&i128", "Rational", "Rational", "multiply_reuse_rhs", "no", ["ref", {"convert": "Rational"}], []],
+        ["&i128", "&Rational", "Rational", "multiply_reuse_lhs", "no", [], []],
+
+        ["Rational", "u128", "Rational", "multiply_reuse_lhs", "no", [], ["ref", {"convert": "Rational"}]],
+        ["Rational", "&u128", "Rational", "multiply_reuse_lhs", "no", [], ["ref", {"convert": "Rational"}]],
+        ["&Rational", "u128", "Rational", "multiply_reuse_rhs", "no", [], []],
+        ["&Rational", "&u128", "Rational", "multiply_reuse_rhs", "no", [], []],
+
+        ["u128", "Rational", "Rational", "multiply_reuse_rhs", "no", ["ref", {"convert": "Rational"}], []],
+        ["u128", "&Rational", "Rational", "multiply_reuse_lhs", "no", [], []],
+        ["&u128", "Rational", "Rational", "multiply_reuse_rhs", "no", ["ref", {"convert": "Rational"}], []],
+        ["&u128", "&Rational", "Rational", "multiply_reuse_lhs", "no", [], []]
+    ]
+}
