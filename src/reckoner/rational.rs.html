@@ -577,6 +577,101 @@
 <span id="577">577</span>
 <span id="578">578</span>
 <span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
+<span id="609">609</span>
+<span id="610">610</span>
+<span id="611">611</span>
+<span id="612">612</span>
+<span id="613">613</span>
+<span id="614">614</span>
+<span id="615">615</span>
+<span id="616">616</span>
+<span id="617">617</span>
+<span id="618">618</span>
+<span id="619">619</span>
+<span id="620">620</span>
+<span id="621">621</span>
+<span id="622">622</span>
+<span id="623">623</span>
+<span id="624">624</span>
+<span id="625">625</span>
+<span id="626">626</span>
+<span id="627">627</span>
+<span id="628">628</span>
+<span id="629">629</span>
+<span id="630">630</span>
+<span id="631">631</span>
+<span id="632">632</span>
+<span id="633">633</span>
+<span id="634">634</span>
+<span id="635">635</span>
+<span id="636">636</span>
+<span id="637">637</span>
+<span id="638">638</span>
+<span id="639">639</span>
+<span id="640">640</span>
+<span id="641">641</span>
+<span id="642">642</span>
+<span id="643">643</span>
+<span id="644">644</span>
+<span id="645">645</span>
+<span id="646">646</span>
+<span id="647">647</span>
+<span id="648">648</span>
+<span id="649">649</span>
+<span id="650">650</span>
+<span id="651">651</span>
+<span id="652">652</span>
+<span id="653">653</span>
+<span id="654">654</span>
+<span id="655">655</span>
+<span id="656">656</span>
+<span id="657">657</span>
+<span id="658">658</span>
+<span id="659">659</span>
+<span id="660">660</span>
+<span id="661">661</span>
+<span id="662">662</span>
+<span id="663">663</span>
+<span id="664">664</span>
+<span id="665">665</span>
+<span id="666">666</span>
+<span id="667">667</span>
+<span id="668">668</span>
+<span id="669">669</span>
+<span id="670">670</span>
+<span id="671">671</span>
+<span id="672">672</span>
+<span id="673">673</span>
+<span id="674">674</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">error</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>},
@@ -587,6 +682,9 @@
 };
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">alloc</span>, <span class="ident">ffi</span>::<span class="ident">CString</span>, <span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_long</span>};
 
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod</span> <span class="ident">comparisons</span>;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod</span> <span class="ident">conversions</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">ops</span>;
 
 <span class="doccomment">/// Multiple precision rational value. Always heap allocated, not safe for</span>
 <span class="doccomment">/// sharing across threads.</span>
@@ -701,6 +799,46 @@
 
         <span class="comment">// This is safe bc `self` has been initialized.</span>
         <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_rat_zero</span>(<span class="ident">self_raw</span>) };
+    }
+
+    <span class="doccomment">/// Returns true if the denominator is 1.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_integer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+
+        <span class="comment">// This is safe bc `self` has been initialized.</span>
+        <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_rat_is_integer</span>(<span class="ident">self_raw</span>) }
+    }
+
+    <span class="doccomment">/// Compare two rationals</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">compare</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ordering</span> {
+        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+        <span class="kw">let</span> <span class="ident">rhs_raw</span> <span class="op">=</span> <span class="ident">rhs</span>.<span class="ident">as_raw</span>();
+
+        <span class="comment">// This is safe bc both self &amp; rhs have been initialized correctly</span>
+        <span class="kw">let</span> <span class="ident">raw_cmp</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_rat_compare</span>(<span class="ident">self_raw</span>, <span class="ident">rhs_raw</span>) };
+
+        <span class="ident">raw_cmp</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="number">0</span>)
+    }
+
+    <span class="doccomment">/// Compare the magnitude of two rationals, not taking sign into account.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">compare_magnitude</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ordering</span> {
+        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+        <span class="kw">let</span> <span class="ident">rhs_raw</span> <span class="op">=</span> <span class="ident">rhs</span>.<span class="ident">as_raw</span>();
+
+        <span class="comment">// This is safe bc both self &amp; rhs have been initialized correctly</span>
+        <span class="kw">let</span> <span class="ident">raw_cmp</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_rat_compare_unsigned</span>(<span class="ident">self_raw</span>, <span class="ident">rhs_raw</span>) };
+
+        <span class="ident">raw_cmp</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="number">0</span>)
+    }
+
+    <span class="doccomment">/// Compare a rational to zero.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">compare_zero</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ordering</span> {
+        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+
+        <span class="comment">// This is safe bc both self has been initialized correctly</span>
+        <span class="kw">let</span> <span class="ident">raw_cmp</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_rat_compare_zero</span>(<span class="ident">self_raw</span>) };
+
+        <span class="ident">raw_cmp</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="number">0</span>)
     }
 
     <span class="doccomment">/// Return a copy of the numerator of the rational value</span>
@@ -921,6 +1059,58 @@
         <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_rat_set_value</span>(<span class="ident">self_raw</span>, <span class="ident">numer</span>.<span class="ident">into</span>(), <span class="ident">denom</span>.<span class="ident">into</span>()) };
 
         <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">res</span>, <span class="string">&quot;Setting the value failed!&quot;</span>);
+    }
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">set_numerator</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">numer</span>: <span class="kw-2">&amp;</span><span class="ident">Integer</span>) {
+        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+        <span class="kw">let</span> <span class="ident">int_raw</span> <span class="op">=</span> <span class="ident">numer</span>.<span class="ident">as_raw</span>();
+        <span class="comment">// TODO: Use `&amp;raw` when it hits stable</span>
+        <span class="comment">// This is correct bc the `num` field is the first field in the `mpz_t` struct,</span>
+        <span class="comment">// which is also `repr(C)`.</span>
+        <span class="kw">let</span> <span class="ident">num_raw</span> <span class="op">=</span> <span class="ident">self_raw</span>.<span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">imath_sys</span>::<span class="ident">mpz_t</span><span class="op">&gt;</span>();
+
+        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_copy</span>(<span class="ident">int_raw</span>, <span class="ident">num_raw</span>) };
+
+        <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">res</span>, <span class="string">&quot;Setting the numerator failed!&quot;</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">set_denominator</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">denom</span>: <span class="kw-2">&amp;</span><span class="ident">Integer</span>) {
+        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+        <span class="kw">let</span> <span class="ident">denom_raw</span> <span class="op">=</span> <span class="ident">denom</span>.<span class="ident">as_raw</span>();
+        <span class="comment">// TODO: Use `&amp;raw` when it hits stable</span>
+        <span class="comment">// This is safe because the layout of the `mpq_t` struct is repr(C) and just two</span>
+        <span class="comment">// `mpz_t` in a row. The alignment of `mpz_t` is 8, and the size is 32, so the</span>
+        <span class="comment">// offset for the `den` field should also be 32, equivalent to one `mpz_t`.</span>
+        <span class="kw">let</span> <span class="ident">den_raw</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">self_raw</span>.<span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">imath_sys</span>::<span class="ident">mpz_t</span><span class="op">&gt;</span>().<span class="ident">offset</span>(<span class="number">1</span>) };
+
+        <span class="comment">// This is safe because both `self` and `denom` have been initialized, and the</span>
+        <span class="comment">// `den_raw` pointer points correctly to the `den` field of the `mpq_t` struct.</span>
+        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_copy</span>(<span class="ident">denom_raw</span>, <span class="ident">den_raw</span>) };
+
+        <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">res</span>, <span class="string">&quot;Setting the denominator failed!&quot;</span>);
+    }
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">try_into_c_long</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">c_long</span>, <span class="ident">c_long</span>)<span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">numerator</span>: <span class="ident">c_long</span> <span class="op">=</span> <span class="number">0</span>;
+        <span class="kw">let</span> <span class="ident">numerator_raw</span> <span class="op">=</span> (<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">numerator</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>;
+
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">denominator</span>: <span class="ident">c_long</span> <span class="op">=</span> <span class="number">0</span>;
+        <span class="kw">let</span> <span class="ident">denominator_raw</span> <span class="op">=</span> (<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">denominator</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>;
+
+        <span class="comment">// This is safe bc `self` has been initialized and</span>
+        <span class="comment">// `numerator_raw`/`denominator_raw` point to actual integers.</span>
+        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_rat_to_ints</span>(<span class="ident">self_raw</span>, <span class="ident">numerator_raw</span>, <span class="ident">denominator_raw</span>) };
+
+        <span class="comment">// Accessing this is safe bc the MP_OK value is only ever used as an error</span>
+        <span class="comment">// condition.</span>
+        <span class="kw">if</span> <span class="ident">res</span> <span class="op">=</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">MP_OK</span> } {
+            <span class="prelude-val">Ok</span>((<span class="ident">numerator</span>, <span class="ident">denominator</span>))
+        } <span class="kw">else</span> {
+            <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">ConversionOutsideRange</span>)
+        }
     }
 }
 

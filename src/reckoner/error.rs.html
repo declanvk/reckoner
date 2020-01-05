@@ -136,6 +136,19 @@
 <span id="136">136</span>
 <span id="137">137</span>
 <span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::{
     <span class="ident">convert</span>::<span class="ident">Infallible</span>,
@@ -167,12 +180,14 @@
     <span class="doccomment">/// Unknown value for an imath rounding mode.</span>
     <span class="ident">UnknownRoundingMode</span>,
     <span class="doccomment">/// Internal error from `imath_sys`.</span>
-    <span class="ident">SysError</span> {
+    <span class="ident">IMath</span> {
         <span class="doccomment">/// Internal `imath_sys` error code.</span>
         <span class="ident">code</span>: <span class="ident">imath_sys</span>::<span class="ident">mp_result</span>,
         <span class="doccomment">/// Custom message to display.</span>
         <span class="ident">msg</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span><span class="op">&gt;</span>,
     },
+    <span class="doccomment">/// The rational value is not a canonical integer, in the form `n/1`.</span>
+    <span class="ident">NotCanonicalInteger</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">Error</span> {}
@@ -197,10 +212,11 @@
             ),
             <span class="ident">Error</span>::<span class="ident">IntParseFailed</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Integer parsing failed.&quot;</span>),
             <span class="ident">Error</span>::<span class="ident">UnknownRoundingMode</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Unknown value for an imath rounding mode.&quot;</span>),
-            <span class="ident">Error</span>::<span class="ident">NoErrorPossible</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;This error is no supposed to be possible. Please file an issue.&quot;</span>)
-            }
-            <span class="ident">Error</span>::<span class="ident">SysError</span> {
+            <span class="ident">Error</span>::<span class="ident">NoErrorPossible</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(
+                <span class="ident">f</span>,
+                <span class="string">&quot;This error is not supposed to be possible. Please file an issue.&quot;</span>
+            ),
+            <span class="ident">Error</span>::<span class="ident">IMath</span> {
                 <span class="ident">code</span>,
                 <span class="ident">msg</span>: <span class="prelude-val">Some</span>(<span class="ident">msg</span>),
             } <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(
@@ -210,11 +226,15 @@
                 <span class="ident">get_imath_sys_error_msg</span>(<span class="kw-2">*</span><span class="ident">code</span>),
                 <span class="ident">msg</span>
             ),
-            <span class="ident">Error</span>::<span class="ident">SysError</span> { <span class="ident">code</span>, <span class="ident">msg</span>: <span class="prelude-val">None</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(
+            <span class="ident">Error</span>::<span class="ident">IMath</span> { <span class="ident">code</span>, <span class="ident">msg</span>: <span class="prelude-val">None</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(
                 <span class="ident">f</span>,
                 <span class="string">&quot;imath error ({:?} \&quot;{}\&quot;)&quot;</span>,
                 <span class="ident">code</span>,
                 <span class="ident">get_imath_sys_error_msg</span>(<span class="kw-2">*</span><span class="ident">code</span>)
+            ),
+            <span class="ident">Error</span>::<span class="ident">NotCanonicalInteger</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(
+                <span class="ident">f</span>,
+                <span class="string">&quot;The rational value is not a canonical integer, in the form `n/1`.&quot;</span>
             ),
         }
     }
@@ -257,10 +277,13 @@
         <span class="comment">// Accessing this is safe bc the MP_OK value is only ever used as an error</span>
         <span class="comment">// condition.</span>
         <span class="kw">if</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span> <span class="op">!</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">MP_OK</span> } {
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="ident">Error</span>::<span class="ident">SysError</span> {
-                <span class="ident">code</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span>,
-                <span class="ident">msg</span>: <span class="prelude-val">None</span>
-            });
+            <span class="macro">panic</span><span class="macro">!</span>(
+                <span class="string">&quot;{}&quot;</span>,
+                <span class="ident">Error</span>::<span class="ident">IMath</span> {
+                    <span class="ident">code</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span>,
+                    <span class="ident">msg</span>: <span class="prelude-val">None</span>
+                }
+            );
         }
     };
 
@@ -268,10 +291,13 @@
         <span class="comment">// Accessing this is safe bc the MP_OK value is only ever used as an error</span>
         <span class="comment">// condition.</span>
         <span class="kw">if</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span> <span class="op">!</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">MP_OK</span> } {
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="ident">Error</span>::<span class="ident">SysError</span> {
-                <span class="ident">code</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span>,
-                <span class="ident">msg</span>: <span class="prelude-val">Some</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">msg</span>)
-            });
+            <span class="macro">panic</span><span class="macro">!</span>(
+                <span class="string">&quot;{}&quot;</span>,
+                <span class="ident">Error</span>::<span class="ident">IMath</span> {
+                    <span class="ident">code</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span>,
+                    <span class="ident">msg</span>: <span class="prelude-val">Some</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">msg</span>)
+                }
+            );
         }
     };
 }
