@@ -200,9 +200,14 @@ impl Integer {
             char_vec.set_len(required_len);
         }
 
-        // At this point, char_vec is a zero-terminated vector containing a string
-        // representation of the integer.
-        let without_nul = &char_vec.as_slice()[..(required_len - 1)];
+        // At this point, char_vec is a zero-terminated (possibly with many zeros)
+        // string containing a string representation of the integer value.
+        let (non_zero_idx, _) = char_vec
+            .iter()
+            .enumerate()
+            .rfind(|(_, c)| **c != 0)
+            .unwrap();
+        let without_nul = &char_vec.as_slice()[..=non_zero_idx];
 
         CString::new(without_nul).expect("Failed to produce a valid CString")
     }
@@ -390,10 +395,8 @@ mod test {
 
     #[test]
     fn create_integer_with_value() {
-        let int = Integer::from_c_long(20000);
-
-        let string_repr = int.to_string();
-        assert_eq!(&string_repr, "20000");
+        assert_eq!(format!("{}", Integer::from(20000)), "20000");
+        assert_eq!(format!("{}", Integer::from(6)), "6");
     }
 
     #[test]
