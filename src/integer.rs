@@ -36,6 +36,15 @@ impl Integer {
     }
 
     /// Construct a new integer with a default value of zero.
+    ///
+    /// # Example
+    /// ```
+    /// use reckoner::Integer;
+    ///
+    /// let a = Integer::new();
+    ///
+    /// assert_eq!(a, 0);
+    /// ```
     pub fn new() -> Self {
         Self::from_c_long(0)
     }
@@ -72,6 +81,24 @@ impl Integer {
     ///
     /// In ths context, initialized means that the `imath_sys::mpz_t` has been
     /// the argument of a call to `imath_sys::mp_int_init`.
+    ///
+    /// # Example
+    /// ```
+    /// use imath_sys::{mp_int_zero, MP_OK};
+    /// use reckoner::Integer;
+    ///
+    /// let a = Integer::from(300);
+    ///
+    /// assert_eq!(a, 300);
+    ///
+    /// let a_raw = Integer::into_raw(a);
+    ///
+    /// unsafe { mp_int_zero(a_raw) };
+    ///
+    /// let a = unsafe { Integer::from_raw(a_raw) };
+    ///
+    /// assert_eq!(a, 0);
+    /// ```
     pub unsafe fn from_raw(raw: *mut imath_sys::mpz_t) -> Self {
         assert!(!raw.is_null());
 
@@ -84,6 +111,34 @@ impl Integer {
     }
 
     /// Consumes the Integer, returning a wrapped raw pointer.
+    ///
+    /// # Example
+    /// ```
+    /// use imath_sys::{mp_int_add, MP_OK};
+    /// use reckoner::Integer;
+    ///
+    /// let a = Integer::from(200);
+    /// let b = Integer::from(300);
+    /// let c = Integer::new();
+    ///
+    /// let a_raw = Integer::into_raw(a);
+    /// let b_raw = Integer::into_raw(b);
+    /// let c_raw = Integer::into_raw(c);
+    ///
+    /// let op_res = unsafe { mp_int_add(a_raw, b_raw, c_raw) };
+    ///
+    /// if op_res != unsafe { MP_OK } {
+    ///     panic!("Operation failed.")
+    /// }
+    ///
+    /// let a = unsafe { Integer::from_raw(a_raw) };
+    /// let b = unsafe { Integer::from_raw(b_raw) };
+    /// let c = unsafe { Integer::from_raw(c_raw) };
+    ///
+    /// assert_eq!(a, 200);
+    /// assert_eq!(b, 300);
+    /// assert_eq!(c, 500);
+    /// ```
     pub fn into_raw(mut integer: Integer) -> *mut imath_sys::mpz_t {
         let raw = mem::replace(&mut integer.raw, NonNull::dangling());
 
@@ -215,12 +270,28 @@ impl Integer {
     /// Replaces the value of `other` with a copy of the value of `self`. No new
     /// memory is allocated unless `self` has more significant digits than
     /// `other` has allocated.
+    ///
+    /// # Example
+    /// ```
+    /// use reckoner::Integer;
+    ///
+    /// let a = Integer::from(20);
+    /// let mut b = Integer::new();
+    ///
+    /// assert_eq!(a, 20);
+    /// assert_eq!(b, 0);
+    ///
+    /// a.copy_to(&mut b);
+    ///
+    /// assert_eq!(a, 20);
+    /// assert_eq!(b, 20, "Failed to copy");
+    /// ```
     pub fn copy_to(&self, other: &mut Self) {
         let self_raw = self.as_raw();
         let other_raw = other.as_raw();
 
         // This is safe bc self has been initialized with a value
-        let res = unsafe { imath_sys::mp_int_copy(other_raw, self_raw) };
+        let res = unsafe { imath_sys::mp_int_copy(self_raw, other_raw) };
 
         imath_check_panic!(res, "Copying the value failed!");
     }
@@ -235,6 +306,17 @@ impl Integer {
     }
 
     /// Set value of integer to zero
+    ///
+    /// # Example
+    /// ```
+    /// use reckoner::Integer;
+    ///
+    /// let mut a = Integer::from(21837419283648u128);
+    ///
+    /// assert_eq!(a, 21837419283648u128);
+    /// a.zero();
+    /// assert_eq!(a, 0);
+    /// ```
     pub fn zero(&mut self) {
         let self_raw = self.as_raw();
 
@@ -243,6 +325,19 @@ impl Integer {
     }
 
     /// Compare two integers
+    ///
+    /// # Example
+    /// ```
+    /// use reckoner::Integer;
+    /// use core::cmp::Ordering;
+    ///
+    /// let a = Integer::from(123);
+    /// let b = Integer::from(456);
+    ///
+    /// assert_eq!(a.compare(&b), Ordering::Less);
+    /// assert_eq!(b.compare(&a), Ordering::Greater);
+    /// assert_eq!(b.compare(&b), Ordering::Equal);
+    /// ```
     pub fn compare(&self, rhs: &Self) -> Ordering {
         let self_raw = self.as_raw();
         let rhs_raw = rhs.as_raw();
@@ -254,6 +349,18 @@ impl Integer {
     }
 
     /// Compare the magnitude of two integers, not taking sign into account.
+    ///
+    /// # Example
+    /// ```
+    /// use core::cmp::Ordering;
+    /// use reckoner::Integer;
+    ///
+    /// let a = Integer::from(-234);
+    /// let b = Integer::from(123);
+    ///
+    /// assert_eq!(a.compare_magnitude(&b), Ordering::Greater);
+    /// assert_eq!(a.compare(&b), Ordering::Less);
+    /// ```
     pub fn compare_magnitude(&self, rhs: &Self) -> Ordering {
         let self_raw = self.as_raw();
         let rhs_raw = rhs.as_raw();
@@ -265,6 +372,18 @@ impl Integer {
     }
 
     /// Compare an integer to zero.
+    ///
+    /// # Example
+    /// ```
+    /// use core::cmp::Ordering;
+    /// use reckoner::Integer;
+    ///
+    /// let a = Integer::from(-234);
+    /// let b = Integer::from(123);
+    ///
+    /// assert_eq!(a.compare_zero(), Ordering::Less);
+    /// assert_eq!(b.compare_zero(), Ordering::Greater);
+    /// ```
     pub fn compare_zero(&self) -> Ordering {
         let self_raw = self.as_raw();
 
@@ -324,20 +443,24 @@ impl fmt::Display for Integer {
 
 impl fmt::Debug for Integer {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        // This is safe bc self has been initialized
-        let imath_sys::mpz_t {
-            single,
-            digits,
-            alloc,
-            used,
-            sign,
-        } = unsafe { *self.as_raw() };
+        if f.alternate() {
+            // This is safe bc self has been initialized
+            let imath_sys::mpz_t {
+                single,
+                digits,
+                alloc,
+                used,
+                sign,
+            } = unsafe { *self.as_raw() };
 
-        write!(
-            f,
-            "Integer {{ single: {:?}, digits: {:p}, alloc: {:?}, used: {:?}, sign: {:?} }}",
-            single, digits, alloc, used, sign
-        )
+            write!(
+                f,
+                "Integer {{ single: {:?}, digits: {:p}, alloc: {:?}, used: {:?}, sign: {:?} }}",
+                single, digits, alloc, used, sign
+            )
+        } else {
+            fmt::Display::fmt(&self, f)
+        }
     }
 }
 
@@ -436,5 +559,18 @@ mod test {
         let b = a.clone();
 
         assert_eq!(a, b);
+    }
+
+    #[test]
+    fn formatting_integer() {
+        let a = Integer::from(12345);
+
+        let display_out = format!("{}", a);
+        let debug_out = format!("{:?}", a);
+        let debug_alt_out = format!("{:#?}", a);
+
+        assert_eq!(display_out, "12345");
+        assert_eq!(debug_out, "12345");
+        assert!(debug_alt_out.starts_with("Integer {"));
     }
 }

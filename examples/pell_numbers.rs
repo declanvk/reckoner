@@ -5,7 +5,7 @@ mod common;
 
 fn main() {
     common::sequence_main_custom_display("sqrt_2_approximations", sqrt_2_approximations(), |rat| {
-        rat.to_decimal_string(RoundMode::HalfUp, 100)
+        rat.to_decimal(RoundMode::HalfUp, 100)
     });
 }
 

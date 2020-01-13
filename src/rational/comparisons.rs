@@ -22,6 +22,19 @@ macro_rules! impl_partial_eq {
                 $func(&other, &Rational::from(self)) == Ordering::Equal
             }
         }
+
+        impl PartialEq<($rhs, $rhs)> for Rational {
+            fn eq(&self, other: &($rhs, $rhs)) -> bool {
+                $func(&self, &Rational::from(other)) == Ordering::Equal
+            }
+        }
+
+        impl PartialEq<Rational> for ($rhs, $rhs) {
+            fn eq(&self, other: &Rational) -> bool {
+                // This doesn't need to be reversed as it simply checks equality
+                $func(&other, &Rational::from(self)) == Ordering::Equal
+            }
+        }
     };
 }
 
@@ -56,6 +69,21 @@ macro_rules! impl_partial_ord {
         }
 
         impl PartialOrd<Rational> for $rhs {
+            fn partial_cmp(&self, other: &Rational) -> Option<Ordering> {
+                // This implies that:
+                // (a cmp b) <=> (b cmp a).reverse()
+                // I don't know if thats always true
+                Some($func(other, &Rational::from(self)).reverse())
+            }
+        }
+
+        impl PartialOrd<($rhs, $rhs)> for Rational {
+            fn partial_cmp(&self, other: &($rhs, $rhs)) -> Option<Ordering> {
+                Some($func(self, &Rational::from(other)))
+            }
+        }
+
+        impl PartialOrd<Rational> for ($rhs, $rhs) {
             fn partial_cmp(&self, other: &Rational) -> Option<Ordering> {
                 // This implies that:
                 // (a cmp b) <=> (b cmp a).reverse()
