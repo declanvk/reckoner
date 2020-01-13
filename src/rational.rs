@@ -11,8 +11,7 @@ pub(crate) mod comparisons;
 pub(crate) mod conversions;
 pub mod ops;
 
-/// Multiple precision rational value. Always heap allocated, not safe for
-/// sharing across threads.
+/// Multiple precision rational value.
 #[repr(transparent)]
 pub struct Rational {
     // This value must be constructed from a Box and then when Drop, must be reconstructed so that
@@ -661,6 +660,9 @@ impl Default for Rational {
     }
 }
 
+// This is safe because the `Rational` has exclusive ownership of its data.
+unsafe impl Send for Rational {}
+
 impl Clone for Rational {
     fn clone(&self) -> Self {
         Self::copy_init(self)
@@ -841,5 +843,11 @@ mod test {
 
         assert_eq!(a.numerator(), b.numerator());
         assert_eq!(a.denominator(), b.denominator());
+    }
+
+    #[test]
+    fn send_not_sync_rational() {
+        static_assertions::assert_impl_all!(Rational: Send);
+        static_assertions::assert_not_impl_any!(Rational: Sync);
     }
 }
