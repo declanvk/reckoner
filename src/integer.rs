@@ -16,8 +16,7 @@ pub(crate) mod comparison;
 pub(crate) mod conversions;
 pub(crate) mod ops;
 
-/// Multiple precision integer value. Always heap allocated, not safe for
-/// sharing across threads.
+/// Multiple precision integer value.
 #[repr(transparent)]
 pub struct Integer {
     // This value must be constructed from a Box and then when Drop, must be reconstructed so that
@@ -464,6 +463,9 @@ impl fmt::Debug for Integer {
     }
 }
 
+// This is safe because the `Integer` has exclusive ownership of its data.
+unsafe impl Send for Integer {}
+
 impl Clone for Integer {
     fn clone(&self) -> Self {
         Integer::copy_init(self)
@@ -572,5 +574,11 @@ mod test {
         assert_eq!(display_out, "12345");
         assert_eq!(debug_out, "12345");
         assert!(debug_alt_out.starts_with("Integer {"));
+    }
+
+    #[test]
+    fn send_not_sync_integer() {
+        static_assertions::assert_impl_all!(Integer: Send);
+        static_assertions::assert_not_impl_any!(Integer: Sync);
     }
 }
