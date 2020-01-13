@@ -33,6 +33,7 @@ pub(crate) fn sequence_main_custom_display<T>(
     }
 }
 
+#[allow(dead_code)]
 pub(crate) fn sequence_main<T: Display>(
     executable_name: &str,
     sequence_iter: impl Iterator<Item = T>,

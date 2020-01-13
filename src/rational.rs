@@ -31,6 +31,15 @@ impl Rational {
     }
 
     /// Create a new rational with a default value of zero (0/1).
+    ///
+    /// # Example
+    /// ```
+    /// use reckoner::Rational;
+    ///
+    /// let r = Rational::new();
+    ///
+    /// assert_eq!(r, (0, 1));
+    /// ```
     pub fn new() -> Self {
         let mut init = Rational::uninit();
 
@@ -79,6 +88,24 @@ impl Rational {
     ///
     /// In ths context, initialized means that the `imath_sys::mpq_t` has been
     /// the argument of a call to `imath_sys::mp_rat_init`.
+    ///
+    /// # Example
+    /// ```
+    /// use imath_sys::{mp_rat_zero, MP_OK};
+    /// use reckoner::Rational;
+    ///
+    /// let a = Rational::from((456, 123));
+    ///
+    /// assert_eq!(a, (456, 123));
+    ///
+    /// let a_raw = Rational::into_raw(a);
+    ///
+    /// unsafe { mp_rat_zero(a_raw) };
+    ///
+    /// let a = unsafe { Rational::from_raw(a_raw) };
+    ///
+    /// assert_eq!(a, (0, 1));
+    /// ```
     pub unsafe fn from_raw(raw: *mut imath_sys::mpq_t) -> Self {
         assert!(!raw.is_null());
 
@@ -91,6 +118,34 @@ impl Rational {
     }
 
     /// Consumes the Rational, returning a wrapped raw pointer.
+    ///
+    /// # Example
+    /// ```
+    /// use imath_sys::{mp_rat_add, MP_OK};
+    /// use reckoner::Rational;
+    ///
+    /// let a = Rational::from((377, 500));
+    /// let b = Rational::from((123, 500));
+    /// let c = Rational::new();
+    ///
+    /// let a_raw = Rational::into_raw(a);
+    /// let b_raw = Rational::into_raw(b);
+    /// let c_raw = Rational::into_raw(c);
+    ///
+    /// let op_res = unsafe { mp_rat_add(a_raw, b_raw, c_raw) };
+    ///
+    /// if op_res != unsafe { MP_OK } {
+    ///     panic!("Operation failed.")
+    /// }
+    ///
+    /// let a = unsafe { Rational::from_raw(a_raw) };
+    /// let b = unsafe { Rational::from_raw(b_raw) };
+    /// let c = unsafe { Rational::from_raw(c_raw) };
+    ///
+    /// assert_eq!(a, (377, 500));
+    /// assert_eq!(b, (123, 500));
+    /// assert_eq!(c, (500, 500));
+    /// ```
     pub fn into_raw(mut rational: Rational) -> *mut imath_sys::mpq_t {
         let raw = mem::replace(&mut rational.raw, NonNull::dangling());
 
@@ -110,6 +165,23 @@ impl Rational {
     ///
     /// Zero is represented as 0/1, one as 1/1, and signs are adjusted so that
     /// the sign of the value is carried by the numerator.
+    ///
+    /// # Example
+    /// ```
+    /// use reckoner::Rational;
+    ///
+    /// let mut a = Rational::from((24, 2));
+    /// let mut b = Rational::from((24, 3));
+    /// let mut c = Rational::from((24, 4));
+    ///
+    /// a.reduce();
+    /// b.reduce();
+    /// c.reduce();
+    ///
+    /// assert_eq!(a, (12, 1));
+    /// assert_eq!(b, (8, 1));
+    /// assert_eq!(c, (6, 1));
+    /// ```
     pub fn reduce(&mut self) {
         let self_raw = self.as_raw();
 
@@ -119,6 +191,17 @@ impl Rational {
     }
 
     /// Set value of integer to zero
+    ///
+    /// # Example
+    /// ```
+    /// use reckoner::Rational;
+    ///
+    /// let mut r = Rational::from((1234567u128, 1346172348u64));
+    ///
+    /// r.zero();
+    ///
+    /// assert_eq!(r, (0, 1));
+    /// ```
     pub fn zero(&mut self) {
         let self_raw = self.as_raw();
 
@@ -127,6 +210,15 @@ impl Rational {
     }
 
     /// Returns true if the denominator is 1.
+    ///
+    /// # Example
+    /// ```
+    /// use reckoner::Rational;
+    ///
+    /// assert!(Rational::from((0, 1)).is_integer());
+    /// assert!(Rational::from((1, 1)).is_integer());
+    /// assert!(!Rational::from((3, 25)).is_integer());
+    /// ```
     pub fn is_integer(&self) -> bool {
         let self_raw = self.as_raw();
 
@@ -135,6 +227,19 @@ impl Rational {
     }
 
     /// Compare two rationals
+    ///
+    /// # Example
+    /// ```
+    /// use core::cmp::Ordering;
+    /// use reckoner::Rational;
+    ///
+    /// let a = Rational::from((123, 500));
+    /// let b = Rational::from((377, 500));
+    ///
+    /// assert_eq!(a.compare(&b), Ordering::Less);
+    /// assert_eq!(b.compare(&a), Ordering::Greater);
+    /// assert_eq!(a.compare(&a), Ordering::Equal);
+    /// ```
     pub fn compare(&self, rhs: &Self) -> Ordering {
         let self_raw = self.as_raw();
         let rhs_raw = rhs.as_raw();
@@ -146,6 +251,18 @@ impl Rational {
     }
 
     /// Compare the magnitude of two rationals, not taking sign into account.
+    ///
+    /// # Example
+    /// ```
+    /// use core::cmp::Ordering;
+    /// use reckoner::Rational;
+    ///
+    /// let a = Rational::from((123, 500));
+    /// let b = Rational::from((-377, 500));
+    ///
+    /// assert_eq!(a.compare(&b), Ordering::Greater);
+    /// assert_eq!(a.compare_magnitude(&b), Ordering::Less);
+    /// ```
     pub fn compare_magnitude(&self, rhs: &Self) -> Ordering {
         let self_raw = self.as_raw();
         let rhs_raw = rhs.as_raw();
@@ -157,6 +274,18 @@ impl Rational {
     }
 
     /// Compare a rational to zero.
+    ///
+    /// # Example
+    /// ```
+    /// use core::cmp::Ordering;
+    /// use reckoner::Rational;
+    ///
+    /// let a = Rational::from((123, 500));
+    /// let b = Rational::from((-377, 500));
+    ///
+    /// assert_eq!(a.compare_zero(), Ordering::Greater);
+    /// assert_eq!(b.compare_zero(), Ordering::Less);
+    /// ```
     pub fn compare_zero(&self) -> Ordering {
         let self_raw = self.as_raw();
 
@@ -167,6 +296,15 @@ impl Rational {
     }
 
     /// Return a copy of the numerator of the rational value
+    ///
+    /// # Example
+    /// ```
+    /// use reckoner::Rational;
+    ///
+    /// let a = Rational::from((34256, 54587));
+    ///
+    /// assert_eq!(a.numerator(), 34256);
+    /// ```
     pub fn numerator(&self) -> Integer {
         let mut numer = Integer::new();
         let self_raw = self.as_raw();
@@ -187,6 +325,15 @@ impl Rational {
     }
 
     /// Return a copy of the denominator of the rational value
+    ///
+    /// # Example
+    /// ```
+    /// use reckoner::Rational;
+    ///
+    /// let a = Rational::from((34256, 54587));
+    ///
+    /// assert_eq!(a.denominator(), 54587);
+    /// ```
     pub fn denominator(&self) -> Integer {
         let mut denom = Integer::new();
         let self_raw = self.as_raw();
@@ -210,12 +357,25 @@ impl Rational {
     /// Replaces the value of `other` with a copy of the value of `self`. No new
     /// memory is allocated unless `self` has more significant digits than
     /// `other` has allocated.
+    ///
+    /// # Example
+    /// ```
+    /// use reckoner::Rational;
+    ///
+    /// let a = Rational::from((34256, 54587));
+    /// let mut b = Rational::new();
+    ///
+    /// a.copy_to(&mut b);
+    ///
+    /// assert_eq!(a, b);
+    /// assert_eq!(b, (34256, 54587));
+    /// ```
     pub fn copy_to(&self, other: &mut Self) {
         let self_raw = self.as_raw();
         let other_raw = other.as_raw();
 
         // This is safe bc self has been initialized with a value
-        let res = unsafe { imath_sys::mp_rat_copy(other_raw, self_raw) };
+        let res = unsafe { imath_sys::mp_rat_copy(self_raw, other_raw) };
 
         imath_check_panic!(res, "Copying the value failed!");
     }
@@ -329,7 +489,19 @@ impl Rational {
     /// notation.  It generates `max_precision` digits of precision and takes a
     /// `RoundMode` argument that determines how the ratio will be converted to
     /// decimal.
-    pub fn to_decimal_string(&self, rounding_mode: RoundMode, max_precision: u16) -> String {
+    ///
+    /// # Example
+    /// ```
+    /// use reckoner::{Rational, RoundMode};
+    ///
+    /// let r = Rational::from((1146408, 364913));
+    ///
+    /// assert_eq!(r.to_decimal(RoundMode::HalfUp, 6), "3.141593");
+    /// assert_eq!(r.to_decimal(RoundMode::HalfUp, 5), "3.14159");
+    /// assert_eq!(r.to_decimal(RoundMode::HalfUp, 4), "3.1416");
+    /// assert_eq!(r.to_decimal(RoundMode::HalfUp, 3), "3.142");
+    /// ```
+    pub fn to_decimal(&self, rounding_mode: RoundMode, max_precision: u16) -> String {
         let required_len = self.required_decimal_display_len(max_precision);
         let self_raw = self.as_raw();
 
@@ -463,11 +635,15 @@ impl FromStr for Rational {
 
 impl fmt::Debug for Rational {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        // This is safe bc self has been initialized
-        let num = self.numerator();
-        let den = self.denominator();
+        if f.alternate() {
+            // This is safe bc self has been initialized
+            let num = self.numerator();
+            let den = self.denominator();
 
-        write!(f, "Rational {{ num: {:?}, den: {:?} }}", num, den)
+            write!(f, "Rational {{ num: {:#?}, den: {:#?} }}", num, den)
+        } else {
+            fmt::Display::fmt(&self, f)
+        }
     }
 }
 
@@ -604,43 +780,34 @@ mod test {
         let mut rat = Rational::new();
         rat.set_value(2, 3);
 
-        assert_eq!(rat.to_decimal_string(RoundMode::Down, 3), "0.666");
-        assert_eq!(
-            rat.to_decimal_string(RoundMode::Down, 15),
-            "0.666666666666666"
-        );
+        assert_eq!(rat.to_decimal(RoundMode::Down, 3), "0.666");
+        assert_eq!(rat.to_decimal(RoundMode::Down, 15), "0.666666666666666");
 
         rat.set_value(2, 1);
 
-        assert_eq!(rat.to_decimal_string(RoundMode::Down, 3), "2.000");
-        assert_eq!(
-            rat.to_decimal_string(RoundMode::Down, 15),
-            "2.000000000000000"
-        );
+        assert_eq!(rat.to_decimal(RoundMode::Down, 3), "2.000");
+        assert_eq!(rat.to_decimal(RoundMode::Down, 15), "2.000000000000000");
 
         rat.zero();
 
-        assert_eq!(rat.to_decimal_string(RoundMode::Down, 3), "0.000");
-        assert_eq!(
-            rat.to_decimal_string(RoundMode::Down, 15),
-            "0.000000000000000"
-        );
+        assert_eq!(rat.to_decimal(RoundMode::Down, 3), "0.000");
+        assert_eq!(rat.to_decimal(RoundMode::Down, 15), "0.000000000000000");
 
         rat.set_value(9, 1000);
-        assert_eq!(rat.to_decimal_string(RoundMode::Down, 2), "0.00");
+        assert_eq!(rat.to_decimal(RoundMode::Down, 2), "0.00");
 
         rat.set_value(1, 1000);
-        assert_eq!(rat.to_decimal_string(RoundMode::Up, 2), "0.01");
+        assert_eq!(rat.to_decimal(RoundMode::Up, 2), "0.01");
 
         rat.set_value(5, 1000);
-        assert_eq!(rat.to_decimal_string(RoundMode::HalfUp, 2), "0.01");
+        assert_eq!(rat.to_decimal(RoundMode::HalfUp, 2), "0.01");
         rat.set_value(4, 1000);
-        assert_eq!(rat.to_decimal_string(RoundMode::HalfUp, 2), "0.00");
+        assert_eq!(rat.to_decimal(RoundMode::HalfUp, 2), "0.00");
 
         rat.set_value(5, 1000);
-        assert_eq!(rat.to_decimal_string(RoundMode::HalfDown, 2), "0.00");
+        assert_eq!(rat.to_decimal(RoundMode::HalfDown, 2), "0.00");
         rat.set_value(6, 1000);
-        assert_eq!(rat.to_decimal_string(RoundMode::HalfDown, 2), "0.01");
+        assert_eq!(rat.to_decimal(RoundMode::HalfDown, 2), "0.01");
     }
 
     #[test]

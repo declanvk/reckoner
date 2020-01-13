@@ -36,6 +36,32 @@ where
     }
 }
 
+impl<'a, A, B> From<&'a (A, B)> for Rational
+where
+    &'a A: Into<Integer>,
+    &'a B: Into<Integer>,
+{
+    fn from((numer, denom): &'a (A, B)) -> Self {
+        let mut rat = Rational::new();
+
+        rat.set_numerator(&numer.into());
+        rat.set_denominator(&denom.into());
+
+        rat
+    }
+}
+
+impl From<&(Integer, Integer)> for Rational {
+    fn from((numer, denom): &(Integer, Integer)) -> Self {
+        let mut rat = Rational::new();
+
+        rat.set_numerator(numer);
+        rat.set_denominator(denom);
+
+        rat
+    }
+}
+
 impl TryFrom<Rational> for Integer {
     type Error = Error;
 
