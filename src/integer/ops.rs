@@ -1,5 +1,9 @@
 use crate::{error::Error, integer::Integer};
-use core::{convert::TryInto, ptr};
+use core::{
+    convert::TryInto,
+    iter::{Product, Sum},
+    ptr,
+};
 use std::os::raw::c_long;
 
 mod addition;
@@ -373,6 +377,30 @@ impl Integer {
             ptr::null_mut(),
             remainder_raw,
         );
+    }
+}
+
+impl Sum for Integer {
+    fn sum<I: Iterator<Item = Integer>>(iter: I) -> Self {
+        let mut s = Integer::from(0);
+
+        for v in iter {
+            s += v;
+        }
+
+        s
+    }
+}
+
+impl Product for Integer {
+    fn product<I: Iterator<Item = Integer>>(iter: I) -> Self {
+        let mut s = Integer::from(1);
+
+        for v in iter {
+            s *= v;
+        }
+
+        s
     }
 }
 

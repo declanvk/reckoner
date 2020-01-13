@@ -1,4 +1,5 @@
 use crate::{error::Error, integer::Integer, rational::Rational};
+use core::iter::{Product, Sum};
 
 mod addition;
 mod addition_assign;
@@ -316,6 +317,30 @@ impl Rational {
         let op_res = unsafe { imath_sys::mp_rat_recip(self_raw, self_raw) };
 
         imath_check_panic!(op_res, "Operation failed!");
+    }
+}
+
+impl Sum for Rational {
+    fn sum<I: Iterator<Item = Rational>>(iter: I) -> Self {
+        let mut s = Rational::from(0);
+
+        for v in iter {
+            s += v;
+        }
+
+        s
+    }
+}
+
+impl Product for Rational {
+    fn product<I: Iterator<Item = Rational>>(iter: I) -> Self {
+        let mut s = Rational::from(1);
+
+        for v in iter {
+            s *= v;
+        }
+
+        s
     }
 }
 
