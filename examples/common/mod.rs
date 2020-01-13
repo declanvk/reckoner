@@ -3,13 +3,10 @@ use std::env;
 
 pub(crate) fn sequence_main_custom_display<T>(
     executable_name: &str,
-    sequence_iter: impl Iterator<Item = T>,
+    mut sequence_iter: impl Iterator<Item = T>,
     display: impl Fn(&T) -> String,
 ) {
-    let limit = env::args()
-        .skip(1)
-        .next()
-        .expect("Missing limit parameter.");
+    let limit = env::args().nth(1).expect("Missing limit parameter.");
 
     if limit == "--help" || limit == "-h" {
         println!(
@@ -25,8 +22,7 @@ pub(crate) fn sequence_main_custom_display<T>(
             .parse()
             .expect("Limit value was not a positive integer.");
         let n = sequence_iter
-            .skip(limit_number)
-            .next()
+            .nth(limit_number)
             .expect("Could not produce nth integer.");
 
         println!("{}", display(&n));
