@@ -59,13 +59,13 @@ See [`examples/`](https://github.com/declanvk/reckoner/tree/master/examples) for
 
 ### `reckoner`
 
-![crates.io](https://img.shields.io/crates/d/reckoner) ![docs.rs](https://docs.rs/reckoner/badge.svg)
+[![crates.io](https://img.shields.io/crates/d/reckoner)](https://crates.io/crates/reckoner) [![docs.rs](https://docs.rs/reckoner/badge.svg)](https://docs.rs/reckoner)
 
 A high level arbitrary precision arithmetic library supporting integer and rational numbers.
 
 ### `imath-sys`
 
-![crates.io](https://img.shields.io/crates/d/imath-sys) ![docs.rs](https://docs.rs/imath-sys/badge.svg)
+[![crates.io](https://img.shields.io/crates/d/imath-sys)](https://crates.io/crates/imath-sys) [![docs.rs](https://docs.rs/imath-sys/badge.svg)](https://docs.rs/imath-sys)
 
 FFI bindings for [`imath`](https://github.com/creachadair/imath/).
 
