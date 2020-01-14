@@ -1,5 +1,6 @@
 [package]
 name = "reckoner"
+description = " A high level arbitrary precision arithmetic library supporting integer and rational numbers."
 version = "0.1.0"
 authors = ["Declan Kelly <dkelly.home@gmail.com>"]
 edition = "2018"
