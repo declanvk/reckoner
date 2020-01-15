@@ -13,7 +13,7 @@ fn factorial(v: &Integer) -> Integer {
     let mut accum = 1.into();
     let mut f = v.clone();
 
-    while &f > &0 {
+    while f > 0 {
         accum *= &f;
         f -= 1;
     }
@@ -21,12 +21,12 @@ fn factorial(v: &Integer) -> Integer {
     accum
 }
 
-// Product of all odd integers up to the given value.
+// Product of all odd integer up to the given value.
 fn odd_factorial(v: &Integer) -> Integer {
     let mut accum = 1.into();
     let mut f = if v % 2 == 0 { v - 1 } else { v.clone() };
 
-    while &f > &0 {
+    while f > 0 {
         accum *= &f;
         f -= 2;
     }
