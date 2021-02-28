@@ -33,11 +33,12 @@ jobs:
           profile: minimal
           toolchain: ${{ matrix.rust }}
           override: true
-      - name: Install libclang via llvm
+      # According to https://github.com/actions/virtual-environments/issues/104
+      # libclang has been installed by default in the Windows image, but is not 
+      # present in the path.
+      - name: Update path variable for Windows
         if: startsWith(matrix.os, 'windows')
-        uses: crazy-max/ghaction-chocolatey@v1
-        with:
-          args: install llvm
+        run: echo "::add-path::C:\msys64\mingw64\bin"
       - name: Update dependencies
         uses: actions-rs/cargo@v1
         with:
