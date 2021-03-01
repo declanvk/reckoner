@@ -36,9 +36,13 @@ jobs:
       # According to https://github.com/actions/virtual-environments/issues/104
       # libclang has been installed by default in the Windows image, but is not 
       # present in the path.
-      - name: Update path variable for Windows
+      #
+      # https://github.com/rust-lang/rust-bindgen/issues/1797#issuecomment-774338111
+      # was one solution for updating the specific env variable that will be
+      # used by bindgen.
+      - name: Update libclang path variable
         if: startsWith(matrix.os, 'windows')
-        run: echo "::add-path::C:\msys64\mingw64\bin"
+        run: echo "LIBCLANG_PATH=$((gcm clang).source -replace "clang.exe")" >> $env:GITHUB_ENV
       - name: Update dependencies
         uses: actions-rs/cargo@v1
         with:
