@@ -39,13 +39,13 @@ jobs:
         id: cache-llvm
         uses: actions/cache@v2
         with:
-          path: ${{ runner.temp }}/llvm-${{ matrix.clang[0] }}
-          key: ${{ matrix.os }}-llvm-${{ matrix.clang[0] }}
+          path: ${{ runner.temp }}/llvm-${{ matrix.clang }}
+          key: ${{ matrix.os }}-llvm-${{ matrix.clang }}
       - name: Install LLVM and Clang
         uses: KyleMayes/install-llvm-action@v1
         with:
-          version: ${{ matrix.clang[0] }}
-          directory: ${{ runner.temp }}/llvm-${{ matrix.clang[0] }}
+          version: ${{ matrix.clang }}
+          directory: ${{ runner.temp }}/llvm-${{ matrix.clang }}
           cached: ${{ steps.cache-llvm.outputs.cache-hit }}
       # Rust
       - name: Install ${{ matrix.rust }} toolchain
@@ -57,16 +57,16 @@ jobs:
       - name: Build
         uses: actions-rs/cargo@v1
         env:
-          LIBCLANG_PATH: ${{ runner.temp }}/llvm-${{ matrix.clang[0] }}/lib
-          LLVM_CONFIG_PATH: ${{ runner.temp }}/llvm-${{ matrix.clang[0] }}/bin/llvm-config
+          LIBCLANG_PATH: ${{ runner.temp }}/llvm-${{ matrix.clang }}/lib
+          LLVM_CONFIG_PATH: ${{ runner.temp }}/llvm-${{ matrix.clang }}/bin/llvm-config
         with:
           command: build
           args: --all
       - name: Test
         uses: actions-rs/cargo@v1
         env:
-          LIBCLANG_PATH: ${{ runner.temp }}/llvm-${{ matrix.clang[0] }}/lib
-          LLVM_CONFIG_PATH: ${{ runner.temp }}/llvm-${{ matrix.clang[0] }}/bin/llvm-config
+          LIBCLANG_PATH: ${{ runner.temp }}/llvm-${{ matrix.clang }}/lib
+          LLVM_CONFIG_PATH: ${{ runner.temp }}/llvm-${{ matrix.clang }}/bin/llvm-config
         with:
           command: test
           args: --all
