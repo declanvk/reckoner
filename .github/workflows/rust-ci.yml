@@ -17,67 +17,59 @@ jobs:
           - stable
           - beta
           - nightly
+          - 1.43.0
         os:
           - ubuntu-latest
           - windows-latest
           - macos-latest
+        clang:
+          - 11.0
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout source
         uses: actions/checkout@v1
         with:
           submodules: recursive
+      # LLVM and Clang installation
+      # https://github.com/KyleMayes/clang-sys/blob/a0bcae1a9d7ab6ed8de010b0f5e2b2020c20d204/.github/workflows/ci.yml#L23-L35 
+      # The clang and clang-sys crates' CI has example of installing LLVM and Clang
+      # along with how to update the environment variables (see Build & Test) so
+      # that bindgen can find libclang and depedencies
+      - name: Cache LLVM and Clang
+        id: cache-llvm
+        uses: actions/cache@v2
+        with:
+          path: ${{ runner.temp }}/llvm-${{ matrix.clang }}
+          key: ${{ matrix.os }}-llvm-${{ matrix.clang }}
+      - name: Install LLVM and Clang
+        uses: KyleMayes/install-llvm-action@v1
+        with:
+          version: ${{ matrix.clang }}
+          directory: ${{ runner.temp }}/llvm-${{ matrix.clang }}
+          cached: ${{ steps.cache-llvm.outputs.cache-hit }}
+      # Rust
       - name: Install ${{ matrix.rust }} toolchain
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
           toolchain: ${{ matrix.rust }}
           override: true
-      - name: Install libclang via llvm
-        if: startsWith(matrix.os, 'windows')
-        uses: crazy-max/ghaction-chocolatey@v1
-        with:
-          args: install llvm
-      - name: Update dependencies
-        uses: actions-rs/cargo@v1
-        with:
-          command: update
-      - name: Cache target directory
-        uses: actions/cache@v1
-        with:
-          path: target
-          key: ${{ runner.OS }}-${{ matrix.Rust }}-build-${{ hashFiles('Cargo.lock') }}
-          restore-keys: |
-            ${{ matrix.os }}-${{ matrix.Rust }}-build-${{ env.cache-name }}-
-            ${{ matrix.os }}-${{ matrix.Rust }}-build-
-            ${{ matrix.os }}-${{ matrix.Rust }}-
       - name: Build
         uses: actions-rs/cargo@v1
+        env:
+          LIBCLANG_PATH: ${{ runner.temp }}/llvm-${{ matrix.clang }}/lib
+          LLVM_CONFIG_PATH: ${{ runner.temp }}/llvm-${{ matrix.clang }}/bin/llvm-config
         with:
           command: build
           args: --all
       - name: Test
         uses: actions-rs/cargo@v1
+        env:
+          LIBCLANG_PATH: ${{ runner.temp }}/llvm-${{ matrix.clang }}/lib
+          LLVM_CONFIG_PATH: ${{ runner.temp }}/llvm-${{ matrix.clang }}/bin/llvm-config
         with:
           command: test
           args: --all
-  format:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout source
-        uses: actions/checkout@v1
-      - name: Install nightly toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: nightly
-          override: true
-          components: rustfmt
-      - name: Check format
-        uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: --all -- --check
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -91,7 +83,12 @@ jobs:
           profile: minimal
           toolchain: nightly
           override: true
-          components: clippy
+          components: clippy, rustfmt
+      - name: Check format
+        uses: actions-rs/cargo@v1
+        with:
+          command: fmt
+          args: --all -- --check
       - name: Lint
         uses: actions-rs/cargo@v1
         with:
