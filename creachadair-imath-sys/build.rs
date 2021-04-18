@@ -39,9 +39,9 @@ fn main() {
     // Parse and generate source
     let bindings = bindings_builder
         .use_core()
-        .whitelist_function(FUNCTION_REG)
-        .whitelist_type(TYPE_REG)
-        .whitelist_var(VAR_REG)
+        .allowlist_function(FUNCTION_REG)
+        .allowlist_type(TYPE_REG)
+        .allowlist_var(VAR_REG)
         .generate()
         .expect("Unable to generate bindings");
 
