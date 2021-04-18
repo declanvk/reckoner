@@ -21,7 +21,7 @@ impl Rational {
         let result_raw = result_rat.as_raw();
 
         // This is safe bc `self`, `other`, and `result` have all been initialized.
-        let op_res = unsafe { imath_sys::mp_rat_add(self_raw, other_raw, result_raw) };
+        let op_res = unsafe { creachadair_imath_sys::mp_rat_add(self_raw, other_raw, result_raw) };
 
         imath_check_panic!(op_res, "Add operation failed!");
 
@@ -38,7 +38,8 @@ impl Rational {
         let result_raw = result_rat.as_raw();
 
         // This is safe bc `self`, `other`, and `result` have all been initialized.
-        let op_res = unsafe { imath_sys::mp_rat_add_int(self_raw, other_raw, result_raw) };
+        let op_res =
+            unsafe { creachadair_imath_sys::mp_rat_add_int(self_raw, other_raw, result_raw) };
 
         imath_check_panic!(op_res, "Add operation failed!");
 
@@ -52,7 +53,7 @@ impl Rational {
 
         // This is safe bc `self` and `other` have all been initialized and the result
         // poiner is allowed to alias with either argument pointer.
-        let op_res = unsafe { imath_sys::mp_rat_add(self_raw, other_raw, self_raw) };
+        let op_res = unsafe { creachadair_imath_sys::mp_rat_add(self_raw, other_raw, self_raw) };
 
         imath_check_panic!(op_res, "Add assign operation failed!");
     }
@@ -64,7 +65,8 @@ impl Rational {
 
         // This is safe bc `self` and `other` have all been initialized and the result
         // poiner is allowed to alias with either argument pointer.
-        let op_res = unsafe { imath_sys::mp_rat_add_int(self_raw, other_raw, self_raw) };
+        let op_res =
+            unsafe { creachadair_imath_sys::mp_rat_add_int(self_raw, other_raw, self_raw) };
 
         imath_check_panic!(op_res, "Add assign operation failed!");
     }
@@ -78,7 +80,7 @@ impl Rational {
         let result_raw = result_rat.as_raw();
 
         // This is safe bc `self`, `other`, and `result` have all been initialized.
-        let op_res = unsafe { imath_sys::mp_rat_sub(self_raw, other_raw, result_raw) };
+        let op_res = unsafe { creachadair_imath_sys::mp_rat_sub(self_raw, other_raw, result_raw) };
 
         imath_check_panic!(op_res, "Subtract operation failed!");
 
@@ -95,7 +97,8 @@ impl Rational {
         let result_raw = result_rat.as_raw();
 
         // This is safe bc `self`, `other`, and `result` have all been initialized.
-        let op_res = unsafe { imath_sys::mp_rat_sub_int(self_raw, other_raw, result_raw) };
+        let op_res =
+            unsafe { creachadair_imath_sys::mp_rat_sub_int(self_raw, other_raw, result_raw) };
 
         imath_check_panic!(op_res, "Subtract operation failed!");
 
@@ -109,7 +112,7 @@ impl Rational {
 
         // This is safe bc `self` and `other` have all been initialized and the result
         // poiner is allowed to alias with either argument pointer.
-        let op_res = unsafe { imath_sys::mp_rat_sub(self_raw, other_raw, self_raw) };
+        let op_res = unsafe { creachadair_imath_sys::mp_rat_sub(self_raw, other_raw, self_raw) };
 
         imath_check_panic!(op_res, "Subtract assign operation failed!");
     }
@@ -122,7 +125,8 @@ impl Rational {
 
         // This is safe bc `self` and `other` have all been initialized and the result
         // poiner is allowed to alias with either argument pointer.
-        let op_res = unsafe { imath_sys::mp_rat_sub_int(self_raw, other_raw, self_raw) };
+        let op_res =
+            unsafe { creachadair_imath_sys::mp_rat_sub_int(self_raw, other_raw, self_raw) };
 
         imath_check_panic!(op_res, "Subtract assign operation failed!");
     }
@@ -136,7 +140,7 @@ impl Rational {
         let result_raw = result_rat.as_raw();
 
         // This is safe bc `self`, `other`, and `result` have all been initialized.
-        let op_res = unsafe { imath_sys::mp_rat_mul(self_raw, other_raw, result_raw) };
+        let op_res = unsafe { creachadair_imath_sys::mp_rat_mul(self_raw, other_raw, result_raw) };
 
         imath_check_panic!(op_res, "Multiply operation failed!");
 
@@ -153,7 +157,8 @@ impl Rational {
         let result_raw = result_rat.as_raw();
 
         // This is safe bc `self`, `other`, and `result` have all been initialized.
-        let op_res = unsafe { imath_sys::mp_rat_mul_int(self_raw, other_raw, result_raw) };
+        let op_res =
+            unsafe { creachadair_imath_sys::mp_rat_mul_int(self_raw, other_raw, result_raw) };
 
         imath_check_panic!(op_res, "Multiply operation failed!");
 
@@ -167,7 +172,7 @@ impl Rational {
 
         // This is safe bc `self` and `other` have all been initialized and the result
         // poiner is allowed to alias with either argument pointer.
-        let op_res = unsafe { imath_sys::mp_rat_mul(self_raw, other_raw, self_raw) };
+        let op_res = unsafe { creachadair_imath_sys::mp_rat_mul(self_raw, other_raw, self_raw) };
 
         imath_check_panic!(op_res, "Multiply assign operation failed!");
     }
@@ -180,7 +185,8 @@ impl Rational {
 
         // This is safe bc `self` and `other` have all been initialized and the result
         // poiner is allowed to alias with either argument pointer.
-        let op_res = unsafe { imath_sys::mp_rat_mul_int(self_raw, other_raw, self_raw) };
+        let op_res =
+            unsafe { creachadair_imath_sys::mp_rat_mul_int(self_raw, other_raw, self_raw) };
 
         imath_check_panic!(op_res, "Multiply assign operation failed!");
     }
@@ -194,7 +200,7 @@ impl Rational {
         let result_raw = result_rat.as_raw();
 
         // This is safe bc `self`, `other`, and `result` have all been initialized.
-        let op_res = unsafe { imath_sys::mp_rat_div(self_raw, other_raw, result_raw) };
+        let op_res = unsafe { creachadair_imath_sys::mp_rat_div(self_raw, other_raw, result_raw) };
 
         imath_check_panic!(op_res, "Divide operation failed!");
 
@@ -211,7 +217,8 @@ impl Rational {
         let result_raw = result_rat.as_raw();
 
         // This is safe bc `self`, `other`, and `result` have all been initialized.
-        let op_res = unsafe { imath_sys::mp_rat_div_int(self_raw, other_raw, result_raw) };
+        let op_res =
+            unsafe { creachadair_imath_sys::mp_rat_div_int(self_raw, other_raw, result_raw) };
 
         imath_check_panic!(op_res, "Divide operation failed!");
 
@@ -225,7 +232,7 @@ impl Rational {
 
         // This is safe bc `self` and `other` have all been initialized and the result
         // poiner is allowed to alias with either argument pointer.
-        let op_res = unsafe { imath_sys::mp_rat_div(self_raw, other_raw, self_raw) };
+        let op_res = unsafe { creachadair_imath_sys::mp_rat_div(self_raw, other_raw, self_raw) };
 
         imath_check_panic!(op_res, "Divide assign operation failed!");
     }
@@ -238,7 +245,8 @@ impl Rational {
 
         // This is safe bc `self` and `other` have all been initialized and the result
         // poiner is allowed to alias with either argument pointer.
-        let op_res = unsafe { imath_sys::mp_rat_div_int(self_raw, other_raw, self_raw) };
+        let op_res =
+            unsafe { creachadair_imath_sys::mp_rat_div_int(self_raw, other_raw, self_raw) };
 
         imath_check_panic!(op_res, "Divide assign operation failed!");
     }
@@ -251,7 +259,7 @@ impl Rational {
 
         // This operation is safe bc `self`and `result` have all been initialized.
         // `result` does not necessarily need to be initialized.
-        let op_res = unsafe { imath_sys::mp_rat_abs(self_raw, result_raw) };
+        let op_res = unsafe { creachadair_imath_sys::mp_rat_abs(self_raw, result_raw) };
 
         imath_check_panic!(op_res, "Operation failed!");
 
@@ -262,7 +270,7 @@ impl Rational {
     pub fn absolute_value_assign(&mut self) {
         let self_raw = self.as_raw();
 
-        let op_res = unsafe { imath_sys::mp_rat_abs(self_raw, self_raw) };
+        let op_res = unsafe { creachadair_imath_sys::mp_rat_abs(self_raw, self_raw) };
 
         imath_check_panic!(op_res, "Operation failed!");
     }
@@ -275,7 +283,7 @@ impl Rational {
 
         // This operation is safe bc `self`and `result` have all been initialized.
         // `result` does not necessarily need to be initialized.
-        let op_res = unsafe { imath_sys::mp_rat_neg(self_raw, result_raw) };
+        let op_res = unsafe { creachadair_imath_sys::mp_rat_neg(self_raw, result_raw) };
 
         imath_check_panic!(op_res, "Operation failed!");
 
@@ -288,7 +296,7 @@ impl Rational {
 
         // This is safe bc `self` has been initialized and the result
         // pointer is allowed to alias with the argument pointer.
-        let op_res = unsafe { imath_sys::mp_rat_neg(self_raw, self_raw) };
+        let op_res = unsafe { creachadair_imath_sys::mp_rat_neg(self_raw, self_raw) };
 
         imath_check_panic!(op_res, "Operation failed!");
     }
@@ -301,7 +309,7 @@ impl Rational {
 
         // This operation is safe bc `self`and `result` have all been initialized.
         // `result` does not necessarily need to be initialized.
-        let op_res = unsafe { imath_sys::mp_rat_recip(self_raw, result_raw) };
+        let op_res = unsafe { creachadair_imath_sys::mp_rat_recip(self_raw, result_raw) };
 
         imath_check_panic!(op_res, "Operation failed!");
 
@@ -314,7 +322,7 @@ impl Rational {
 
         // This is safe bc `self` has been initialized and the result
         // pointer is allowed to alias with the argument pointer.
-        let op_res = unsafe { imath_sys::mp_rat_recip(self_raw, self_raw) };
+        let op_res = unsafe { creachadair_imath_sys::mp_rat_recip(self_raw, self_raw) };
 
         imath_check_panic!(op_res, "Operation failed!");
     }
