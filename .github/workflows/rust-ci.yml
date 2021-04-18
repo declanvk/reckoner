@@ -17,7 +17,7 @@ jobs:
           - stable
           - beta
           - nightly
-          - 1.43.0
+          - 1.51.0
         os:
           - ubuntu-latest
           - windows-latest
@@ -31,7 +31,7 @@ jobs:
         with:
           submodules: recursive
       # LLVM and Clang installation
-      # https://github.com/KyleMayes/clang-sys/blob/a0bcae1a9d7ab6ed8de010b0f5e2b2020c20d204/.github/workflows/ci.yml#L23-L35 
+      # https://github.com/KyleMayes/clang-sys/blob/a0bcae1a9d7ab6ed8de010b0f5e2b2020c20d204/.github/workflows/ci.yml#L23-L35
       # The clang and clang-sys crates' CI has example of installing LLVM and Clang
       # along with how to update the environment variables (see Build & Test) so
       # that bindgen can find libclang and depedencies
