@@ -175,7 +175,23 @@ impl Integer {
         unsafe { Integer::from_raw(Box::into_raw(init).cast()) }
     }
 
-    pub(crate) fn from_string_repr(src: impl ToString) -> Result<Self> {
+    /// Parse an `Integer` from the given string, with the specified
+    /// radix.
+    ///
+    /// # Example
+    /// ```
+    /// use reckoner::Integer;
+    ///
+    /// let a = Integer::from_string("8", 10);
+    /// let b = Integer::from_string("1000", 2);
+    ///
+    /// assert_eq!(a, b);
+    /// ```
+    pub fn from_string(s: impl AsRef<str>, radix: u8) -> Result<Self> {
+        Integer::from_string_repr(s.as_ref(), radix.into())
+    }
+
+    pub(crate) fn from_string_repr(src: impl ToString, radix: u32) -> Result<Self> {
         let string_repr =
             CString::new(src.to_string()).map_err(|_| Error::StringReprContainedNul)?;
         let char_ptr = string_repr.into_raw();
@@ -196,7 +212,7 @@ impl Integer {
             // This is safe bc all the data provided to the function is correctly setup
             // (integer was allocated/initialized, char_ptr is 0-terminated).
             let res_read =
-                unsafe { creachadair_imath_sys::mp_int_read_string(raw_mpz, 10, char_ptr) };
+                unsafe { creachadair_imath_sys::mp_int_read_string(raw_mpz, radix, char_ptr) };
 
             // Accessing this is safe bc the MP_OK value is only ever used as an error
             // condition.
@@ -494,7 +510,7 @@ impl FromStr for Integer {
     type Err = Error;
 
     fn from_str(s: &str) -> core::result::Result<Self, Self::Err> {
-        Integer::from_string_repr(s)
+        Integer::from_string_repr(s, 10)
     }
 }
 

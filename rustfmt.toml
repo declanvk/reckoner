@@ -5,6 +5,6 @@ condense_wildcard_suffixes = true
 format_strings = true
 reorder_impl_items = true
 reorder_modules = true
-merge_imports = true
+imports_granularity="Crate"
 use_field_init_shorthand = true
 report_fixme = "Unnumbered"
