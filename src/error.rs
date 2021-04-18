@@ -7,7 +7,7 @@ use std::ffi::CStr;
 
 pub(crate) type Result<T> = core::result::Result<T, Error>;
 
-/// Error used in `reckoner`, usually originating from `imath-sys`.
+/// Error used in `reckoner`, usually originating from `creachadair-imath-sys`.
 #[derive(Debug, Clone, PartialEq)]
 pub enum Error {
     /// When converting from a string representation, the given string contained
@@ -27,10 +27,10 @@ pub enum Error {
     NoErrorPossible,
     /// Unknown value for an imath rounding mode.
     UnknownRoundingMode,
-    /// Internal error from `imath_sys`.
+    /// Internal error from `creachadair_imath_sys`.
     IMath {
-        /// Internal `imath_sys` error code.
-        code: imath_sys::mp_result,
+        /// Internal `creachadair_imath_sys` error code.
+        code: creachadair_imath_sys::mp_result,
         /// Custom message to display.
         msg: Option<&'static str>,
     },
@@ -71,14 +71,14 @@ impl fmt::Display for Error {
                 f,
                 "imath error ({:?} \"{}\"): {}",
                 code,
-                get_imath_sys_error_msg(*code),
+                get_creachadair_imath_sys_error_msg(*code),
                 msg
             ),
             Error::IMath { code, msg: None } => write!(
                 f,
                 "imath error ({:?} \"{}\")",
                 code,
-                get_imath_sys_error_msg(*code)
+                get_creachadair_imath_sys_error_msg(*code)
             ),
             Error::NotCanonicalInteger => write!(
                 f,
@@ -106,10 +106,10 @@ impl From<ParseIntError> for Error {
     }
 }
 
-fn get_imath_sys_error_msg(code: imath_sys::mp_result) -> String {
+fn get_creachadair_imath_sys_error_msg(code: creachadair_imath_sys::mp_result) -> String {
     // This is safe because the function will always return a cstring with static
     // lifetime, even if the error code is not a recognized value.
-    let err_char_ptr = unsafe { imath_sys::mp_error_string(code) };
+    let err_char_ptr = unsafe { creachadair_imath_sys::mp_error_string(code) };
 
     // This function is safe bc I checked the static string that `mp_error_string`
     // return and they conform to the condition of ending with nul byte. Other
@@ -124,7 +124,7 @@ macro_rules! imath_check_panic {
     ($arg:expr) => {
         // Accessing this is safe bc the MP_OK value is only ever used as an error
         // condition.
-        if $arg != unsafe { imath_sys::MP_OK } {
+        if $arg != unsafe { creachadair_imath_sys::MP_OK } {
             panic!(
                 "{}",
                 Error::IMath {
@@ -138,7 +138,7 @@ macro_rules! imath_check_panic {
     ($arg:expr, $msg:tt) => {
         // Accessing this is safe bc the MP_OK value is only ever used as an error
         // condition.
-        if $arg != unsafe { imath_sys::MP_OK } {
+        if $arg != unsafe { creachadair_imath_sys::MP_OK } {
             panic!(
                 "{}",
                 Error::IMath {

@@ -16,16 +16,16 @@ pub mod ops;
 pub struct Rational {
     // This value must be constructed from a Box and then when Drop, must be reconstructed so that
     // the Box Drop can free the memory used.
-    raw: NonNull<imath_sys::mpq_t>,
+    raw: NonNull<creachadair_imath_sys::mpq_t>,
 }
 
 impl Rational {
-    pub(crate) fn uninit() -> Box<MaybeUninit<imath_sys::mpq_t>> {
+    pub(crate) fn uninit() -> Box<MaybeUninit<creachadair_imath_sys::mpq_t>> {
         // Replace with Box::new_uninit when it is stable (1.41 maybe?).
-        let layout = alloc::Layout::new::<MaybeUninit<imath_sys::mpq_t>>();
+        let layout = alloc::Layout::new::<MaybeUninit<creachadair_imath_sys::mpq_t>>();
         let ptr = unsafe { alloc::alloc(layout) };
         // This cast is safe bc the layout was specified for
-        // MaybeUninit<imath_sys::mpq_t>
+        // MaybeUninit<creachadair_imath_sys::mpq_t>
         unsafe { Box::from_raw(ptr.cast()) }
     }
 
@@ -47,13 +47,13 @@ impl Rational {
 
             // This function call is safe because the mp_rat_init function only requires
             // that the mpq_t struct has been correctly allocated.
-            let res = unsafe { imath_sys::mp_rat_init(raw_mpq) };
+            let res = unsafe { creachadair_imath_sys::mp_rat_init(raw_mpq) };
 
             imath_check_panic!(res, "Rational init failed!");
         }
 
-        // This cast is safe (from MaybeUninit<imath_sys::mpq_t> to imath_sys::mpq_t)
-        // because the value is now initialized.
+        // This cast is safe (from MaybeUninit<creachadair_imath_sys::mpq_t> to
+        // creachadair_imath_sys::mpq_t) because the value is now initialized.
         unsafe { Rational::from_raw(Box::into_raw(init).cast()) }
     }
 
@@ -66,31 +66,33 @@ impl Rational {
 
             // This function call is safe because the mpq_t struct has been correctly
             // allocated and `other_raw` has been successfully initialized.
-            let res = unsafe { imath_sys::mp_rat_init_copy(raw_mpq, other_raw) };
+            let res = unsafe { creachadair_imath_sys::mp_rat_init_copy(raw_mpq, other_raw) };
 
             imath_check_panic!(res, "Rational init failed!");
         }
 
-        // This cast is safe (from MaybeUninit<imath_sys::mpq_t> to imath_sys::mpq_t)
-        // because the value is now initialized.
+        // This cast is safe (from MaybeUninit<creachadair_imath_sys::mpq_t> to
+        // creachadair_imath_sys::mpq_t) because the value is now initialized.
         unsafe { Rational::from_raw(Box::into_raw(init).cast()) }
     }
 
-    /// Construct a Rational from a raw non-null pointer to `imath_sys::mpq_t`.
+    /// Construct a Rational from a raw non-null pointer to
+    /// `creachadair_imath_sys::mpq_t`.
     ///
     /// # Safety
     ///
     /// This function must only every be called once for a given pointer, and
-    /// the pointer must point to an initialized `imath_sys::mpq_t` struct. The
-    /// recommendation is to only use raw pointers from the `Rational::into_raw`
-    /// function.
+    /// the pointer must point to an initialized `creachadair_imath_sys::mpq_t`
+    /// struct. The recommendation is to only use raw pointers from the
+    /// `Rational::into_raw` function.
     ///
-    /// In ths context, initialized means that the `imath_sys::mpq_t` has been
-    /// the argument of a call to `imath_sys::mp_rat_init`.
+    /// In ths context, initialized means that the
+    /// `creachadair_imath_sys::mpq_t` has been the argument of a call to
+    /// `creachadair_imath_sys::mp_rat_init`.
     ///
     /// # Example
     /// ```
-    /// use imath_sys::{mp_rat_zero, MP_OK};
+    /// use creachadair_imath_sys::{mp_rat_zero, MP_OK};
     /// use reckoner::Rational;
     ///
     /// let a = Rational::from((456, 123));
@@ -105,7 +107,7 @@ impl Rational {
     ///
     /// assert_eq!(a, (0, 1));
     /// ```
-    pub unsafe fn from_raw(raw: *mut imath_sys::mpq_t) -> Self {
+    pub unsafe fn from_raw(raw: *mut creachadair_imath_sys::mpq_t) -> Self {
         assert!(!raw.is_null());
 
         // This is safe bc the invariants of the function and because it was checked
@@ -120,7 +122,7 @@ impl Rational {
     ///
     /// # Example
     /// ```
-    /// use imath_sys::{mp_rat_add, MP_OK};
+    /// use creachadair_imath_sys::{mp_rat_add, MP_OK};
     /// use reckoner::Rational;
     ///
     /// let a = Rational::from((377, 500));
@@ -145,7 +147,7 @@ impl Rational {
     /// assert_eq!(b, (123, 500));
     /// assert_eq!(c, (500, 500));
     /// ```
-    pub fn into_raw(mut rational: Rational) -> *mut imath_sys::mpq_t {
+    pub fn into_raw(mut rational: Rational) -> *mut creachadair_imath_sys::mpq_t {
         let raw = mem::replace(&mut rational.raw, NonNull::dangling());
 
         // The destructor does not need to run, as we are intentionally leaking the
@@ -156,7 +158,7 @@ impl Rational {
     }
 
     // Internal use only
-    pub(crate) fn as_raw(&self) -> *mut imath_sys::mpq_t {
+    pub(crate) fn as_raw(&self) -> *mut creachadair_imath_sys::mpq_t {
         self.raw.as_ptr()
     }
 
@@ -184,7 +186,7 @@ impl Rational {
     pub fn reduce(&mut self) {
         let self_raw = self.as_raw();
 
-        let res = unsafe { imath_sys::mp_rat_reduce(self_raw) };
+        let res = unsafe { creachadair_imath_sys::mp_rat_reduce(self_raw) };
 
         imath_check_panic!(res, "Reducing rational value failed!");
     }
@@ -205,7 +207,7 @@ impl Rational {
         let self_raw = self.as_raw();
 
         // This is safe bc `self` has been initialized.
-        unsafe { imath_sys::mp_rat_zero(self_raw) };
+        unsafe { creachadair_imath_sys::mp_rat_zero(self_raw) };
     }
 
     /// Returns true if the denominator is 1.
@@ -222,7 +224,7 @@ impl Rational {
         let self_raw = self.as_raw();
 
         // This is safe bc `self` has been initialized.
-        unsafe { imath_sys::mp_rat_is_integer(self_raw) }
+        unsafe { creachadair_imath_sys::mp_rat_is_integer(self_raw) }
     }
 
     /// Compare two rationals
@@ -244,7 +246,7 @@ impl Rational {
         let rhs_raw = rhs.as_raw();
 
         // This is safe bc both self & rhs have been initialized correctly
-        let raw_cmp = unsafe { imath_sys::mp_rat_compare(self_raw, rhs_raw) };
+        let raw_cmp = unsafe { creachadair_imath_sys::mp_rat_compare(self_raw, rhs_raw) };
 
         raw_cmp.cmp(&0)
     }
@@ -267,7 +269,7 @@ impl Rational {
         let rhs_raw = rhs.as_raw();
 
         // This is safe bc both self & rhs have been initialized correctly
-        let raw_cmp = unsafe { imath_sys::mp_rat_compare_unsigned(self_raw, rhs_raw) };
+        let raw_cmp = unsafe { creachadair_imath_sys::mp_rat_compare_unsigned(self_raw, rhs_raw) };
 
         raw_cmp.cmp(&0)
     }
@@ -289,7 +291,7 @@ impl Rational {
         let self_raw = self.as_raw();
 
         // This is safe bc both self has been initialized correctly
-        let raw_cmp = unsafe { imath_sys::mp_rat_compare_zero(self_raw) };
+        let raw_cmp = unsafe { creachadair_imath_sys::mp_rat_compare_zero(self_raw) };
 
         raw_cmp.cmp(&0)
     }
@@ -311,7 +313,7 @@ impl Rational {
         {
             let raw_int = Integer::into_raw(numer);
 
-            let res = unsafe { imath_sys::mp_rat_numer(self_raw, raw_int) };
+            let res = unsafe { creachadair_imath_sys::mp_rat_numer(self_raw, raw_int) };
 
             imath_check_panic!(res, "Value init failed!");
 
@@ -341,7 +343,7 @@ impl Rational {
             let raw_int = Integer::into_raw(denom);
 
             // This function call is safe as self_raw and raw_int have been initialized.
-            let res = unsafe { imath_sys::mp_rat_denom(self_raw, raw_int) };
+            let res = unsafe { creachadair_imath_sys::mp_rat_denom(self_raw, raw_int) };
 
             imath_check_panic!(res, "Value init failed!");
 
@@ -374,7 +376,7 @@ impl Rational {
         let other_raw = other.as_raw();
 
         // This is safe bc self has been initialized with a value
-        let res = unsafe { imath_sys::mp_rat_copy(self_raw, other_raw) };
+        let res = unsafe { creachadair_imath_sys::mp_rat_copy(self_raw, other_raw) };
 
         imath_check_panic!(res, "Copying the value failed!");
     }
@@ -391,18 +393,19 @@ impl Rational {
 
             // This is safe bc a valid structure is provided to the unsafe methods. And the
             // src value is of the correct type?
-            let res_init = unsafe { imath_sys::mp_rat_init(raw_mpq) };
+            let res_init = unsafe { creachadair_imath_sys::mp_rat_init(raw_mpq) };
 
             imath_check_panic!(res_init, "Init failed!");
 
             // This is safe bc all the data provided to the function is correctly setup
             // (rational was allocated/initialized, char_ptr is 0-terminated).
-            let res_read =
-                unsafe { imath_sys::mp_rat_read_ustring(raw_mpq, 10, char_ptr, ptr::null_mut()) };
+            let res_read = unsafe {
+                creachadair_imath_sys::mp_rat_read_ustring(raw_mpq, 10, char_ptr, ptr::null_mut())
+            };
 
             // Accessing this is safe bc the MP_OK value is only ever used as an error
             // condition.
-            if res_read != unsafe { imath_sys::MP_OK } {
+            if res_read != unsafe { creachadair_imath_sys::MP_OK } {
                 return Err(Error::ReadStringTruncated);
             }
         }
@@ -411,8 +414,8 @@ impl Rational {
         let _ = unsafe { CString::from_raw(char_ptr) };
 
         Ok(
-            // This cast is safe (from MaybeUninit<imath_sys::mpq_t> to imath_sys::mpq_t)
-            // because the value is now initialized.
+            // This cast is safe (from MaybeUninit<creachadair_imath_sys::mpq_t> to
+            // creachadair_imath_sys::mpq_t) because the value is now initialized.
             unsafe { Rational::from_raw(Box::into_raw(init).cast()) },
         )
     }
@@ -424,7 +427,7 @@ impl Rational {
 
         // This is safe bc self_raw has been initialized and 10 is within the range
         // `[MP_MIN_RADIX, MP_MAX_RADIX]`
-        let len = unsafe { imath_sys::mp_rat_string_len(self_raw, 10) };
+        let len = unsafe { creachadair_imath_sys::mp_rat_string_len(self_raw, 10) };
 
         // The output of the call is an i32, check that it is gte zero.
         assert!(len >= 0);
@@ -438,7 +441,9 @@ impl Rational {
 
         // This is safe bc self_raw has been initialized and 10 is within the range
         // `[MP_MIN_RADIX, MP_MAX_RADIX]`
-        let len = unsafe { imath_sys::mp_rat_decimal_len(self_raw, 10, max_precision.into()) };
+        let len = unsafe {
+            creachadair_imath_sys::mp_rat_decimal_len(self_raw, 10, max_precision.into())
+        };
 
         // The output of the call is an i32, check that it is gte zero.
         assert!(len >= 0);
@@ -459,7 +464,12 @@ impl Rational {
 
             debug_assert_eq!(required_len, cap);
             unsafe {
-                imath_sys::mp_rat_to_string(self_raw, 10, char_ptr as *mut _, required_len as i32)
+                creachadair_imath_sys::mp_rat_to_string(
+                    self_raw,
+                    10,
+                    char_ptr as *mut _,
+                    required_len as i32,
+                )
             }
         };
 
@@ -514,7 +524,7 @@ impl Rational {
 
             debug_assert_eq!(required_len, cap);
             unsafe {
-                imath_sys::mp_rat_to_decimal(
+                creachadair_imath_sys::mp_rat_to_decimal(
                     self_raw,
                     10,
                     max_precision.into(),
@@ -557,7 +567,9 @@ impl Rational {
     pub(crate) fn set_value(&mut self, numer: impl Into<c_long>, denom: impl Into<c_long>) {
         let self_raw = self.as_raw();
 
-        let res = unsafe { imath_sys::mp_rat_set_value(self_raw, numer.into(), denom.into()) };
+        let res = unsafe {
+            creachadair_imath_sys::mp_rat_set_value(self_raw, numer.into(), denom.into())
+        };
 
         imath_check_panic!(res, "Setting the value failed!");
     }
@@ -568,9 +580,9 @@ impl Rational {
         // TODO: Use `&raw` when it hits stable
         // This is correct bc the `num` field is the first field in the `mpz_t` struct,
         // which is also `repr(C)`.
-        let num_raw = self_raw.cast::<imath_sys::mpz_t>();
+        let num_raw = self_raw.cast::<creachadair_imath_sys::mpz_t>();
 
-        let res = unsafe { imath_sys::mp_int_copy(int_raw, num_raw) };
+        let res = unsafe { creachadair_imath_sys::mp_int_copy(int_raw, num_raw) };
 
         imath_check_panic!(res, "Setting the numerator failed!");
     }
@@ -582,11 +594,11 @@ impl Rational {
         // This is safe because the layout of the `mpq_t` struct is repr(C) and just two
         // `mpz_t` in a row. The alignment of `mpz_t` is 8, and the size is 32, so the
         // offset for the `den` field should also be 32, equivalent to one `mpz_t`.
-        let den_raw = unsafe { self_raw.cast::<imath_sys::mpz_t>().offset(1) };
+        let den_raw = unsafe { self_raw.cast::<creachadair_imath_sys::mpz_t>().offset(1) };
 
         // This is safe because both `self` and `denom` have been initialized, and the
         // `den_raw` pointer points correctly to the `den` field of the `mpq_t` struct.
-        let res = unsafe { imath_sys::mp_int_copy(denom_raw, den_raw) };
+        let res = unsafe { creachadair_imath_sys::mp_int_copy(denom_raw, den_raw) };
 
         imath_check_panic!(res, "Setting the denominator failed!");
     }
@@ -602,11 +614,13 @@ impl Rational {
 
         // This is safe bc `self` has been initialized and
         // `numerator_raw`/`denominator_raw` point to actual integers.
-        let res = unsafe { imath_sys::mp_rat_to_ints(self_raw, numerator_raw, denominator_raw) };
+        let res = unsafe {
+            creachadair_imath_sys::mp_rat_to_ints(self_raw, numerator_raw, denominator_raw)
+        };
 
         // Accessing this is safe bc the MP_OK value is only ever used as an error
         // condition.
-        if res == unsafe { imath_sys::MP_OK } {
+        if res == unsafe { creachadair_imath_sys::MP_OK } {
             Ok((numerator, denominator))
         } else {
             Err(Error::ConversionOutsideRange)
@@ -680,10 +694,10 @@ impl Drop for Rational {
 
             // This will ensure that the memory holding the rational data (the digits?) is
             // not leaked.
-            imath_sys::mp_rat_clear(raw);
+            creachadair_imath_sys::mp_rat_clear(raw);
 
-            // This will ensure that the memory that held the `imath_sys::mpq_t` is not
-            // leaked.
+            // This will ensure that the memory that held the `creachadair_imath_sys::mpq_t`
+            // is not leaked.
             drop(Box::from_raw(raw));
         }
     }
@@ -714,28 +728,28 @@ pub enum RoundMode {
     HalfDown,
 }
 
-impl Into<imath_sys::mp_round_mode> for RoundMode {
-    fn into(self) -> imath_sys::mp_round_mode {
+impl Into<creachadair_imath_sys::mp_round_mode> for RoundMode {
+    fn into(self) -> creachadair_imath_sys::mp_round_mode {
         use RoundMode::*;
         match self {
-            Down => imath_sys::mp_round_mode_MP_ROUND_DOWN,
-            Up => imath_sys::mp_round_mode_MP_ROUND_UP,
-            HalfDown => imath_sys::mp_round_mode_MP_ROUND_HALF_DOWN,
-            HalfUp => imath_sys::mp_round_mode_MP_ROUND_HALF_UP,
+            Down => creachadair_imath_sys::mp_round_mode_MP_ROUND_DOWN,
+            Up => creachadair_imath_sys::mp_round_mode_MP_ROUND_UP,
+            HalfDown => creachadair_imath_sys::mp_round_mode_MP_ROUND_HALF_DOWN,
+            HalfUp => creachadair_imath_sys::mp_round_mode_MP_ROUND_HALF_UP,
         }
     }
 }
 
-impl TryFrom<imath_sys::mp_round_mode> for RoundMode {
+impl TryFrom<creachadair_imath_sys::mp_round_mode> for RoundMode {
     type Error = Error;
 
-    fn try_from(src: imath_sys::mp_round_mode) -> Result<Self> {
+    fn try_from(src: creachadair_imath_sys::mp_round_mode) -> Result<Self> {
         use RoundMode::*;
         match src {
-            imath_sys::mp_round_mode_MP_ROUND_DOWN => Ok(Down),
-            imath_sys::mp_round_mode_MP_ROUND_UP => Ok(Up),
-            imath_sys::mp_round_mode_MP_ROUND_HALF_DOWN => Ok(HalfDown),
-            imath_sys::mp_round_mode_MP_ROUND_HALF_UP => Ok(HalfUp),
+            creachadair_imath_sys::mp_round_mode_MP_ROUND_DOWN => Ok(Down),
+            creachadair_imath_sys::mp_round_mode_MP_ROUND_UP => Ok(Up),
+            creachadair_imath_sys::mp_round_mode_MP_ROUND_HALF_DOWN => Ok(HalfDown),
+            creachadair_imath_sys::mp_round_mode_MP_ROUND_HALF_UP => Ok(HalfUp),
             _ => Err(Error::UnknownRoundingMode),
         }
     }

@@ -29,7 +29,7 @@ impl Integer {
 
         // This operation is safe bc `self`, `other`, and `result` have all been
         // initialized. `result` does not necessarily need to be initialized.
-        let op_res = unsafe { imath_sys::mp_int_add(self_raw, other_raw, result_raw) };
+        let op_res = unsafe { creachadair_imath_sys::mp_int_add(self_raw, other_raw, result_raw) };
 
         imath_check_panic!(op_res, "Operation failed!");
 
@@ -43,7 +43,7 @@ impl Integer {
 
         // This operation is safe because `self` and `other` have been initialized and
         // the result pointer is allowed to alias with either of the arguments.
-        let op_res = unsafe { imath_sys::mp_int_add(self_raw, other_raw, self_raw) };
+        let op_res = unsafe { creachadair_imath_sys::mp_int_add(self_raw, other_raw, self_raw) };
 
         imath_check_panic!(op_res, "Operation failed!");
     }
@@ -54,7 +54,8 @@ impl Integer {
         let result_raw = result_int.as_raw();
 
         // This operation is safe because `self` and `result` have been initialized.
-        let op_res = unsafe { imath_sys::mp_int_add_value(self_raw, value.into(), result_raw) };
+        let op_res =
+            unsafe { creachadair_imath_sys::mp_int_add_value(self_raw, value.into(), result_raw) };
 
         imath_check_panic!(op_res, "Operation failed!");
 
@@ -66,7 +67,8 @@ impl Integer {
 
         // This operation is safe because `self` has been initialized and the result
         // pointer is allowed to alias with the integer argument.
-        let op_res = unsafe { imath_sys::mp_int_add_value(self_raw, other.into(), self_raw) };
+        let op_res =
+            unsafe { creachadair_imath_sys::mp_int_add_value(self_raw, other.into(), self_raw) };
 
         imath_check_panic!(op_res, "Operation failed!");
     }
@@ -81,7 +83,7 @@ impl Integer {
 
         // This operation is safe bc `self`, `other`, and `result` have all been
         // initialized. `result` does not necessarily need to be initialized.
-        let op_res = unsafe { imath_sys::mp_int_sub(self_raw, other_raw, result_raw) };
+        let op_res = unsafe { creachadair_imath_sys::mp_int_sub(self_raw, other_raw, result_raw) };
 
         imath_check_panic!(op_res, "Operation failed!");
 
@@ -93,7 +95,7 @@ impl Integer {
         let self_raw = self.as_raw();
         let other_raw = other.as_raw();
 
-        let op_res = unsafe { imath_sys::mp_int_sub(self_raw, other_raw, self_raw) };
+        let op_res = unsafe { creachadair_imath_sys::mp_int_sub(self_raw, other_raw, self_raw) };
 
         imath_check_panic!(op_res, "Operation failed!");
     }
@@ -103,7 +105,8 @@ impl Integer {
         let result_int = Integer::new();
         let result_raw = result_int.as_raw();
 
-        let op_res = unsafe { imath_sys::mp_int_sub_value(self_raw, value.into(), result_raw) };
+        let op_res =
+            unsafe { creachadair_imath_sys::mp_int_sub_value(self_raw, value.into(), result_raw) };
 
         imath_check_panic!(op_res, "Operation failed!");
 
@@ -113,7 +116,8 @@ impl Integer {
     pub(crate) fn subtract_c_long_assign(&mut self, other: impl Into<c_long>) {
         let self_raw = self.as_raw();
 
-        let op_res = unsafe { imath_sys::mp_int_sub_value(self_raw, other.into(), self_raw) };
+        let op_res =
+            unsafe { creachadair_imath_sys::mp_int_sub_value(self_raw, other.into(), self_raw) };
 
         imath_check_panic!(op_res, "Operation failed!");
     }
@@ -128,7 +132,7 @@ impl Integer {
 
         // This operation is safe bc `self`, `other`, and `result` have all been
         // initialized. `result` does not necessarily need to be initialized.
-        let op_res = unsafe { imath_sys::mp_int_mul(self_raw, other_raw, result_raw) };
+        let op_res = unsafe { creachadair_imath_sys::mp_int_mul(self_raw, other_raw, result_raw) };
 
         imath_check_panic!(op_res, "Operation failed!");
 
@@ -140,7 +144,7 @@ impl Integer {
         let self_raw = self.as_raw();
         let other_raw = other.as_raw();
 
-        let op_res = unsafe { imath_sys::mp_int_mul(self_raw, other_raw, self_raw) };
+        let op_res = unsafe { creachadair_imath_sys::mp_int_mul(self_raw, other_raw, self_raw) };
 
         imath_check_panic!(op_res, "Operation failed!");
     }
@@ -150,7 +154,8 @@ impl Integer {
         let result_int = Integer::new();
         let result_raw = result_int.as_raw();
 
-        let op_res = unsafe { imath_sys::mp_int_mul_value(self_raw, value.into(), result_raw) };
+        let op_res =
+            unsafe { creachadair_imath_sys::mp_int_mul_value(self_raw, value.into(), result_raw) };
 
         imath_check_panic!(op_res, "Operation failed!");
 
@@ -160,7 +165,8 @@ impl Integer {
     pub(crate) fn multiply_c_long_assign(&mut self, other: impl Into<c_long>) {
         let self_raw = self.as_raw();
 
-        let op_res = unsafe { imath_sys::mp_int_mul_value(self_raw, other.into(), self_raw) };
+        let op_res =
+            unsafe { creachadair_imath_sys::mp_int_mul_value(self_raw, other.into(), self_raw) };
 
         imath_check_panic!(op_res, "Operation failed!");
     }
@@ -173,7 +179,7 @@ impl Integer {
 
         // This operation is safe bc `self`and `result` have all been initialized.
         // `result` does not necessarily need to be initialized.
-        let op_res = unsafe { imath_sys::mp_int_neg(self_raw, result_raw) };
+        let op_res = unsafe { creachadair_imath_sys::mp_int_neg(self_raw, result_raw) };
 
         imath_check_panic!(op_res, "Operation failed!");
 
@@ -184,7 +190,7 @@ impl Integer {
     pub fn negate_assign(&mut self) {
         let self_raw = self.as_raw();
 
-        let op_res = unsafe { imath_sys::mp_int_neg(self_raw, self_raw) };
+        let op_res = unsafe { creachadair_imath_sys::mp_int_neg(self_raw, self_raw) };
 
         imath_check_panic!(op_res, "Operation failed!");
     }
@@ -197,7 +203,7 @@ impl Integer {
 
         // This operation is safe bc `self`and `result` have all been initialized.
         // `result` does not necessarily need to be initialized.
-        let op_res = unsafe { imath_sys::mp_int_abs(self_raw, result_raw) };
+        let op_res = unsafe { creachadair_imath_sys::mp_int_abs(self_raw, result_raw) };
 
         imath_check_panic!(op_res, "Operation failed!");
 
@@ -208,7 +214,7 @@ impl Integer {
     pub fn absolute_value_assign(&mut self) {
         let self_raw = self.as_raw();
 
-        let op_res = unsafe { imath_sys::mp_int_abs(self_raw, self_raw) };
+        let op_res = unsafe { creachadair_imath_sys::mp_int_abs(self_raw, self_raw) };
 
         imath_check_panic!(op_res, "Operation failed!");
     }
@@ -224,8 +230,8 @@ impl Integer {
     fn mp_int_div(
         dividend: &Integer,
         divisor: &Integer,
-        out_quotient: imath_sys::mp_int,
-        out_remainder: imath_sys::mp_int,
+        out_quotient: creachadair_imath_sys::mp_int,
+        out_remainder: creachadair_imath_sys::mp_int,
     ) {
         assert!(!(out_quotient.is_null() && out_remainder.is_null()));
 
@@ -236,7 +242,12 @@ impl Integer {
         // Also, runtime checks of `out_quotient` and `out_remainder` ensure that a
         // result can be written somewhere.
         let op_res = unsafe {
-            imath_sys::mp_int_div(dividend_raw, divisor_raw, out_quotient, out_remainder)
+            creachadair_imath_sys::mp_int_div(
+                dividend_raw,
+                divisor_raw,
+                out_quotient,
+                out_remainder,
+            )
         };
 
         imath_check_panic!(op_res, "Operation failed!");
@@ -297,7 +308,7 @@ impl Integer {
     fn mp_int_div_value(
         dividend: &Integer,
         divisor: impl Into<c_long>,
-        out_quotient: imath_sys::mp_int,
+        out_quotient: creachadair_imath_sys::mp_int,
         out_remainder: *mut c_long,
     ) {
         let divident_raw = dividend.as_raw();
@@ -306,7 +317,12 @@ impl Integer {
         // checks of `out_quotient` and `out_remainder` ensure that a result can
         // be written somewhere.
         let op_res = unsafe {
-            imath_sys::mp_int_div_value(divident_raw, divisor.into(), out_quotient, out_remainder)
+            creachadair_imath_sys::mp_int_div_value(
+                divident_raw,
+                divisor.into(),
+                out_quotient,
+                out_remainder,
+            )
         };
 
         imath_check_panic!(op_res, "Operation failed!");
