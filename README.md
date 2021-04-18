@@ -63,9 +63,9 @@ See [`examples/`](https://github.com/declanvk/reckoner/tree/master/examples) for
 
 A high level arbitrary precision arithmetic library supporting integer and rational numbers.
 
-### `imath-sys`
+### `creachadair-imath-sys`
 
-[![crates.io](https://img.shields.io/crates/d/imath-sys)](https://crates.io/crates/imath-sys) [![docs.rs](https://docs.rs/imath-sys/badge.svg)](https://docs.rs/imath-sys)
+[![crates.io](https://img.shields.io/crates/d/creachadair-imath-sys)](https://crates.io/crates/creachadair-imath-sys) [![docs.rs](https://docs.rs/creachadair-imath-sys/badge.svg)](https://docs.rs/creachadair-imath-sys)
 
 FFI bindings for [`imath`](https://github.com/creachadair/imath/).
 
@@ -73,4 +73,4 @@ FFI bindings for [`imath`](https://github.com/creachadair/imath/).
 
 [Master documentation for `reckoner`](https://declanvk.github.io/reckoner/reckoner/index.html)
 
-[Master documentation for `imath-sys`](https://declanvk.github.io/reckoner/imath_sys/index.html)
+[Master documentation for `creachadair-imath-sys`](https://declanvk.github.io/reckoner/creachadair_imath_sys/index.html)

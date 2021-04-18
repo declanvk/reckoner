@@ -21,16 +21,16 @@ pub(crate) mod ops;
 pub struct Integer {
     // This value must be constructed from a Box and then when Drop, must be reconstructed so that
     // the Box Drop can free the memory used.
-    raw: NonNull<imath_sys::mpz_t>,
+    raw: NonNull<creachadair_imath_sys::mpz_t>,
 }
 
 impl Integer {
-    pub(crate) fn uninit() -> Box<MaybeUninit<imath_sys::mpz_t>> {
+    pub(crate) fn uninit() -> Box<MaybeUninit<creachadair_imath_sys::mpz_t>> {
         // Replace with Box::new_uninit when it is stable (1.40 maybe?).
-        let layout = alloc::Layout::new::<MaybeUninit<imath_sys::mpz_t>>();
+        let layout = alloc::Layout::new::<MaybeUninit<creachadair_imath_sys::mpz_t>>();
         let ptr = unsafe { alloc::alloc(layout) };
         // This cast is safe bc the layout was specified for
-        // MaybeUninit<imath_sys::mpz_t>
+        // MaybeUninit<creachadair_imath_sys::mpz_t>
         unsafe { Box::from_raw(ptr.cast()) }
     }
 
@@ -59,31 +59,33 @@ impl Integer {
 
             // This is safe bc a valid structure is provided to the unsafe methods. And the
             // src value is of the correct type?
-            let res = unsafe { imath_sys::mp_int_init_copy(raw_mpz, other_raw) };
+            let res = unsafe { creachadair_imath_sys::mp_int_init_copy(raw_mpz, other_raw) };
 
             imath_check_panic!(res, "Value init failed!");
         }
 
-        // This cast is safe (from MaybeUninit<imath_sys::mpz_t> to imath_sys::mpz_t)
-        // because the value is now initialized.
+        // This cast is safe (from MaybeUninit<creachadair_imath_sys::mpz_t> to
+        // creachadair_imath_sys::mpz_t) because the value is now initialized.
         unsafe { Integer::from_raw(Box::into_raw(init).cast()) }
     }
 
-    /// Construct an Integer from a raw non-null pointer to `imath_sys::mpz_t`.
+    /// Construct an Integer from a raw non-null pointer to
+    /// `creachadair_imath_sys::mpz_t`.
     ///
     /// # Safety
     ///
     /// This function must only every be called once for a given pointer, and
-    /// the pointer must point to an initialized `imath_sys::mpz_t` struct. The
-    /// recommendation is to only use raw pointers from the `Integer::into_raw`
-    /// function.
+    /// the pointer must point to an initialized `creachadair_imath_sys::mpz_t`
+    /// struct. The recommendation is to only use raw pointers from the
+    /// `Integer::into_raw` function.
     ///
-    /// In ths context, initialized means that the `imath_sys::mpz_t` has been
-    /// the argument of a call to `imath_sys::mp_int_init`.
+    /// In ths context, initialized means that the
+    /// `creachadair_imath_sys::mpz_t` has been the argument of a call to
+    /// `creachadair_imath_sys::mp_int_init`.
     ///
     /// # Example
     /// ```
-    /// use imath_sys::{mp_int_zero, MP_OK};
+    /// use creachadair_imath_sys::{mp_int_zero, MP_OK};
     /// use reckoner::Integer;
     ///
     /// let a = Integer::from(300);
@@ -98,7 +100,7 @@ impl Integer {
     ///
     /// assert_eq!(a, 0);
     /// ```
-    pub unsafe fn from_raw(raw: *mut imath_sys::mpz_t) -> Self {
+    pub unsafe fn from_raw(raw: *mut creachadair_imath_sys::mpz_t) -> Self {
         assert!(!raw.is_null());
 
         // This is safe bc the invariants of the function and because it was checked
@@ -113,7 +115,7 @@ impl Integer {
     ///
     /// # Example
     /// ```
-    /// use imath_sys::{mp_int_add, MP_OK};
+    /// use creachadair_imath_sys::{mp_int_add, MP_OK};
     /// use reckoner::Integer;
     ///
     /// let a = Integer::from(200);
@@ -138,7 +140,7 @@ impl Integer {
     /// assert_eq!(b, 300);
     /// assert_eq!(c, 500);
     /// ```
-    pub fn into_raw(mut integer: Integer) -> *mut imath_sys::mpz_t {
+    pub fn into_raw(mut integer: Integer) -> *mut creachadair_imath_sys::mpz_t {
         let raw = mem::replace(&mut integer.raw, NonNull::dangling());
 
         // The destructor does not need to run, as we are intentionally leaking the
@@ -149,7 +151,7 @@ impl Integer {
     }
 
     // Internal use only
-    pub(crate) fn as_raw(&self) -> *mut imath_sys::mpz_t {
+    pub(crate) fn as_raw(&self) -> *mut creachadair_imath_sys::mpz_t {
         self.raw.as_ptr()
     }
 
@@ -163,13 +165,13 @@ impl Integer {
 
             // This is safe bc a valid structure is provided to the unsafe methods. And the
             // src value is of the correct type?
-            let res = unsafe { imath_sys::mp_int_init_value(raw_mpz, src.into()) };
+            let res = unsafe { creachadair_imath_sys::mp_int_init_value(raw_mpz, src.into()) };
 
             imath_check_panic!(res, "Value init failed!");
         }
 
-        // This cast is safe (from MaybeUninit<imath_sys::mpz_t> to imath_sys::mpz_t)
-        // because the value is now initialized.
+        // This cast is safe (from MaybeUninit<creachadair_imath_sys::mpz_t> to
+        // creachadair_imath_sys::mpz_t) because the value is now initialized.
         unsafe { Integer::from_raw(Box::into_raw(init).cast()) }
     }
 
@@ -187,17 +189,18 @@ impl Integer {
 
             // This is safe bc a valid structure is provided to the unsafe methods. And the
             // src value is of the correct type?
-            let res_init = unsafe { imath_sys::mp_int_init(raw_mpz) };
+            let res_init = unsafe { creachadair_imath_sys::mp_int_init(raw_mpz) };
 
             imath_check_panic!(res_init, "Init failed!");
 
             // This is safe bc all the data provided to the function is correctly setup
             // (integer was allocated/initialized, char_ptr is 0-terminated).
-            let res_read = unsafe { imath_sys::mp_int_read_string(raw_mpz, 10, char_ptr) };
+            let res_read =
+                unsafe { creachadair_imath_sys::mp_int_read_string(raw_mpz, 10, char_ptr) };
 
             // Accessing this is safe bc the MP_OK value is only ever used as an error
             // condition.
-            if res_read != unsafe { imath_sys::MP_OK } {
+            if res_read != unsafe { creachadair_imath_sys::MP_OK } {
                 return Err(Error::ReadStringTruncated);
             }
         }
@@ -208,8 +211,8 @@ impl Integer {
         Ok(
             // This `Integer::from_raw` is safe because
             //
-            // This cast is safe (from MaybeUninit<imath_sys::mpz_t> to imath_sys::mpz_t)
-            // because the value is now initialized.
+            // This cast is safe (from MaybeUninit<creachadair_imath_sys::mpz_t> to
+            // creachadair_imath_sys::mpz_t) because the value is now initialized.
             unsafe { Integer::from_raw(Box::into_raw(init).cast()) },
         )
     }
@@ -220,7 +223,7 @@ impl Integer {
         let self_raw = self.as_raw();
 
         // This is safe bc self has been initialized
-        let len = unsafe { imath_sys::mp_int_string_len(self_raw, 10) };
+        let len = unsafe { creachadair_imath_sys::mp_int_string_len(self_raw, 10) };
 
         // The output of the call is an i32, check that it is gte zero.
         assert!(len >= 0);
@@ -241,7 +244,12 @@ impl Integer {
 
             debug_assert_eq!(required_len, cap);
             unsafe {
-                imath_sys::mp_int_to_string(self_raw, 10, char_ptr as *mut _, required_len as i32)
+                creachadair_imath_sys::mp_int_to_string(
+                    self_raw,
+                    10,
+                    char_ptr as *mut _,
+                    required_len as i32,
+                )
             }
         };
 
@@ -290,7 +298,7 @@ impl Integer {
         let other_raw = other.as_raw();
 
         // This is safe bc self has been initialized with a value
-        let res = unsafe { imath_sys::mp_int_copy(self_raw, other_raw) };
+        let res = unsafe { creachadair_imath_sys::mp_int_copy(self_raw, other_raw) };
 
         imath_check_panic!(res, "Copying the value failed!");
     }
@@ -299,7 +307,7 @@ impl Integer {
     pub(crate) fn set_value(&mut self, value: impl Into<c_long>) {
         let self_raw = self.as_raw();
 
-        let res = unsafe { imath_sys::mp_int_set_value(self_raw, value.into()) };
+        let res = unsafe { creachadair_imath_sys::mp_int_set_value(self_raw, value.into()) };
 
         imath_check_panic!(res, "Setting the value directly failed!");
     }
@@ -320,7 +328,7 @@ impl Integer {
         let self_raw = self.as_raw();
 
         // This is safe bc `self` has been initialized.
-        unsafe { imath_sys::mp_int_zero(self_raw) };
+        unsafe { creachadair_imath_sys::mp_int_zero(self_raw) };
     }
 
     /// Compare two integers
@@ -342,7 +350,7 @@ impl Integer {
         let rhs_raw = rhs.as_raw();
 
         // This is safe bc both self & rhs have been initialized correctly
-        let raw_cmp = unsafe { imath_sys::mp_int_compare(self_raw, rhs_raw) };
+        let raw_cmp = unsafe { creachadair_imath_sys::mp_int_compare(self_raw, rhs_raw) };
 
         raw_cmp.cmp(&0)
     }
@@ -365,7 +373,7 @@ impl Integer {
         let rhs_raw = rhs.as_raw();
 
         // This is safe bc both self & rhs have been initialized correctly
-        let raw_cmp = unsafe { imath_sys::mp_int_compare_unsigned(self_raw, rhs_raw) };
+        let raw_cmp = unsafe { creachadair_imath_sys::mp_int_compare_unsigned(self_raw, rhs_raw) };
 
         raw_cmp.cmp(&0)
     }
@@ -387,7 +395,7 @@ impl Integer {
         let self_raw = self.as_raw();
 
         // This is safe bc both self has been initialized correctly
-        let raw_cmp = unsafe { imath_sys::mp_int_compare_zero(self_raw) };
+        let raw_cmp = unsafe { creachadair_imath_sys::mp_int_compare_zero(self_raw) };
 
         raw_cmp.cmp(&0)
     }
@@ -397,7 +405,7 @@ impl Integer {
         let value = value.into();
 
         // This is safe bc both self has been initialized correctly
-        let raw_cmp = unsafe { imath_sys::mp_int_compare_value(self_raw, value) };
+        let raw_cmp = unsafe { creachadair_imath_sys::mp_int_compare_value(self_raw, value) };
 
         raw_cmp.cmp(&0)
     }
@@ -408,7 +416,7 @@ impl Integer {
         let value = value.into();
 
         // This is safe bc both self has been initialized correctly
-        let raw_cmp = unsafe { imath_sys::mp_int_compare_uvalue(self_raw, value) };
+        let raw_cmp = unsafe { creachadair_imath_sys::mp_int_compare_uvalue(self_raw, value) };
 
         raw_cmp.cmp(&0)
     }
@@ -420,11 +428,11 @@ impl Integer {
 
         // This is safe bc `self` has been initialized and `out_raw` points to an actual
         // integer.
-        let res = unsafe { imath_sys::mp_int_to_int(self_raw, out_raw) };
+        let res = unsafe { creachadair_imath_sys::mp_int_to_int(self_raw, out_raw) };
 
         // Accessing this is safe bc the MP_OK value is only ever used as an error
         // condition.
-        if res == unsafe { imath_sys::MP_OK } {
+        if res == unsafe { creachadair_imath_sys::MP_OK } {
             Ok(out)
         } else {
             Err(Error::ConversionOutsideRange)
@@ -444,7 +452,7 @@ impl fmt::Debug for Integer {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         if f.alternate() {
             // This is safe bc self has been initialized
-            let imath_sys::mpz_t {
+            let creachadair_imath_sys::mpz_t {
                 single,
                 digits,
                 alloc,
@@ -497,10 +505,10 @@ impl Drop for Integer {
 
             // This will ensure that the memory holding the integer data (the digits?) is
             // not leaked.
-            imath_sys::mp_int_clear(raw);
+            creachadair_imath_sys::mp_int_clear(raw);
 
-            // This will ensure that the memory that held the `imath_sys::mpz_t` is not
-            // leaked.
+            // This will ensure that the memory that held the `creachadair_imath_sys::mpz_t`
+            // is not leaked.
             drop(Box::from_raw(raw));
         }
     }
