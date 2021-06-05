@@ -200,3 +200,26 @@ fn check_test_data_mul() {
         }
     }
 }
+
+#[test]
+fn check_test_data_neg() {
+    let file_contents = read_file(tc_path!("neg.tc"));
+    let test_cases = file_contents
+        .lines()
+        .filter(filter_comments_and_whitespace)
+        .map(TestCase::<2, 1>::parse);
+
+    for tc in test_cases {
+        match tc.operator {
+            "neg" => {
+                let input = parse_integer(tc.arguments[0]);
+                let output = -input;
+
+                let expected = parse_integer(tc.outputs[0]);
+
+                assert_eq!(output, expected);
+            }
+            x => panic!("unknown operator: {:?}", x),
+        }
+    }
+}
