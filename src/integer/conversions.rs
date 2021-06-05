@@ -211,13 +211,13 @@ cfg_if::cfg_if! {
     } else {
         impl From<u32> for Integer {
             fn from(src: u32) -> Self {
-                Self::from_string_repr(src).expect("Conversion from string failed")
+                Self::from_string_repr(src, 10).expect("Conversion from string failed")
             }
         }
 
         impl From<&u32> for Integer {
             fn from(src: &u32) -> Self {
-                Self::from_string_repr(src).expect("Conversion from string failed")
+                Self::from_string_repr(src, 10).expect("Conversion from string failed")
             }
         }
 
@@ -238,13 +238,13 @@ cfg_if::cfg_if! {
 
         impl From<i64> for Integer {
             fn from(src: i64) -> Self {
-                Self::from_string_repr(src).expect("Conversion from string failed")
+                Self::from_string_repr(src, 10).expect("Conversion from string failed")
             }
         }
 
         impl From<&i64> for Integer {
             fn from(src: &i64) -> Self {
-                Self::from_string_repr(*src).expect("Conversion from string failed")
+                Self::from_string_repr(*src, 10).expect("Conversion from string failed")
             }
         }
 
@@ -266,13 +266,13 @@ cfg_if::cfg_if! {
 
 impl From<u64> for Integer {
     fn from(src: u64) -> Self {
-        Self::from_string_repr(src).expect("Conversion from string failed")
+        Self::from_string_repr(src, 10).expect("Conversion from string failed")
     }
 }
 
 impl From<&u64> for Integer {
     fn from(src: &u64) -> Self {
-        Self::from_string_repr(*src).expect("Conversion from string failed")
+        Self::from_string_repr(*src, 10).expect("Conversion from string failed")
     }
 }
 
@@ -298,13 +298,13 @@ impl TryFrom<&Integer> for u64 {
 
 impl From<i128> for Integer {
     fn from(src: i128) -> Self {
-        Self::from_string_repr(src).expect("Conversion from string failed")
+        Self::from_string_repr(src, 10).expect("Conversion from string failed")
     }
 }
 
 impl From<&i128> for Integer {
     fn from(src: &i128) -> Self {
-        Self::from_string_repr(*src).expect("Conversion from string failed")
+        Self::from_string_repr(*src, 10).expect("Conversion from string failed")
     }
 }
 
@@ -330,13 +330,13 @@ impl TryFrom<&Integer> for i128 {
 
 impl From<u128> for Integer {
     fn from(src: u128) -> Self {
-        Self::from_string_repr(src).expect("Conversion from string failed")
+        Self::from_string_repr(src, 10).expect("Conversion from string failed")
     }
 }
 
 impl From<&u128> for Integer {
     fn from(src: &u128) -> Self {
-        Self::from_string_repr(*src).expect("Conversion from string failed")
+        Self::from_string_repr(*src, 10).expect("Conversion from string failed")
     }
 }
 

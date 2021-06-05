@@ -159,7 +159,7 @@ mod test {
 
     #[test]
     fn compare_big_integers_with_small() {
-        let a = Integer::from_string_repr("1234567890").unwrap();
+        let a = Integer::from_string_repr("1234567890", 10).unwrap();
 
         assert!(a > 0);
         assert!(a != 987_654_321);
