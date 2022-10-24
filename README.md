@@ -57,6 +57,8 @@ See [`examples/`](https://github.com/declanvk/reckoner/tree/master/examples) for
 
 ## Crates
 
+The MSRV for both crates is `1.64.0`.
+
 ### `reckoner`
 
 [![crates.io](https://img.shields.io/crates/d/reckoner)](https://crates.io/crates/reckoner) [![docs.rs](https://docs.rs/reckoner/badge.svg)](https://docs.rs/reckoner)
