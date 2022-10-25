@@ -7,4 +7,3 @@ reorder_impl_items = true
 reorder_modules = true
 imports_granularity="Crate"
 use_field_init_shorthand = true
-report_fixme = "Unnumbered"

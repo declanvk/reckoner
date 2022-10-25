@@ -3,9 +3,10 @@ use crate::{
     integer::Integer,
 };
 use core::{
-    cmp::Ordering, convert::TryFrom, fmt, mem, mem::MaybeUninit, ptr, ptr::NonNull, str::FromStr,
+    cmp::Ordering, convert::TryFrom, fmt, mem, mem::MaybeUninit, ptr, ptr::NonNull, ffi::c_long,
+    str::FromStr,
 };
-use std::{alloc, ffi::CString, os::raw::c_long};
+use std::{alloc, ffi::CString};
 
 pub(crate) mod comparisons;
 pub(crate) mod conversions;
