@@ -729,14 +729,13 @@ pub enum RoundMode {
     HalfDown,
 }
 
-impl Into<creachadair_imath_sys::mp_round_mode> for RoundMode {
-    fn into(self) -> creachadair_imath_sys::mp_round_mode {
-        use RoundMode::*;
-        match self {
-            Down => creachadair_imath_sys::mp_round_mode_MP_ROUND_DOWN,
-            Up => creachadair_imath_sys::mp_round_mode_MP_ROUND_UP,
-            HalfDown => creachadair_imath_sys::mp_round_mode_MP_ROUND_HALF_DOWN,
-            HalfUp => creachadair_imath_sys::mp_round_mode_MP_ROUND_HALF_UP,
+impl From<RoundMode> for creachadair_imath_sys::mp_round_mode {
+    fn from(src: RoundMode) -> creachadair_imath_sys::mp_round_mode {
+        match src {
+            RoundMode::Down => creachadair_imath_sys::mp_round_mode_MP_ROUND_DOWN,
+            RoundMode::Up => creachadair_imath_sys::mp_round_mode_MP_ROUND_UP,
+            RoundMode::HalfDown => creachadair_imath_sys::mp_round_mode_MP_ROUND_HALF_DOWN,
+            RoundMode::HalfUp => creachadair_imath_sys::mp_round_mode_MP_ROUND_HALF_UP,
         }
     }
 }
