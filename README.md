@@ -53,7 +53,7 @@ fn compute_pi_approx(iterations: u32) -> Rational {
 }
 ````
 
-See [`examples/`](https://github.com/declanvk/reckoner/tree/master/examples) for more.
+See [`examples/`](https://github.com/declanvk/reckoner/tree/main/examples) for more.
 
 ## Crates
 
@@ -73,6 +73,6 @@ FFI bindings for [`imath`](https://github.com/creachadair/imath/).
 
 ## Documentation
 
-[Master documentation for `reckoner`](https://declanvk.github.io/reckoner/reckoner/index.html)
+[Documentation for `reckoner` from `main` branch](https://declanvk.github.io/reckoner/reckoner/index.html)
 
-[Master documentation for `creachadair-imath-sys`](https://declanvk.github.io/reckoner/creachadair_imath_sys/index.html)
+[Documentation for `creachadair-imath-sys` from `main` branch](https://declanvk.github.io/reckoner/creachadair_imath_sys/index.html)
