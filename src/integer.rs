@@ -5,11 +5,11 @@ use core::{
     mem::{self, MaybeUninit},
     ptr::NonNull,
     str::FromStr,
+    ffi::{c_long, c_ulong}
 };
 use std::{
     alloc,
-    ffi::CString,
-    os::raw::{c_long, c_ulong},
+    ffi::CString
 };
 
 pub(crate) mod comparison;

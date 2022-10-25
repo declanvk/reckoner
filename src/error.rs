@@ -8,7 +8,7 @@ use std::ffi::CStr;
 pub(crate) type Result<T> = core::result::Result<T, Error>;
 
 /// Error used in `reckoner`, usually originating from `creachadair-imath-sys`.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum Error {
     /// When converting from a string representation, the given string contained
     /// a zero-byte that was not at the end.
