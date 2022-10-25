@@ -3,7 +3,7 @@ use crate::{
     integer::Integer,
 };
 use core::{
-    cmp::Ordering, convert::TryFrom, fmt, mem, mem::MaybeUninit, ptr, ptr::NonNull, ffi::c_long,
+    cmp::Ordering, convert::TryFrom, ffi::c_long, fmt, mem, mem::MaybeUninit, ptr, ptr::NonNull,
     str::FromStr,
 };
 use std::{alloc, ffi::CString};
