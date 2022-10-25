@@ -1,0 +1,2 @@
+allow-branch = ["main"]
+pre-release-replacements = []
