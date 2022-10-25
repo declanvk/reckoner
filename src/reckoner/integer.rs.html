@@ -1,102 +1,102 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/integer.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>integer.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../reckoner/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
-<span id="2">  2</span>
-<span id="3">  3</span>
-<span id="4">  4</span>
-<span id="5">  5</span>
-<span id="6">  6</span>
-<span id="7">  7</span>
-<span id="8">  8</span>
-<span id="9">  9</span>
-<span id="10"> 10</span>
-<span id="11"> 11</span>
-<span id="12"> 12</span>
-<span id="13"> 13</span>
-<span id="14"> 14</span>
-<span id="15"> 15</span>
-<span id="16"> 16</span>
-<span id="17"> 17</span>
-<span id="18"> 18</span>
-<span id="19"> 19</span>
-<span id="20"> 20</span>
-<span id="21"> 21</span>
-<span id="22"> 22</span>
-<span id="23"> 23</span>
-<span id="24"> 24</span>
-<span id="25"> 25</span>
-<span id="26"> 26</span>
-<span id="27"> 27</span>
-<span id="28"> 28</span>
-<span id="29"> 29</span>
-<span id="30"> 30</span>
-<span id="31"> 31</span>
-<span id="32"> 32</span>
-<span id="33"> 33</span>
-<span id="34"> 34</span>
-<span id="35"> 35</span>
-<span id="36"> 36</span>
-<span id="37"> 37</span>
-<span id="38"> 38</span>
-<span id="39"> 39</span>
-<span id="40"> 40</span>
-<span id="41"> 41</span>
-<span id="42"> 42</span>
-<span id="43"> 43</span>
-<span id="44"> 44</span>
-<span id="45"> 45</span>
-<span id="46"> 46</span>
-<span id="47"> 47</span>
-<span id="48"> 48</span>
-<span id="49"> 49</span>
-<span id="50"> 50</span>
-<span id="51"> 51</span>
-<span id="52"> 52</span>
-<span id="53"> 53</span>
-<span id="54"> 54</span>
-<span id="55"> 55</span>
-<span id="56"> 56</span>
-<span id="57"> 57</span>
-<span id="58"> 58</span>
-<span id="59"> 59</span>
-<span id="60"> 60</span>
-<span id="61"> 61</span>
-<span id="62"> 62</span>
-<span id="63"> 63</span>
-<span id="64"> 64</span>
-<span id="65"> 65</span>
-<span id="66"> 66</span>
-<span id="67"> 67</span>
-<span id="68"> 68</span>
-<span id="69"> 69</span>
-<span id="70"> 70</span>
-<span id="71"> 71</span>
-<span id="72"> 72</span>
-<span id="73"> 73</span>
-<span id="74"> 74</span>
-<span id="75"> 75</span>
-<span id="76"> 76</span>
-<span id="77"> 77</span>
-<span id="78"> 78</span>
-<span id="79"> 79</span>
-<span id="80"> 80</span>
-<span id="81"> 81</span>
-<span id="82"> 82</span>
-<span id="83"> 83</span>
-<span id="84"> 84</span>
-<span id="85"> 85</span>
-<span id="86"> 86</span>
-<span id="87"> 87</span>
-<span id="88"> 88</span>
-<span id="89"> 89</span>
-<span id="90"> 90</span>
-<span id="91"> 91</span>
-<span id="92"> 92</span>
-<span id="93"> 93</span>
-<span id="94"> 94</span>
-<span id="95"> 95</span>
-<span id="96"> 96</span>
-<span id="97"> 97</span>
-<span id="98"> 98</span>
-<span id="99"> 99</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/integer.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>integer.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../reckoner/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../reckoner/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../reckoner/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
@@ -582,19 +582,42 @@
 <span id="582">582</span>
 <span id="583">583</span>
 <span id="584">584</span>
-</pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>};
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
+</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::error</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>};
 <span class="kw">use</span> <span class="ident">core</span>::{
-    <span class="ident">cmp</span>::<span class="ident">Ordering</span>,
+    <span class="ident">cmp::Ordering</span>,
     <span class="ident">fmt</span>,
     <span class="ident">mem</span>::{<span class="self">self</span>, <span class="ident">MaybeUninit</span>},
-    <span class="ident">ptr</span>::<span class="ident">NonNull</span>,
-    <span class="ident">str</span>::<span class="ident">FromStr</span>,
+    <span class="ident">ptr::NonNull</span>,
+    <span class="ident">str::FromStr</span>,
+    <span class="ident">ffi</span>::{<span class="ident">c_long</span>, <span class="ident">c_ulong</span>}
 };
 <span class="kw">use</span> <span class="ident">std</span>::{
     <span class="ident">alloc</span>,
-    <span class="ident">ffi</span>::<span class="ident">CString</span>,
-    <span class="ident">os</span>::<span class="ident">raw</span>::{<span class="ident">c_long</span>, <span class="ident">c_ulong</span>},
+    <span class="ident">ffi::CString</span>
 };
 
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod</span> <span class="ident">comparison</span>;
@@ -606,17 +629,17 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Integer</span> {
     <span class="comment">// This value must be constructed from a Box and then when Drop, must be reconstructed so that</span>
     <span class="comment">// the Box Drop can free the memory used.</span>
-    <span class="ident">raw</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="ident">imath_sys</span>::<span class="ident">mpz_t</span><span class="op">&gt;</span>,
+    <span class="ident">raw</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="ident">creachadair_imath_sys::mpz_t</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Integer</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">uninit</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">MaybeUninit</span><span class="op">&lt;</span><span class="ident">imath_sys</span>::<span class="ident">mpz_t</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">uninit</span>() -&gt; <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">MaybeUninit</span><span class="op">&lt;</span><span class="ident">creachadair_imath_sys::mpz_t</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="comment">// Replace with Box::new_uninit when it is stable (1.40 maybe?).</span>
-        <span class="kw">let</span> <span class="ident">layout</span> <span class="op">=</span> <span class="ident">alloc</span>::<span class="ident">Layout</span>::<span class="ident">new</span>::<span class="op">&lt;</span><span class="ident">MaybeUninit</span><span class="op">&lt;</span><span class="ident">imath_sys</span>::<span class="ident">mpz_t</span><span class="op">&gt;</span><span class="op">&gt;</span>();
-        <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">alloc</span>::<span class="ident">alloc</span>(<span class="ident">layout</span>) };
+        <span class="kw">let</span> <span class="ident">layout</span> <span class="op">=</span> <span class="ident">alloc::Layout::new</span>::<span class="op">&lt;</span><span class="ident">MaybeUninit</span><span class="op">&lt;</span><span class="ident">creachadair_imath_sys::mpz_t</span><span class="op">&gt;</span><span class="op">&gt;</span>();
+        <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">alloc::alloc</span>(<span class="ident">layout</span>) };
         <span class="comment">// This cast is safe bc the layout was specified for</span>
-        <span class="comment">// MaybeUninit&lt;imath_sys::mpz_t&gt;</span>
-        <span class="kw">unsafe</span> { <span class="ident">Box</span>::<span class="ident">from_raw</span>(<span class="ident">ptr</span>.<span class="ident">cast</span>()) }
+        <span class="comment">// MaybeUninit&lt;creachadair_imath_sys::mpz_t&gt;</span>
+        <span class="kw">unsafe</span> { <span class="ident">Box::from_raw</span>(<span class="ident">ptr</span>.<span class="ident">cast</span>()) }
     }
 
     <span class="doccomment">/// Construct a new integer with a default value of zero.</span>
@@ -629,12 +652,12 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(a, 0);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">from_c_long</span>(<span class="number">0</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="self">Self</span> {
+        <span class="ident"><span class="self">Self</span>::from_c_long</span>(<span class="number">0</span>)
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">copy_init</span>(<span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">init</span> <span class="op">=</span> <span class="ident">Integer</span>::<span class="ident">uninit</span>();
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">copy_init</span>(<span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="self">Self</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">init</span> <span class="op">=</span> <span class="ident">Integer::uninit</span>();
         <span class="kw">let</span> <span class="ident">other_raw</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">as_raw</span>();
 
         {
@@ -644,31 +667,33 @@
 
             <span class="comment">// This is safe bc a valid structure is provided to the unsafe methods. And the</span>
             <span class="comment">// src value is of the correct type?</span>
-            <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_init_copy</span>(<span class="ident">raw_mpz</span>, <span class="ident">other_raw</span>) };
+            <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_init_copy</span>(<span class="ident">raw_mpz</span>, <span class="ident">other_raw</span>) };
 
-            <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">res</span>, <span class="string">&quot;Value init failed!&quot;</span>);
+            <span class="macro">imath_check_panic!</span>(<span class="ident">res</span>, <span class="string">&quot;Value init failed!&quot;</span>);
         }
 
-        <span class="comment">// This cast is safe (from MaybeUninit&lt;imath_sys::mpz_t&gt; to imath_sys::mpz_t)</span>
-        <span class="comment">// because the value is now initialized.</span>
-        <span class="kw">unsafe</span> { <span class="ident">Integer</span>::<span class="ident">from_raw</span>(<span class="ident">Box</span>::<span class="ident">into_raw</span>(<span class="ident">init</span>).<span class="ident">cast</span>()) }
+        <span class="comment">// This cast is safe (from MaybeUninit&lt;creachadair_imath_sys::mpz_t&gt; to</span>
+        <span class="comment">// creachadair_imath_sys::mpz_t) because the value is now initialized.</span>
+        <span class="kw">unsafe</span> { <span class="ident">Integer::from_raw</span>(<span class="ident">Box::into_raw</span>(<span class="ident">init</span>).<span class="ident">cast</span>()) }
     }
 
-    <span class="doccomment">/// Construct an Integer from a raw non-null pointer to `imath_sys::mpz_t`.</span>
+    <span class="doccomment">/// Construct an Integer from a raw non-null pointer to</span>
+    <span class="doccomment">/// `creachadair_imath_sys::mpz_t`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Safety</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This function must only every be called once for a given pointer, and</span>
-    <span class="doccomment">/// the pointer must point to an initialized `imath_sys::mpz_t` struct. The</span>
-    <span class="doccomment">/// recommendation is to only use raw pointers from the `Integer::into_raw`</span>
-    <span class="doccomment">/// function.</span>
+    <span class="doccomment">/// the pointer must point to an initialized `creachadair_imath_sys::mpz_t`</span>
+    <span class="doccomment">/// struct. The recommendation is to only use raw pointers from the</span>
+    <span class="doccomment">/// `Integer::into_raw` function.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// In ths context, initialized means that the `imath_sys::mpz_t` has been</span>
-    <span class="doccomment">/// the argument of a call to `imath_sys::mp_int_init`.</span>
+    <span class="doccomment">/// In ths context, initialized means that the</span>
+    <span class="doccomment">/// `creachadair_imath_sys::mpz_t` has been the argument of a call to</span>
+    <span class="doccomment">/// `creachadair_imath_sys::mp_int_init`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use imath_sys::{mp_int_zero, MP_OK};</span>
+    <span class="doccomment">/// use creachadair_imath_sys::{mp_int_zero, MP_OK};</span>
     <span class="doccomment">/// use reckoner::Integer;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let a = Integer::from(300);</span>
@@ -683,13 +708,13 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(a, 0);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_raw</span>(<span class="ident">raw</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">imath_sys</span>::<span class="ident">mpz_t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">raw</span>.<span class="ident">is_null</span>());
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_raw</span>(<span class="ident">raw</span>: <span class="kw-2">*mut</span> <span class="ident">creachadair_imath_sys::mpz_t</span>) -&gt; <span class="self">Self</span> {
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">raw</span>.<span class="ident">is_null</span>());
 
         <span class="comment">// This is safe bc the invariants of the function and because it was checked</span>
         <span class="comment">// that the pointer is not null.</span>
         <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_unsafe</span>)]</span>
-        <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">NonNull</span>::<span class="ident">new_unchecked</span>(<span class="ident">raw</span>) };
+        <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">NonNull::new_unchecked</span>(<span class="ident">raw</span>) };
 
         <span class="ident">Integer</span> { <span class="ident">raw</span> }
     }
@@ -698,7 +723,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use imath_sys::{mp_int_add, MP_OK};</span>
+    <span class="doccomment">/// use creachadair_imath_sys::{mp_int_add, MP_OK};</span>
     <span class="doccomment">/// use reckoner::Integer;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let a = Integer::from(200);</span>
@@ -723,23 +748,23 @@
     <span class="doccomment">/// assert_eq!(b, 300);</span>
     <span class="doccomment">/// assert_eq!(c, 500);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_raw</span>(<span class="kw-2">mut</span> <span class="ident">integer</span>: <span class="ident">Integer</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">imath_sys</span>::<span class="ident">mpz_t</span> {
-        <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">replace</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">integer</span>.<span class="ident">raw</span>, <span class="ident">NonNull</span>::<span class="ident">dangling</span>());
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_raw</span>(<span class="kw-2">mut</span> <span class="ident">integer</span>: <span class="ident">Integer</span>) -&gt; <span class="kw-2">*mut</span> <span class="ident">creachadair_imath_sys::mpz_t</span> {
+        <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="ident">mem::replace</span>(<span class="kw-2">&amp;mut</span> <span class="ident">integer</span>.<span class="ident">raw</span>, <span class="ident">NonNull::dangling</span>());
 
         <span class="comment">// The destructor does not need to run, as we are intentionally leaking the</span>
         <span class="comment">// resources here.</span>
-        <span class="ident">mem</span>::<span class="ident">forget</span>(<span class="ident">integer</span>);
+        <span class="ident">mem::forget</span>(<span class="ident">integer</span>);
 
         <span class="ident">raw</span>.<span class="ident">as_ptr</span>()
     }
 
     <span class="comment">// Internal use only</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">imath_sys</span>::<span class="ident">mpz_t</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">*mut</span> <span class="ident">creachadair_imath_sys::mpz_t</span> {
         <span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>()
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">from_c_long</span>(<span class="ident">src</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">init</span> <span class="op">=</span> <span class="ident">Integer</span>::<span class="ident">uninit</span>();
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">from_c_long</span>(<span class="ident">src</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">init</span> <span class="op">=</span> <span class="ident">Integer::uninit</span>();
 
         {
             <span class="comment">// This is safe bc init is entirely local. raw_mpz is also scoped to be less</span>
@@ -748,22 +773,38 @@
 
             <span class="comment">// This is safe bc a valid structure is provided to the unsafe methods. And the</span>
             <span class="comment">// src value is of the correct type?</span>
-            <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_init_value</span>(<span class="ident">raw_mpz</span>, <span class="ident">src</span>.<span class="ident">into</span>()) };
+            <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_init_value</span>(<span class="ident">raw_mpz</span>, <span class="ident">src</span>.<span class="ident">into</span>()) };
 
-            <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">res</span>, <span class="string">&quot;Value init failed!&quot;</span>);
+            <span class="macro">imath_check_panic!</span>(<span class="ident">res</span>, <span class="string">&quot;Value init failed!&quot;</span>);
         }
 
-        <span class="comment">// This cast is safe (from MaybeUninit&lt;imath_sys::mpz_t&gt; to imath_sys::mpz_t)</span>
-        <span class="comment">// because the value is now initialized.</span>
-        <span class="kw">unsafe</span> { <span class="ident">Integer</span>::<span class="ident">from_raw</span>(<span class="ident">Box</span>::<span class="ident">into_raw</span>(<span class="ident">init</span>).<span class="ident">cast</span>()) }
+        <span class="comment">// This cast is safe (from MaybeUninit&lt;creachadair_imath_sys::mpz_t&gt; to</span>
+        <span class="comment">// creachadair_imath_sys::mpz_t) because the value is now initialized.</span>
+        <span class="kw">unsafe</span> { <span class="ident">Integer::from_raw</span>(<span class="ident">Box::into_raw</span>(<span class="ident">init</span>).<span class="ident">cast</span>()) }
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">from_string_repr</span>(<span class="ident">src</span>: <span class="kw">impl</span> <span class="ident">ToString</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Parse an `Integer` from the given string, with the specified</span>
+    <span class="doccomment">/// radix.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Example</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use reckoner::Integer;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let a = Integer::from_string(&quot;8&quot;, 10);</span>
+    <span class="doccomment">/// let b = Integer::from_string(&quot;1000&quot;, 2);</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// assert_eq!(a, b);</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_string</span>(<span class="ident">s</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>, <span class="ident">radix</span>: <span class="ident">u8</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="ident">Integer::from_string_repr</span>(<span class="ident">s</span>.<span class="ident">as_ref</span>(), <span class="ident">radix</span>.<span class="ident">into</span>())
+    }
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">from_string_repr</span>(<span class="ident">src</span>: <span class="kw">impl</span> <span class="ident">ToString</span>, <span class="ident">radix</span>: <span class="ident">u32</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">string_repr</span> <span class="op">=</span>
-            <span class="ident">CString</span>::<span class="ident">new</span>(<span class="ident">src</span>.<span class="ident">to_string</span>()).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Error</span>::<span class="ident">StringReprContainedNul</span>)<span class="question-mark">?</span>;
+            <span class="ident">CString::new</span>(<span class="ident">src</span>.<span class="ident">to_string</span>()).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Error::StringReprContainedNul</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">char_ptr</span> <span class="op">=</span> <span class="ident">string_repr</span>.<span class="ident">into_raw</span>();
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">init</span> <span class="op">=</span> <span class="ident">Integer</span>::<span class="ident">uninit</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">init</span> <span class="op">=</span> <span class="ident">Integer::uninit</span>();
 
         {
             <span class="comment">// This is safe bc init is entirely local. raw_mpz is also scoped to be less</span>
@@ -772,65 +813,71 @@
 
             <span class="comment">// This is safe bc a valid structure is provided to the unsafe methods. And the</span>
             <span class="comment">// src value is of the correct type?</span>
-            <span class="kw">let</span> <span class="ident">res_init</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_init</span>(<span class="ident">raw_mpz</span>) };
+            <span class="kw">let</span> <span class="ident">res_init</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_init</span>(<span class="ident">raw_mpz</span>) };
 
-            <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">res_init</span>, <span class="string">&quot;Init failed!&quot;</span>);
+            <span class="macro">imath_check_panic!</span>(<span class="ident">res_init</span>, <span class="string">&quot;Init failed!&quot;</span>);
 
             <span class="comment">// This is safe bc all the data provided to the function is correctly setup</span>
             <span class="comment">// (integer was allocated/initialized, char_ptr is 0-terminated).</span>
-            <span class="kw">let</span> <span class="ident">res_read</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_read_string</span>(<span class="ident">raw_mpz</span>, <span class="number">10</span>, <span class="ident">char_ptr</span>) };
+            <span class="kw">let</span> <span class="ident">res_read</span> <span class="op">=</span>
+                <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_read_string</span>(<span class="ident">raw_mpz</span>, <span class="ident">radix</span>, <span class="ident">char_ptr</span>) };
 
             <span class="comment">// Accessing this is safe bc the MP_OK value is only ever used as an error</span>
             <span class="comment">// condition.</span>
-            <span class="kw">if</span> <span class="ident">res_read</span> <span class="op">!</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">MP_OK</span> } {
-                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">ReadStringTruncated</span>);
+            <span class="kw">if</span> <span class="ident">res_read</span> <span class="op">!</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::MP_OK</span> } {
+                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::ReadStringTruncated</span>);
             }
         }
 
         <span class="comment">// This is safe bc we produced the char_ptr earlier from a CString</span>
-        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">CString</span>::<span class="ident">from_raw</span>(<span class="ident">char_ptr</span>) };
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">CString::from_raw</span>(<span class="ident">char_ptr</span>) };
 
         <span class="prelude-val">Ok</span>(
             <span class="comment">// This `Integer::from_raw` is safe because</span>
             <span class="comment">//</span>
-            <span class="comment">// This cast is safe (from MaybeUninit&lt;imath_sys::mpz_t&gt; to imath_sys::mpz_t)</span>
-            <span class="comment">// because the value is now initialized.</span>
-            <span class="kw">unsafe</span> { <span class="ident">Integer</span>::<span class="ident">from_raw</span>(<span class="ident">Box</span>::<span class="ident">into_raw</span>(<span class="ident">init</span>).<span class="ident">cast</span>()) },
+            <span class="comment">// This cast is safe (from MaybeUninit&lt;creachadair_imath_sys::mpz_t&gt; to</span>
+            <span class="comment">// creachadair_imath_sys::mpz_t) because the value is now initialized.</span>
+            <span class="kw">unsafe</span> { <span class="ident">Integer::from_raw</span>(<span class="ident">Box::into_raw</span>(<span class="ident">init</span>).<span class="ident">cast</span>()) },
         )
     }
 
     <span class="comment">// Reports the minimum number of characters required to represent `z` as a</span>
     <span class="comment">// zero-terminated string in base-10.</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">required_display_len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">required_display_len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">usize</span> {
         <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
 
         <span class="comment">// This is safe bc self has been initialized</span>
-        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_string_len</span>(<span class="ident">self_raw</span>, <span class="number">10</span>) };
+        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_string_len</span>(<span class="ident">self_raw</span>, <span class="number">10</span>) };
 
         <span class="comment">// The output of the call is an i32, check that it is gte zero.</span>
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">len</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0</span>);
+        <span class="macro">assert!</span>(<span class="ident">len</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0</span>);
         <span class="ident">len</span> <span class="kw">as</span> <span class="ident">usize</span>
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">to_cstring</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CString</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">to_cstring</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">CString</span> {
         <span class="kw">let</span> <span class="ident">required_len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">required_display_len</span>();
         <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">char_vec</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">required_len</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">char_vec</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">required_len</span>);
         <span class="comment">// Initialize all to zero</span>
-        <span class="ident">char_vec</span>.<span class="ident">resize_with</span>(<span class="ident">required_len</span>, <span class="ident">Default</span>::<span class="ident">default</span>);
+        <span class="ident">char_vec</span>.<span class="ident">resize_with</span>(<span class="ident">required_len</span>, <span class="ident">Default::default</span>);
 
         <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> {
             <span class="kw">let</span> <span class="ident">char_ptr</span> <span class="op">=</span> <span class="ident">char_vec</span>.<span class="ident">as_mut_ptr</span>();
             <span class="kw">let</span> <span class="ident">cap</span> <span class="op">=</span> <span class="ident">char_vec</span>.<span class="ident">capacity</span>();
 
-            <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="ident">required_len</span>, <span class="ident">cap</span>);
+            <span class="macro">debug_assert_eq!</span>(<span class="ident">required_len</span>, <span class="ident">cap</span>);
             <span class="kw">unsafe</span> {
-                <span class="ident">imath_sys</span>::<span class="ident">mp_int_to_string</span>(<span class="ident">self_raw</span>, <span class="number">10</span>, <span class="ident">char_ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>, <span class="ident">required_len</span> <span class="kw">as</span> <span class="ident">i32</span>)
+                <span class="ident">creachadair_imath_sys::mp_int_to_string</span>(
+                    <span class="ident">self_raw</span>,
+                    <span class="number">10</span>,
+                    <span class="ident">char_ptr</span> <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
+                    <span class="ident">required_len</span> <span class="kw">as</span> <span class="ident">i32</span>,
+                )
             }
         };
 
-        <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">res</span>, <span class="string">&quot;Writing the value as a string failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(<span class="ident">res</span>, <span class="string">&quot;Writing the value as a string failed!&quot;</span>);
 
         <span class="comment">// Setting the length is safe bc we now that the `mp_int_to_string`</span>
         <span class="comment">// should have used the entire capacity to write to</span>
@@ -848,7 +895,7 @@
             .<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">without_nul</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">char_vec</span>.<span class="ident">as_slice</span>()[..<span class="op">=</span><span class="ident">non_zero_idx</span>];
 
-        <span class="ident">CString</span>::<span class="ident">new</span>(<span class="ident">without_nul</span>).<span class="ident">expect</span>(<span class="string">&quot;Failed to produce a valid CString&quot;</span>)
+        <span class="ident">CString::new</span>(<span class="ident">without_nul</span>).<span class="ident">expect</span>(<span class="string">&quot;Failed to produce a valid CString&quot;</span>)
     }
 
     <span class="doccomment">/// Replaces the value of `other` with a copy of the value of `self`. No new</span>
@@ -870,23 +917,23 @@
     <span class="doccomment">/// assert_eq!(a, 20);</span>
     <span class="doccomment">/// assert_eq!(b, 20, &quot;Failed to copy&quot;);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;mut</span> <span class="self">Self</span>) {
         <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
         <span class="kw">let</span> <span class="ident">other_raw</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">as_raw</span>();
 
         <span class="comment">// This is safe bc self has been initialized with a value</span>
-        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_copy</span>(<span class="ident">self_raw</span>, <span class="ident">other_raw</span>) };
+        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_copy</span>(<span class="ident">self_raw</span>, <span class="ident">other_raw</span>) };
 
-        <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">res</span>, <span class="string">&quot;Copying the value failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(<span class="ident">res</span>, <span class="string">&quot;Copying the value failed!&quot;</span>);
     }
 
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">set_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>) {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">set_value</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>) {
         <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
 
-        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_set_value</span>(<span class="ident">self_raw</span>, <span class="ident">value</span>.<span class="ident">into</span>()) };
+        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_set_value</span>(<span class="ident">self_raw</span>, <span class="ident">value</span>.<span class="ident">into</span>()) };
 
-        <span class="macro">imath_check_panic</span><span class="macro">!</span>(<span class="ident">res</span>, <span class="string">&quot;Setting the value directly failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(<span class="ident">res</span>, <span class="string">&quot;Setting the value directly failed!&quot;</span>);
     }
 
     <span class="doccomment">/// Set value of integer to zero</span>
@@ -901,11 +948,11 @@
     <span class="doccomment">/// a.zero();</span>
     <span class="doccomment">/// assert_eq!(a, 0);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">zero</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">zero</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) {
         <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
 
         <span class="comment">// This is safe bc `self` has been initialized.</span>
-        <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_zero</span>(<span class="ident">self_raw</span>) };
+        <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_zero</span>(<span class="ident">self_raw</span>) };
     }
 
     <span class="doccomment">/// Compare two integers</span>
@@ -922,12 +969,12 @@
     <span class="doccomment">/// assert_eq!(b.compare(&amp;a), Ordering::Greater);</span>
     <span class="doccomment">/// assert_eq!(b.compare(&amp;b), Ordering::Equal);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">compare</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ordering</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">compare</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="ident">Ordering</span> {
         <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
         <span class="kw">let</span> <span class="ident">rhs_raw</span> <span class="op">=</span> <span class="ident">rhs</span>.<span class="ident">as_raw</span>();
 
         <span class="comment">// This is safe bc both self &amp; rhs have been initialized correctly</span>
-        <span class="kw">let</span> <span class="ident">raw_cmp</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_compare</span>(<span class="ident">self_raw</span>, <span class="ident">rhs_raw</span>) };
+        <span class="kw">let</span> <span class="ident">raw_cmp</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_compare</span>(<span class="ident">self_raw</span>, <span class="ident">rhs_raw</span>) };
 
         <span class="ident">raw_cmp</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="number">0</span>)
     }
@@ -945,12 +992,12 @@
     <span class="doccomment">/// assert_eq!(a.compare_magnitude(&amp;b), Ordering::Greater);</span>
     <span class="doccomment">/// assert_eq!(a.compare(&amp;b), Ordering::Less);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">compare_magnitude</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ordering</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">compare_magnitude</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="ident">Ordering</span> {
         <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
         <span class="kw">let</span> <span class="ident">rhs_raw</span> <span class="op">=</span> <span class="ident">rhs</span>.<span class="ident">as_raw</span>();
 
         <span class="comment">// This is safe bc both self &amp; rhs have been initialized correctly</span>
-        <span class="kw">let</span> <span class="ident">raw_cmp</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_compare_unsigned</span>(<span class="ident">self_raw</span>, <span class="ident">rhs_raw</span>) };
+        <span class="kw">let</span> <span class="ident">raw_cmp</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_compare_unsigned</span>(<span class="ident">self_raw</span>, <span class="ident">rhs_raw</span>) };
 
         <span class="ident">raw_cmp</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="number">0</span>)
     }
@@ -968,68 +1015,68 @@
     <span class="doccomment">/// assert_eq!(a.compare_zero(), Ordering::Less);</span>
     <span class="doccomment">/// assert_eq!(b.compare_zero(), Ordering::Greater);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">compare_zero</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ordering</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">compare_zero</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Ordering</span> {
         <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
 
         <span class="comment">// This is safe bc both self has been initialized correctly</span>
-        <span class="kw">let</span> <span class="ident">raw_cmp</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_compare_zero</span>(<span class="ident">self_raw</span>) };
+        <span class="kw">let</span> <span class="ident">raw_cmp</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_compare_zero</span>(<span class="ident">self_raw</span>) };
 
         <span class="ident">raw_cmp</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="number">0</span>)
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">compare_c_long</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ordering</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">compare_c_long</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>) -&gt; <span class="ident">Ordering</span> {
         <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
         <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">into</span>();
 
         <span class="comment">// This is safe bc both self has been initialized correctly</span>
-        <span class="kw">let</span> <span class="ident">raw_cmp</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_compare_value</span>(<span class="ident">self_raw</span>, <span class="ident">value</span>) };
+        <span class="kw">let</span> <span class="ident">raw_cmp</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_compare_value</span>(<span class="ident">self_raw</span>, <span class="ident">value</span>) };
 
         <span class="ident">raw_cmp</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="number">0</span>)
     }
 
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">compare_c_ulong</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_ulong</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ordering</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">compare_c_ulong</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_ulong</span><span class="op">&gt;</span>) -&gt; <span class="ident">Ordering</span> {
         <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
         <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">into</span>();
 
         <span class="comment">// This is safe bc both self has been initialized correctly</span>
-        <span class="kw">let</span> <span class="ident">raw_cmp</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_compare_uvalue</span>(<span class="ident">self_raw</span>, <span class="ident">value</span>) };
+        <span class="kw">let</span> <span class="ident">raw_cmp</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_compare_uvalue</span>(<span class="ident">self_raw</span>, <span class="ident">value</span>) };
 
         <span class="ident">raw_cmp</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="number">0</span>)
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">try_into_c_long</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">try_into_c_long</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span>: <span class="ident">c_long</span> <span class="op">=</span> <span class="number">0</span>;
-        <span class="kw">let</span> <span class="ident">out_raw</span> <span class="op">=</span> (<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>;
+        <span class="kw">let</span> <span class="ident">out_raw</span> <span class="op">=</span> (<span class="kw-2">&amp;mut</span> <span class="ident">out</span>) <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>;
 
         <span class="comment">// This is safe bc `self` has been initialized and `out_raw` points to an actual</span>
         <span class="comment">// integer.</span>
-        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">mp_int_to_int</span>(<span class="ident">self_raw</span>, <span class="ident">out_raw</span>) };
+        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_to_int</span>(<span class="ident">self_raw</span>, <span class="ident">out_raw</span>) };
 
         <span class="comment">// Accessing this is safe bc the MP_OK value is only ever used as an error</span>
         <span class="comment">// condition.</span>
-        <span class="kw">if</span> <span class="ident">res</span> <span class="op">=</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">imath_sys</span>::<span class="ident">MP_OK</span> } {
+        <span class="kw">if</span> <span class="ident">res</span> <span class="op">==</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::MP_OK</span> } {
             <span class="prelude-val">Ok</span>(<span class="ident">out</span>)
         } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">ConversionOutsideRange</span>)
+            <span class="prelude-val">Err</span>(<span class="ident">Error::ConversionOutsideRange</span>)
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Integer</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="kw">let</span> <span class="ident">string_repr</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">to_cstring</span>();
 
         <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="ident">string_repr</span>.<span class="ident">to_str</span>().<span class="ident">unwrap</span>())
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+<span class="kw">impl</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">Integer</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="kw">if</span> <span class="ident">f</span>.<span class="ident">alternate</span>() {
             <span class="comment">// This is safe bc self has been initialized</span>
-            <span class="kw">let</span> <span class="ident">imath_sys</span>::<span class="ident">mpz_t</span> {
+            <span class="kw">let</span> <span class="ident">creachadair_imath_sys::mpz_t</span> {
                 <span class="ident">single</span>,
                 <span class="ident">digits</span>,
                 <span class="ident">alloc</span>,
@@ -1037,13 +1084,13 @@
                 <span class="ident">sign</span>,
             } <span class="op">=</span> <span class="kw">unsafe</span> { <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">as_raw</span>() };
 
-            <span class="macro">write</span><span class="macro">!</span>(
+            <span class="macro">write!</span>(
                 <span class="ident">f</span>,
                 <span class="string">&quot;Integer {{ single: {:?}, digits: {:p}, alloc: {:?}, used: {:?}, sign: {:?} }}&quot;</span>,
                 <span class="ident">single</span>, <span class="ident">digits</span>, <span class="ident">alloc</span>, <span class="ident">used</span>, <span class="ident">sign</span>
             )
         } <span class="kw">else</span> {
-            <span class="ident">fmt</span>::<span class="ident">Display</span>::<span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>)
+            <span class="ident">fmt::Display::fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>)
         }
     }
 }
@@ -1052,41 +1099,41 @@
 <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Send</span> <span class="kw">for</span> <span class="ident">Integer</span> {}
 
 <span class="kw">impl</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="ident">Integer</span>::<span class="ident">copy_init</span>(<span class="self">self</span>)
+    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span> {
+        <span class="ident">Integer::copy_init</span>(<span class="self">self</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">clone_from</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) {
+    <span class="kw">fn</span> <span class="ident">clone_from</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) {
         <span class="ident">source</span>.<span class="ident">copy_to</span>(<span class="self">self</span>);
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">new</span>()
+    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
+        <span class="ident"><span class="self">Self</span>::new</span>()
     }
 }
 
 <span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">Integer</span> {
     <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">Error</span>;
 
-    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">core</span>::<span class="ident">result</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="self">Self</span>::<span class="prelude-val">Err</span><span class="op">&gt;</span> {
-        <span class="ident">Integer</span>::<span class="ident">from_string_repr</span>(<span class="ident">s</span>)
+    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">core::result::Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
+        <span class="ident">Integer::from_string_repr</span>(<span class="ident">s</span>, <span class="number">10</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+    <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
 
             <span class="comment">// This will ensure that the memory holding the integer data (the digits?) is</span>
             <span class="comment">// not leaked.</span>
-            <span class="ident">imath_sys</span>::<span class="ident">mp_int_clear</span>(<span class="ident">raw</span>);
+            <span class="ident">creachadair_imath_sys::mp_int_clear</span>(<span class="ident">raw</span>);
 
-            <span class="comment">// This will ensure that the memory that held the `imath_sys::mpz_t` is not</span>
-            <span class="comment">// leaked.</span>
-            <span class="ident">drop</span>(<span class="ident">Box</span>::<span class="ident">from_raw</span>(<span class="ident">raw</span>));
+            <span class="comment">// This will ensure that the memory that held the `creachadair_imath_sys::mpz_t`</span>
+            <span class="comment">// is not leaked.</span>
+            <span class="ident">drop</span>(<span class="ident">Box::from_raw</span>(<span class="ident">raw</span>));
         }
     }
 }
@@ -1097,16 +1144,16 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">create_default_integer</span>() {
-        <span class="kw">let</span> <span class="ident">int</span> <span class="op">=</span> <span class="ident">Integer</span>::<span class="ident">new</span>();
+        <span class="kw">let</span> <span class="ident">int</span> <span class="op">=</span> <span class="ident">Integer::new</span>();
 
         <span class="kw">let</span> <span class="ident">string_repr</span> <span class="op">=</span> <span class="ident">int</span>.<span class="ident">to_string</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">string_repr</span>, <span class="string">&quot;0&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">string_repr</span>, <span class="string">&quot;0&quot;</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">create_integer_with_value</span>() {
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">Integer</span>::<span class="ident">from</span>(<span class="number">20000</span>)), <span class="string">&quot;20000&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">Integer</span>::<span class="ident">from</span>(<span class="number">6</span>)), <span class="string">&quot;6&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">Integer::from</span>(<span class="number">20000</span>)), <span class="string">&quot;20000&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">Integer::from</span>(<span class="number">6</span>)), <span class="string">&quot;6&quot;</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1115,10 +1162,10 @@
             <span class="string">&quot;98712698346126837461287318238761234897612839471623487619872364981726348176234&quot;</span>
                 .<span class="ident">parse</span>()
                 .<span class="ident">unwrap</span>();
-        <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">eq_op</span>)]</span>
+        <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::eq_op</span>)]</span>
         <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">int</span> <span class="op">-</span> <span class="kw-2">&amp;</span><span class="ident">int</span>;
 
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">zero</span>, <span class="number">0</span>)
+        <span class="macro">assert_eq!</span>(<span class="ident">zero</span>, <span class="number">0</span>)
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1130,10 +1177,10 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">small_int</span>: <span class="ident">Integer</span> <span class="op">=</span> (<span class="op">-</span><span class="number">4_565_234</span>).<span class="ident">into</span>();
 
         <span class="ident">big_int</span>.<span class="ident">zero</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">big_int</span>, <span class="number">0</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">big_int</span>, <span class="number">0</span>);
 
         <span class="ident">small_int</span>.<span class="ident">zero</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">small_int</span>, <span class="number">0</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">small_int</span>, <span class="number">0</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1145,27 +1192,27 @@
 
         <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">a</span>.<span class="ident">clone</span>();
 
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">a</span>, <span class="ident">b</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">a</span>, <span class="ident">b</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">formatting_integer</span>() {
-        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Integer</span>::<span class="ident">from</span>(<span class="number">12345</span>);
+        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Integer::from</span>(<span class="number">12345</span>);
 
-        <span class="kw">let</span> <span class="ident">display_out</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">a</span>);
-        <span class="kw">let</span> <span class="ident">debug_out</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">a</span>);
-        <span class="kw">let</span> <span class="ident">debug_alt_out</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{:#?}&quot;</span>, <span class="ident">a</span>);
+        <span class="kw">let</span> <span class="ident">display_out</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">a</span>);
+        <span class="kw">let</span> <span class="ident">debug_out</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">a</span>);
+        <span class="kw">let</span> <span class="ident">debug_alt_out</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">&quot;{:#?}&quot;</span>, <span class="ident">a</span>);
 
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">display_out</span>, <span class="string">&quot;12345&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">debug_out</span>, <span class="string">&quot;12345&quot;</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">debug_alt_out</span>.<span class="ident">starts_with</span>(<span class="string">&quot;Integer {&quot;</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">display_out</span>, <span class="string">&quot;12345&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">debug_out</span>, <span class="string">&quot;12345&quot;</span>);
+        <span class="macro">assert!</span>(<span class="ident">debug_alt_out</span>.<span class="ident">starts_with</span>(<span class="string">&quot;Integer {&quot;</span>));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">send_not_sync_integer</span>() {
-        <span class="ident">static_assertions</span>::<span class="macro">assert_impl_all</span><span class="macro">!</span>(<span class="ident">Integer</span>: <span class="ident">Send</span>);
-        <span class="ident">static_assertions</span>::<span class="macro">assert_not_impl_any</span><span class="macro">!</span>(<span class="ident">Integer</span>: <span class="ident">Sync</span>);
+        <span class="macro">static_assertions::assert_impl_all!</span>(<span class="ident">Integer</span>: <span class="ident">Send</span>);
+        <span class="macro">static_assertions::assert_not_impl_any!</span>(<span class="ident">Integer</span>: <span class="ident">Sync</span>);
     }
 }
-</pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "reckoner";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
+</code></pre></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="reckoner" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
