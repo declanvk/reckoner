@@ -603,22 +603,16 @@
 <span id="603">603</span>
 <span id="604">604</span>
 <span id="605">605</span>
-<span id="606">606</span>
-<span id="607">607</span>
-<span id="608">608</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::error</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>};
 <span class="kw">use</span> <span class="ident">core</span>::{
     <span class="ident">cmp::Ordering</span>,
+    <span class="ident">ffi</span>::{<span class="ident">c_long</span>, <span class="ident">c_ulong</span>},
     <span class="ident">fmt</span>,
     <span class="ident">mem</span>::{<span class="self">self</span>, <span class="ident">MaybeUninit</span>},
     <span class="ident">ptr::NonNull</span>,
     <span class="ident">str::FromStr</span>,
-    <span class="ident">ffi</span>::{<span class="ident">c_long</span>, <span class="ident">c_ulong</span>}
 };
-<span class="kw">use</span> <span class="ident">std</span>::{
-    <span class="ident">alloc</span>,
-    <span class="ident">ffi::CString</span>
-};
+<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">alloc</span>, <span class="ident">ffi::CString</span>};
 
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod</span> <span class="ident">comparison</span>;
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod</span> <span class="ident">conversions</span>;
