@@ -1,3 +1,5 @@
+#![allow(clippy::useless_conversion)]
+
 use crate::{error::Error, integer::Integer};
 use core::convert::{TryFrom, TryInto};
 
