@@ -1,16 +1,13 @@
 use crate::error::{Error, Result};
 use core::{
     cmp::Ordering,
+    ffi::{c_long, c_ulong},
     fmt,
     mem::{self, MaybeUninit},
     ptr::NonNull,
     str::FromStr,
-    ffi::{c_long, c_ulong}
 };
-use std::{
-    alloc,
-    ffi::CString
-};
+use std::{alloc, ffi::CString};
 
 pub(crate) mod comparison;
 pub(crate) mod conversions;
