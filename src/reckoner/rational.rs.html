@@ -865,7 +865,6 @@
 <span id="865">865</span>
 <span id="866">866</span>
 <span id="867">867</span>
-<span id="868">868</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">error</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>},
     <span class="ident">integer::Integer</span>,
@@ -1597,14 +1596,13 @@
     <span class="ident">HalfDown</span>,
 }
 
-<span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">creachadair_imath_sys::mp_round_mode</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">RoundMode</span> {
-    <span class="kw">fn</span> <span class="ident">into</span>(<span class="self">self</span>) -&gt; <span class="ident">creachadair_imath_sys::mp_round_mode</span> {
-        <span class="kw">use</span> <span class="ident">RoundMode</span>::<span class="kw-2">*</span>;
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">Down</span> =&gt; <span class="ident">creachadair_imath_sys::mp_round_mode_MP_ROUND_DOWN</span>,
-            <span class="ident">Up</span> =&gt; <span class="ident">creachadair_imath_sys::mp_round_mode_MP_ROUND_UP</span>,
-            <span class="ident">HalfDown</span> =&gt; <span class="ident">creachadair_imath_sys::mp_round_mode_MP_ROUND_HALF_DOWN</span>,
-            <span class="ident">HalfUp</span> =&gt; <span class="ident">creachadair_imath_sys::mp_round_mode_MP_ROUND_HALF_UP</span>,
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">RoundMode</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">creachadair_imath_sys::mp_round_mode</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">src</span>: <span class="ident">RoundMode</span>) -&gt; <span class="ident">creachadair_imath_sys::mp_round_mode</span> {
+        <span class="kw">match</span> <span class="ident">src</span> {
+            <span class="ident">RoundMode::Down</span> =&gt; <span class="ident">creachadair_imath_sys::mp_round_mode_MP_ROUND_DOWN</span>,
+            <span class="ident">RoundMode::Up</span> =&gt; <span class="ident">creachadair_imath_sys::mp_round_mode_MP_ROUND_UP</span>,
+            <span class="ident">RoundMode::HalfDown</span> =&gt; <span class="ident">creachadair_imath_sys::mp_round_mode_MP_ROUND_HALF_DOWN</span>,
+            <span class="ident">RoundMode::HalfUp</span> =&gt; <span class="ident">creachadair_imath_sys::mp_round_mode_MP_ROUND_HALF_UP</span>,
         }
     }
 }

@@ -604,7 +604,11 @@
 <span id="604">604</span>
 <span id="605">605</span>
 <span id="606">606</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">error::Error</span>, <span class="ident">integer::Integer</span>, <span class="ident">rational::Rational</span>};
+<span id="607">607</span>
+<span id="608">608</span>
+</pre><pre class="rust"><code><span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy::useless_conversion</span>)]</span>
+
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">error::Error</span>, <span class="ident">integer::Integer</span>, <span class="ident">rational::Rational</span>};
 <span class="kw">use</span> <span class="ident">core::convert</span>::{<span class="ident">TryFrom</span>, <span class="ident">TryInto</span>};
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Rational</span> {
