@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/integer/ops.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>ops.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../reckoner/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../reckoner/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../reckoner/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/integer/ops.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>ops.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../reckoner/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../reckoner/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../reckoner/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -663,670 +663,670 @@
 <span id="663">663</span>
 <span id="664">664</span>
 <span id="665">665</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">error::Error</span>, <span class="ident">integer::Integer</span>};
-<span class="kw">use</span> <span class="ident">core</span>::{
-    <span class="ident">convert::TryInto</span>,
-    <span class="ident">iter</span>::{<span class="ident">Product</span>, <span class="ident">Sum</span>},
-    <span class="ident">ptr</span>,
+</pre><pre class="rust"><code><span class="kw">use crate</span>::{error::Error, integer::Integer};
+<span class="kw">use </span>core::{
+    convert::TryInto,
+    iter::{Product, Sum},
+    ptr,
 };
-<span class="kw">use</span> <span class="ident">std::os::raw::c_long</span>;
+<span class="kw">use </span>std::os::raw::c_long;
 
-<span class="kw">mod</span> <span class="ident">addition</span>;
-<span class="kw">mod</span> <span class="ident">addition_assign</span>;
-<span class="kw">mod</span> <span class="ident">division</span>;
-<span class="kw">mod</span> <span class="ident">division_assign</span>;
-<span class="kw">mod</span> <span class="ident">multiplication</span>;
-<span class="kw">mod</span> <span class="ident">multiplication_assign</span>;
-<span class="kw">mod</span> <span class="ident">negation</span>;
-<span class="kw">mod</span> <span class="ident">remainder</span>;
-<span class="kw">mod</span> <span class="ident">remainder_assign</span>;
-<span class="kw">mod</span> <span class="ident">subtraction</span>;
-<span class="kw">mod</span> <span class="ident">subtraction_assign</span>;
+<span class="kw">mod </span>addition;
+<span class="kw">mod </span>addition_assign;
+<span class="kw">mod </span>division;
+<span class="kw">mod </span>division_assign;
+<span class="kw">mod </span>multiplication;
+<span class="kw">mod </span>multiplication_assign;
+<span class="kw">mod </span>negation;
+<span class="kw">mod </span>remainder;
+<span class="kw">mod </span>remainder_assign;
+<span class="kw">mod </span>subtraction;
+<span class="kw">mod </span>subtraction_assign;
 
-<span class="kw">impl</span> <span class="ident">Integer</span> {
-    <span class="doccomment">/// Add two integers and return the result</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
-        <span class="kw">let</span> <span class="ident">other_raw</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">as_raw</span>();
+<span class="kw">impl </span>Integer {
+    <span class="doccomment">/// Add two integers and return the result
+    </span><span class="kw">pub fn </span>add(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
+        <span class="kw">let </span>other_raw = other.as_raw();
 
-        <span class="kw">let</span> <span class="ident">result_int</span> <span class="op">=</span> <span class="ident">Integer::new</span>();
-        <span class="kw">let</span> <span class="ident">result_raw</span> <span class="op">=</span> <span class="ident">result_int</span>.<span class="ident">as_raw</span>();
+        <span class="kw">let </span>result_int = Integer::new();
+        <span class="kw">let </span>result_raw = result_int.as_raw();
 
-        <span class="comment">// This operation is safe bc `self`, `other`, and `result` have all been</span>
-        <span class="comment">// initialized. `result` does not necessarily need to be initialized.</span>
-        <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_add</span>(<span class="ident">self_raw</span>, <span class="ident">other_raw</span>, <span class="ident">result_raw</span>) };
+        <span class="comment">// This operation is safe bc `self`, `other`, and `result` have all been
+        // initialized. `result` does not necessarily need to be initialized.
+        </span><span class="kw">let </span>op_res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_add(self_raw, other_raw, result_raw) };
 
-        <span class="macro">imath_check_panic!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
 
-        <span class="ident">result_int</span>
+        result_int
     }
 
-    <span class="doccomment">/// Add two integers and assign the result to self</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
-        <span class="kw">let</span> <span class="ident">other_raw</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">as_raw</span>();
+    <span class="doccomment">/// Add two integers and assign the result to self
+    </span><span class="kw">pub fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) {
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
+        <span class="kw">let </span>other_raw = other.as_raw();
 
-        <span class="comment">// This operation is safe because `self` and `other` have been initialized and</span>
-        <span class="comment">// the result pointer is allowed to alias with either of the arguments.</span>
-        <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_add</span>(<span class="ident">self_raw</span>, <span class="ident">other_raw</span>, <span class="ident">self_raw</span>) };
+        <span class="comment">// This operation is safe because `self` and `other` have been initialized and
+        // the result pointer is allowed to alias with either of the arguments.
+        </span><span class="kw">let </span>op_res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_add(self_raw, other_raw, self_raw) };
 
-        <span class="macro">imath_check_panic!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">add_c_long</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
-        <span class="kw">let</span> <span class="ident">result_int</span> <span class="op">=</span> <span class="ident">Integer::new</span>();
-        <span class="kw">let</span> <span class="ident">result_raw</span> <span class="op">=</span> <span class="ident">result_int</span>.<span class="ident">as_raw</span>();
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>add_c_long(<span class="kw-2">&amp;</span><span class="self">self</span>, value: <span class="kw">impl </span>Into&lt;c_long&gt;) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
+        <span class="kw">let </span>result_int = Integer::new();
+        <span class="kw">let </span>result_raw = result_int.as_raw();
 
-        <span class="comment">// This operation is safe because `self` and `result` have been initialized.</span>
-        <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span>
-            <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_add_value</span>(<span class="ident">self_raw</span>, <span class="ident">value</span>.<span class="ident">into</span>(), <span class="ident">result_raw</span>) };
+        <span class="comment">// This operation is safe because `self` and `result` have been initialized.
+        </span><span class="kw">let </span>op_res =
+            <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_add_value(self_raw, value.into(), result_raw) };
 
-        <span class="macro">imath_check_panic!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
 
-        <span class="ident">result_int</span>
+        result_int
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">add_c_long_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>) {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>add_c_long_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, other: <span class="kw">impl </span>Into&lt;c_long&gt;) {
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
 
-        <span class="comment">// This operation is safe because `self` has been initialized and the result</span>
-        <span class="comment">// pointer is allowed to alias with the integer argument.</span>
-        <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span>
-            <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_add_value</span>(<span class="ident">self_raw</span>, <span class="ident">other</span>.<span class="ident">into</span>(), <span class="ident">self_raw</span>) };
+        <span class="comment">// This operation is safe because `self` has been initialized and the result
+        // pointer is allowed to alias with the integer argument.
+        </span><span class="kw">let </span>op_res =
+            <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_add_value(self_raw, other.into(), self_raw) };
 
-        <span class="macro">imath_check_panic!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
     }
 
-    <span class="doccomment">/// Subtract two integers and return the result</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">subtract</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
-        <span class="kw">let</span> <span class="ident">other_raw</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">as_raw</span>();
+    <span class="doccomment">/// Subtract two integers and return the result
+    </span><span class="kw">pub fn </span>subtract(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
+        <span class="kw">let </span>other_raw = other.as_raw();
 
-        <span class="kw">let</span> <span class="ident">result_int</span> <span class="op">=</span> <span class="ident">Integer::new</span>();
-        <span class="kw">let</span> <span class="ident">result_raw</span> <span class="op">=</span> <span class="ident">result_int</span>.<span class="ident">as_raw</span>();
+        <span class="kw">let </span>result_int = Integer::new();
+        <span class="kw">let </span>result_raw = result_int.as_raw();
 
-        <span class="comment">// This operation is safe bc `self`, `other`, and `result` have all been</span>
-        <span class="comment">// initialized. `result` does not necessarily need to be initialized.</span>
-        <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_sub</span>(<span class="ident">self_raw</span>, <span class="ident">other_raw</span>, <span class="ident">result_raw</span>) };
+        <span class="comment">// This operation is safe bc `self`, `other`, and `result` have all been
+        // initialized. `result` does not necessarily need to be initialized.
+        </span><span class="kw">let </span>op_res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_sub(self_raw, other_raw, result_raw) };
 
-        <span class="macro">imath_check_panic!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
 
-        <span class="ident">result_int</span>
+        result_int
     }
 
-    <span class="doccomment">/// Subtract two integers and assign the result to self</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">subtract_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
-        <span class="kw">let</span> <span class="ident">other_raw</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">as_raw</span>();
+    <span class="doccomment">/// Subtract two integers and assign the result to self
+    </span><span class="kw">pub fn </span>subtract_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) {
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
+        <span class="kw">let </span>other_raw = other.as_raw();
 
-        <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_sub</span>(<span class="ident">self_raw</span>, <span class="ident">other_raw</span>, <span class="ident">self_raw</span>) };
+        <span class="kw">let </span>op_res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_sub(self_raw, other_raw, self_raw) };
 
-        <span class="macro">imath_check_panic!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">subtract_c_long</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
-        <span class="kw">let</span> <span class="ident">result_int</span> <span class="op">=</span> <span class="ident">Integer::new</span>();
-        <span class="kw">let</span> <span class="ident">result_raw</span> <span class="op">=</span> <span class="ident">result_int</span>.<span class="ident">as_raw</span>();
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>subtract_c_long(<span class="kw-2">&amp;</span><span class="self">self</span>, value: <span class="kw">impl </span>Into&lt;c_long&gt;) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
+        <span class="kw">let </span>result_int = Integer::new();
+        <span class="kw">let </span>result_raw = result_int.as_raw();
 
-        <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span>
-            <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_sub_value</span>(<span class="ident">self_raw</span>, <span class="ident">value</span>.<span class="ident">into</span>(), <span class="ident">result_raw</span>) };
+        <span class="kw">let </span>op_res =
+            <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_sub_value(self_raw, value.into(), result_raw) };
 
-        <span class="macro">imath_check_panic!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
 
-        <span class="ident">result_int</span>
+        result_int
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">subtract_c_long_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>) {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>subtract_c_long_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, other: <span class="kw">impl </span>Into&lt;c_long&gt;) {
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
 
-        <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span>
-            <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_sub_value</span>(<span class="ident">self_raw</span>, <span class="ident">other</span>.<span class="ident">into</span>(), <span class="ident">self_raw</span>) };
+        <span class="kw">let </span>op_res =
+            <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_sub_value(self_raw, other.into(), self_raw) };
 
-        <span class="macro">imath_check_panic!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
     }
 
-    <span class="doccomment">/// Multiply two integers and return the result</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">multiply</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
-        <span class="kw">let</span> <span class="ident">other_raw</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">as_raw</span>();
+    <span class="doccomment">/// Multiply two integers and return the result
+    </span><span class="kw">pub fn </span>multiply(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
+        <span class="kw">let </span>other_raw = other.as_raw();
 
-        <span class="kw">let</span> <span class="ident">result_int</span> <span class="op">=</span> <span class="ident">Integer::new</span>();
-        <span class="kw">let</span> <span class="ident">result_raw</span> <span class="op">=</span> <span class="ident">result_int</span>.<span class="ident">as_raw</span>();
+        <span class="kw">let </span>result_int = Integer::new();
+        <span class="kw">let </span>result_raw = result_int.as_raw();
 
-        <span class="comment">// This operation is safe bc `self`, `other`, and `result` have all been</span>
-        <span class="comment">// initialized. `result` does not necessarily need to be initialized.</span>
-        <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_mul</span>(<span class="ident">self_raw</span>, <span class="ident">other_raw</span>, <span class="ident">result_raw</span>) };
+        <span class="comment">// This operation is safe bc `self`, `other`, and `result` have all been
+        // initialized. `result` does not necessarily need to be initialized.
+        </span><span class="kw">let </span>op_res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_mul(self_raw, other_raw, result_raw) };
 
-        <span class="macro">imath_check_panic!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
 
-        <span class="ident">result_int</span>
+        result_int
     }
 
-    <span class="doccomment">/// Multiply two integers and assign the result to self</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">multiply_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
-        <span class="kw">let</span> <span class="ident">other_raw</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">as_raw</span>();
+    <span class="doccomment">/// Multiply two integers and assign the result to self
+    </span><span class="kw">pub fn </span>multiply_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) {
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
+        <span class="kw">let </span>other_raw = other.as_raw();
 
-        <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_mul</span>(<span class="ident">self_raw</span>, <span class="ident">other_raw</span>, <span class="ident">self_raw</span>) };
+        <span class="kw">let </span>op_res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_mul(self_raw, other_raw, self_raw) };
 
-        <span class="macro">imath_check_panic!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">multiply_c_long</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
-        <span class="kw">let</span> <span class="ident">result_int</span> <span class="op">=</span> <span class="ident">Integer::new</span>();
-        <span class="kw">let</span> <span class="ident">result_raw</span> <span class="op">=</span> <span class="ident">result_int</span>.<span class="ident">as_raw</span>();
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>multiply_c_long(<span class="kw-2">&amp;</span><span class="self">self</span>, value: <span class="kw">impl </span>Into&lt;c_long&gt;) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
+        <span class="kw">let </span>result_int = Integer::new();
+        <span class="kw">let </span>result_raw = result_int.as_raw();
 
-        <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span>
-            <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_mul_value</span>(<span class="ident">self_raw</span>, <span class="ident">value</span>.<span class="ident">into</span>(), <span class="ident">result_raw</span>) };
+        <span class="kw">let </span>op_res =
+            <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_mul_value(self_raw, value.into(), result_raw) };
 
-        <span class="macro">imath_check_panic!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
 
-        <span class="ident">result_int</span>
+        result_int
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">multiply_c_long_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>) {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>multiply_c_long_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, other: <span class="kw">impl </span>Into&lt;c_long&gt;) {
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
 
-        <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span>
-            <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_mul_value</span>(<span class="ident">self_raw</span>, <span class="ident">other</span>.<span class="ident">into</span>(), <span class="ident">self_raw</span>) };
+        <span class="kw">let </span>op_res =
+            <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_mul_value(self_raw, other.into(), self_raw) };
 
-        <span class="macro">imath_check_panic!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
     }
 
-    <span class="doccomment">/// Return the additive inverse</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">negate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
-        <span class="kw">let</span> <span class="ident">result_int</span> <span class="op">=</span> <span class="ident">Integer::new</span>();
-        <span class="kw">let</span> <span class="ident">result_raw</span> <span class="op">=</span> <span class="ident">result_int</span>.<span class="ident">as_raw</span>();
+    <span class="doccomment">/// Return the additive inverse
+    </span><span class="kw">pub fn </span>negate(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
+        <span class="kw">let </span>result_int = Integer::new();
+        <span class="kw">let </span>result_raw = result_int.as_raw();
 
-        <span class="comment">// This operation is safe bc `self`and `result` have all been initialized.</span>
-        <span class="comment">// `result` does not necessarily need to be initialized.</span>
-        <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_neg</span>(<span class="ident">self_raw</span>, <span class="ident">result_raw</span>) };
+        <span class="comment">// This operation is safe bc `self`and `result` have all been initialized.
+        // `result` does not necessarily need to be initialized.
+        </span><span class="kw">let </span>op_res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_neg(self_raw, result_raw) };
 
-        <span class="macro">imath_check_panic!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
 
-        <span class="ident">result_int</span>
+        result_int
     }
 
-    <span class="doccomment">/// Assign the additive inverse to self</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">negate_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+    <span class="doccomment">/// Assign the additive inverse to self
+    </span><span class="kw">pub fn </span>negate_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
 
-        <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_neg</span>(<span class="ident">self_raw</span>, <span class="ident">self_raw</span>) };
+        <span class="kw">let </span>op_res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_neg(self_raw, self_raw) };
 
-        <span class="macro">imath_check_panic!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
     }
 
-    <span class="doccomment">/// Return the absolute value</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">absolute_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
-        <span class="kw">let</span> <span class="ident">result_int</span> <span class="op">=</span> <span class="ident">Integer::new</span>();
-        <span class="kw">let</span> <span class="ident">result_raw</span> <span class="op">=</span> <span class="ident">result_int</span>.<span class="ident">as_raw</span>();
+    <span class="doccomment">/// Return the absolute value
+    </span><span class="kw">pub fn </span>absolute_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
+        <span class="kw">let </span>result_int = Integer::new();
+        <span class="kw">let </span>result_raw = result_int.as_raw();
 
-        <span class="comment">// This operation is safe bc `self`and `result` have all been initialized.</span>
-        <span class="comment">// `result` does not necessarily need to be initialized.</span>
-        <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_abs</span>(<span class="ident">self_raw</span>, <span class="ident">result_raw</span>) };
+        <span class="comment">// This operation is safe bc `self`and `result` have all been initialized.
+        // `result` does not necessarily need to be initialized.
+        </span><span class="kw">let </span>op_res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_abs(self_raw, result_raw) };
 
-        <span class="macro">imath_check_panic!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
 
-        <span class="ident">result_int</span>
+        result_int
     }
 
-    <span class="doccomment">/// Assign the absolute value to self</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">absolute_value_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+    <span class="doccomment">/// Assign the absolute value to self
+    </span><span class="kw">pub fn </span>absolute_value_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
 
-        <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_abs</span>(<span class="ident">self_raw</span>, <span class="ident">self_raw</span>) };
+        <span class="kw">let </span>op_res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_abs(self_raw, self_raw) };
 
-        <span class="macro">imath_check_panic!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
     }
 
-    <span class="doccomment">/// Perform integer division operation.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Safety</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// `dividend` and `divisor` are allowed to alias for this operation, so</span>
-    <span class="doccomment">/// they may point to the same `Integer`. Either `out_quotient` or</span>
-    <span class="doccomment">/// `out_remainder` may be `null`, but not both. These also may alias with</span>
-    <span class="doccomment">/// either of the input arguments, `dividend` or `divisor`.</span>
-    <span class="kw">fn</span> <span class="ident">mp_int_div</span>(
-        <span class="ident">dividend</span>: <span class="kw-2">&amp;</span><span class="ident">Integer</span>,
-        <span class="ident">divisor</span>: <span class="kw-2">&amp;</span><span class="ident">Integer</span>,
-        <span class="ident">out_quotient</span>: <span class="ident">creachadair_imath_sys::mp_int</span>,
-        <span class="ident">out_remainder</span>: <span class="ident">creachadair_imath_sys::mp_int</span>,
+    <span class="doccomment">/// Perform integer division operation.
+    ///
+    /// # Safety
+    ///
+    /// `dividend` and `divisor` are allowed to alias for this operation, so
+    /// they may point to the same `Integer`. Either `out_quotient` or
+    /// `out_remainder` may be `null`, but not both. These also may alias with
+    /// either of the input arguments, `dividend` or `divisor`.
+    </span><span class="kw">fn </span>mp_int_div(
+        dividend: <span class="kw-2">&amp;</span>Integer,
+        divisor: <span class="kw-2">&amp;</span>Integer,
+        out_quotient: creachadair_imath_sys::mp_int,
+        out_remainder: creachadair_imath_sys::mp_int,
     ) {
-        <span class="macro">assert!</span>(<span class="op">!</span>(<span class="ident">out_quotient</span>.<span class="ident">is_null</span>() <span class="op">&amp;&amp;</span> <span class="ident">out_remainder</span>.<span class="ident">is_null</span>()));
+        <span class="macro">assert!</span>(!(out_quotient.is_null() &amp;&amp; out_remainder.is_null()));
 
-        <span class="kw">let</span> <span class="ident">dividend_raw</span> <span class="op">=</span> <span class="ident">dividend</span>.<span class="ident">as_raw</span>();
-        <span class="kw">let</span> <span class="ident">divisor_raw</span> <span class="op">=</span> <span class="ident">divisor</span>.<span class="ident">as_raw</span>();
+        <span class="kw">let </span>dividend_raw = dividend.as_raw();
+        <span class="kw">let </span>divisor_raw = divisor.as_raw();
 
-        <span class="comment">// This operation is safe bc `dividend`, `divisor` have all been initialized.</span>
-        <span class="comment">// Also, runtime checks of `out_quotient` and `out_remainder` ensure that a</span>
-        <span class="comment">// result can be written somewhere.</span>
-        <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> {
-            <span class="ident">creachadair_imath_sys::mp_int_div</span>(
-                <span class="ident">dividend_raw</span>,
-                <span class="ident">divisor_raw</span>,
-                <span class="ident">out_quotient</span>,
-                <span class="ident">out_remainder</span>,
+        <span class="comment">// This operation is safe bc `dividend`, `divisor` have all been initialized.
+        // Also, runtime checks of `out_quotient` and `out_remainder` ensure that a
+        // result can be written somewhere.
+        </span><span class="kw">let </span>op_res = <span class="kw">unsafe </span>{
+            creachadair_imath_sys::mp_int_div(
+                dividend_raw,
+                divisor_raw,
+                out_quotient,
+                out_remainder,
             )
         };
 
-        <span class="macro">imath_check_panic!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
     }
 
-    <span class="doccomment">/// Divide two integers and return quotient and remainder</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">divide_full</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; (<span class="self">Self</span>, <span class="self">Self</span>) {
-        <span class="kw">let</span> <span class="ident">quotient</span> <span class="op">=</span> <span class="ident">Integer::new</span>();
-        <span class="kw">let</span> <span class="ident">quotient_raw</span> <span class="op">=</span> <span class="ident">quotient</span>.<span class="ident">as_raw</span>();
-        <span class="kw">let</span> <span class="ident">remainder</span> <span class="op">=</span> <span class="ident">Integer::new</span>();
-        <span class="kw">let</span> <span class="ident">remainder_raw</span> <span class="op">=</span> <span class="ident">remainder</span>.<span class="ident">as_raw</span>();
+    <span class="doccomment">/// Divide two integers and return quotient and remainder
+    </span><span class="kw">pub fn </span>divide_full(<span class="kw-2">&amp;</span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; (<span class="self">Self</span>, <span class="self">Self</span>) {
+        <span class="kw">let </span>quotient = Integer::new();
+        <span class="kw">let </span>quotient_raw = quotient.as_raw();
+        <span class="kw">let </span>remainder = Integer::new();
+        <span class="kw">let </span>remainder_raw = remainder.as_raw();
 
-        <span class="ident">Integer::mp_int_div</span>(<span class="self">self</span>, <span class="ident">rhs</span>, <span class="ident">quotient_raw</span>, <span class="ident">remainder_raw</span>);
+        Integer::mp_int_div(<span class="self">self</span>, rhs, quotient_raw, remainder_raw);
 
-        (<span class="ident">quotient</span>, <span class="ident">remainder</span>)
+        (quotient, remainder)
     }
 
-    <span class="doccomment">/// Divide two integers and return only quotient</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">divide</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">quotient</span> <span class="op">=</span> <span class="ident">Integer::new</span>();
-        <span class="kw">let</span> <span class="ident">quotient_raw</span> <span class="op">=</span> <span class="ident">quotient</span>.<span class="ident">as_raw</span>();
+    <span class="doccomment">/// Divide two integers and return only quotient
+    </span><span class="kw">pub fn </span>divide(<span class="kw-2">&amp;</span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>quotient = Integer::new();
+        <span class="kw">let </span>quotient_raw = quotient.as_raw();
 
-        <span class="ident">Integer::mp_int_div</span>(<span class="self">self</span>, <span class="ident">rhs</span>, <span class="ident">quotient_raw</span>, <span class="ident">ptr::null_mut</span>());
+        Integer::mp_int_div(<span class="self">self</span>, rhs, quotient_raw, ptr::null_mut());
 
-        <span class="ident">quotient</span>
+        quotient
     }
 
-    <span class="doccomment">/// Divide two integers and assign the result to self</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">divide_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) {
-        <span class="kw">let</span> <span class="ident">quotient_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+    <span class="doccomment">/// Divide two integers and assign the result to self
+    </span><span class="kw">pub fn </span>divide_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span><span class="self">Self</span>) {
+        <span class="kw">let </span>quotient_raw = <span class="self">self</span>.as_raw();
 
-        <span class="ident">Integer::mp_int_div</span>(<span class="self">self</span>, <span class="ident">rhs</span>, <span class="ident">quotient_raw</span>, <span class="ident">ptr::null_mut</span>());
+        Integer::mp_int_div(<span class="self">self</span>, rhs, quotient_raw, ptr::null_mut());
     }
 
-    <span class="doccomment">/// Divide two integers and return only remainder</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remainder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">remainder</span> <span class="op">=</span> <span class="ident">Integer::new</span>();
-        <span class="kw">let</span> <span class="ident">remainder_raw</span> <span class="op">=</span> <span class="ident">remainder</span>.<span class="ident">as_raw</span>();
+    <span class="doccomment">/// Divide two integers and return only remainder
+    </span><span class="kw">pub fn </span>remainder(<span class="kw-2">&amp;</span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>remainder = Integer::new();
+        <span class="kw">let </span>remainder_raw = remainder.as_raw();
 
-        <span class="ident">Integer::mp_int_div</span>(<span class="self">self</span>, <span class="ident">rhs</span>, <span class="ident">ptr::null_mut</span>(), <span class="ident">remainder_raw</span>);
+        Integer::mp_int_div(<span class="self">self</span>, rhs, ptr::null_mut(), remainder_raw);
 
-        <span class="ident">remainder</span>
+        remainder
     }
 
-    <span class="doccomment">/// Divide two integers and assign the remainder to self</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remainder_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) {
-        <span class="kw">let</span> <span class="ident">remainder_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+    <span class="doccomment">/// Divide two integers and assign the remainder to self
+    </span><span class="kw">pub fn </span>remainder_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span><span class="self">Self</span>) {
+        <span class="kw">let </span>remainder_raw = <span class="self">self</span>.as_raw();
 
-        <span class="ident">Integer::mp_int_div</span>(<span class="self">self</span>, <span class="ident">rhs</span>, <span class="ident">ptr::null_mut</span>(), <span class="ident">remainder_raw</span>);
+        Integer::mp_int_div(<span class="self">self</span>, rhs, ptr::null_mut(), remainder_raw);
     }
 
-    <span class="doccomment">/// Perform the integer division with primitive value operation.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Safety</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Either `out_quotient` or `out_remainder` may be `null`, but not both.</span>
-    <span class="doccomment">/// These also may alias with the `Integer` input argument, `dividend`.</span>
-    <span class="kw">fn</span> <span class="ident">mp_int_div_value</span>(
-        <span class="ident">dividend</span>: <span class="kw-2">&amp;</span><span class="ident">Integer</span>,
-        <span class="ident">divisor</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>,
-        <span class="ident">out_quotient</span>: <span class="ident">creachadair_imath_sys::mp_int</span>,
-        <span class="ident">out_remainder</span>: <span class="kw-2">*mut</span> <span class="ident">c_long</span>,
+    <span class="doccomment">/// Perform the integer division with primitive value operation.
+    ///
+    /// # Safety
+    ///
+    /// Either `out_quotient` or `out_remainder` may be `null`, but not both.
+    /// These also may alias with the `Integer` input argument, `dividend`.
+    </span><span class="kw">fn </span>mp_int_div_value(
+        dividend: <span class="kw-2">&amp;</span>Integer,
+        divisor: <span class="kw">impl </span>Into&lt;c_long&gt;,
+        out_quotient: creachadair_imath_sys::mp_int,
+        out_remainder: <span class="kw-2">*mut </span>c_long,
     ) {
-        <span class="kw">let</span> <span class="ident">divident_raw</span> <span class="op">=</span> <span class="ident">dividend</span>.<span class="ident">as_raw</span>();
+        <span class="kw">let </span>divident_raw = dividend.as_raw();
 
-        <span class="comment">// This operation is safe bc `dividend` has been initialized. Also, runtime</span>
-        <span class="comment">// checks of `out_quotient` and `out_remainder` ensure that a result can</span>
-        <span class="comment">// be written somewhere.</span>
-        <span class="kw">let</span> <span class="ident">op_res</span> <span class="op">=</span> <span class="kw">unsafe</span> {
-            <span class="ident">creachadair_imath_sys::mp_int_div_value</span>(
-                <span class="ident">divident_raw</span>,
-                <span class="ident">divisor</span>.<span class="ident">into</span>(),
-                <span class="ident">out_quotient</span>,
-                <span class="ident">out_remainder</span>,
+        <span class="comment">// This operation is safe bc `dividend` has been initialized. Also, runtime
+        // checks of `out_quotient` and `out_remainder` ensure that a result can
+        // be written somewhere.
+        </span><span class="kw">let </span>op_res = <span class="kw">unsafe </span>{
+            creachadair_imath_sys::mp_int_div_value(
+                divident_raw,
+                divisor.into(),
+                out_quotient,
+                out_remainder,
             )
         };
 
-        <span class="macro">imath_check_panic!</span>(<span class="ident">op_res</span>, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
     }
 
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">divide_full_c_long</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="ident">V</span>) -&gt; (<span class="ident">Integer</span>, <span class="ident">V</span>)
-    <span class="kw">where</span>
-        <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>,
-        <span class="ident">c_long</span>: <span class="ident">TryInto</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>,
+    <span class="attribute">#[allow(dead_code)]
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>divide_full_c_long&lt;V&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, value: V) -&gt; (Integer, V)
+    <span class="kw">where
+        </span>V: Into&lt;c_long&gt;,
+        c_long: TryInto&lt;V&gt;,
     {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">remainder</span>: <span class="ident">c_long</span> <span class="op">=</span> <span class="number">0</span>;
-        <span class="kw">let</span> <span class="ident">quotient</span> <span class="op">=</span> <span class="ident">Integer::new</span>();
-        <span class="kw">let</span> <span class="ident">quotient_raw</span> <span class="op">=</span> <span class="ident">quotient</span>.<span class="ident">as_raw</span>();
+        <span class="kw">let </span><span class="kw-2">mut </span>remainder: c_long = <span class="number">0</span>;
+        <span class="kw">let </span>quotient = Integer::new();
+        <span class="kw">let </span>quotient_raw = quotient.as_raw();
 
-        <span class="ident">Integer::mp_int_div_value</span>(<span class="self">self</span>, <span class="ident">value</span>.<span class="ident">into</span>(), <span class="ident">quotient_raw</span>, <span class="kw-2">&amp;mut</span> <span class="ident">remainder</span>);
+        Integer::mp_int_div_value(<span class="self">self</span>, value.into(), quotient_raw, <span class="kw-2">&amp;mut </span>remainder);
 
-        <span class="comment">// This should not panic bc the modulo operation will always return within the</span>
-        <span class="comment">// range [0, value].</span>
-        (
-            <span class="ident">quotient</span>,
-            <span class="ident">remainder</span>
-                .<span class="ident">try_into</span>()
-                .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Error::RemainderOutsideBounds</span>)
-                .<span class="ident">unwrap</span>(),
+        <span class="comment">// This should not panic bc the modulo operation will always return within the
+        // range [0, value].
+        </span>(
+            quotient,
+            remainder
+                .try_into()
+                .map_err(|<span class="kw">_</span>| Error::RemainderOutsideBounds)
+                .unwrap(),
         )
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">divide_c_long</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">quotient</span> <span class="op">=</span> <span class="ident">Integer::new</span>();
-        <span class="kw">let</span> <span class="ident">quotient_raw</span> <span class="op">=</span> <span class="ident">quotient</span>.<span class="ident">as_raw</span>();
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>divide_c_long(<span class="kw-2">&amp;</span><span class="self">self</span>, value: <span class="kw">impl </span>Into&lt;c_long&gt;) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>quotient = Integer::new();
+        <span class="kw">let </span>quotient_raw = quotient.as_raw();
 
-        <span class="ident">Integer::mp_int_div_value</span>(<span class="self">self</span>, <span class="ident">value</span>, <span class="ident">quotient_raw</span>, <span class="ident">ptr::null_mut</span>());
+        Integer::mp_int_div_value(<span class="self">self</span>, value, quotient_raw, ptr::null_mut());
 
-        <span class="ident">quotient</span>
+        quotient
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">divide_c_long_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>) {
-        <span class="kw">let</span> <span class="ident">quotient_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>divide_c_long_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw">impl </span>Into&lt;c_long&gt;) {
+        <span class="kw">let </span>quotient_raw = <span class="self">self</span>.as_raw();
 
-        <span class="ident">Integer::mp_int_div_value</span>(<span class="self">self</span>, <span class="ident">value</span>, <span class="ident">quotient_raw</span>, <span class="ident">ptr::null_mut</span>());
+        Integer::mp_int_div_value(<span class="self">self</span>, value, quotient_raw, ptr::null_mut());
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">remainder_c_long</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="ident">V</span>) -&gt; <span class="ident">V</span>
-    <span class="kw">where</span>
-        <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>,
-        <span class="ident">c_long</span>: <span class="ident">TryInto</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>remainder_c_long&lt;V&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, value: V) -&gt; V
+    <span class="kw">where
+        </span>V: Into&lt;c_long&gt;,
+        c_long: TryInto&lt;V&gt;,
     {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">result</span>: <span class="ident">c_long</span> <span class="op">=</span> <span class="number">0</span>;
-        <span class="kw">let</span> <span class="ident">result_raw</span> <span class="op">=</span> (<span class="kw-2">&amp;mut</span> <span class="ident">result</span>) <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>result: c_long = <span class="number">0</span>;
+        <span class="kw">let </span>result_raw = (<span class="kw-2">&amp;mut </span>result) <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>;
 
-        <span class="ident">Integer::mp_int_div_value</span>(<span class="self">self</span>, <span class="ident">value</span>, <span class="ident">ptr::null_mut</span>(), <span class="ident">result_raw</span>);
+        Integer::mp_int_div_value(<span class="self">self</span>, value, ptr::null_mut(), result_raw);
 
-        <span class="comment">// This will not panic bc the modulo operation will always return within the</span>
-        <span class="comment">// range [0, value).</span>
-        <span class="ident">result</span>
-            .<span class="ident">try_into</span>()
-            .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Error::RemainderOutsideBounds</span>)
-            .<span class="ident">unwrap</span>()
+        <span class="comment">// This will not panic bc the modulo operation will always return within the
+        // range [0, value).
+        </span>result
+            .try_into()
+            .map_err(|<span class="kw">_</span>| Error::RemainderOutsideBounds)
+            .unwrap()
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">remainder_c_long_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>) {
-        <span class="kw">let</span> <span class="ident">remainder_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>remainder_c_long_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw">impl </span>Into&lt;c_long&gt;) {
+        <span class="kw">let </span>remainder_raw = <span class="self">self</span>.as_raw();
 
-        <span class="ident">Integer::mp_int_div</span>(
+        Integer::mp_int_div(
             <span class="self">self</span>,
-            <span class="kw-2">&amp;</span><span class="ident">Integer::from</span>(<span class="ident">value</span>.<span class="ident">into</span>()),
-            <span class="ident">ptr::null_mut</span>(),
-            <span class="ident">remainder_raw</span>,
+            <span class="kw-2">&amp;</span>Integer::from(value.into()),
+            ptr::null_mut(),
+            remainder_raw,
         );
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Sum</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">sum</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">Integer</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">Integer::from</span>(<span class="number">0</span>);
+<span class="kw">impl </span>Sum <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>sum&lt;I: Iterator&lt;Item = Integer&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span><span class="kw-2">mut </span>s = Integer::from(<span class="number">0</span>);
 
-        <span class="kw">for</span> <span class="ident">v</span> <span class="kw">in</span> <span class="ident">iter</span> {
-            <span class="ident">s</span> <span class="op">+</span><span class="op">=</span> <span class="ident">v</span>;
+        <span class="kw">for </span>v <span class="kw">in </span>iter {
+            s += v;
         }
 
-        <span class="ident">s</span>
+        s
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Product</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">product</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">Integer</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">Integer::from</span>(<span class="number">1</span>);
+<span class="kw">impl </span>Product <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>product&lt;I: Iterator&lt;Item = Integer&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span><span class="kw-2">mut </span>s = Integer::from(<span class="number">1</span>);
 
-        <span class="kw">for</span> <span class="ident">v</span> <span class="kw">in</span> <span class="ident">iter</span> {
-            <span class="ident">s</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">v</span>;
+        <span class="kw">for </span>v <span class="kw">in </span>iter {
+            s <span class="kw-2">*</span>= v;
         }
 
-        <span class="ident">s</span>
+        s
     }
 }
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod</span> <span class="ident">helpers</span> {
-    <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">error::Error</span>, <span class="ident">integer::Integer</span>};
-    <span class="kw">use</span> <span class="ident">core::convert::TryInto</span>;
-    <span class="kw">use</span> <span class="ident">std::os::raw::c_long</span>;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod </span>helpers {
+    <span class="kw">use crate</span>::{error::Error, integer::Integer};
+    <span class="kw">use </span>core::convert::TryInto;
+    <span class="kw">use </span>std::os::raw::c_long;
 
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reverse_add_c_long</span>(<span class="ident">other</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>, <span class="ident">integer</span>: <span class="kw-2">&amp;</span><span class="ident">Integer</span>) -&gt; <span class="ident">Integer</span> {
-        <span class="ident">Integer::add_c_long</span>(<span class="ident">integer</span>, <span class="ident">other</span>)
+    <span class="attribute">#[inline]
+    </span><span class="kw">pub fn </span>reverse_add_c_long(other: <span class="kw">impl </span>Into&lt;c_long&gt;, integer: <span class="kw-2">&amp;</span>Integer) -&gt; Integer {
+        Integer::add_c_long(integer, other)
     }
 
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reverse_add_assign</span>(<span class="ident">integer</span>: <span class="kw-2">&amp;</span><span class="ident">Integer</span>, <span class="ident">other</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Integer</span>) {
-        <span class="ident">Integer::add_assign</span>(<span class="ident">other</span>, <span class="ident">integer</span>);
+    <span class="attribute">#[inline]
+    </span><span class="kw">pub fn </span>reverse_add_assign(integer: <span class="kw-2">&amp;</span>Integer, other: <span class="kw-2">&amp;mut </span>Integer) {
+        Integer::add_assign(other, integer);
     }
 
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reverse_add_c_long_assign</span>(<span class="ident">other</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>, <span class="ident">integer</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Integer</span>) {
-        <span class="ident">Integer::add_c_long_assign</span>(<span class="ident">integer</span>, <span class="ident">other</span>);
+    <span class="attribute">#[inline]
+    </span><span class="kw">pub fn </span>reverse_add_c_long_assign(other: <span class="kw">impl </span>Into&lt;c_long&gt;, integer: <span class="kw-2">&amp;mut </span>Integer) {
+        Integer::add_c_long_assign(integer, other);
     }
 
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reverse_multiply_c_long</span>(<span class="ident">other</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>, <span class="ident">integer</span>: <span class="kw-2">&amp;</span><span class="ident">Integer</span>) -&gt; <span class="ident">Integer</span> {
-        <span class="ident">Integer::multiply_c_long</span>(<span class="ident">integer</span>, <span class="ident">other</span>)
+    <span class="attribute">#[inline]
+    </span><span class="kw">pub fn </span>reverse_multiply_c_long(other: <span class="kw">impl </span>Into&lt;c_long&gt;, integer: <span class="kw-2">&amp;</span>Integer) -&gt; Integer {
+        Integer::multiply_c_long(integer, other)
     }
 
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reverse_multiply_assign</span>(<span class="ident">integer</span>: <span class="kw-2">&amp;</span><span class="ident">Integer</span>, <span class="ident">other</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Integer</span>) {
-        <span class="ident">Integer::multiply_assign</span>(<span class="ident">other</span>, <span class="ident">integer</span>);
+    <span class="attribute">#[inline]
+    </span><span class="kw">pub fn </span>reverse_multiply_assign(integer: <span class="kw-2">&amp;</span>Integer, other: <span class="kw-2">&amp;mut </span>Integer) {
+        Integer::multiply_assign(other, integer);
     }
 
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reverse_multiply_c_long_assign</span>(<span class="ident">other</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>, <span class="ident">integer</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Integer</span>) {
-        <span class="ident">Integer::multiply_c_long_assign</span>(<span class="ident">integer</span>, <span class="ident">other</span>);
+    <span class="attribute">#[inline]
+    </span><span class="kw">pub fn </span>reverse_multiply_c_long_assign(other: <span class="kw">impl </span>Into&lt;c_long&gt;, integer: <span class="kw-2">&amp;mut </span>Integer) {
+        Integer::multiply_c_long_assign(integer, other);
     }
 
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reverse_remainder</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="ident">value</span>: <span class="ident">V</span>, <span class="ident">integer</span>: <span class="kw-2">&amp;</span><span class="ident">Integer</span>) -&gt; <span class="ident">V</span>
-    <span class="kw">where</span>
-        <span class="ident">Integer</span>: <span class="ident">TryInto</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>,
+    <span class="attribute">#[inline]
+    </span><span class="kw">pub fn </span>reverse_remainder&lt;V&gt;(value: V, integer: <span class="kw-2">&amp;</span>Integer) -&gt; V
+    <span class="kw">where
+        </span>Integer: TryInto&lt;V&gt; + From&lt;V&gt;,
     {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">lhs</span> <span class="op">=</span> <span class="ident">Integer::from</span>(<span class="ident">value</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>lhs = Integer::from(value);
 
-        <span class="ident">Integer::remainder_assign</span>(<span class="kw-2">&amp;mut</span> <span class="ident">lhs</span>, <span class="ident">integer</span>);
+        Integer::remainder_assign(<span class="kw-2">&amp;mut </span>lhs, integer);
 
-        <span class="ident">lhs</span>.<span class="ident">try_into</span>()
-            .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Error::RemainderOutsideBounds</span>)
-            .<span class="ident">unwrap</span>()
+        lhs.try_into()
+            .map_err(|<span class="kw">_</span>| Error::RemainderOutsideBounds)
+            .unwrap()
     }
 
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remainder_reuse</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="ident">integer</span>: <span class="ident">Integer</span>, <span class="ident">rhs</span>: <span class="ident">V</span>) -&gt; <span class="ident">V</span>
-    <span class="kw">where</span>
-        <span class="ident">Integer</span>: <span class="ident">TryInto</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>,
+    <span class="attribute">#[inline]
+    </span><span class="kw">pub fn </span>remainder_reuse&lt;V&gt;(<span class="kw-2">mut </span>integer: Integer, rhs: V) -&gt; V
+    <span class="kw">where
+        </span>Integer: TryInto&lt;V&gt; + From&lt;V&gt;,
     {
-        <span class="ident">Integer::remainder_assign</span>(<span class="kw-2">&amp;mut</span> <span class="ident">integer</span>, <span class="kw-2">&amp;</span><span class="ident">Integer::from</span>(<span class="ident">rhs</span>));
+        Integer::remainder_assign(<span class="kw-2">&amp;mut </span>integer, <span class="kw-2">&amp;</span>Integer::from(rhs));
 
-        <span class="ident">integer</span>
-            .<span class="ident">try_into</span>()
-            .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Error::RemainderOutsideBounds</span>)
-            .<span class="ident">unwrap</span>()
+        integer
+            .try_into()
+            .map_err(|<span class="kw">_</span>| Error::RemainderOutsideBounds)
+            .unwrap()
     }
 
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remainder_ref</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="ident">integer</span>: <span class="kw-2">&amp;</span><span class="ident">Integer</span>, <span class="ident">rhs</span>: <span class="ident">V</span>) -&gt; <span class="ident">V</span>
-    <span class="kw">where</span>
-        <span class="ident">Integer</span>: <span class="ident">TryInto</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>,
+    <span class="attribute">#[inline]
+    </span><span class="kw">pub fn </span>remainder_ref&lt;V&gt;(integer: <span class="kw-2">&amp;</span>Integer, rhs: V) -&gt; V
+    <span class="kw">where
+        </span>Integer: TryInto&lt;V&gt; + From&lt;V&gt;,
     {
-        <span class="ident">Integer::remainder</span>(<span class="ident">integer</span>, <span class="kw-2">&amp;</span><span class="ident">Integer::from</span>(<span class="ident">rhs</span>))
-            .<span class="ident">try_into</span>()
-            .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Error::RemainderOutsideBounds</span>)
-            .<span class="ident">unwrap</span>()
+        Integer::remainder(integer, <span class="kw-2">&amp;</span>Integer::from(rhs))
+            .try_into()
+            .map_err(|<span class="kw">_</span>| Error::RemainderOutsideBounds)
+            .unwrap()
     }
 
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">c_long_remainder_assign</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="ident">value</span>: <span class="kw-2">&amp;mut</span> <span class="ident">V</span>, <span class="ident">integer</span>: <span class="kw-2">&amp;</span><span class="ident">Integer</span>)
-    <span class="kw">where</span>
-        <span class="ident">Integer</span>: <span class="ident">TryInto</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>,
-        <span class="ident">V</span>: <span class="ident">Copy</span>,
+    <span class="attribute">#[inline]
+    </span><span class="kw">pub fn </span>c_long_remainder_assign&lt;V&gt;(value: <span class="kw-2">&amp;mut </span>V, integer: <span class="kw-2">&amp;</span>Integer)
+    <span class="kw">where
+        </span>Integer: TryInto&lt;V&gt; + From&lt;V&gt;,
+        V: Copy,
     {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">lhs</span> <span class="op">=</span> <span class="ident">Integer::from</span>(<span class="kw-2">*</span><span class="ident">value</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>lhs = Integer::from(<span class="kw-2">*</span>value);
 
-        <span class="ident">Integer::remainder_assign</span>(<span class="kw-2">&amp;mut</span> <span class="ident">lhs</span>, <span class="ident">integer</span>);
+        Integer::remainder_assign(<span class="kw-2">&amp;mut </span>lhs, integer);
 
-        <span class="kw-2">*</span><span class="ident">value</span> <span class="op">=</span> <span class="ident">lhs</span>
-            .<span class="ident">try_into</span>()
-            .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Error::RemainderOutsideBounds</span>)
-            .<span class="ident">unwrap</span>();
+        <span class="kw-2">*</span>value = lhs
+            .try_into()
+            .map_err(|<span class="kw">_</span>| Error::RemainderOutsideBounds)
+            .unwrap();
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">test</span> {
-    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
+<span class="attribute">#[cfg(test)]
+</span><span class="kw">mod </span>test {
+    <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="kw">fn</span> <span class="ident">fibonacci</span>(<span class="kw-2">mut</span> <span class="ident">n</span>: <span class="ident">usize</span>) -&gt; <span class="ident">Integer</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">f0</span> <span class="op">=</span> <span class="ident">Integer::new</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">f1</span> <span class="op">=</span> <span class="ident">Integer::from</span>(<span class="number">1</span>);
+    <span class="kw">fn </span>fibonacci(<span class="kw-2">mut </span>n: usize) -&gt; Integer {
+        <span class="kw">let </span><span class="kw-2">mut </span>f0 = Integer::new();
+        <span class="kw">let </span><span class="kw-2">mut </span>f1 = Integer::from(<span class="number">1</span>);
 
-        <span class="kw">if</span> <span class="ident">n</span> <span class="op">==</span> <span class="number">0</span> {
-            <span class="ident">f0</span>
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">n</span> <span class="op">==</span> <span class="number">1</span> {
-            <span class="ident">f1</span>
-        } <span class="kw">else</span> {
-            <span class="ident">n</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
+        <span class="kw">if </span>n == <span class="number">0 </span>{
+            f0
+        } <span class="kw">else if </span>n == <span class="number">1 </span>{
+            f1
+        } <span class="kw">else </span>{
+            n -= <span class="number">1</span>;
 
-            <span class="kw">while</span> <span class="ident">n</span> <span class="op">&gt;</span> <span class="number">0</span> {
-                <span class="kw">let</span> <span class="ident">temp</span> <span class="op">=</span> <span class="ident">f1</span>;
-                <span class="ident">f1</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">temp</span> <span class="op">+</span> <span class="ident">f0</span>;
-                <span class="ident">f0</span> <span class="op">=</span> <span class="ident">temp</span>;
+            <span class="kw">while </span>n &gt; <span class="number">0 </span>{
+                <span class="kw">let </span>temp = f1;
+                f1 = <span class="kw-2">&amp;</span>temp + f0;
+                f0 = temp;
 
-                <span class="ident">n</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
+                n -= <span class="number">1</span>;
             }
 
-            <span class="ident">f1</span>
+            f1
         }
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">fibonacci_values</span>() {
-        <span class="macro">assert_eq!</span>(<span class="ident">fibonacci</span>(<span class="number">1</span>).<span class="ident">to_string</span>(), <span class="string">&quot;1&quot;</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">fibonacci</span>(<span class="number">10</span>).<span class="ident">to_string</span>(), <span class="string">&quot;55&quot;</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">fibonacci</span>(<span class="number">50</span>).<span class="ident">to_string</span>(), <span class="string">&quot;12586269025&quot;</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">fibonacci</span>(<span class="number">100</span>).<span class="ident">to_string</span>(), <span class="string">&quot;354224848179261915075&quot;</span>);
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>fibonacci_values() {
+        <span class="macro">assert_eq!</span>(fibonacci(<span class="number">1</span>).to_string(), <span class="string">&quot;1&quot;</span>);
+        <span class="macro">assert_eq!</span>(fibonacci(<span class="number">10</span>).to_string(), <span class="string">&quot;55&quot;</span>);
+        <span class="macro">assert_eq!</span>(fibonacci(<span class="number">50</span>).to_string(), <span class="string">&quot;12586269025&quot;</span>);
+        <span class="macro">assert_eq!</span>(fibonacci(<span class="number">100</span>).to_string(), <span class="string">&quot;354224848179261915075&quot;</span>);
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">add_integers</span>() {
-        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Integer::from_c_long</span>(<span class="number">11111</span>);
-        <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Integer::from_c_long</span>(<span class="number">33333</span>);
-        <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">a</span> <span class="op">+</span> <span class="ident">b</span>;
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>add_integers() {
+        <span class="kw">let </span>a = Integer::from_c_long(<span class="number">11111</span>);
+        <span class="kw">let </span>b = Integer::from_c_long(<span class="number">33333</span>);
+        <span class="kw">let </span>c = a + b;
 
-        <span class="macro">assert_eq!</span>(<span class="ident">c</span>, <span class="number">44_444</span>);
+        <span class="macro">assert_eq!</span>(c, <span class="number">44_444</span>);
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">add_assign_integers</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Integer::from_c_long</span>(<span class="number">11111</span>);
-        <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Integer::from_c_long</span>(<span class="number">33333</span>);
-        <span class="ident">a</span> <span class="op">+</span><span class="op">=</span> <span class="ident">b</span>;
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>add_assign_integers() {
+        <span class="kw">let </span><span class="kw-2">mut </span>a = Integer::from_c_long(<span class="number">11111</span>);
+        <span class="kw">let </span>b = Integer::from_c_long(<span class="number">33333</span>);
+        a += b;
 
-        <span class="macro">assert_eq!</span>(<span class="ident">a</span>, <span class="number">44_444</span>);
+        <span class="macro">assert_eq!</span>(a, <span class="number">44_444</span>);
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">subtract_integers</span>() {
-        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Integer::from_c_long</span>(<span class="number">12345</span>);
-        <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Integer::from_c_long</span>(<span class="number">1234</span>);
-        <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">a</span> <span class="op">-</span> <span class="ident">b</span>;
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>subtract_integers() {
+        <span class="kw">let </span>a = Integer::from_c_long(<span class="number">12345</span>);
+        <span class="kw">let </span>b = Integer::from_c_long(<span class="number">1234</span>);
+        <span class="kw">let </span>c = a - b;
 
-        <span class="macro">assert_eq!</span>(<span class="ident">c</span>, <span class="number">11_111</span>);
+        <span class="macro">assert_eq!</span>(c, <span class="number">11_111</span>);
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">subtract_assign_integers</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Integer::from_c_long</span>(<span class="number">12345</span>);
-        <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Integer::from_c_long</span>(<span class="number">1234</span>);
-        <span class="ident">a</span> <span class="op">-</span><span class="op">=</span> <span class="ident">b</span>;
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>subtract_assign_integers() {
+        <span class="kw">let </span><span class="kw-2">mut </span>a = Integer::from_c_long(<span class="number">12345</span>);
+        <span class="kw">let </span>b = Integer::from_c_long(<span class="number">1234</span>);
+        a -= b;
 
-        <span class="macro">assert_eq!</span>(<span class="ident">a</span>, <span class="number">11_111</span>);
+        <span class="macro">assert_eq!</span>(a, <span class="number">11_111</span>);
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">multiply_integers</span>() {
-        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Integer::from_c_long</span>(<span class="number">50505</span>);
-        <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Integer::from_c_long</span>(<span class="number">5050</span>);
-        <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">a</span> <span class="op">*</span> <span class="ident">b</span>;
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>multiply_integers() {
+        <span class="kw">let </span>a = Integer::from_c_long(<span class="number">50505</span>);
+        <span class="kw">let </span>b = Integer::from_c_long(<span class="number">5050</span>);
+        <span class="kw">let </span>c = a * b;
 
-        <span class="macro">assert_eq!</span>(<span class="ident">c</span>, <span class="number">255_050_250</span>);
+        <span class="macro">assert_eq!</span>(c, <span class="number">255_050_250</span>);
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">multiply_assign_integers</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Integer::from_c_long</span>(<span class="number">50505</span>);
-        <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Integer::from_c_long</span>(<span class="number">5050</span>);
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>multiply_assign_integers() {
+        <span class="kw">let </span><span class="kw-2">mut </span>a = Integer::from_c_long(<span class="number">50505</span>);
+        <span class="kw">let </span>b = Integer::from_c_long(<span class="number">5050</span>);
 
-        <span class="ident">a</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">b</span>;
-        <span class="macro">assert_eq!</span>(<span class="ident">a</span>, <span class="number">255_050_250</span>);
+        a <span class="kw-2">*</span>= b;
+        <span class="macro">assert_eq!</span>(a, <span class="number">255_050_250</span>);
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">divide_integers</span>() {
-        <span class="kw">let</span> <span class="ident">a</span>: <span class="ident">Integer</span> <span class="op">=</span> <span class="string">&quot;52384129912341238437480192384&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>divide_integers() {
+        <span class="kw">let </span>a: Integer = <span class="string">&quot;52384129912341238437480192384&quot;</span>.parse().unwrap();
 
-        <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::eq_op</span>)]</span>
-        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">a</span> <span class="op">/</span> <span class="kw-2">&amp;</span><span class="ident">a</span>;
-        <span class="macro">assert_eq!</span>(<span class="ident">one</span>, <span class="number">1</span>);
-        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">a</span> <span class="op">/</span> <span class="number">10_000_000_000_000_000_000_000u128</span>, <span class="number">5_238_412</span>);
+        <span class="attribute">#[allow(clippy::eq_op)]
+        </span><span class="kw">let </span>one = <span class="kw-2">&amp;</span>a / <span class="kw-2">&amp;</span>a;
+        <span class="macro">assert_eq!</span>(one, <span class="number">1</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>a / <span class="number">10_000_000_000_000_000_000_000u128</span>, <span class="number">5_238_412</span>);
 
-        <span class="kw">let</span> <span class="ident">b</span>: <span class="ident">Integer</span> <span class="op">=</span> <span class="number">1_234_567</span>.<span class="ident">into</span>();
-        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">b</span> <span class="op">/</span> <span class="number">123_456</span>, <span class="number">10</span>);
-        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">b</span> <span class="op">/</span> <span class="number">3</span>, <span class="number">411_522</span>);
-        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">b</span> <span class="op">/</span> <span class="op">-</span><span class="number">3</span>, <span class="op">-</span><span class="number">411_522</span>);
-        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">b</span> <span class="op">/</span> <span class="op">-</span><span class="number">230</span>, <span class="op">-</span><span class="number">5_367</span>)
+        <span class="kw">let </span>b: Integer = <span class="number">1_234_567</span>.into();
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>b / <span class="number">123_456</span>, <span class="number">10</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>b / <span class="number">3</span>, <span class="number">411_522</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>b / -<span class="number">3</span>, -<span class="number">411_522</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>b / -<span class="number">230</span>, -<span class="number">5_367</span>)
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">divide_assign_integers</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">a</span>: <span class="ident">Integer</span> <span class="op">=</span> <span class="string">&quot;52384129912341238437480192384&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>divide_assign_integers() {
+        <span class="kw">let </span><span class="kw-2">mut </span>a: Integer = <span class="string">&quot;52384129912341238437480192384&quot;</span>.parse().unwrap();
 
-        <span class="ident">a</span> <span class="op">/</span><span class="op">=</span> <span class="ident">a</span>.<span class="ident">clone</span>();
-        <span class="macro">assert_eq!</span>(<span class="ident">a</span>, <span class="number">1</span>);
+        a /= a.clone();
+        <span class="macro">assert_eq!</span>(a, <span class="number">1</span>);
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">remainder_integers</span>() {
-        <span class="kw">let</span> <span class="ident">a</span>: <span class="ident">Integer</span> <span class="op">=</span> <span class="string">&quot;52384129912341238437480192384&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>remainder_integers() {
+        <span class="kw">let </span>a: Integer = <span class="string">&quot;52384129912341238437480192384&quot;</span>.parse().unwrap();
 
-        <span class="kw">let</span> <span class="ident">res_u8</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">a</span> <span class="op">%</span> <span class="number">122u8</span>;
-        <span class="macro">assert_eq!</span>(<span class="ident">res_u8</span>, <span class="number">62</span>);
+        <span class="kw">let </span>res_u8: u8 = <span class="kw-2">&amp;</span>a % <span class="number">122u8</span>;
+        <span class="macro">assert_eq!</span>(res_u8, <span class="number">62</span>);
 
-        <span class="kw">let</span> <span class="ident">res_u16</span>: <span class="ident">u16</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">a</span> <span class="op">%</span> <span class="number">60_000u16</span>;
-        <span class="macro">assert_eq!</span>(<span class="ident">res_u16</span>, <span class="number">12384</span>);
+        <span class="kw">let </span>res_u16: u16 = <span class="kw-2">&amp;</span>a % <span class="number">60_000u16</span>;
+        <span class="macro">assert_eq!</span>(res_u16, <span class="number">12384</span>);
 
-        <span class="kw">let</span> <span class="ident">res_u32</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">a</span> <span class="op">%</span> <span class="number">127_384i32</span>;
-        <span class="macro">assert_eq!</span>(<span class="ident">res_u32</span>, <span class="number">85248</span>);
+        <span class="kw">let </span>res_u32: i32 = <span class="kw-2">&amp;</span>a % <span class="number">127_384i32</span>;
+        <span class="macro">assert_eq!</span>(res_u32, <span class="number">85248</span>);
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">remainder_assign_integers</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">a</span>: <span class="ident">Integer</span> <span class="op">=</span> <span class="string">&quot;52384129912341238437480192384&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>remainder_assign_integers() {
+        <span class="kw">let </span><span class="kw-2">mut </span>a: Integer = <span class="string">&quot;52384129912341238437480192384&quot;</span>.parse().unwrap();
 
-        <span class="ident">a</span> <span class="op">%</span><span class="op">=</span> <span class="number">60_000u16</span>;
-        <span class="macro">assert_eq!</span>(<span class="ident">a</span>, <span class="number">12384</span>);
+        a %= <span class="number">60_000u16</span>;
+        <span class="macro">assert_eq!</span>(a, <span class="number">12384</span>);
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">negate_integers</span>() {
-        <span class="kw">let</span> <span class="ident">a</span>: <span class="ident">Integer</span> <span class="op">=</span> <span class="string">&quot;52384129912341238437480192384&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="op">-</span><span class="ident">a</span>;
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>negate_integers() {
+        <span class="kw">let </span>a: Integer = <span class="string">&quot;52384129912341238437480192384&quot;</span>.parse().unwrap();
+        <span class="kw">let </span>b = -a;
 
-        <span class="kw">let</span> <span class="ident">string_repr</span> <span class="op">=</span> <span class="ident">b</span>.<span class="ident">to_string</span>();
-        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">string_repr</span>, <span class="string">&quot;-52384129912341238437480192384&quot;</span>);
+        <span class="kw">let </span>string_repr = b.to_string();
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>string_repr, <span class="string">&quot;-52384129912341238437480192384&quot;</span>);
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">absolute_value_integer</span>() {
-        <span class="kw">let</span> <span class="ident">neg_int</span>: <span class="ident">Integer</span> <span class="op">=</span> <span class="string">&quot;-37129740&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">pos_int</span>: <span class="ident">Integer</span> <span class="op">=</span> <span class="string">&quot;37129740&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>absolute_value_integer() {
+        <span class="kw">let </span>neg_int: Integer = <span class="string">&quot;-37129740&quot;</span>.parse().unwrap();
+        <span class="kw">let </span>pos_int: Integer = <span class="string">&quot;37129740&quot;</span>.parse().unwrap();
 
-        <span class="macro">assert_eq!</span>(<span class="ident">neg_int</span>.<span class="ident">absolute_value</span>(), <span class="ident">pos_int</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">pos_int</span>.<span class="ident">absolute_value</span>(), <span class="number">37_129_740</span>);
+        <span class="macro">assert_eq!</span>(neg_int.absolute_value(), pos_int);
+        <span class="macro">assert_eq!</span>(pos_int.absolute_value(), <span class="number">37_129_740</span>);
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="reckoner" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="reckoner" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0 (897e37553 2022-11-02)" ></div></body></html>

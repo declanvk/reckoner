@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/rational.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>rational.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../reckoner/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../reckoner/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../reckoner/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/rational.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>rational.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../reckoner/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../reckoner/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../reckoner/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -865,872 +865,872 @@
 <span id="865">865</span>
 <span id="866">866</span>
 <span id="867">867</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">error</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>},
-    <span class="ident">integer::Integer</span>,
+</pre><pre class="rust"><code><span class="kw">use crate</span>::{
+    error::{Error, <span class="prelude-ty">Result</span>},
+    integer::Integer,
 };
-<span class="kw">use</span> <span class="ident">core</span>::{
-    <span class="ident">cmp::Ordering</span>, <span class="ident">convert::TryFrom</span>, <span class="ident">ffi::c_long</span>, <span class="ident">fmt</span>, <span class="ident">mem</span>, <span class="ident">mem::MaybeUninit</span>, <span class="ident">ptr</span>, <span class="ident">ptr::NonNull</span>,
-    <span class="ident">str::FromStr</span>,
+<span class="kw">use </span>core::{
+    cmp::Ordering, convert::TryFrom, ffi::c_long, fmt, mem, mem::MaybeUninit, ptr, ptr::NonNull,
+    str::FromStr,
 };
-<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">alloc</span>, <span class="ident">ffi::CString</span>};
+<span class="kw">use </span>std::{alloc, ffi::CString};
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod</span> <span class="ident">comparisons</span>;
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod</span> <span class="ident">conversions</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">ops</span>;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod </span>comparisons;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod </span>conversions;
+<span class="kw">pub mod </span>ops;
 
-<span class="doccomment">/// Multiple precision rational value.</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">transparent</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Rational</span> {
-    <span class="comment">// This value must be constructed from a Box and then when Drop, must be reconstructed so that</span>
-    <span class="comment">// the Box Drop can free the memory used.</span>
-    <span class="ident">raw</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="ident">creachadair_imath_sys::mpq_t</span><span class="op">&gt;</span>,
+<span class="doccomment">/// Multiple precision rational value.
+</span><span class="attribute">#[repr(transparent)]
+</span><span class="kw">pub struct </span>Rational {
+    <span class="comment">// This value must be constructed from a Box and then when Drop, must be reconstructed so that
+    // the Box Drop can free the memory used.
+    </span>raw: NonNull&lt;creachadair_imath_sys::mpq_t&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">Rational</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">uninit</span>() -&gt; <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">MaybeUninit</span><span class="op">&lt;</span><span class="ident">creachadair_imath_sys::mpq_t</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="comment">// Replace with Box::new_uninit when it is stable (1.41 maybe?).</span>
-        <span class="kw">let</span> <span class="ident">layout</span> <span class="op">=</span> <span class="ident">alloc::Layout::new</span>::<span class="op">&lt;</span><span class="ident">MaybeUninit</span><span class="op">&lt;</span><span class="ident">creachadair_imath_sys::mpq_t</span><span class="op">&gt;</span><span class="op">&gt;</span>();
-        <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">alloc::alloc</span>(<span class="ident">layout</span>) };
-        <span class="comment">// This cast is safe bc the layout was specified for</span>
-        <span class="comment">// MaybeUninit&lt;creachadair_imath_sys::mpq_t&gt;</span>
-        <span class="kw">unsafe</span> { <span class="ident">Box::from_raw</span>(<span class="ident">ptr</span>.<span class="ident">cast</span>()) }
+<span class="kw">impl </span>Rational {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>uninit() -&gt; Box&lt;MaybeUninit&lt;creachadair_imath_sys::mpq_t&gt;&gt; {
+        <span class="comment">// Replace with Box::new_uninit when it is stable (1.41 maybe?).
+        </span><span class="kw">let </span>layout = alloc::Layout::new::&lt;MaybeUninit&lt;creachadair_imath_sys::mpq_t&gt;&gt;();
+        <span class="kw">let </span>ptr = <span class="kw">unsafe </span>{ alloc::alloc(layout) };
+        <span class="comment">// This cast is safe bc the layout was specified for
+        // MaybeUninit&lt;creachadair_imath_sys::mpq_t&gt;
+        </span><span class="kw">unsafe </span>{ Box::from_raw(ptr.cast()) }
     }
 
-    <span class="doccomment">/// Create a new rational with a default value of zero (0/1).</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use reckoner::Rational;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let r = Rational::new();</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// assert_eq!(r, (0, 1));</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">init</span> <span class="op">=</span> <span class="ident">Rational::uninit</span>();
+    <span class="doccomment">/// Create a new rational with a default value of zero (0/1).
+    ///
+    /// # Example
+    /// ```
+    /// use reckoner::Rational;
+    ///
+    /// let r = Rational::new();
+    ///
+    /// assert_eq!(r, (0, 1));
+    /// ```
+    </span><span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span><span class="kw-2">mut </span>init = Rational::uninit();
 
         {
-            <span class="kw">let</span> <span class="ident">raw_mpq</span> <span class="op">=</span> <span class="ident">init</span>.<span class="ident">as_mut_ptr</span>();
+            <span class="kw">let </span>raw_mpq = init.as_mut_ptr();
 
-            <span class="comment">// This function call is safe because the mp_rat_init function only requires</span>
-            <span class="comment">// that the mpq_t struct has been correctly allocated.</span>
-            <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_rat_init</span>(<span class="ident">raw_mpq</span>) };
+            <span class="comment">// This function call is safe because the mp_rat_init function only requires
+            // that the mpq_t struct has been correctly allocated.
+            </span><span class="kw">let </span>res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_rat_init(raw_mpq) };
 
-            <span class="macro">imath_check_panic!</span>(<span class="ident">res</span>, <span class="string">&quot;Rational init failed!&quot;</span>);
+            <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Rational init failed!&quot;</span>);
         }
 
-        <span class="comment">// This cast is safe (from MaybeUninit&lt;creachadair_imath_sys::mpq_t&gt; to</span>
-        <span class="comment">// creachadair_imath_sys::mpq_t) because the value is now initialized.</span>
-        <span class="kw">unsafe</span> { <span class="ident">Rational::from_raw</span>(<span class="ident">Box::into_raw</span>(<span class="ident">init</span>).<span class="ident">cast</span>()) }
+        <span class="comment">// This cast is safe (from MaybeUninit&lt;creachadair_imath_sys::mpq_t&gt; to
+        // creachadair_imath_sys::mpq_t) because the value is now initialized.
+        </span><span class="kw">unsafe </span>{ Rational::from_raw(Box::into_raw(init).cast()) }
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">copy_init</span>(<span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">init</span> <span class="op">=</span> <span class="ident">Rational::uninit</span>();
-        <span class="kw">let</span> <span class="ident">other_raw</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">as_raw</span>();
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>copy_init(other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span><span class="kw-2">mut </span>init = Rational::uninit();
+        <span class="kw">let </span>other_raw = other.as_raw();
 
         {
-            <span class="kw">let</span> <span class="ident">raw_mpq</span> <span class="op">=</span> <span class="ident">init</span>.<span class="ident">as_mut_ptr</span>();
+            <span class="kw">let </span>raw_mpq = init.as_mut_ptr();
 
-            <span class="comment">// This function call is safe because the mpq_t struct has been correctly</span>
-            <span class="comment">// allocated and `other_raw` has been successfully initialized.</span>
-            <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_rat_init_copy</span>(<span class="ident">raw_mpq</span>, <span class="ident">other_raw</span>) };
+            <span class="comment">// This function call is safe because the mpq_t struct has been correctly
+            // allocated and `other_raw` has been successfully initialized.
+            </span><span class="kw">let </span>res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_rat_init_copy(raw_mpq, other_raw) };
 
-            <span class="macro">imath_check_panic!</span>(<span class="ident">res</span>, <span class="string">&quot;Rational init failed!&quot;</span>);
+            <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Rational init failed!&quot;</span>);
         }
 
-        <span class="comment">// This cast is safe (from MaybeUninit&lt;creachadair_imath_sys::mpq_t&gt; to</span>
-        <span class="comment">// creachadair_imath_sys::mpq_t) because the value is now initialized.</span>
-        <span class="kw">unsafe</span> { <span class="ident">Rational::from_raw</span>(<span class="ident">Box::into_raw</span>(<span class="ident">init</span>).<span class="ident">cast</span>()) }
+        <span class="comment">// This cast is safe (from MaybeUninit&lt;creachadair_imath_sys::mpq_t&gt; to
+        // creachadair_imath_sys::mpq_t) because the value is now initialized.
+        </span><span class="kw">unsafe </span>{ Rational::from_raw(Box::into_raw(init).cast()) }
     }
 
-    <span class="doccomment">/// Construct a Rational from a raw non-null pointer to</span>
-    <span class="doccomment">/// `creachadair_imath_sys::mpq_t`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Safety</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This function must only every be called once for a given pointer, and</span>
-    <span class="doccomment">/// the pointer must point to an initialized `creachadair_imath_sys::mpq_t`</span>
-    <span class="doccomment">/// struct. The recommendation is to only use raw pointers from the</span>
-    <span class="doccomment">/// `Rational::into_raw` function.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// In ths context, initialized means that the</span>
-    <span class="doccomment">/// `creachadair_imath_sys::mpq_t` has been the argument of a call to</span>
-    <span class="doccomment">/// `creachadair_imath_sys::mp_rat_init`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use creachadair_imath_sys::{mp_rat_zero, MP_OK};</span>
-    <span class="doccomment">/// use reckoner::Rational;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let a = Rational::from((456, 123));</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// assert_eq!(a, (456, 123));</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let a_raw = Rational::into_raw(a);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// unsafe { mp_rat_zero(a_raw) };</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let a = unsafe { Rational::from_raw(a_raw) };</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// assert_eq!(a, (0, 1));</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_raw</span>(<span class="ident">raw</span>: <span class="kw-2">*mut</span> <span class="ident">creachadair_imath_sys::mpq_t</span>) -&gt; <span class="self">Self</span> {
-        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">raw</span>.<span class="ident">is_null</span>());
+    <span class="doccomment">/// Construct a Rational from a raw non-null pointer to
+    /// `creachadair_imath_sys::mpq_t`.
+    ///
+    /// # Safety
+    ///
+    /// This function must only every be called once for a given pointer, and
+    /// the pointer must point to an initialized `creachadair_imath_sys::mpq_t`
+    /// struct. The recommendation is to only use raw pointers from the
+    /// `Rational::into_raw` function.
+    ///
+    /// In ths context, initialized means that the
+    /// `creachadair_imath_sys::mpq_t` has been the argument of a call to
+    /// `creachadair_imath_sys::mp_rat_init`.
+    ///
+    /// # Example
+    /// ```
+    /// use creachadair_imath_sys::{mp_rat_zero, MP_OK};
+    /// use reckoner::Rational;
+    ///
+    /// let a = Rational::from((456, 123));
+    ///
+    /// assert_eq!(a, (456, 123));
+    ///
+    /// let a_raw = Rational::into_raw(a);
+    ///
+    /// unsafe { mp_rat_zero(a_raw) };
+    ///
+    /// let a = unsafe { Rational::from_raw(a_raw) };
+    ///
+    /// assert_eq!(a, (0, 1));
+    /// ```
+    </span><span class="kw">pub unsafe fn </span>from_raw(raw: <span class="kw-2">*mut </span>creachadair_imath_sys::mpq_t) -&gt; <span class="self">Self </span>{
+        <span class="macro">assert!</span>(!raw.is_null());
 
-        <span class="comment">// This is safe bc the invariants of the function and because it was checked</span>
-        <span class="comment">// that the pointer is not null.</span>
-        <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_unsafe</span>)]</span>
-        <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">NonNull::new_unchecked</span>(<span class="ident">raw</span>) };
+        <span class="comment">// This is safe bc the invariants of the function and because it was checked
+        // that the pointer is not null.
+        </span><span class="attribute">#[allow(unused_unsafe)]
+        </span><span class="kw">let </span>raw = <span class="kw">unsafe </span>{ NonNull::new_unchecked(raw) };
 
-        <span class="ident">Rational</span> { <span class="ident">raw</span> }
+        Rational { raw }
     }
 
-    <span class="doccomment">/// Consumes the Rational, returning a wrapped raw pointer.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use creachadair_imath_sys::{mp_rat_add, MP_OK};</span>
-    <span class="doccomment">/// use reckoner::Rational;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let a = Rational::from((377, 500));</span>
-    <span class="doccomment">/// let b = Rational::from((123, 500));</span>
-    <span class="doccomment">/// let c = Rational::new();</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let a_raw = Rational::into_raw(a);</span>
-    <span class="doccomment">/// let b_raw = Rational::into_raw(b);</span>
-    <span class="doccomment">/// let c_raw = Rational::into_raw(c);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let op_res = unsafe { mp_rat_add(a_raw, b_raw, c_raw) };</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// if op_res != unsafe { MP_OK } {</span>
-    <span class="doccomment">///     panic!(&quot;Operation failed.&quot;)</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let a = unsafe { Rational::from_raw(a_raw) };</span>
-    <span class="doccomment">/// let b = unsafe { Rational::from_raw(b_raw) };</span>
-    <span class="doccomment">/// let c = unsafe { Rational::from_raw(c_raw) };</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// assert_eq!(a, (377, 500));</span>
-    <span class="doccomment">/// assert_eq!(b, (123, 500));</span>
-    <span class="doccomment">/// assert_eq!(c, (500, 500));</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_raw</span>(<span class="kw-2">mut</span> <span class="ident">rational</span>: <span class="ident">Rational</span>) -&gt; <span class="kw-2">*mut</span> <span class="ident">creachadair_imath_sys::mpq_t</span> {
-        <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="ident">mem::replace</span>(<span class="kw-2">&amp;mut</span> <span class="ident">rational</span>.<span class="ident">raw</span>, <span class="ident">NonNull::dangling</span>());
+    <span class="doccomment">/// Consumes the Rational, returning a wrapped raw pointer.
+    ///
+    /// # Example
+    /// ```
+    /// use creachadair_imath_sys::{mp_rat_add, MP_OK};
+    /// use reckoner::Rational;
+    ///
+    /// let a = Rational::from((377, 500));
+    /// let b = Rational::from((123, 500));
+    /// let c = Rational::new();
+    ///
+    /// let a_raw = Rational::into_raw(a);
+    /// let b_raw = Rational::into_raw(b);
+    /// let c_raw = Rational::into_raw(c);
+    ///
+    /// let op_res = unsafe { mp_rat_add(a_raw, b_raw, c_raw) };
+    ///
+    /// if op_res != unsafe { MP_OK } {
+    ///     panic!(&quot;Operation failed.&quot;)
+    /// }
+    ///
+    /// let a = unsafe { Rational::from_raw(a_raw) };
+    /// let b = unsafe { Rational::from_raw(b_raw) };
+    /// let c = unsafe { Rational::from_raw(c_raw) };
+    ///
+    /// assert_eq!(a, (377, 500));
+    /// assert_eq!(b, (123, 500));
+    /// assert_eq!(c, (500, 500));
+    /// ```
+    </span><span class="kw">pub fn </span>into_raw(<span class="kw-2">mut </span>rational: Rational) -&gt; <span class="kw-2">*mut </span>creachadair_imath_sys::mpq_t {
+        <span class="kw">let </span>raw = mem::replace(<span class="kw-2">&amp;mut </span>rational.raw, NonNull::dangling());
 
-        <span class="comment">// The destructor does not need to run, as we are intentionally leaking the</span>
-        <span class="comment">// resources here.</span>
-        <span class="ident">mem::forget</span>(<span class="ident">rational</span>);
+        <span class="comment">// The destructor does not need to run, as we are intentionally leaking the
+        // resources here.
+        </span>mem::forget(rational);
 
-        <span class="ident">raw</span>.<span class="ident">as_ptr</span>()
+        raw.as_ptr()
     }
 
-    <span class="comment">// Internal use only</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">*mut</span> <span class="ident">creachadair_imath_sys::mpq_t</span> {
-        <span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>()
+    <span class="comment">// Internal use only
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>as_raw(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">*mut </span>creachadair_imath_sys::mpq_t {
+        <span class="self">self</span>.raw.as_ptr()
     }
 
-    <span class="doccomment">/// Reduces `r` in-place to lowest terms and canonical form.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Zero is represented as 0/1, one as 1/1, and signs are adjusted so that</span>
-    <span class="doccomment">/// the sign of the value is carried by the numerator.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use reckoner::Rational;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let mut a = Rational::from((24, 2));</span>
-    <span class="doccomment">/// let mut b = Rational::from((24, 3));</span>
-    <span class="doccomment">/// let mut c = Rational::from((24, 4));</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// a.reduce();</span>
-    <span class="doccomment">/// b.reduce();</span>
-    <span class="doccomment">/// c.reduce();</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// assert_eq!(a, (12, 1));</span>
-    <span class="doccomment">/// assert_eq!(b, (8, 1));</span>
-    <span class="doccomment">/// assert_eq!(c, (6, 1));</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reduce</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+    <span class="doccomment">/// Reduces `r` in-place to lowest terms and canonical form.
+    ///
+    /// Zero is represented as 0/1, one as 1/1, and signs are adjusted so that
+    /// the sign of the value is carried by the numerator.
+    ///
+    /// # Example
+    /// ```
+    /// use reckoner::Rational;
+    ///
+    /// let mut a = Rational::from((24, 2));
+    /// let mut b = Rational::from((24, 3));
+    /// let mut c = Rational::from((24, 4));
+    ///
+    /// a.reduce();
+    /// b.reduce();
+    /// c.reduce();
+    ///
+    /// assert_eq!(a, (12, 1));
+    /// assert_eq!(b, (8, 1));
+    /// assert_eq!(c, (6, 1));
+    /// ```
+    </span><span class="kw">pub fn </span>reduce(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
 
-        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_rat_reduce</span>(<span class="ident">self_raw</span>) };
+        <span class="kw">let </span>res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_rat_reduce(self_raw) };
 
-        <span class="macro">imath_check_panic!</span>(<span class="ident">res</span>, <span class="string">&quot;Reducing rational value failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Reducing rational value failed!&quot;</span>);
     }
 
-    <span class="doccomment">/// Set value of integer to zero</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use reckoner::Rational;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let mut r = Rational::from((1234567u128, 1346172348u64));</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// r.zero();</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// assert_eq!(r, (0, 1));</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">zero</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+    <span class="doccomment">/// Set value of integer to zero
+    ///
+    /// # Example
+    /// ```
+    /// use reckoner::Rational;
+    ///
+    /// let mut r = Rational::from((1234567u128, 1346172348u64));
+    ///
+    /// r.zero();
+    ///
+    /// assert_eq!(r, (0, 1));
+    /// ```
+    </span><span class="kw">pub fn </span>zero(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
 
-        <span class="comment">// This is safe bc `self` has been initialized.</span>
-        <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_rat_zero</span>(<span class="ident">self_raw</span>) };
+        <span class="comment">// This is safe bc `self` has been initialized.
+        </span><span class="kw">unsafe </span>{ creachadair_imath_sys::mp_rat_zero(self_raw) };
     }
 
-    <span class="doccomment">/// Returns true if the denominator is 1.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use reckoner::Rational;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// assert!(Rational::from((0, 1)).is_integer());</span>
-    <span class="doccomment">/// assert!(Rational::from((1, 1)).is_integer());</span>
-    <span class="doccomment">/// assert!(!Rational::from((3, 25)).is_integer());</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_integer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+    <span class="doccomment">/// Returns true if the denominator is 1.
+    ///
+    /// # Example
+    /// ```
+    /// use reckoner::Rational;
+    ///
+    /// assert!(Rational::from((0, 1)).is_integer());
+    /// assert!(Rational::from((1, 1)).is_integer());
+    /// assert!(!Rational::from((3, 25)).is_integer());
+    /// ```
+    </span><span class="kw">pub fn </span>is_integer(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
 
-        <span class="comment">// This is safe bc `self` has been initialized.</span>
-        <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_rat_is_integer</span>(<span class="ident">self_raw</span>) }
+        <span class="comment">// This is safe bc `self` has been initialized.
+        </span><span class="kw">unsafe </span>{ creachadair_imath_sys::mp_rat_is_integer(self_raw) }
     }
 
-    <span class="doccomment">/// Compare two rationals</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use core::cmp::Ordering;</span>
-    <span class="doccomment">/// use reckoner::Rational;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let a = Rational::from((123, 500));</span>
-    <span class="doccomment">/// let b = Rational::from((377, 500));</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// assert_eq!(a.compare(&amp;b), Ordering::Less);</span>
-    <span class="doccomment">/// assert_eq!(b.compare(&amp;a), Ordering::Greater);</span>
-    <span class="doccomment">/// assert_eq!(a.compare(&amp;a), Ordering::Equal);</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">compare</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="ident">Ordering</span> {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
-        <span class="kw">let</span> <span class="ident">rhs_raw</span> <span class="op">=</span> <span class="ident">rhs</span>.<span class="ident">as_raw</span>();
+    <span class="doccomment">/// Compare two rationals
+    ///
+    /// # Example
+    /// ```
+    /// use core::cmp::Ordering;
+    /// use reckoner::Rational;
+    ///
+    /// let a = Rational::from((123, 500));
+    /// let b = Rational::from((377, 500));
+    ///
+    /// assert_eq!(a.compare(&amp;b), Ordering::Less);
+    /// assert_eq!(b.compare(&amp;a), Ordering::Greater);
+    /// assert_eq!(a.compare(&amp;a), Ordering::Equal);
+    /// ```
+    </span><span class="kw">pub fn </span>compare(<span class="kw-2">&amp;</span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; Ordering {
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
+        <span class="kw">let </span>rhs_raw = rhs.as_raw();
 
-        <span class="comment">// This is safe bc both self &amp; rhs have been initialized correctly</span>
-        <span class="kw">let</span> <span class="ident">raw_cmp</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_rat_compare</span>(<span class="ident">self_raw</span>, <span class="ident">rhs_raw</span>) };
+        <span class="comment">// This is safe bc both self &amp; rhs have been initialized correctly
+        </span><span class="kw">let </span>raw_cmp = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_rat_compare(self_raw, rhs_raw) };
 
-        <span class="ident">raw_cmp</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="number">0</span>)
+        raw_cmp.cmp(<span class="kw-2">&amp;</span><span class="number">0</span>)
     }
 
-    <span class="doccomment">/// Compare the magnitude of two rationals, not taking sign into account.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use core::cmp::Ordering;</span>
-    <span class="doccomment">/// use reckoner::Rational;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let a = Rational::from((123, 500));</span>
-    <span class="doccomment">/// let b = Rational::from((-377, 500));</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// assert_eq!(a.compare(&amp;b), Ordering::Greater);</span>
-    <span class="doccomment">/// assert_eq!(a.compare_magnitude(&amp;b), Ordering::Less);</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">compare_magnitude</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="ident">Ordering</span> {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
-        <span class="kw">let</span> <span class="ident">rhs_raw</span> <span class="op">=</span> <span class="ident">rhs</span>.<span class="ident">as_raw</span>();
+    <span class="doccomment">/// Compare the magnitude of two rationals, not taking sign into account.
+    ///
+    /// # Example
+    /// ```
+    /// use core::cmp::Ordering;
+    /// use reckoner::Rational;
+    ///
+    /// let a = Rational::from((123, 500));
+    /// let b = Rational::from((-377, 500));
+    ///
+    /// assert_eq!(a.compare(&amp;b), Ordering::Greater);
+    /// assert_eq!(a.compare_magnitude(&amp;b), Ordering::Less);
+    /// ```
+    </span><span class="kw">pub fn </span>compare_magnitude(<span class="kw-2">&amp;</span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; Ordering {
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
+        <span class="kw">let </span>rhs_raw = rhs.as_raw();
 
-        <span class="comment">// This is safe bc both self &amp; rhs have been initialized correctly</span>
-        <span class="kw">let</span> <span class="ident">raw_cmp</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_rat_compare_unsigned</span>(<span class="ident">self_raw</span>, <span class="ident">rhs_raw</span>) };
+        <span class="comment">// This is safe bc both self &amp; rhs have been initialized correctly
+        </span><span class="kw">let </span>raw_cmp = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_rat_compare_unsigned(self_raw, rhs_raw) };
 
-        <span class="ident">raw_cmp</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="number">0</span>)
+        raw_cmp.cmp(<span class="kw-2">&amp;</span><span class="number">0</span>)
     }
 
-    <span class="doccomment">/// Compare a rational to zero.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use core::cmp::Ordering;</span>
-    <span class="doccomment">/// use reckoner::Rational;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let a = Rational::from((123, 500));</span>
-    <span class="doccomment">/// let b = Rational::from((-377, 500));</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// assert_eq!(a.compare_zero(), Ordering::Greater);</span>
-    <span class="doccomment">/// assert_eq!(b.compare_zero(), Ordering::Less);</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">compare_zero</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Ordering</span> {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+    <span class="doccomment">/// Compare a rational to zero.
+    ///
+    /// # Example
+    /// ```
+    /// use core::cmp::Ordering;
+    /// use reckoner::Rational;
+    ///
+    /// let a = Rational::from((123, 500));
+    /// let b = Rational::from((-377, 500));
+    ///
+    /// assert_eq!(a.compare_zero(), Ordering::Greater);
+    /// assert_eq!(b.compare_zero(), Ordering::Less);
+    /// ```
+    </span><span class="kw">pub fn </span>compare_zero(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Ordering {
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
 
-        <span class="comment">// This is safe bc both self has been initialized correctly</span>
-        <span class="kw">let</span> <span class="ident">raw_cmp</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_rat_compare_zero</span>(<span class="ident">self_raw</span>) };
+        <span class="comment">// This is safe bc both self has been initialized correctly
+        </span><span class="kw">let </span>raw_cmp = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_rat_compare_zero(self_raw) };
 
-        <span class="ident">raw_cmp</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="number">0</span>)
+        raw_cmp.cmp(<span class="kw-2">&amp;</span><span class="number">0</span>)
     }
 
-    <span class="doccomment">/// Return a copy of the numerator of the rational value</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use reckoner::Rational;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let a = Rational::from((34256, 54587));</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// assert_eq!(a.numerator(), 34256);</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">numerator</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Integer</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">numer</span> <span class="op">=</span> <span class="ident">Integer::new</span>();
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+    <span class="doccomment">/// Return a copy of the numerator of the rational value
+    ///
+    /// # Example
+    /// ```
+    /// use reckoner::Rational;
+    ///
+    /// let a = Rational::from((34256, 54587));
+    ///
+    /// assert_eq!(a.numerator(), 34256);
+    /// ```
+    </span><span class="kw">pub fn </span>numerator(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Integer {
+        <span class="kw">let </span><span class="kw-2">mut </span>numer = Integer::new();
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
 
         {
-            <span class="kw">let</span> <span class="ident">raw_int</span> <span class="op">=</span> <span class="ident">Integer::into_raw</span>(<span class="ident">numer</span>);
+            <span class="kw">let </span>raw_int = Integer::into_raw(numer);
 
-            <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_rat_numer</span>(<span class="ident">self_raw</span>, <span class="ident">raw_int</span>) };
+            <span class="kw">let </span>res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_rat_numer(self_raw, raw_int) };
 
-            <span class="macro">imath_check_panic!</span>(<span class="ident">res</span>, <span class="string">&quot;Value init failed!&quot;</span>);
+            <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Value init failed!&quot;</span>);
 
-            <span class="comment">// This is safe because the `raw_int` ptr is created directly from an</span>
-            <span class="comment">// `Integer::into_raw` call.</span>
-            <span class="ident">numer</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Integer::from_raw</span>(<span class="ident">raw_int</span>) };
+            <span class="comment">// This is safe because the `raw_int` ptr is created directly from an
+            // `Integer::into_raw` call.
+            </span>numer = <span class="kw">unsafe </span>{ Integer::from_raw(raw_int) };
         }
 
-        <span class="ident">numer</span>
+        numer
     }
 
-    <span class="doccomment">/// Return a copy of the denominator of the rational value</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use reckoner::Rational;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let a = Rational::from((34256, 54587));</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// assert_eq!(a.denominator(), 54587);</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">denominator</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Integer</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">denom</span> <span class="op">=</span> <span class="ident">Integer::new</span>();
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+    <span class="doccomment">/// Return a copy of the denominator of the rational value
+    ///
+    /// # Example
+    /// ```
+    /// use reckoner::Rational;
+    ///
+    /// let a = Rational::from((34256, 54587));
+    ///
+    /// assert_eq!(a.denominator(), 54587);
+    /// ```
+    </span><span class="kw">pub fn </span>denominator(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Integer {
+        <span class="kw">let </span><span class="kw-2">mut </span>denom = Integer::new();
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
 
         {
-            <span class="kw">let</span> <span class="ident">raw_int</span> <span class="op">=</span> <span class="ident">Integer::into_raw</span>(<span class="ident">denom</span>);
+            <span class="kw">let </span>raw_int = Integer::into_raw(denom);
 
-            <span class="comment">// This function call is safe as self_raw and raw_int have been initialized.</span>
-            <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_rat_denom</span>(<span class="ident">self_raw</span>, <span class="ident">raw_int</span>) };
+            <span class="comment">// This function call is safe as self_raw and raw_int have been initialized.
+            </span><span class="kw">let </span>res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_rat_denom(self_raw, raw_int) };
 
-            <span class="macro">imath_check_panic!</span>(<span class="ident">res</span>, <span class="string">&quot;Value init failed!&quot;</span>);
+            <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Value init failed!&quot;</span>);
 
-            <span class="comment">// This is safe because the `raw_int` ptr is created directly from an</span>
-            <span class="comment">// `Integer::into_raw` call.</span>
-            <span class="ident">denom</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Integer::from_raw</span>(<span class="ident">raw_int</span>) };
+            <span class="comment">// This is safe because the `raw_int` ptr is created directly from an
+            // `Integer::into_raw` call.
+            </span>denom = <span class="kw">unsafe </span>{ Integer::from_raw(raw_int) };
         }
 
-        <span class="ident">denom</span>
+        denom
     }
 
-    <span class="doccomment">/// Replaces the value of `other` with a copy of the value of `self`. No new</span>
-    <span class="doccomment">/// memory is allocated unless `self` has more significant digits than</span>
-    <span class="doccomment">/// `other` has allocated.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use reckoner::Rational;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let a = Rational::from((34256, 54587));</span>
-    <span class="doccomment">/// let mut b = Rational::new();</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// a.copy_to(&amp;mut b);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// assert_eq!(a, b);</span>
-    <span class="doccomment">/// assert_eq!(b, (34256, 54587));</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;mut</span> <span class="self">Self</span>) {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
-        <span class="kw">let</span> <span class="ident">other_raw</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">as_raw</span>();
+    <span class="doccomment">/// Replaces the value of `other` with a copy of the value of `self`. No new
+    /// memory is allocated unless `self` has more significant digits than
+    /// `other` has allocated.
+    ///
+    /// # Example
+    /// ```
+    /// use reckoner::Rational;
+    ///
+    /// let a = Rational::from((34256, 54587));
+    /// let mut b = Rational::new();
+    ///
+    /// a.copy_to(&amp;mut b);
+    ///
+    /// assert_eq!(a, b);
+    /// assert_eq!(b, (34256, 54587));
+    /// ```
+    </span><span class="kw">pub fn </span>copy_to(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;mut </span><span class="self">Self</span>) {
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
+        <span class="kw">let </span>other_raw = other.as_raw();
 
-        <span class="comment">// This is safe bc self has been initialized with a value</span>
-        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_rat_copy</span>(<span class="ident">self_raw</span>, <span class="ident">other_raw</span>) };
+        <span class="comment">// This is safe bc self has been initialized with a value
+        </span><span class="kw">let </span>res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_rat_copy(self_raw, other_raw) };
 
-        <span class="macro">imath_check_panic!</span>(<span class="ident">res</span>, <span class="string">&quot;Copying the value failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Copying the value failed!&quot;</span>);
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">from_string_repr</span>(<span class="ident">src</span>: <span class="kw">impl</span> <span class="ident">ToString</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">string_repr</span> <span class="op">=</span>
-            <span class="ident">CString::new</span>(<span class="ident">src</span>.<span class="ident">to_string</span>()).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Error::StringReprContainedNul</span>)<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">char_ptr</span> <span class="op">=</span> <span class="ident">string_repr</span>.<span class="ident">into_raw</span>();
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>from_string_repr(src: <span class="kw">impl </span>ToString) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">let </span>string_repr =
+            CString::new(src.to_string()).map_err(|<span class="kw">_</span>| Error::StringReprContainedNul)<span class="question-mark">?</span>;
+        <span class="kw">let </span>char_ptr = string_repr.into_raw();
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">init</span> <span class="op">=</span> <span class="ident">Rational::uninit</span>();
+        <span class="kw">let </span><span class="kw-2">mut </span>init = Rational::uninit();
 
         {
-            <span class="kw">let</span> <span class="ident">raw_mpq</span> <span class="op">=</span> <span class="ident">init</span>.<span class="ident">as_mut_ptr</span>();
+            <span class="kw">let </span>raw_mpq = init.as_mut_ptr();
 
-            <span class="comment">// This is safe bc a valid structure is provided to the unsafe methods. And the</span>
-            <span class="comment">// src value is of the correct type?</span>
-            <span class="kw">let</span> <span class="ident">res_init</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_rat_init</span>(<span class="ident">raw_mpq</span>) };
+            <span class="comment">// This is safe bc a valid structure is provided to the unsafe methods. And the
+            // src value is of the correct type?
+            </span><span class="kw">let </span>res_init = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_rat_init(raw_mpq) };
 
-            <span class="macro">imath_check_panic!</span>(<span class="ident">res_init</span>, <span class="string">&quot;Init failed!&quot;</span>);
+            <span class="macro">imath_check_panic!</span>(res_init, <span class="string">&quot;Init failed!&quot;</span>);
 
-            <span class="comment">// This is safe bc all the data provided to the function is correctly setup</span>
-            <span class="comment">// (rational was allocated/initialized, char_ptr is 0-terminated).</span>
-            <span class="kw">let</span> <span class="ident">res_read</span> <span class="op">=</span> <span class="kw">unsafe</span> {
-                <span class="ident">creachadair_imath_sys::mp_rat_read_ustring</span>(<span class="ident">raw_mpq</span>, <span class="number">10</span>, <span class="ident">char_ptr</span>, <span class="ident">ptr::null_mut</span>())
+            <span class="comment">// This is safe bc all the data provided to the function is correctly setup
+            // (rational was allocated/initialized, char_ptr is 0-terminated).
+            </span><span class="kw">let </span>res_read = <span class="kw">unsafe </span>{
+                creachadair_imath_sys::mp_rat_read_ustring(raw_mpq, <span class="number">10</span>, char_ptr, ptr::null_mut())
             };
 
-            <span class="comment">// Accessing this is safe bc the MP_OK value is only ever used as an error</span>
-            <span class="comment">// condition.</span>
-            <span class="kw">if</span> <span class="ident">res_read</span> <span class="op">!</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::MP_OK</span> } {
-                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::ReadStringTruncated</span>);
+            <span class="comment">// Accessing this is safe bc the MP_OK value is only ever used as an error
+            // condition.
+            </span><span class="kw">if </span>res_read != <span class="kw">unsafe </span>{ creachadair_imath_sys::MP_OK } {
+                <span class="kw">return </span><span class="prelude-val">Err</span>(Error::ReadStringTruncated);
             }
         }
 
-        <span class="comment">// This is safe bc we produced the char_ptr earlier from a CString</span>
-        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">CString::from_raw</span>(<span class="ident">char_ptr</span>) };
+        <span class="comment">// This is safe bc we produced the char_ptr earlier from a CString
+        </span><span class="kw">let _ </span>= <span class="kw">unsafe </span>{ CString::from_raw(char_ptr) };
 
         <span class="prelude-val">Ok</span>(
-            <span class="comment">// This cast is safe (from MaybeUninit&lt;creachadair_imath_sys::mpq_t&gt; to</span>
-            <span class="comment">// creachadair_imath_sys::mpq_t) because the value is now initialized.</span>
-            <span class="kw">unsafe</span> { <span class="ident">Rational::from_raw</span>(<span class="ident">Box::into_raw</span>(<span class="ident">init</span>).<span class="ident">cast</span>()) },
+            <span class="comment">// This cast is safe (from MaybeUninit&lt;creachadair_imath_sys::mpq_t&gt; to
+            // creachadair_imath_sys::mpq_t) because the value is now initialized.
+            </span><span class="kw">unsafe </span>{ Rational::from_raw(Box::into_raw(init).cast()) },
         )
     }
 
-    <span class="comment">// Reports the minimum number of characters required to represent `self` as a</span>
-    <span class="comment">// zero-terminated string in base-10.</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">required_display_len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">usize</span> {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+    <span class="comment">// Reports the minimum number of characters required to represent `self` as a
+    // zero-terminated string in base-10.
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>required_display_len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
 
-        <span class="comment">// This is safe bc self_raw has been initialized and 10 is within the range</span>
-        <span class="comment">// `[MP_MIN_RADIX, MP_MAX_RADIX]`</span>
-        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_rat_string_len</span>(<span class="ident">self_raw</span>, <span class="number">10</span>) };
+        <span class="comment">// This is safe bc self_raw has been initialized and 10 is within the range
+        // `[MP_MIN_RADIX, MP_MAX_RADIX]`
+        </span><span class="kw">let </span>len = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_rat_string_len(self_raw, <span class="number">10</span>) };
 
-        <span class="comment">// The output of the call is an i32, check that it is gte zero.</span>
-        <span class="macro">assert!</span>(<span class="ident">len</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0</span>);
-        <span class="ident">len</span> <span class="kw">as</span> <span class="ident">usize</span>
+        <span class="comment">// The output of the call is an i32, check that it is gte zero.
+        </span><span class="macro">assert!</span>(len &gt;= <span class="number">0</span>);
+        len <span class="kw">as </span>usize
     }
 
-    <span class="comment">// Reports the minimum number of characters required to represent `z` as a</span>
-    <span class="comment">// zero-terminated decimal string in base-10.</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">required_decimal_display_len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">max_precision</span>: <span class="ident">u16</span>) -&gt; <span class="ident">usize</span> {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+    <span class="comment">// Reports the minimum number of characters required to represent `z` as a
+    // zero-terminated decimal string in base-10.
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>required_decimal_display_len(<span class="kw-2">&amp;</span><span class="self">self</span>, max_precision: u16) -&gt; usize {
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
 
-        <span class="comment">// This is safe bc self_raw has been initialized and 10 is within the range</span>
-        <span class="comment">// `[MP_MIN_RADIX, MP_MAX_RADIX]`</span>
-        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="kw">unsafe</span> {
-            <span class="ident">creachadair_imath_sys::mp_rat_decimal_len</span>(<span class="ident">self_raw</span>, <span class="number">10</span>, <span class="ident">max_precision</span>.<span class="ident">into</span>())
+        <span class="comment">// This is safe bc self_raw has been initialized and 10 is within the range
+        // `[MP_MIN_RADIX, MP_MAX_RADIX]`
+        </span><span class="kw">let </span>len = <span class="kw">unsafe </span>{
+            creachadair_imath_sys::mp_rat_decimal_len(self_raw, <span class="number">10</span>, max_precision.into())
         };
 
-        <span class="comment">// The output of the call is an i32, check that it is gte zero.</span>
-        <span class="macro">assert!</span>(<span class="ident">len</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0</span>);
-        <span class="ident">len</span> <span class="kw">as</span> <span class="ident">usize</span>
+        <span class="comment">// The output of the call is an i32, check that it is gte zero.
+        </span><span class="macro">assert!</span>(len &gt;= <span class="number">0</span>);
+        len <span class="kw">as </span>usize
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">to_cstring</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">CString</span> {
-        <span class="kw">let</span> <span class="ident">required_len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">required_display_len</span>();
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>to_cstring(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; CString {
+        <span class="kw">let </span>required_len = <span class="self">self</span>.required_display_len();
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">char_vec</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">required_len</span>);
-        <span class="comment">// Initialize all to zero</span>
-        <span class="ident">char_vec</span>.<span class="ident">resize_with</span>(<span class="ident">required_len</span>, <span class="ident">Default::default</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>char_vec: Vec&lt;u8&gt; = Vec::with_capacity(required_len);
+        <span class="comment">// Initialize all to zero
+        </span>char_vec.resize_with(required_len, Default::default);
 
-        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> {
-            <span class="kw">let</span> <span class="ident">char_ptr</span> <span class="op">=</span> <span class="ident">char_vec</span>.<span class="ident">as_mut_ptr</span>();
-            <span class="kw">let</span> <span class="ident">cap</span> <span class="op">=</span> <span class="ident">char_vec</span>.<span class="ident">capacity</span>();
+        <span class="kw">let </span>res = {
+            <span class="kw">let </span>char_ptr = char_vec.as_mut_ptr();
+            <span class="kw">let </span>cap = char_vec.capacity();
 
-            <span class="macro">debug_assert_eq!</span>(<span class="ident">required_len</span>, <span class="ident">cap</span>);
-            <span class="kw">unsafe</span> {
-                <span class="ident">creachadair_imath_sys::mp_rat_to_string</span>(
-                    <span class="ident">self_raw</span>,
+            <span class="macro">debug_assert_eq!</span>(required_len, cap);
+            <span class="kw">unsafe </span>{
+                creachadair_imath_sys::mp_rat_to_string(
+                    self_raw,
                     <span class="number">10</span>,
-                    <span class="ident">char_ptr</span> <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                    <span class="ident">required_len</span> <span class="kw">as</span> <span class="ident">i32</span>,
+                    char_ptr <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                    required_len <span class="kw">as </span>i32,
                 )
             }
         };
 
-        <span class="macro">imath_check_panic!</span>(<span class="ident">res</span>, <span class="string">&quot;Writing the value as a string failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Writing the value as a string failed!&quot;</span>);
 
-        <span class="comment">// Setting the length is safe bc we now that the `mp_rat_to_string`</span>
-        <span class="comment">// should have used the entire capacity to write to</span>
-        <span class="comment">// string.</span>
-        <span class="kw">unsafe</span> {
-            <span class="ident">char_vec</span>.<span class="ident">set_len</span>(<span class="ident">required_len</span>);
+        <span class="comment">// Setting the length is safe bc we now that the `mp_rat_to_string`
+        // should have used the entire capacity to write to
+        // string.
+        </span><span class="kw">unsafe </span>{
+            char_vec.set_len(required_len);
         }
 
-        <span class="comment">// At this point, char_vec is a zero-terminated (possibly with many zeros)</span>
-        <span class="comment">// string containing a string representation of the rational value.</span>
-        <span class="kw">let</span> (<span class="ident">non_zero_idx</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">char_vec</span>
-            .<span class="ident">iter</span>()
-            .<span class="ident">enumerate</span>()
-            .<span class="ident">rfind</span>(<span class="op">|</span>(<span class="kw">_</span>, <span class="ident">c</span>)<span class="op">|</span> <span class="kw-2">*</span><span class="kw-2">*</span><span class="ident">c</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>)
-            .<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">without_nul</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">char_vec</span>.<span class="ident">as_slice</span>()[..<span class="op">=</span><span class="ident">non_zero_idx</span>];
+        <span class="comment">// At this point, char_vec is a zero-terminated (possibly with many zeros)
+        // string containing a string representation of the rational value.
+        </span><span class="kw">let </span>(non_zero_idx, <span class="kw">_</span>) = char_vec
+            .iter()
+            .enumerate()
+            .rfind(|(<span class="kw">_</span>, c)| <span class="kw-2">**</span>c != <span class="number">0</span>)
+            .unwrap();
+        <span class="kw">let </span>without_nul = <span class="kw-2">&amp;</span>char_vec.as_slice()[..=non_zero_idx];
 
-        <span class="ident">CString::new</span>(<span class="ident">without_nul</span>).<span class="ident">expect</span>(<span class="string">&quot;Failed to produce a valid CString&quot;</span>)
+        CString::new(without_nul).expect(<span class="string">&quot;Failed to produce a valid CString&quot;</span>)
     }
 
-    <span class="doccomment">/// Converts the value of `self` to a string in base-10 decimal-point</span>
-    <span class="doccomment">/// notation.  It generates `max_precision` digits of precision and takes a</span>
-    <span class="doccomment">/// `RoundMode` argument that determines how the ratio will be converted to</span>
-    <span class="doccomment">/// decimal.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use reckoner::{Rational, RoundMode};</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let r = Rational::from((1146408, 364913));</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// assert_eq!(r.to_decimal(RoundMode::HalfUp, 6), &quot;3.141593&quot;);</span>
-    <span class="doccomment">/// assert_eq!(r.to_decimal(RoundMode::HalfUp, 5), &quot;3.14159&quot;);</span>
-    <span class="doccomment">/// assert_eq!(r.to_decimal(RoundMode::HalfUp, 4), &quot;3.1416&quot;);</span>
-    <span class="doccomment">/// assert_eq!(r.to_decimal(RoundMode::HalfUp, 3), &quot;3.142&quot;);</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_decimal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rounding_mode</span>: <span class="ident">RoundMode</span>, <span class="ident">max_precision</span>: <span class="ident">u16</span>) -&gt; <span class="ident">String</span> {
-        <span class="kw">let</span> <span class="ident">required_len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">required_decimal_display_len</span>(<span class="ident">max_precision</span>);
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+    <span class="doccomment">/// Converts the value of `self` to a string in base-10 decimal-point
+    /// notation.  It generates `max_precision` digits of precision and takes a
+    /// `RoundMode` argument that determines how the ratio will be converted to
+    /// decimal.
+    ///
+    /// # Example
+    /// ```
+    /// use reckoner::{Rational, RoundMode};
+    ///
+    /// let r = Rational::from((1146408, 364913));
+    ///
+    /// assert_eq!(r.to_decimal(RoundMode::HalfUp, 6), &quot;3.141593&quot;);
+    /// assert_eq!(r.to_decimal(RoundMode::HalfUp, 5), &quot;3.14159&quot;);
+    /// assert_eq!(r.to_decimal(RoundMode::HalfUp, 4), &quot;3.1416&quot;);
+    /// assert_eq!(r.to_decimal(RoundMode::HalfUp, 3), &quot;3.142&quot;);
+    /// ```
+    </span><span class="kw">pub fn </span>to_decimal(<span class="kw-2">&amp;</span><span class="self">self</span>, rounding_mode: RoundMode, max_precision: u16) -&gt; String {
+        <span class="kw">let </span>required_len = <span class="self">self</span>.required_decimal_display_len(max_precision);
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">char_vec</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">required_len</span>);
-        <span class="comment">// Initialize all to zero</span>
-        <span class="ident">char_vec</span>.<span class="ident">resize_with</span>(<span class="ident">required_len</span>, <span class="ident">Default::default</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>char_vec: Vec&lt;u8&gt; = Vec::with_capacity(required_len);
+        <span class="comment">// Initialize all to zero
+        </span>char_vec.resize_with(required_len, Default::default);
 
-        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> {
-            <span class="kw">let</span> <span class="ident">char_ptr</span> <span class="op">=</span> <span class="ident">char_vec</span>.<span class="ident">as_mut_ptr</span>();
-            <span class="kw">let</span> <span class="ident">cap</span> <span class="op">=</span> <span class="ident">char_vec</span>.<span class="ident">capacity</span>();
+        <span class="kw">let </span>res = {
+            <span class="kw">let </span>char_ptr = char_vec.as_mut_ptr();
+            <span class="kw">let </span>cap = char_vec.capacity();
 
-            <span class="macro">debug_assert_eq!</span>(<span class="ident">required_len</span>, <span class="ident">cap</span>);
-            <span class="kw">unsafe</span> {
-                <span class="ident">creachadair_imath_sys::mp_rat_to_decimal</span>(
-                    <span class="ident">self_raw</span>,
+            <span class="macro">debug_assert_eq!</span>(required_len, cap);
+            <span class="kw">unsafe </span>{
+                creachadair_imath_sys::mp_rat_to_decimal(
+                    self_raw,
                     <span class="number">10</span>,
-                    <span class="ident">max_precision</span>.<span class="ident">into</span>(),
-                    <span class="ident">rounding_mode</span>.<span class="ident">into</span>(),
-                    <span class="ident">char_ptr</span> <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                    <span class="ident">required_len</span> <span class="kw">as</span> <span class="ident">i32</span>,
+                    max_precision.into(),
+                    rounding_mode.into(),
+                    char_ptr <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                    required_len <span class="kw">as </span>i32,
                 )
             }
         };
 
-        <span class="macro">imath_check_panic!</span>(<span class="ident">res</span>, <span class="string">&quot;Writing the value as a string failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Writing the value as a string failed!&quot;</span>);
 
-        <span class="comment">// Setting the length is safe bc we now that the `mp_rat_to_decimal`</span>
-        <span class="comment">// should have used the entire capacity to write to</span>
-        <span class="comment">// string.</span>
-        <span class="kw">unsafe</span> {
-            <span class="ident">char_vec</span>.<span class="ident">set_len</span>(<span class="ident">required_len</span>);
+        <span class="comment">// Setting the length is safe bc we now that the `mp_rat_to_decimal`
+        // should have used the entire capacity to write to
+        // string.
+        </span><span class="kw">unsafe </span>{
+            char_vec.set_len(required_len);
         }
 
-        <span class="comment">// At this point, char_vec is a zero-terminated (possibly with many zeros)</span>
-        <span class="comment">// string containing a decimal representation of the rational value.</span>
-        <span class="kw">let</span> (<span class="ident">non_zero_idx</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">char_vec</span>
-            .<span class="ident">iter</span>()
-            .<span class="ident">enumerate</span>()
-            .<span class="ident">rfind</span>(<span class="op">|</span>(<span class="kw">_</span>, <span class="ident">c</span>)<span class="op">|</span> <span class="kw-2">*</span><span class="kw-2">*</span><span class="ident">c</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>)
-            .<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">without_nul</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">char_vec</span>.<span class="ident">as_slice</span>()[..<span class="op">=</span><span class="ident">non_zero_idx</span>];
+        <span class="comment">// At this point, char_vec is a zero-terminated (possibly with many zeros)
+        // string containing a decimal representation of the rational value.
+        </span><span class="kw">let </span>(non_zero_idx, <span class="kw">_</span>) = char_vec
+            .iter()
+            .enumerate()
+            .rfind(|(<span class="kw">_</span>, c)| <span class="kw-2">**</span>c != <span class="number">0</span>)
+            .unwrap();
+        <span class="kw">let </span>without_nul = <span class="kw-2">&amp;</span>char_vec.as_slice()[..=non_zero_idx];
 
-        <span class="ident">CString::new</span>(<span class="ident">without_nul</span>)
-            .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> {
+        CString::new(without_nul)
+            .unwrap_or_else(|err| {
                 <span class="macro">panic!</span>(
                     <span class="string">&quot;Failed to produce a valid CString. {} {:?}\n{}&quot;</span>,
-                    <span class="ident">non_zero_idx</span>, <span class="ident">char_vec</span>, <span class="ident">err</span>
+                    non_zero_idx, char_vec, err
                 )
             })
-            .<span class="ident">to_string_lossy</span>()
-            .<span class="ident">into_owned</span>()
+            .to_string_lossy()
+            .into_owned()
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">set_value</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">numer</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>, <span class="ident">denom</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">c_long</span><span class="op">&gt;</span>) {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>set_value(<span class="kw-2">&amp;mut </span><span class="self">self</span>, numer: <span class="kw">impl </span>Into&lt;c_long&gt;, denom: <span class="kw">impl </span>Into&lt;c_long&gt;) {
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
 
-        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> {
-            <span class="ident">creachadair_imath_sys::mp_rat_set_value</span>(<span class="ident">self_raw</span>, <span class="ident">numer</span>.<span class="ident">into</span>(), <span class="ident">denom</span>.<span class="ident">into</span>())
+        <span class="kw">let </span>res = <span class="kw">unsafe </span>{
+            creachadair_imath_sys::mp_rat_set_value(self_raw, numer.into(), denom.into())
         };
 
-        <span class="macro">imath_check_panic!</span>(<span class="ident">res</span>, <span class="string">&quot;Setting the value failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Setting the value failed!&quot;</span>);
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">set_numerator</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">numer</span>: <span class="kw-2">&amp;</span><span class="ident">Integer</span>) {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
-        <span class="kw">let</span> <span class="ident">int_raw</span> <span class="op">=</span> <span class="ident">numer</span>.<span class="ident">as_raw</span>();
-        <span class="comment">// TODO: Use `&amp;raw` when it hits stable</span>
-        <span class="comment">// This is correct bc the `num` field is the first field in the `mpz_t` struct,</span>
-        <span class="comment">// which is also `repr(C)`.</span>
-        <span class="kw">let</span> <span class="ident">num_raw</span> <span class="op">=</span> <span class="ident">self_raw</span>.<span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">creachadair_imath_sys::mpz_t</span><span class="op">&gt;</span>();
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>set_numerator(<span class="kw-2">&amp;mut </span><span class="self">self</span>, numer: <span class="kw-2">&amp;</span>Integer) {
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
+        <span class="kw">let </span>int_raw = numer.as_raw();
+        <span class="comment">// TODO: Use `&amp;raw` when it hits stable
+        // This is correct bc the `num` field is the first field in the `mpz_t` struct,
+        // which is also `repr(C)`.
+        </span><span class="kw">let </span>num_raw = self_raw.cast::&lt;creachadair_imath_sys::mpz_t&gt;();
 
-        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_copy</span>(<span class="ident">int_raw</span>, <span class="ident">num_raw</span>) };
+        <span class="kw">let </span>res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_copy(int_raw, num_raw) };
 
-        <span class="macro">imath_check_panic!</span>(<span class="ident">res</span>, <span class="string">&quot;Setting the numerator failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Setting the numerator failed!&quot;</span>);
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">set_denominator</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">denom</span>: <span class="kw-2">&amp;</span><span class="ident">Integer</span>) {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
-        <span class="kw">let</span> <span class="ident">denom_raw</span> <span class="op">=</span> <span class="ident">denom</span>.<span class="ident">as_raw</span>();
-        <span class="comment">// TODO: Use `&amp;raw` when it hits stable</span>
-        <span class="comment">// This is safe because the layout of the `mpq_t` struct is repr(C) and just two</span>
-        <span class="comment">// `mpz_t` in a row. The alignment of `mpz_t` is 8, and the size is 32, so the</span>
-        <span class="comment">// offset for the `den` field should also be 32, equivalent to one `mpz_t`.</span>
-        <span class="kw">let</span> <span class="ident">den_raw</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">self_raw</span>.<span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">creachadair_imath_sys::mpz_t</span><span class="op">&gt;</span>().<span class="ident">offset</span>(<span class="number">1</span>) };
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>set_denominator(<span class="kw-2">&amp;mut </span><span class="self">self</span>, denom: <span class="kw-2">&amp;</span>Integer) {
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
+        <span class="kw">let </span>denom_raw = denom.as_raw();
+        <span class="comment">// TODO: Use `&amp;raw` when it hits stable
+        // This is safe because the layout of the `mpq_t` struct is repr(C) and just two
+        // `mpz_t` in a row. The alignment of `mpz_t` is 8, and the size is 32, so the
+        // offset for the `den` field should also be 32, equivalent to one `mpz_t`.
+        </span><span class="kw">let </span>den_raw = <span class="kw">unsafe </span>{ self_raw.cast::&lt;creachadair_imath_sys::mpz_t&gt;().offset(<span class="number">1</span>) };
 
-        <span class="comment">// This is safe because both `self` and `denom` have been initialized, and the</span>
-        <span class="comment">// `den_raw` pointer points correctly to the `den` field of the `mpq_t` struct.</span>
-        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::mp_int_copy</span>(<span class="ident">denom_raw</span>, <span class="ident">den_raw</span>) };
+        <span class="comment">// This is safe because both `self` and `denom` have been initialized, and the
+        // `den_raw` pointer points correctly to the `den` field of the `mpq_t` struct.
+        </span><span class="kw">let </span>res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_copy(denom_raw, den_raw) };
 
-        <span class="macro">imath_check_panic!</span>(<span class="ident">res</span>, <span class="string">&quot;Setting the denominator failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Setting the denominator failed!&quot;</span>);
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">try_into_c_long</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">c_long</span>, <span class="ident">c_long</span>)<span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">self_raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>try_into_c_long(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(c_long, c_long)&gt; {
+        <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">numerator</span>: <span class="ident">c_long</span> <span class="op">=</span> <span class="number">0</span>;
-        <span class="kw">let</span> <span class="ident">numerator_raw</span> <span class="op">=</span> (<span class="kw-2">&amp;mut</span> <span class="ident">numerator</span>) <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>numerator: c_long = <span class="number">0</span>;
+        <span class="kw">let </span>numerator_raw = (<span class="kw-2">&amp;mut </span>numerator) <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>;
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">denominator</span>: <span class="ident">c_long</span> <span class="op">=</span> <span class="number">0</span>;
-        <span class="kw">let</span> <span class="ident">denominator_raw</span> <span class="op">=</span> (<span class="kw-2">&amp;mut</span> <span class="ident">denominator</span>) <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>denominator: c_long = <span class="number">0</span>;
+        <span class="kw">let </span>denominator_raw = (<span class="kw-2">&amp;mut </span>denominator) <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>;
 
-        <span class="comment">// This is safe bc `self` has been initialized and</span>
-        <span class="comment">// `numerator_raw`/`denominator_raw` point to actual integers.</span>
-        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> {
-            <span class="ident">creachadair_imath_sys::mp_rat_to_ints</span>(<span class="ident">self_raw</span>, <span class="ident">numerator_raw</span>, <span class="ident">denominator_raw</span>)
+        <span class="comment">// This is safe bc `self` has been initialized and
+        // `numerator_raw`/`denominator_raw` point to actual integers.
+        </span><span class="kw">let </span>res = <span class="kw">unsafe </span>{
+            creachadair_imath_sys::mp_rat_to_ints(self_raw, numerator_raw, denominator_raw)
         };
 
-        <span class="comment">// Accessing this is safe bc the MP_OK value is only ever used as an error</span>
-        <span class="comment">// condition.</span>
-        <span class="kw">if</span> <span class="ident">res</span> <span class="op">==</span> <span class="kw">unsafe</span> { <span class="ident">creachadair_imath_sys::MP_OK</span> } {
-            <span class="prelude-val">Ok</span>((<span class="ident">numerator</span>, <span class="ident">denominator</span>))
-        } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">Error::ConversionOutsideRange</span>)
+        <span class="comment">// Accessing this is safe bc the MP_OK value is only ever used as an error
+        // condition.
+        </span><span class="kw">if </span>res == <span class="kw">unsafe </span>{ creachadair_imath_sys::MP_OK } {
+            <span class="prelude-val">Ok</span>((numerator, denominator))
+        } <span class="kw">else </span>{
+            <span class="prelude-val">Err</span>(Error::ConversionOutsideRange)
         }
     }
 }
 
-<span class="doccomment">/// Parse a rational value from a string having one of the following formats,</span>
-<span class="doccomment">/// each with an optional leading sign flag:</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// - `n`, integer format, e.g. &quot;123&quot;</span>
-<span class="doccomment">/// - `n/d`, ratio format, e.g., &quot;-12/5&quot;</span>
-<span class="doccomment">/// - `z.ffff`, decimal format, e.g., &quot;1.627&quot;</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// After successfully parsing, the rational will be reduced by factoring out</span>
-<span class="doccomment">/// common multiples of the numerator and denominators, as if `Rational::reduce`</span>
-<span class="doccomment">/// was called on the value.</span>
-<span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">Rational</span> {
-    <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">Error</span>;
+<span class="doccomment">/// Parse a rational value from a string having one of the following formats,
+/// each with an optional leading sign flag:
+///
+/// - `n`, integer format, e.g. &quot;123&quot;
+/// - `n/d`, ratio format, e.g., &quot;-12/5&quot;
+/// - `z.ffff`, decimal format, e.g., &quot;1.627&quot;
+///
+/// After successfully parsing, the rational will be reduced by factoring out
+/// common multiples of the numerator and denominators, as if `Rational::reduce`
+/// was called on the value.
+</span><span class="kw">impl </span>FromStr <span class="kw">for </span>Rational {
+    <span class="kw">type </span><span class="prelude-val">Err </span>= Error;
 
-    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="ident">Rational::from_string_repr</span>(<span class="ident">s</span>)
+    <span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        Rational::from_string_repr(s)
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">Rational</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="kw">if</span> <span class="ident">f</span>.<span class="ident">alternate</span>() {
-            <span class="comment">// This is safe bc self has been initialized</span>
-            <span class="kw">let</span> <span class="ident">num</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">numerator</span>();
-            <span class="kw">let</span> <span class="ident">den</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">denominator</span>();
+<span class="kw">impl </span>fmt::Debug <span class="kw">for </span>Rational {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+        <span class="kw">if </span>f.alternate() {
+            <span class="comment">// This is safe bc self has been initialized
+            </span><span class="kw">let </span>num = <span class="self">self</span>.numerator();
+            <span class="kw">let </span>den = <span class="self">self</span>.denominator();
 
-            <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Rational {{ num: {:#?}, den: {:#?} }}&quot;</span>, <span class="ident">num</span>, <span class="ident">den</span>)
-        } <span class="kw">else</span> {
-            <span class="ident">fmt::Display::fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>)
+            <span class="macro">write!</span>(f, <span class="string">&quot;Rational {{ num: {:#?}, den: {:#?} }}&quot;</span>, num, den)
+        } <span class="kw">else </span>{
+            fmt::Display::fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f)
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Rational</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="kw">let</span> <span class="ident">string_repr</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">to_cstring</span>();
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>Rational {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+        <span class="kw">let </span>string_repr = <span class="self">self</span>.to_cstring();
 
-        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="ident">string_repr</span>.<span class="ident">to_str</span>().<span class="ident">unwrap</span>())
+        f.write_str(string_repr.to_str().unwrap())
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Rational</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
-        <span class="ident"><span class="self">Self</span>::new</span>()
+<span class="kw">impl </span>Default <span class="kw">for </span>Rational {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::new()
     }
 }
 
-<span class="comment">// This is safe because the `Rational` has exclusive ownership of its data.</span>
-<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Send</span> <span class="kw">for</span> <span class="ident">Rational</span> {}
+<span class="comment">// This is safe because the `Rational` has exclusive ownership of its data.
+</span><span class="kw">unsafe impl </span>Send <span class="kw">for </span>Rational {}
 
-<span class="kw">impl</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">Rational</span> {
-    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span> {
-        <span class="ident"><span class="self">Self</span>::copy_init</span>(<span class="self">self</span>)
+<span class="kw">impl </span>Clone <span class="kw">for </span>Rational {
+    <span class="kw">fn </span>clone(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::copy_init(<span class="self">self</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">clone_from</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) {
-        <span class="ident">source</span>.<span class="ident">copy_to</span>(<span class="self">self</span>);
+    <span class="kw">fn </span>clone_from(<span class="kw-2">&amp;mut </span><span class="self">self</span>, source: <span class="kw-2">&amp;</span><span class="self">Self</span>) {
+        source.copy_to(<span class="self">self</span>);
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">Rational</span> {
-    <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_raw</span>();
+<span class="kw">impl </span>Drop <span class="kw">for </span>Rational {
+    <span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>raw = <span class="self">self</span>.as_raw();
 
-            <span class="comment">// This will ensure that the memory holding the rational data (the digits?) is</span>
-            <span class="comment">// not leaked.</span>
-            <span class="ident">creachadair_imath_sys::mp_rat_clear</span>(<span class="ident">raw</span>);
+            <span class="comment">// This will ensure that the memory holding the rational data (the digits?) is
+            // not leaked.
+            </span>creachadair_imath_sys::mp_rat_clear(raw);
 
-            <span class="comment">// This will ensure that the memory that held the `creachadair_imath_sys::mpq_t`</span>
-            <span class="comment">// is not leaked.</span>
-            <span class="ident">drop</span>(<span class="ident">Box::from_raw</span>(<span class="ident">raw</span>));
+            <span class="comment">// This will ensure that the memory that held the `creachadair_imath_sys::mpq_t`
+            // is not leaked.
+            </span>drop(Box::from_raw(raw));
         }
     }
 }
 
-<span class="comment">// Ratios usually must be rounded when they are being converted for output</span>
-<span class="doccomment">/// as a decimal value.  There are four rounding modes currently</span>
-<span class="doccomment">/// supported.</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">RoundMode</span> {
-    <span class="doccomment">/// Truncates the value toward zero.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// For example, 12.009 to 2 decimal places becomes 12.00.</span>
-    <span class="ident">Down</span>,
-    <span class="doccomment">/// Rounds the value away from zero.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// For example, 12.001 to 2 decimal places becomes 12.01, but 12.000 to 2</span>
-    <span class="doccomment">/// decimal places remains 12.00.</span>
-    <span class="ident">Up</span>,
-    <span class="doccomment">/// Rounds the value to nearest digit, half rounds upward.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// For example, 12.005 to 2 decimal places becomes 12.01, but 12.004 to 2</span>
-    <span class="doccomment">/// decimal places becomes 12.00.</span>
-    <span class="ident">HalfUp</span>,
-    <span class="doccomment">/// Rounds the value to nearest digit, half goes toward zero.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// For example, 12.005 to 2 decimal places becomes 12.00, but 12.006 to 2</span>
-    <span class="doccomment">/// decimal places becomes 12.01.</span>
-    <span class="ident">HalfDown</span>,
+<span class="comment">// Ratios usually must be rounded when they are being converted for output
+</span><span class="doccomment">/// as a decimal value.  There are four rounding modes currently
+/// supported.
+</span><span class="kw">pub enum </span>RoundMode {
+    <span class="doccomment">/// Truncates the value toward zero.
+    ///
+    /// For example, 12.009 to 2 decimal places becomes 12.00.
+    </span>Down,
+    <span class="doccomment">/// Rounds the value away from zero.
+    ///
+    /// For example, 12.001 to 2 decimal places becomes 12.01, but 12.000 to 2
+    /// decimal places remains 12.00.
+    </span>Up,
+    <span class="doccomment">/// Rounds the value to nearest digit, half rounds upward.
+    ///
+    /// For example, 12.005 to 2 decimal places becomes 12.01, but 12.004 to 2
+    /// decimal places becomes 12.00.
+    </span>HalfUp,
+    <span class="doccomment">/// Rounds the value to nearest digit, half goes toward zero.
+    ///
+    /// For example, 12.005 to 2 decimal places becomes 12.00, but 12.006 to 2
+    /// decimal places becomes 12.01.
+    </span>HalfDown,
 }
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">RoundMode</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">creachadair_imath_sys::mp_round_mode</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">src</span>: <span class="ident">RoundMode</span>) -&gt; <span class="ident">creachadair_imath_sys::mp_round_mode</span> {
-        <span class="kw">match</span> <span class="ident">src</span> {
-            <span class="ident">RoundMode::Down</span> =&gt; <span class="ident">creachadair_imath_sys::mp_round_mode_MP_ROUND_DOWN</span>,
-            <span class="ident">RoundMode::Up</span> =&gt; <span class="ident">creachadair_imath_sys::mp_round_mode_MP_ROUND_UP</span>,
-            <span class="ident">RoundMode::HalfDown</span> =&gt; <span class="ident">creachadair_imath_sys::mp_round_mode_MP_ROUND_HALF_DOWN</span>,
-            <span class="ident">RoundMode::HalfUp</span> =&gt; <span class="ident">creachadair_imath_sys::mp_round_mode_MP_ROUND_HALF_UP</span>,
+<span class="kw">impl </span>From&lt;RoundMode&gt; <span class="kw">for </span>creachadair_imath_sys::mp_round_mode {
+    <span class="kw">fn </span>from(src: RoundMode) -&gt; creachadair_imath_sys::mp_round_mode {
+        <span class="kw">match </span>src {
+            RoundMode::Down =&gt; creachadair_imath_sys::mp_round_mode_MP_ROUND_DOWN,
+            RoundMode::Up =&gt; creachadair_imath_sys::mp_round_mode_MP_ROUND_UP,
+            RoundMode::HalfDown =&gt; creachadair_imath_sys::mp_round_mode_MP_ROUND_HALF_DOWN,
+            RoundMode::HalfUp =&gt; creachadair_imath_sys::mp_round_mode_MP_ROUND_HALF_UP,
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">creachadair_imath_sys::mp_round_mode</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">RoundMode</span> {
-    <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">Error</span>;
+<span class="kw">impl </span>TryFrom&lt;creachadair_imath_sys::mp_round_mode&gt; <span class="kw">for </span>RoundMode {
+    <span class="kw">type </span>Error = Error;
 
-    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">src</span>: <span class="ident">creachadair_imath_sys::mp_round_mode</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">use</span> <span class="ident">RoundMode</span>::<span class="kw-2">*</span>;
-        <span class="kw">match</span> <span class="ident">src</span> {
-            <span class="ident">creachadair_imath_sys::mp_round_mode_MP_ROUND_DOWN</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Down</span>),
-            <span class="ident">creachadair_imath_sys::mp_round_mode_MP_ROUND_UP</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Up</span>),
-            <span class="ident">creachadair_imath_sys::mp_round_mode_MP_ROUND_HALF_DOWN</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">HalfDown</span>),
-            <span class="ident">creachadair_imath_sys::mp_round_mode_MP_ROUND_HALF_UP</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">HalfUp</span>),
-            <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::UnknownRoundingMode</span>),
+    <span class="kw">fn </span>try_from(src: creachadair_imath_sys::mp_round_mode) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">use </span>RoundMode::<span class="kw-2">*</span>;
+        <span class="kw">match </span>src {
+            creachadair_imath_sys::mp_round_mode_MP_ROUND_DOWN =&gt; <span class="prelude-val">Ok</span>(Down),
+            creachadair_imath_sys::mp_round_mode_MP_ROUND_UP =&gt; <span class="prelude-val">Ok</span>(Up),
+            creachadair_imath_sys::mp_round_mode_MP_ROUND_HALF_DOWN =&gt; <span class="prelude-val">Ok</span>(HalfDown),
+            creachadair_imath_sys::mp_round_mode_MP_ROUND_HALF_UP =&gt; <span class="prelude-val">Ok</span>(HalfUp),
+            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(Error::UnknownRoundingMode),
         }
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">test</span> {
-    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
+<span class="attribute">#[cfg(test)]
+</span><span class="kw">mod </span>test {
+    <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">create_default_rational</span>() {
-        <span class="kw">let</span> <span class="ident">rat</span> <span class="op">=</span> <span class="ident">Rational::new</span>();
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>create_default_rational() {
+        <span class="kw">let </span>rat = Rational::new();
 
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">numerator</span>(), <span class="ident">Integer::from</span>(<span class="number">0</span>));
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">denominator</span>(), <span class="ident">Integer::from</span>(<span class="number">1</span>));
+        <span class="macro">assert_eq!</span>(rat.numerator(), Integer::from(<span class="number">0</span>));
+        <span class="macro">assert_eq!</span>(rat.denominator(), Integer::from(<span class="number">1</span>));
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">parse_normal_rational</span>() {
-        <span class="kw">let</span> <span class="ident">rat</span>: <span class="ident">Rational</span> <span class="op">=</span> <span class="string">&quot;12345/67890&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>parse_normal_rational() {
+        <span class="kw">let </span>rat: Rational = <span class="string">&quot;12345/67890&quot;</span>.parse().unwrap();
 
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">numerator</span>(), <span class="ident">Integer::from</span>(<span class="number">823</span>));
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">denominator</span>(), <span class="ident">Integer::from</span>(<span class="number">4526</span>));
+        <span class="macro">assert_eq!</span>(rat.numerator(), Integer::from(<span class="number">823</span>));
+        <span class="macro">assert_eq!</span>(rat.denominator(), Integer::from(<span class="number">4526</span>));
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">parse_integer_rational</span>() {
-        <span class="kw">let</span> <span class="ident">rat</span>: <span class="ident">Rational</span> <span class="op">=</span> <span class="string">&quot;12345&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>parse_integer_rational() {
+        <span class="kw">let </span>rat: Rational = <span class="string">&quot;12345&quot;</span>.parse().unwrap();
 
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">numerator</span>(), <span class="ident">Integer::from</span>(<span class="number">12345</span>));
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">denominator</span>(), <span class="ident">Integer::from</span>(<span class="number">1</span>));
+        <span class="macro">assert_eq!</span>(rat.numerator(), Integer::from(<span class="number">12345</span>));
+        <span class="macro">assert_eq!</span>(rat.denominator(), Integer::from(<span class="number">1</span>));
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">parse_decimal_rational</span>() {
-        <span class="kw">let</span> <span class="ident">rat</span>: <span class="ident">Rational</span> <span class="op">=</span> <span class="string">&quot;1.2345&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>parse_decimal_rational() {
+        <span class="kw">let </span>rat: Rational = <span class="string">&quot;1.2345&quot;</span>.parse().unwrap();
 
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">numerator</span>(), <span class="ident">Integer::from</span>(<span class="number">2469</span>));
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">denominator</span>(), <span class="ident">Integer::from</span>(<span class="number">2000</span>));
+        <span class="macro">assert_eq!</span>(rat.numerator(), Integer::from(<span class="number">2469</span>));
+        <span class="macro">assert_eq!</span>(rat.denominator(), Integer::from(<span class="number">2000</span>));
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">rational_to_decimal</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rat</span> <span class="op">=</span> <span class="ident">Rational::new</span>();
-        <span class="ident">rat</span>.<span class="ident">set_value</span>(<span class="number">2</span>, <span class="number">3</span>);
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>rational_to_decimal() {
+        <span class="kw">let </span><span class="kw-2">mut </span>rat = Rational::new();
+        rat.set_value(<span class="number">2</span>, <span class="number">3</span>);
 
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">to_decimal</span>(<span class="ident">RoundMode::Down</span>, <span class="number">3</span>), <span class="string">&quot;0.666&quot;</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">to_decimal</span>(<span class="ident">RoundMode::Down</span>, <span class="number">15</span>), <span class="string">&quot;0.666666666666666&quot;</span>);
+        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::Down, <span class="number">3</span>), <span class="string">&quot;0.666&quot;</span>);
+        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::Down, <span class="number">15</span>), <span class="string">&quot;0.666666666666666&quot;</span>);
 
-        <span class="ident">rat</span>.<span class="ident">set_value</span>(<span class="number">2</span>, <span class="number">1</span>);
+        rat.set_value(<span class="number">2</span>, <span class="number">1</span>);
 
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">to_decimal</span>(<span class="ident">RoundMode::Down</span>, <span class="number">3</span>), <span class="string">&quot;2.000&quot;</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">to_decimal</span>(<span class="ident">RoundMode::Down</span>, <span class="number">15</span>), <span class="string">&quot;2.000000000000000&quot;</span>);
+        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::Down, <span class="number">3</span>), <span class="string">&quot;2.000&quot;</span>);
+        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::Down, <span class="number">15</span>), <span class="string">&quot;2.000000000000000&quot;</span>);
 
-        <span class="ident">rat</span>.<span class="ident">zero</span>();
+        rat.zero();
 
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">to_decimal</span>(<span class="ident">RoundMode::Down</span>, <span class="number">3</span>), <span class="string">&quot;0.000&quot;</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">to_decimal</span>(<span class="ident">RoundMode::Down</span>, <span class="number">15</span>), <span class="string">&quot;0.000000000000000&quot;</span>);
+        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::Down, <span class="number">3</span>), <span class="string">&quot;0.000&quot;</span>);
+        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::Down, <span class="number">15</span>), <span class="string">&quot;0.000000000000000&quot;</span>);
 
-        <span class="ident">rat</span>.<span class="ident">set_value</span>(<span class="number">9</span>, <span class="number">1000</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">to_decimal</span>(<span class="ident">RoundMode::Down</span>, <span class="number">2</span>), <span class="string">&quot;0.00&quot;</span>);
+        rat.set_value(<span class="number">9</span>, <span class="number">1000</span>);
+        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::Down, <span class="number">2</span>), <span class="string">&quot;0.00&quot;</span>);
 
-        <span class="ident">rat</span>.<span class="ident">set_value</span>(<span class="number">1</span>, <span class="number">1000</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">to_decimal</span>(<span class="ident">RoundMode::Up</span>, <span class="number">2</span>), <span class="string">&quot;0.01&quot;</span>);
+        rat.set_value(<span class="number">1</span>, <span class="number">1000</span>);
+        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::Up, <span class="number">2</span>), <span class="string">&quot;0.01&quot;</span>);
 
-        <span class="ident">rat</span>.<span class="ident">set_value</span>(<span class="number">5</span>, <span class="number">1000</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">to_decimal</span>(<span class="ident">RoundMode::HalfUp</span>, <span class="number">2</span>), <span class="string">&quot;0.01&quot;</span>);
-        <span class="ident">rat</span>.<span class="ident">set_value</span>(<span class="number">4</span>, <span class="number">1000</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">to_decimal</span>(<span class="ident">RoundMode::HalfUp</span>, <span class="number">2</span>), <span class="string">&quot;0.00&quot;</span>);
+        rat.set_value(<span class="number">5</span>, <span class="number">1000</span>);
+        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::HalfUp, <span class="number">2</span>), <span class="string">&quot;0.01&quot;</span>);
+        rat.set_value(<span class="number">4</span>, <span class="number">1000</span>);
+        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::HalfUp, <span class="number">2</span>), <span class="string">&quot;0.00&quot;</span>);
 
-        <span class="ident">rat</span>.<span class="ident">set_value</span>(<span class="number">5</span>, <span class="number">1000</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">to_decimal</span>(<span class="ident">RoundMode::HalfDown</span>, <span class="number">2</span>), <span class="string">&quot;0.00&quot;</span>);
-        <span class="ident">rat</span>.<span class="ident">set_value</span>(<span class="number">6</span>, <span class="number">1000</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">to_decimal</span>(<span class="ident">RoundMode::HalfDown</span>, <span class="number">2</span>), <span class="string">&quot;0.01&quot;</span>);
+        rat.set_value(<span class="number">5</span>, <span class="number">1000</span>);
+        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::HalfDown, <span class="number">2</span>), <span class="string">&quot;0.00&quot;</span>);
+        rat.set_value(<span class="number">6</span>, <span class="number">1000</span>);
+        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::HalfDown, <span class="number">2</span>), <span class="string">&quot;0.01&quot;</span>);
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">reduce_rational</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rat</span> <span class="op">=</span> <span class="ident">Rational::new</span>();
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>reduce_rational() {
+        <span class="kw">let </span><span class="kw-2">mut </span>rat = Rational::new();
 
-        <span class="ident">rat</span>.<span class="ident">set_value</span>(<span class="number">10</span>, <span class="number">20</span>);
-        <span class="ident">rat</span>.<span class="ident">reduce</span>();
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">numerator</span>(), <span class="ident">Integer::from</span>(<span class="number">1</span>));
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">denominator</span>(), <span class="ident">Integer::from</span>(<span class="number">2</span>));
+        rat.set_value(<span class="number">10</span>, <span class="number">20</span>);
+        rat.reduce();
+        <span class="macro">assert_eq!</span>(rat.numerator(), Integer::from(<span class="number">1</span>));
+        <span class="macro">assert_eq!</span>(rat.denominator(), Integer::from(<span class="number">2</span>));
 
-        <span class="ident">rat</span>.<span class="ident">set_value</span>(<span class="number">0</span>, <span class="number">1234</span>);
-        <span class="ident">rat</span>.<span class="ident">reduce</span>();
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">numerator</span>(), <span class="ident">Integer::from</span>(<span class="number">0</span>));
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">denominator</span>(), <span class="ident">Integer::from</span>(<span class="number">1</span>));
+        rat.set_value(<span class="number">0</span>, <span class="number">1234</span>);
+        rat.reduce();
+        <span class="macro">assert_eq!</span>(rat.numerator(), Integer::from(<span class="number">0</span>));
+        <span class="macro">assert_eq!</span>(rat.denominator(), Integer::from(<span class="number">1</span>));
 
-        <span class="ident">rat</span>.<span class="ident">set_value</span>(<span class="number">13412</span>, <span class="number">13412</span>);
-        <span class="ident">rat</span>.<span class="ident">reduce</span>();
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">numerator</span>(), <span class="ident">Integer::from</span>(<span class="number">1</span>));
-        <span class="macro">assert_eq!</span>(<span class="ident">rat</span>.<span class="ident">denominator</span>(), <span class="ident">Integer::from</span>(<span class="number">1</span>));
+        rat.set_value(<span class="number">13412</span>, <span class="number">13412</span>);
+        rat.reduce();
+        <span class="macro">assert_eq!</span>(rat.numerator(), Integer::from(<span class="number">1</span>));
+        <span class="macro">assert_eq!</span>(rat.denominator(), Integer::from(<span class="number">1</span>));
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">clone_rational</span>() {
-        <span class="kw">let</span> <span class="ident">a</span>: <span class="ident">Rational</span> <span class="op">=</span>
-            <span class="string">&quot;98712698346126837461287318238761234897612839471623487619872364981726348176234&quot;</span>
-                .<span class="ident">parse</span>()
-                .<span class="ident">unwrap</span>();
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>clone_rational() {
+        <span class="kw">let </span>a: Rational =
+            <span class="string">&quot;98712698346126837461287318238761234897612839471623487619872364981726348176234&quot;
+                </span>.parse()
+                .unwrap();
 
-        <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">a</span>.<span class="ident">clone</span>();
+        <span class="kw">let </span>b = a.clone();
 
-        <span class="macro">assert_eq!</span>(<span class="ident">a</span>.<span class="ident">numerator</span>(), <span class="ident">b</span>.<span class="ident">numerator</span>());
-        <span class="macro">assert_eq!</span>(<span class="ident">a</span>.<span class="ident">denominator</span>(), <span class="ident">b</span>.<span class="ident">denominator</span>());
+        <span class="macro">assert_eq!</span>(a.numerator(), b.numerator());
+        <span class="macro">assert_eq!</span>(a.denominator(), b.denominator());
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">send_not_sync_rational</span>() {
-        <span class="macro">static_assertions::assert_impl_all!</span>(<span class="ident">Rational</span>: <span class="ident">Send</span>);
-        <span class="macro">static_assertions::assert_not_impl_any!</span>(<span class="ident">Rational</span>: <span class="ident">Sync</span>);
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>send_not_sync_rational() {
+        <span class="macro">static_assertions::assert_impl_all!</span>(Rational: Send);
+        <span class="macro">static_assertions::assert_not_impl_any!</span>(Rational: Sync);
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="reckoner" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="reckoner" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0 (897e37553 2022-11-02)" ></div></body></html>

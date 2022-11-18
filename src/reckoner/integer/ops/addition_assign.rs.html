@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/integer/ops/addition_assign.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>addition_assign.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../../storage.js"></script><script defer src="../../../../source-script.js"></script><script defer src="../../../../source-files.js"></script><script defer src="../../../../main.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../../reckoner/index.html"><div class="logo-container"><img class="rust-logo" src="../../../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../../reckoner/index.html"><div class="logo-container"><img class="rust-logo" src="../../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../../reckoner/index.html"><img class="rust-logo" src="../../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/integer/ops/addition_assign.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>addition_assign.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../../normalize.css"><link rel="stylesheet" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../../ayu.css" disabled><link rel="stylesheet" href="../../../../dark.css" disabled><link rel="stylesheet" href="../../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../../storage.js"></script><script defer src="../../../../source-script.js"></script><script defer src="../../../../source-files.js"></script><script defer src="../../../../main.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../../reckoner/index.html"><div class="logo-container"><img class="rust-logo" src="../../../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../../reckoner/index.html"><div class="logo-container"><img class="rust-logo" src="../../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../../reckoner/index.html"><img class="rust-logo" src="../../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -202,209 +202,209 @@
 <span id="202">202</span>
 <span id="203">203</span>
 <span id="204">204</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::integer::Integer</span>;
-<span class="kw">use</span> <span class="ident">core::ops::AddAssign</span>;
+</pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::integer::Integer;
+<span class="kw">use </span>core::ops::AddAssign;
 
-<span class="comment">// AddAssign    The addition assignment operator +=.</span>
+<span class="comment">// AddAssign    The addition assignment operator +=.
 
-<span class="comment">// [&#39;Integer&#39;, &#39;Integer&#39;, &#39;Integer::add_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">Integer</span>) {
-        <span class="ident">Integer::add_assign</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">rhs</span>)
+// [&#39;Integer&#39;, &#39;Integer&#39;, &#39;Integer::add_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]
+</span><span class="kw">impl </span>AddAssign&lt;Integer&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: Integer) {
+        Integer::add_assign(<span class="self">self</span>, <span class="kw-2">&amp;</span>rhs)
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;&amp;Integer&#39;, &#39;Integer::add_assign&#39;, &#39;no&#39;, [], []]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Integer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">Integer</span>) {
-        <span class="ident">Integer::add_assign</span>(<span class="self">self</span>, <span class="ident">rhs</span>)
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;Integer&#39;, &#39;Integer::add_assign&#39;, &#39;no&#39;, [], []]
+</span><span class="kw">impl </span>AddAssign&lt;<span class="kw-2">&amp;</span>Integer&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span>Integer) {
+        Integer::add_assign(<span class="self">self</span>, rhs)
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;i8&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], []]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="ident">i8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">i8</span>) {
-        <span class="ident">Integer::add_c_long_assign</span>(<span class="self">self</span>, <span class="ident">rhs</span>)
+<span class="comment">// [&#39;Integer&#39;, &#39;i8&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], []]
+</span><span class="kw">impl </span>AddAssign&lt;i8&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: i8) {
+        Integer::add_c_long_assign(<span class="self">self</span>, rhs)
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;&amp;i8&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">i8</span>) {
-        <span class="ident">Integer::add_c_long_assign</span>(<span class="self">self</span>, <span class="kw-2">*</span><span class="ident">rhs</span>)
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;i8&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]
+</span><span class="kw">impl </span>AddAssign&lt;<span class="kw-2">&amp;</span>i8&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span>i8) {
+        Integer::add_c_long_assign(<span class="self">self</span>, <span class="kw-2">*</span>rhs)
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;u8&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], []]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">u8</span>) {
-        <span class="ident">Integer::add_c_long_assign</span>(<span class="self">self</span>, <span class="ident">rhs</span>)
+<span class="comment">// [&#39;Integer&#39;, &#39;u8&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], []]
+</span><span class="kw">impl </span>AddAssign&lt;u8&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: u8) {
+        Integer::add_c_long_assign(<span class="self">self</span>, rhs)
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;&amp;u8&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">u8</span>) {
-        <span class="ident">Integer::add_c_long_assign</span>(<span class="self">self</span>, <span class="kw-2">*</span><span class="ident">rhs</span>)
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;u8&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]
+</span><span class="kw">impl </span>AddAssign&lt;<span class="kw-2">&amp;</span>u8&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span>u8) {
+        Integer::add_c_long_assign(<span class="self">self</span>, <span class="kw-2">*</span>rhs)
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;i16&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], []]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="ident">i16</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">i16</span>) {
-        <span class="ident">Integer::add_c_long_assign</span>(<span class="self">self</span>, <span class="ident">rhs</span>)
+<span class="comment">// [&#39;Integer&#39;, &#39;i16&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], []]
+</span><span class="kw">impl </span>AddAssign&lt;i16&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: i16) {
+        Integer::add_c_long_assign(<span class="self">self</span>, rhs)
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;&amp;i16&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i16</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">i16</span>) {
-        <span class="ident">Integer::add_c_long_assign</span>(<span class="self">self</span>, <span class="kw-2">*</span><span class="ident">rhs</span>)
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;i16&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]
+</span><span class="kw">impl </span>AddAssign&lt;<span class="kw-2">&amp;</span>i16&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span>i16) {
+        Integer::add_c_long_assign(<span class="self">self</span>, <span class="kw-2">*</span>rhs)
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;u16&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], []]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">u16</span>) {
-        <span class="ident">Integer::add_c_long_assign</span>(<span class="self">self</span>, <span class="ident">rhs</span>)
+<span class="comment">// [&#39;Integer&#39;, &#39;u16&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], []]
+</span><span class="kw">impl </span>AddAssign&lt;u16&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: u16) {
+        Integer::add_c_long_assign(<span class="self">self</span>, rhs)
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;&amp;u16&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">u16</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">u16</span>) {
-        <span class="ident">Integer::add_c_long_assign</span>(<span class="self">self</span>, <span class="kw-2">*</span><span class="ident">rhs</span>)
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;u16&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]
+</span><span class="kw">impl </span>AddAssign&lt;<span class="kw-2">&amp;</span>u16&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span>u16) {
+        Integer::add_c_long_assign(<span class="self">self</span>, <span class="kw-2">*</span>rhs)
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;i32&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], []]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">i32</span>) {
-        <span class="ident">Integer::add_c_long_assign</span>(<span class="self">self</span>, <span class="ident">rhs</span>)
+<span class="comment">// [&#39;Integer&#39;, &#39;i32&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], []]
+</span><span class="kw">impl </span>AddAssign&lt;i32&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: i32) {
+        Integer::add_c_long_assign(<span class="self">self</span>, rhs)
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;&amp;i32&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">i32</span>) {
-        <span class="ident">Integer::add_c_long_assign</span>(<span class="self">self</span>, <span class="kw-2">*</span><span class="ident">rhs</span>)
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;i32&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]
+</span><span class="kw">impl </span>AddAssign&lt;<span class="kw-2">&amp;</span>i32&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span>i32) {
+        Integer::add_c_long_assign(<span class="self">self</span>, <span class="kw-2">*</span>rhs)
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;u32&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], []]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>)))]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">u32</span>) {
-        <span class="ident">Integer::add_c_long_assign</span>(<span class="self">self</span>, <span class="ident">rhs</span>)
+<span class="comment">// [&#39;Integer&#39;, &#39;u32&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], []]
+</span><span class="attribute">#[cfg(all(target_pointer_width = <span class="string">&quot;64&quot;</span>, not(windows)))]
+</span><span class="kw">impl </span>AddAssign&lt;u32&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: u32) {
+        Integer::add_c_long_assign(<span class="self">self</span>, rhs)
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;&amp;u32&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>)))]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">u32</span>) {
-        <span class="ident">Integer::add_c_long_assign</span>(<span class="self">self</span>, <span class="kw-2">*</span><span class="ident">rhs</span>)
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;u32&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]
+</span><span class="attribute">#[cfg(all(target_pointer_width = <span class="string">&quot;64&quot;</span>, not(windows)))]
+</span><span class="kw">impl </span>AddAssign&lt;<span class="kw-2">&amp;</span>u32&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span>u32) {
+        Integer::add_c_long_assign(<span class="self">self</span>, <span class="kw-2">*</span>rhs)
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;i64&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], []]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>)))]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">i64</span>) {
-        <span class="ident">Integer::add_c_long_assign</span>(<span class="self">self</span>, <span class="ident">rhs</span>)
+<span class="comment">// [&#39;Integer&#39;, &#39;i64&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], []]
+</span><span class="attribute">#[cfg(all(target_pointer_width = <span class="string">&quot;64&quot;</span>, not(windows)))]
+</span><span class="kw">impl </span>AddAssign&lt;i64&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: i64) {
+        Integer::add_c_long_assign(<span class="self">self</span>, rhs)
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;&amp;i64&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>)))]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">i64</span>) {
-        <span class="ident">Integer::add_c_long_assign</span>(<span class="self">self</span>, <span class="kw-2">*</span><span class="ident">rhs</span>)
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;i64&#39;, &#39;Integer::add_c_long_assign&#39;, &#39;no&#39;, [], [&#39;deref&#39;]]
+</span><span class="attribute">#[cfg(all(target_pointer_width = <span class="string">&quot;64&quot;</span>, not(windows)))]
+</span><span class="kw">impl </span>AddAssign&lt;<span class="kw-2">&amp;</span>i64&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span>i64) {
+        Integer::add_c_long_assign(<span class="self">self</span>, <span class="kw-2">*</span>rhs)
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;u32&#39;, &#39;Integer::add_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:</span>
-<span class="comment">// &#39;Integer&#39;}]]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>))))]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">u32</span>) {
-        <span class="ident">Integer::add_assign</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">Integer::from</span>(<span class="ident">rhs</span>))
+<span class="comment">// [&#39;Integer&#39;, &#39;u32&#39;, &#39;Integer::add_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:
+// &#39;Integer&#39;}]]
+</span><span class="attribute">#[cfg(not(all(target_pointer_width = <span class="string">&quot;64&quot;</span>, not(windows))))]
+</span><span class="kw">impl </span>AddAssign&lt;u32&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: u32) {
+        Integer::add_assign(<span class="self">self</span>, <span class="kw-2">&amp;</span>Integer::from(rhs))
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;&amp;u32&#39;, &#39;Integer::add_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:</span>
-<span class="comment">// &#39;Integer&#39;}, &#39;deref&#39;]]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>))))]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">u32</span>) {
-        <span class="ident">Integer::add_assign</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">Integer::from</span>(<span class="kw-2">*</span><span class="ident">rhs</span>))
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;u32&#39;, &#39;Integer::add_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:
+// &#39;Integer&#39;}, &#39;deref&#39;]]
+</span><span class="attribute">#[cfg(not(all(target_pointer_width = <span class="string">&quot;64&quot;</span>, not(windows))))]
+</span><span class="kw">impl </span>AddAssign&lt;<span class="kw-2">&amp;</span>u32&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span>u32) {
+        Integer::add_assign(<span class="self">self</span>, <span class="kw-2">&amp;</span>Integer::from(<span class="kw-2">*</span>rhs))
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;i64&#39;, &#39;Integer::add_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:</span>
-<span class="comment">// &#39;Integer&#39;}]]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>))))]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">i64</span>) {
-        <span class="ident">Integer::add_assign</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">Integer::from</span>(<span class="ident">rhs</span>))
+<span class="comment">// [&#39;Integer&#39;, &#39;i64&#39;, &#39;Integer::add_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:
+// &#39;Integer&#39;}]]
+</span><span class="attribute">#[cfg(not(all(target_pointer_width = <span class="string">&quot;64&quot;</span>, not(windows))))]
+</span><span class="kw">impl </span>AddAssign&lt;i64&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: i64) {
+        Integer::add_assign(<span class="self">self</span>, <span class="kw-2">&amp;</span>Integer::from(rhs))
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;&amp;i64&#39;, &#39;Integer::add_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:</span>
-<span class="comment">// &#39;Integer&#39;}, &#39;deref&#39;]]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>, <span class="ident">not</span>(<span class="ident">windows</span>))))]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">i64</span>) {
-        <span class="ident">Integer::add_assign</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">Integer::from</span>(<span class="kw-2">*</span><span class="ident">rhs</span>))
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;i64&#39;, &#39;Integer::add_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:
+// &#39;Integer&#39;}, &#39;deref&#39;]]
+</span><span class="attribute">#[cfg(not(all(target_pointer_width = <span class="string">&quot;64&quot;</span>, not(windows))))]
+</span><span class="kw">impl </span>AddAssign&lt;<span class="kw-2">&amp;</span>i64&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span>i64) {
+        Integer::add_assign(<span class="self">self</span>, <span class="kw-2">&amp;</span>Integer::from(<span class="kw-2">*</span>rhs))
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;u64&#39;, &#39;Integer::add_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:</span>
-<span class="comment">// &#39;Integer&#39;}]]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">u64</span>) {
-        <span class="ident">Integer::add_assign</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">Integer::from</span>(<span class="ident">rhs</span>))
+<span class="comment">// [&#39;Integer&#39;, &#39;u64&#39;, &#39;Integer::add_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:
+// &#39;Integer&#39;}]]
+</span><span class="kw">impl </span>AddAssign&lt;u64&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: u64) {
+        Integer::add_assign(<span class="self">self</span>, <span class="kw-2">&amp;</span>Integer::from(rhs))
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;&amp;u64&#39;, &#39;Integer::add_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:</span>
-<span class="comment">// &#39;Integer&#39;}, &#39;deref&#39;]]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">u64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">u64</span>) {
-        <span class="ident">Integer::add_assign</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">Integer::from</span>(<span class="kw-2">*</span><span class="ident">rhs</span>))
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;u64&#39;, &#39;Integer::add_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:
+// &#39;Integer&#39;}, &#39;deref&#39;]]
+</span><span class="kw">impl </span>AddAssign&lt;<span class="kw-2">&amp;</span>u64&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span>u64) {
+        Integer::add_assign(<span class="self">self</span>, <span class="kw-2">&amp;</span>Integer::from(<span class="kw-2">*</span>rhs))
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;i128&#39;, &#39;Integer::add_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:</span>
-<span class="comment">// &#39;Integer&#39;}]]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="ident">i128</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">i128</span>) {
-        <span class="ident">Integer::add_assign</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">Integer::from</span>(<span class="ident">rhs</span>))
+<span class="comment">// [&#39;Integer&#39;, &#39;i128&#39;, &#39;Integer::add_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:
+// &#39;Integer&#39;}]]
+</span><span class="kw">impl </span>AddAssign&lt;i128&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: i128) {
+        Integer::add_assign(<span class="self">self</span>, <span class="kw-2">&amp;</span>Integer::from(rhs))
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;&amp;i128&#39;, &#39;Integer::add_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:</span>
-<span class="comment">// &#39;Integer&#39;}, &#39;deref&#39;]]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">i128</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">i128</span>) {
-        <span class="ident">Integer::add_assign</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">Integer::from</span>(<span class="kw-2">*</span><span class="ident">rhs</span>))
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;i128&#39;, &#39;Integer::add_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:
+// &#39;Integer&#39;}, &#39;deref&#39;]]
+</span><span class="kw">impl </span>AddAssign&lt;<span class="kw-2">&amp;</span>i128&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span>i128) {
+        Integer::add_assign(<span class="self">self</span>, <span class="kw-2">&amp;</span>Integer::from(<span class="kw-2">*</span>rhs))
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;u128&#39;, &#39;Integer::add_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:</span>
-<span class="comment">// &#39;Integer&#39;}]]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="ident">u128</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">u128</span>) {
-        <span class="ident">Integer::add_assign</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">Integer::from</span>(<span class="ident">rhs</span>))
+<span class="comment">// [&#39;Integer&#39;, &#39;u128&#39;, &#39;Integer::add_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:
+// &#39;Integer&#39;}]]
+</span><span class="kw">impl </span>AddAssign&lt;u128&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: u128) {
+        Integer::add_assign(<span class="self">self</span>, <span class="kw-2">&amp;</span>Integer::from(rhs))
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;&amp;u128&#39;, &#39;Integer::add_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:</span>
-<span class="comment">// &#39;Integer&#39;}, &#39;deref&#39;]]</span>
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">u128</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Integer</span> {
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">u128</span>) {
-        <span class="ident">Integer::add_assign</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">Integer::from</span>(<span class="kw-2">*</span><span class="ident">rhs</span>))
+<span class="comment">// [&#39;Integer&#39;, &#39;&amp;u128&#39;, &#39;Integer::add_assign&#39;, &#39;no&#39;, [], [&#39;ref&#39;, {&#39;convert&#39;:
+// &#39;Integer&#39;}, &#39;deref&#39;]]
+</span><span class="kw">impl </span>AddAssign&lt;<span class="kw-2">&amp;</span>u128&gt; <span class="kw">for </span>Integer {
+    <span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span>u128) {
+        Integer::add_assign(<span class="self">self</span>, <span class="kw-2">&amp;</span>Integer::from(<span class="kw-2">*</span>rhs))
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../../" data-current-crate="reckoner" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../../" data-current-crate="reckoner" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0 (897e37553 2022-11-02)" ></div></body></html>
