@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["Error","Error used in `reckoner`, usually originating from `creachadair-imath-sys`."],["RoundMode","as a decimal value.  There are four rounding modes currently supported."]],"struct":[["Integer","Multiple precision integer value."],["Rational","Multiple precision rational value."]]};
+window.SIDEBAR_ITEMS = {"enum":["Error","RoundMode"],"struct":["Integer","Rational"]};
