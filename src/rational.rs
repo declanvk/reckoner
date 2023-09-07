@@ -372,6 +372,8 @@ impl Rational {
     /// assert_eq!(a, b);
     /// assert_eq!(b, (34256, 54587));
     /// ```
+    #[allow(clippy::needless_pass_by_ref_mut)] // we allow this because we're signalling to the caller that we're going to
+                                               // mutate `other`
     pub fn copy_to(&self, other: &mut Self) {
         let self_raw = self.as_raw();
         let other_raw = other.as_raw();

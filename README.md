@@ -76,3 +76,13 @@ FFI bindings for [`imath`](https://github.com/creachadair/imath/).
 [Documentation for `reckoner` from `main` branch](https://declanvk.github.io/reckoner/reckoner/index.html)
 
 [Documentation for `creachadair-imath-sys` from `main` branch](https://declanvk.github.io/reckoner/creachadair_imath_sys/index.html)
+
+## Contributing
+
+Download the crate using the command
+
+```bash
+git clone --recurse-submodules https://github.com/declanvk/reckoner
+```
+
+so that you also get the submodule sources, which are required to compile the `creachadair-imath-sys` crate. If you already cloned the project and forgot `--recurse-submodules`, you can combine the `git submodule init` and `git submodule update` steps by running `git submodule update --init`.

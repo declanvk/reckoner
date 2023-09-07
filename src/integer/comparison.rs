@@ -102,7 +102,14 @@ macro_rules! impl_partial_ord {
     };
 }
 
-impl_partial_ord!(Integer, Integer::compare);
+// impl_partial_ord!(Integer, Integer::compare);
+// manual impl to satify clippy::incorrect_partial_ord_impl_on_ord_type lint
+impl PartialOrd for Integer {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
+}
+
 impl_partial_ord!(u8, Integer::compare_c_long, deref rhs);
 impl_partial_ord!(i8, Integer::compare_c_long, deref rhs);
 impl_partial_ord!(u16, Integer::compare_c_long, deref rhs);
