@@ -94,7 +94,14 @@ macro_rules! impl_partial_ord {
     };
 }
 
-impl_partial_ord!(Rational, Rational::compare);
+// impl_partial_ord!(Rational, Rational::compare);
+// manual impl to satify clippy::incorrect_partial_ord_impl_on_ord_type lint
+impl PartialOrd for Rational {
+    fn partial_cmp(&self, other: &Rational) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
+}
+
 impl_partial_ord!(Integer, Rational::compare, into rhs);
 impl_partial_ord!(u8, Rational::compare, into rhs);
 impl_partial_ord!(i8, Rational::compare, into rhs);
