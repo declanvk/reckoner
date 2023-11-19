@@ -57,7 +57,7 @@ See [`examples/`](https://github.com/declanvk/reckoner/tree/main/examples) for m
 
 ## Crates
 
-The MSRV for both crates is `1.64.0`.
+The MSRV for both crates is `1.65.0`.
 
 ### `reckoner`
 
