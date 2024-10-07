@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/rational/ops/division.rs`."><title>division.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="reckoner" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0 (79e9716c9 2023-11-13)" data-channel="1.74.0" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../../reckoner/index.html"><img class="rust-logo" src="../../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/rational/ops/division.rs`."><title>division.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-c5d6553a23f1e5a6.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="reckoner" data-themes="" data-resource-suffix="" data-rustdoc-version="1.81.0 (eeb90cda1 2024-09-04)" data-channel="1.81.0" data-search-js="search-d234aafac6c221dd.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-d2fab2bf619172d3.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -907,8 +907,8 @@
 
 <span class="comment">// Div          The division operator /.
 
-// [&#39;Rational&#39;, &#39;Rational&#39;, &#39;Rational&#39;, &#39;Rational::divide_assign&#39;, &#39;lhs&#39;,
-// [&#39;ref_mut&#39;], [&#39;ref&#39;]]
+// ['Rational', 'Rational', 'Rational', 'Rational::divide_assign', 'lhs',
+// ['ref_mut'], ['ref']]
 </span><span class="kw">impl </span>Div&lt;Rational&gt; <span class="kw">for </span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -918,8 +918,8 @@
     </span>}
 }
 
-<span class="comment">// [&#39;Rational&#39;, &#39;&amp;Rational&#39;, &#39;Rational&#39;, &#39;Rational::divide_assign&#39;, &#39;lhs&#39;,
-// [&#39;ref_mut&#39;], []]
+<span class="comment">// ['Rational', '&amp;Rational', 'Rational', 'Rational::divide_assign', 'lhs',
+// ['ref_mut'], []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Rational&gt; <span class="kw">for </span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -929,7 +929,7 @@
     </span>}
 }
 
-<span class="comment">// [&#39;&amp;Rational&#39;, &#39;Rational&#39;, &#39;Rational&#39;, &#39;Rational::divide&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]
+<span class="comment">// ['&amp;Rational', 'Rational', 'Rational', 'Rational::divide', 'no', [], ['ref']]
 </span><span class="kw">impl </span>Div&lt;Rational&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -938,7 +938,7 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;Rational&#39;, &#39;&amp;Rational&#39;, &#39;Rational&#39;, &#39;Rational::divide&#39;, &#39;no&#39;, [], []]
+<span class="comment">// ['&amp;Rational', '&amp;Rational', 'Rational', 'Rational::divide', 'no', [], []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Rational&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -947,8 +947,8 @@
     }
 }
 
-<span class="comment">// [&#39;Rational&#39;, &#39;Integer&#39;, &#39;Rational&#39;, &#39;Rational::divide_assign_integer&#39;, &#39;lhs&#39;,
-// [&#39;ref_mut&#39;], [&#39;ref&#39;]]
+<span class="comment">// ['Rational', 'Integer', 'Rational', 'Rational::divide_assign_integer', 'lhs',
+// ['ref_mut'], ['ref']]
 </span><span class="kw">impl </span>Div&lt;Integer&gt; <span class="kw">for </span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -958,8 +958,8 @@
     </span>}
 }
 
-<span class="comment">// [&#39;Rational&#39;, &#39;&amp;Integer&#39;, &#39;Rational&#39;, &#39;Rational::divide_assign_integer&#39;,
-// &#39;lhs&#39;, [&#39;ref_mut&#39;], []]
+<span class="comment">// ['Rational', '&amp;Integer', 'Rational', 'Rational::divide_assign_integer',
+// 'lhs', ['ref_mut'], []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Integer&gt; <span class="kw">for </span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -969,8 +969,8 @@
     </span>}
 }
 
-<span class="comment">// [&#39;&amp;Rational&#39;, &#39;Integer&#39;, &#39;Rational&#39;, &#39;Rational::divide_integer&#39;, &#39;no&#39;, [],
-// [&#39;ref&#39;]]
+<span class="comment">// ['&amp;Rational', 'Integer', 'Rational', 'Rational::divide_integer', 'no', [],
+// ['ref']]
 </span><span class="kw">impl </span>Div&lt;Integer&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -979,7 +979,7 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;Rational&#39;, &#39;&amp;Integer&#39;, &#39;Rational&#39;, &#39;Rational::divide_integer&#39;, &#39;no&#39;, [],
+<span class="comment">// ['&amp;Rational', '&amp;Integer', 'Rational', 'Rational::divide_integer', 'no', [],
 // []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Integer&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Rational {
     <span class="kw">type </span>Output = Rational;
@@ -989,7 +989,7 @@
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]
+<span class="comment">// ['Integer', 'Rational', 'Rational', 'divide_reuse_lhs', 'no', [], ['ref']]
 </span><span class="kw">impl </span>Div&lt;Rational&gt; <span class="kw">for </span>Integer {
     <span class="kw">type </span>Output = Rational;
 
@@ -998,7 +998,7 @@
     }
 }
 
-<span class="comment">// [&#39;Integer&#39;, &#39;&amp;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], []]
+<span class="comment">// ['Integer', '&amp;Rational', 'Rational', 'divide_reuse_lhs', 'no', [], []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Rational&gt; <span class="kw">for </span>Integer {
     <span class="kw">type </span>Output = Rational;
 
@@ -1007,7 +1007,7 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;Integer&#39;, &#39;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]
+<span class="comment">// ['&amp;Integer', 'Rational', 'Rational', 'divide_reuse_lhs', 'no', [], ['ref']]
 </span><span class="kw">impl </span>Div&lt;Rational&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Integer {
     <span class="kw">type </span>Output = Rational;
 
@@ -1016,7 +1016,7 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;Integer&#39;, &#39;&amp;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], []]
+<span class="comment">// ['&amp;Integer', '&amp;Rational', 'Rational', 'divide_reuse_lhs', 'no', [], []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Rational&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Integer {
     <span class="kw">type </span>Output = Rational;
 
@@ -1025,8 +1025,8 @@
     }
 }
 
-<span class="comment">// [&#39;Rational&#39;, &#39;i8&#39;, &#39;Rational&#39;, &#39;Rational::divide_assign_integer&#39;, &#39;lhs&#39;,
-// [&#39;ref_mut&#39;], [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}]]
+<span class="comment">// ['Rational', 'i8', 'Rational', 'Rational::divide_assign_integer', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}]]
 </span><span class="kw">impl </span>Div&lt;i8&gt; <span class="kw">for </span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1036,8 +1036,8 @@
     </span>}
 }
 
-<span class="comment">// [&#39;Rational&#39;, &#39;&amp;i8&#39;, &#39;Rational&#39;, &#39;Rational::divide_assign_integer&#39;, &#39;lhs&#39;,
-// [&#39;ref_mut&#39;], [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;]]
+<span class="comment">// ['Rational', '&amp;i8', 'Rational', 'Rational::divide_assign_integer', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}, 'deref']]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>i8&gt; <span class="kw">for </span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1047,8 +1047,8 @@
     </span>}
 }
 
-<span class="comment">// [&#39;&amp;Rational&#39;, &#39;i8&#39;, &#39;Rational&#39;, &#39;Rational::divide_integer&#39;, &#39;no&#39;, [], [&#39;ref&#39;,
-// {&#39;convert&#39;: &#39;Integer&#39;}]]
+<span class="comment">// ['&amp;Rational', 'i8', 'Rational', 'Rational::divide_integer', 'no', [], ['ref',
+// {'convert': 'Integer'}]]
 </span><span class="kw">impl </span>Div&lt;i8&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1057,8 +1057,8 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;Rational&#39;, &#39;&amp;i8&#39;, &#39;Rational&#39;, &#39;Rational::divide_integer&#39;, &#39;no&#39;, [],
-// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;]]
+<span class="comment">// ['&amp;Rational', '&amp;i8', 'Rational', 'Rational::divide_integer', 'no', [],
+// ['ref', {'convert': 'Integer'}, 'deref']]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>i8&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1067,7 +1067,7 @@
     }
 }
 
-<span class="comment">// [&#39;i8&#39;, &#39;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]
+<span class="comment">// ['i8', 'Rational', 'Rational', 'divide_reuse_lhs', 'no', [], ['ref']]
 </span><span class="kw">impl </span>Div&lt;Rational&gt; <span class="kw">for </span>i8 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1076,7 +1076,7 @@
     }
 }
 
-<span class="comment">// [&#39;i8&#39;, &#39;&amp;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], []]
+<span class="comment">// ['i8', '&amp;Rational', 'Rational', 'divide_reuse_lhs', 'no', [], []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Rational&gt; <span class="kw">for </span>i8 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1085,7 +1085,7 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;i8&#39;, &#39;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]
+<span class="comment">// ['&amp;i8', 'Rational', 'Rational', 'divide_reuse_lhs', 'no', [], ['ref']]
 </span><span class="kw">impl </span>Div&lt;Rational&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>i8 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1094,7 +1094,7 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;i8&#39;, &#39;&amp;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], []]
+<span class="comment">// ['&amp;i8', '&amp;Rational', 'Rational', 'divide_reuse_lhs', 'no', [], []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Rational&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>i8 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1103,8 +1103,8 @@
     }
 }
 
-<span class="comment">// [&#39;Rational&#39;, &#39;u8&#39;, &#39;Rational&#39;, &#39;Rational::divide_assign_integer&#39;, &#39;lhs&#39;,
-// [&#39;ref_mut&#39;], [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}]]
+<span class="comment">// ['Rational', 'u8', 'Rational', 'Rational::divide_assign_integer', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}]]
 </span><span class="kw">impl </span>Div&lt;u8&gt; <span class="kw">for </span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1114,8 +1114,8 @@
     </span>}
 }
 
-<span class="comment">// [&#39;Rational&#39;, &#39;&amp;u8&#39;, &#39;Rational&#39;, &#39;Rational::divide_assign_integer&#39;, &#39;lhs&#39;,
-// [&#39;ref_mut&#39;], [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;]]
+<span class="comment">// ['Rational', '&amp;u8', 'Rational', 'Rational::divide_assign_integer', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}, 'deref']]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>u8&gt; <span class="kw">for </span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1125,8 +1125,8 @@
     </span>}
 }
 
-<span class="comment">// [&#39;&amp;Rational&#39;, &#39;u8&#39;, &#39;Rational&#39;, &#39;Rational::divide_integer&#39;, &#39;no&#39;, [], [&#39;ref&#39;,
-// {&#39;convert&#39;: &#39;Integer&#39;}]]
+<span class="comment">// ['&amp;Rational', 'u8', 'Rational', 'Rational::divide_integer', 'no', [], ['ref',
+// {'convert': 'Integer'}]]
 </span><span class="kw">impl </span>Div&lt;u8&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1135,8 +1135,8 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;Rational&#39;, &#39;&amp;u8&#39;, &#39;Rational&#39;, &#39;Rational::divide_integer&#39;, &#39;no&#39;, [],
-// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;]]
+<span class="comment">// ['&amp;Rational', '&amp;u8', 'Rational', 'Rational::divide_integer', 'no', [],
+// ['ref', {'convert': 'Integer'}, 'deref']]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>u8&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1145,7 +1145,7 @@
     }
 }
 
-<span class="comment">// [&#39;u8&#39;, &#39;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]
+<span class="comment">// ['u8', 'Rational', 'Rational', 'divide_reuse_lhs', 'no', [], ['ref']]
 </span><span class="kw">impl </span>Div&lt;Rational&gt; <span class="kw">for </span>u8 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1154,7 +1154,7 @@
     }
 }
 
-<span class="comment">// [&#39;u8&#39;, &#39;&amp;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], []]
+<span class="comment">// ['u8', '&amp;Rational', 'Rational', 'divide_reuse_lhs', 'no', [], []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Rational&gt; <span class="kw">for </span>u8 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1163,7 +1163,7 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;u8&#39;, &#39;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]
+<span class="comment">// ['&amp;u8', 'Rational', 'Rational', 'divide_reuse_lhs', 'no', [], ['ref']]
 </span><span class="kw">impl </span>Div&lt;Rational&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>u8 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1172,7 +1172,7 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;u8&#39;, &#39;&amp;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], []]
+<span class="comment">// ['&amp;u8', '&amp;Rational', 'Rational', 'divide_reuse_lhs', 'no', [], []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Rational&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>u8 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1181,8 +1181,8 @@
     }
 }
 
-<span class="comment">// [&#39;Rational&#39;, &#39;i16&#39;, &#39;Rational&#39;, &#39;Rational::divide_assign_integer&#39;, &#39;lhs&#39;,
-// [&#39;ref_mut&#39;], [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}]]
+<span class="comment">// ['Rational', 'i16', 'Rational', 'Rational::divide_assign_integer', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}]]
 </span><span class="kw">impl </span>Div&lt;i16&gt; <span class="kw">for </span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1192,8 +1192,8 @@
     </span>}
 }
 
-<span class="comment">// [&#39;Rational&#39;, &#39;&amp;i16&#39;, &#39;Rational&#39;, &#39;Rational::divide_assign_integer&#39;, &#39;lhs&#39;,
-// [&#39;ref_mut&#39;], [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;]]
+<span class="comment">// ['Rational', '&amp;i16', 'Rational', 'Rational::divide_assign_integer', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}, 'deref']]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>i16&gt; <span class="kw">for </span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1203,8 +1203,8 @@
     </span>}
 }
 
-<span class="comment">// [&#39;&amp;Rational&#39;, &#39;i16&#39;, &#39;Rational&#39;, &#39;Rational::divide_integer&#39;, &#39;no&#39;, [],
-// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}]]
+<span class="comment">// ['&amp;Rational', 'i16', 'Rational', 'Rational::divide_integer', 'no', [],
+// ['ref', {'convert': 'Integer'}]]
 </span><span class="kw">impl </span>Div&lt;i16&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1213,8 +1213,8 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;Rational&#39;, &#39;&amp;i16&#39;, &#39;Rational&#39;, &#39;Rational::divide_integer&#39;, &#39;no&#39;, [],
-// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;]]
+<span class="comment">// ['&amp;Rational', '&amp;i16', 'Rational', 'Rational::divide_integer', 'no', [],
+// ['ref', {'convert': 'Integer'}, 'deref']]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>i16&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1223,7 +1223,7 @@
     }
 }
 
-<span class="comment">// [&#39;i16&#39;, &#39;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]
+<span class="comment">// ['i16', 'Rational', 'Rational', 'divide_reuse_lhs', 'no', [], ['ref']]
 </span><span class="kw">impl </span>Div&lt;Rational&gt; <span class="kw">for </span>i16 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1232,7 +1232,7 @@
     }
 }
 
-<span class="comment">// [&#39;i16&#39;, &#39;&amp;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], []]
+<span class="comment">// ['i16', '&amp;Rational', 'Rational', 'divide_reuse_lhs', 'no', [], []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Rational&gt; <span class="kw">for </span>i16 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1241,7 +1241,7 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;i16&#39;, &#39;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]
+<span class="comment">// ['&amp;i16', 'Rational', 'Rational', 'divide_reuse_lhs', 'no', [], ['ref']]
 </span><span class="kw">impl </span>Div&lt;Rational&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>i16 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1250,7 +1250,7 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;i16&#39;, &#39;&amp;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], []]
+<span class="comment">// ['&amp;i16', '&amp;Rational', 'Rational', 'divide_reuse_lhs', 'no', [], []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Rational&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>i16 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1259,8 +1259,8 @@
     }
 }
 
-<span class="comment">// [&#39;Rational&#39;, &#39;u16&#39;, &#39;Rational&#39;, &#39;Rational::divide_assign_integer&#39;, &#39;lhs&#39;,
-// [&#39;ref_mut&#39;], [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}]]
+<span class="comment">// ['Rational', 'u16', 'Rational', 'Rational::divide_assign_integer', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}]]
 </span><span class="kw">impl </span>Div&lt;u16&gt; <span class="kw">for </span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1270,8 +1270,8 @@
     </span>}
 }
 
-<span class="comment">// [&#39;Rational&#39;, &#39;&amp;u16&#39;, &#39;Rational&#39;, &#39;Rational::divide_assign_integer&#39;, &#39;lhs&#39;,
-// [&#39;ref_mut&#39;], [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;]]
+<span class="comment">// ['Rational', '&amp;u16', 'Rational', 'Rational::divide_assign_integer', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}, 'deref']]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>u16&gt; <span class="kw">for </span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1281,8 +1281,8 @@
     </span>}
 }
 
-<span class="comment">// [&#39;&amp;Rational&#39;, &#39;u16&#39;, &#39;Rational&#39;, &#39;Rational::divide_integer&#39;, &#39;no&#39;, [],
-// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}]]
+<span class="comment">// ['&amp;Rational', 'u16', 'Rational', 'Rational::divide_integer', 'no', [],
+// ['ref', {'convert': 'Integer'}]]
 </span><span class="kw">impl </span>Div&lt;u16&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1291,8 +1291,8 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;Rational&#39;, &#39;&amp;u16&#39;, &#39;Rational&#39;, &#39;Rational::divide_integer&#39;, &#39;no&#39;, [],
-// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;]]
+<span class="comment">// ['&amp;Rational', '&amp;u16', 'Rational', 'Rational::divide_integer', 'no', [],
+// ['ref', {'convert': 'Integer'}, 'deref']]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>u16&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1301,7 +1301,7 @@
     }
 }
 
-<span class="comment">// [&#39;u16&#39;, &#39;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]
+<span class="comment">// ['u16', 'Rational', 'Rational', 'divide_reuse_lhs', 'no', [], ['ref']]
 </span><span class="kw">impl </span>Div&lt;Rational&gt; <span class="kw">for </span>u16 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1310,7 +1310,7 @@
     }
 }
 
-<span class="comment">// [&#39;u16&#39;, &#39;&amp;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], []]
+<span class="comment">// ['u16', '&amp;Rational', 'Rational', 'divide_reuse_lhs', 'no', [], []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Rational&gt; <span class="kw">for </span>u16 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1319,7 +1319,7 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;u16&#39;, &#39;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]
+<span class="comment">// ['&amp;u16', 'Rational', 'Rational', 'divide_reuse_lhs', 'no', [], ['ref']]
 </span><span class="kw">impl </span>Div&lt;Rational&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>u16 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1328,7 +1328,7 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;u16&#39;, &#39;&amp;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], []]
+<span class="comment">// ['&amp;u16', '&amp;Rational', 'Rational', 'divide_reuse_lhs', 'no', [], []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Rational&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>u16 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1337,8 +1337,8 @@
     }
 }
 
-<span class="comment">// [&#39;Rational&#39;, &#39;i32&#39;, &#39;Rational&#39;, &#39;Rational::divide_assign_integer&#39;, &#39;lhs&#39;,
-// [&#39;ref_mut&#39;], [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}]]
+<span class="comment">// ['Rational', 'i32', 'Rational', 'Rational::divide_assign_integer', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}]]
 </span><span class="kw">impl </span>Div&lt;i32&gt; <span class="kw">for </span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1348,8 +1348,8 @@
     </span>}
 }
 
-<span class="comment">// [&#39;Rational&#39;, &#39;&amp;i32&#39;, &#39;Rational&#39;, &#39;Rational::divide_assign_integer&#39;, &#39;lhs&#39;,
-// [&#39;ref_mut&#39;], [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;]]
+<span class="comment">// ['Rational', '&amp;i32', 'Rational', 'Rational::divide_assign_integer', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}, 'deref']]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>i32&gt; <span class="kw">for </span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1359,8 +1359,8 @@
     </span>}
 }
 
-<span class="comment">// [&#39;&amp;Rational&#39;, &#39;i32&#39;, &#39;Rational&#39;, &#39;Rational::divide_integer&#39;, &#39;no&#39;, [],
-// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}]]
+<span class="comment">// ['&amp;Rational', 'i32', 'Rational', 'Rational::divide_integer', 'no', [],
+// ['ref', {'convert': 'Integer'}]]
 </span><span class="kw">impl </span>Div&lt;i32&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1369,8 +1369,8 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;Rational&#39;, &#39;&amp;i32&#39;, &#39;Rational&#39;, &#39;Rational::divide_integer&#39;, &#39;no&#39;, [],
-// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;]]
+<span class="comment">// ['&amp;Rational', '&amp;i32', 'Rational', 'Rational::divide_integer', 'no', [],
+// ['ref', {'convert': 'Integer'}, 'deref']]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>i32&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1379,7 +1379,7 @@
     }
 }
 
-<span class="comment">// [&#39;i32&#39;, &#39;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]
+<span class="comment">// ['i32', 'Rational', 'Rational', 'divide_reuse_lhs', 'no', [], ['ref']]
 </span><span class="kw">impl </span>Div&lt;Rational&gt; <span class="kw">for </span>i32 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1388,7 +1388,7 @@
     }
 }
 
-<span class="comment">// [&#39;i32&#39;, &#39;&amp;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], []]
+<span class="comment">// ['i32', '&amp;Rational', 'Rational', 'divide_reuse_lhs', 'no', [], []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Rational&gt; <span class="kw">for </span>i32 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1397,7 +1397,7 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;i32&#39;, &#39;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]
+<span class="comment">// ['&amp;i32', 'Rational', 'Rational', 'divide_reuse_lhs', 'no', [], ['ref']]
 </span><span class="kw">impl </span>Div&lt;Rational&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>i32 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1406,7 +1406,7 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;i32&#39;, &#39;&amp;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], []]
+<span class="comment">// ['&amp;i32', '&amp;Rational', 'Rational', 'divide_reuse_lhs', 'no', [], []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Rational&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>i32 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1415,8 +1415,8 @@
     }
 }
 
-<span class="comment">// [&#39;Rational&#39;, &#39;u32&#39;, &#39;Rational&#39;, &#39;Rational::divide_assign_integer&#39;, &#39;lhs&#39;,
-// [&#39;ref_mut&#39;], [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}]]
+<span class="comment">// ['Rational', 'u32', 'Rational', 'Rational::divide_assign_integer', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}]]
 </span><span class="kw">impl </span>Div&lt;u32&gt; <span class="kw">for </span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1426,8 +1426,8 @@
     </span>}
 }
 
-<span class="comment">// [&#39;Rational&#39;, &#39;&amp;u32&#39;, &#39;Rational&#39;, &#39;Rational::divide_assign_integer&#39;, &#39;lhs&#39;,
-// [&#39;ref_mut&#39;], [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;]]
+<span class="comment">// ['Rational', '&amp;u32', 'Rational', 'Rational::divide_assign_integer', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}, 'deref']]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>u32&gt; <span class="kw">for </span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1437,8 +1437,8 @@
     </span>}
 }
 
-<span class="comment">// [&#39;&amp;Rational&#39;, &#39;u32&#39;, &#39;Rational&#39;, &#39;Rational::divide_integer&#39;, &#39;no&#39;, [],
-// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}]]
+<span class="comment">// ['&amp;Rational', 'u32', 'Rational', 'Rational::divide_integer', 'no', [],
+// ['ref', {'convert': 'Integer'}]]
 </span><span class="kw">impl </span>Div&lt;u32&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1447,8 +1447,8 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;Rational&#39;, &#39;&amp;u32&#39;, &#39;Rational&#39;, &#39;Rational::divide_integer&#39;, &#39;no&#39;, [],
-// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;]]
+<span class="comment">// ['&amp;Rational', '&amp;u32', 'Rational', 'Rational::divide_integer', 'no', [],
+// ['ref', {'convert': 'Integer'}, 'deref']]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>u32&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1457,7 +1457,7 @@
     }
 }
 
-<span class="comment">// [&#39;u32&#39;, &#39;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]
+<span class="comment">// ['u32', 'Rational', 'Rational', 'divide_reuse_lhs', 'no', [], ['ref']]
 </span><span class="kw">impl </span>Div&lt;Rational&gt; <span class="kw">for </span>u32 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1466,7 +1466,7 @@
     }
 }
 
-<span class="comment">// [&#39;u32&#39;, &#39;&amp;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], []]
+<span class="comment">// ['u32', '&amp;Rational', 'Rational', 'divide_reuse_lhs', 'no', [], []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Rational&gt; <span class="kw">for </span>u32 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1475,7 +1475,7 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;u32&#39;, &#39;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]
+<span class="comment">// ['&amp;u32', 'Rational', 'Rational', 'divide_reuse_lhs', 'no', [], ['ref']]
 </span><span class="kw">impl </span>Div&lt;Rational&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>u32 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1484,7 +1484,7 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;u32&#39;, &#39;&amp;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], []]
+<span class="comment">// ['&amp;u32', '&amp;Rational', 'Rational', 'divide_reuse_lhs', 'no', [], []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Rational&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>u32 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1493,8 +1493,8 @@
     }
 }
 
-<span class="comment">// [&#39;Rational&#39;, &#39;i64&#39;, &#39;Rational&#39;, &#39;Rational::divide_assign_integer&#39;, &#39;lhs&#39;,
-// [&#39;ref_mut&#39;], [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}]]
+<span class="comment">// ['Rational', 'i64', 'Rational', 'Rational::divide_assign_integer', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}]]
 </span><span class="kw">impl </span>Div&lt;i64&gt; <span class="kw">for </span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1504,8 +1504,8 @@
     </span>}
 }
 
-<span class="comment">// [&#39;Rational&#39;, &#39;&amp;i64&#39;, &#39;Rational&#39;, &#39;Rational::divide_assign_integer&#39;, &#39;lhs&#39;,
-// [&#39;ref_mut&#39;], [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;]]
+<span class="comment">// ['Rational', '&amp;i64', 'Rational', 'Rational::divide_assign_integer', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}, 'deref']]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>i64&gt; <span class="kw">for </span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1515,8 +1515,8 @@
     </span>}
 }
 
-<span class="comment">// [&#39;&amp;Rational&#39;, &#39;i64&#39;, &#39;Rational&#39;, &#39;Rational::divide_integer&#39;, &#39;no&#39;, [],
-// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}]]
+<span class="comment">// ['&amp;Rational', 'i64', 'Rational', 'Rational::divide_integer', 'no', [],
+// ['ref', {'convert': 'Integer'}]]
 </span><span class="kw">impl </span>Div&lt;i64&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1525,8 +1525,8 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;Rational&#39;, &#39;&amp;i64&#39;, &#39;Rational&#39;, &#39;Rational::divide_integer&#39;, &#39;no&#39;, [],
-// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;]]
+<span class="comment">// ['&amp;Rational', '&amp;i64', 'Rational', 'Rational::divide_integer', 'no', [],
+// ['ref', {'convert': 'Integer'}, 'deref']]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>i64&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1535,7 +1535,7 @@
     }
 }
 
-<span class="comment">// [&#39;i64&#39;, &#39;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]
+<span class="comment">// ['i64', 'Rational', 'Rational', 'divide_reuse_lhs', 'no', [], ['ref']]
 </span><span class="kw">impl </span>Div&lt;Rational&gt; <span class="kw">for </span>i64 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1544,7 +1544,7 @@
     }
 }
 
-<span class="comment">// [&#39;i64&#39;, &#39;&amp;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], []]
+<span class="comment">// ['i64', '&amp;Rational', 'Rational', 'divide_reuse_lhs', 'no', [], []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Rational&gt; <span class="kw">for </span>i64 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1553,7 +1553,7 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;i64&#39;, &#39;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]
+<span class="comment">// ['&amp;i64', 'Rational', 'Rational', 'divide_reuse_lhs', 'no', [], ['ref']]
 </span><span class="kw">impl </span>Div&lt;Rational&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>i64 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1562,7 +1562,7 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;i64&#39;, &#39;&amp;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], []]
+<span class="comment">// ['&amp;i64', '&amp;Rational', 'Rational', 'divide_reuse_lhs', 'no', [], []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Rational&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>i64 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1571,8 +1571,8 @@
     }
 }
 
-<span class="comment">// [&#39;Rational&#39;, &#39;u64&#39;, &#39;Rational&#39;, &#39;Rational::divide_assign_integer&#39;, &#39;lhs&#39;,
-// [&#39;ref_mut&#39;], [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}]]
+<span class="comment">// ['Rational', 'u64', 'Rational', 'Rational::divide_assign_integer', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}]]
 </span><span class="kw">impl </span>Div&lt;u64&gt; <span class="kw">for </span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1582,8 +1582,8 @@
     </span>}
 }
 
-<span class="comment">// [&#39;Rational&#39;, &#39;&amp;u64&#39;, &#39;Rational&#39;, &#39;Rational::divide_assign_integer&#39;, &#39;lhs&#39;,
-// [&#39;ref_mut&#39;], [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;]]
+<span class="comment">// ['Rational', '&amp;u64', 'Rational', 'Rational::divide_assign_integer', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}, 'deref']]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>u64&gt; <span class="kw">for </span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1593,8 +1593,8 @@
     </span>}
 }
 
-<span class="comment">// [&#39;&amp;Rational&#39;, &#39;u64&#39;, &#39;Rational&#39;, &#39;Rational::divide_integer&#39;, &#39;no&#39;, [],
-// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}]]
+<span class="comment">// ['&amp;Rational', 'u64', 'Rational', 'Rational::divide_integer', 'no', [],
+// ['ref', {'convert': 'Integer'}]]
 </span><span class="kw">impl </span>Div&lt;u64&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1603,8 +1603,8 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;Rational&#39;, &#39;&amp;u64&#39;, &#39;Rational&#39;, &#39;Rational::divide_integer&#39;, &#39;no&#39;, [],
-// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;]]
+<span class="comment">// ['&amp;Rational', '&amp;u64', 'Rational', 'Rational::divide_integer', 'no', [],
+// ['ref', {'convert': 'Integer'}, 'deref']]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>u64&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1613,7 +1613,7 @@
     }
 }
 
-<span class="comment">// [&#39;u64&#39;, &#39;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]
+<span class="comment">// ['u64', 'Rational', 'Rational', 'divide_reuse_lhs', 'no', [], ['ref']]
 </span><span class="kw">impl </span>Div&lt;Rational&gt; <span class="kw">for </span>u64 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1622,7 +1622,7 @@
     }
 }
 
-<span class="comment">// [&#39;u64&#39;, &#39;&amp;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], []]
+<span class="comment">// ['u64', '&amp;Rational', 'Rational', 'divide_reuse_lhs', 'no', [], []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Rational&gt; <span class="kw">for </span>u64 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1631,7 +1631,7 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;u64&#39;, &#39;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]
+<span class="comment">// ['&amp;u64', 'Rational', 'Rational', 'divide_reuse_lhs', 'no', [], ['ref']]
 </span><span class="kw">impl </span>Div&lt;Rational&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>u64 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1640,7 +1640,7 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;u64&#39;, &#39;&amp;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], []]
+<span class="comment">// ['&amp;u64', '&amp;Rational', 'Rational', 'divide_reuse_lhs', 'no', [], []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Rational&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>u64 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1649,8 +1649,8 @@
     }
 }
 
-<span class="comment">// [&#39;Rational&#39;, &#39;i128&#39;, &#39;Rational&#39;, &#39;Rational::divide_assign_integer&#39;, &#39;lhs&#39;,
-// [&#39;ref_mut&#39;], [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}]]
+<span class="comment">// ['Rational', 'i128', 'Rational', 'Rational::divide_assign_integer', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}]]
 </span><span class="kw">impl </span>Div&lt;i128&gt; <span class="kw">for </span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1660,8 +1660,8 @@
     </span>}
 }
 
-<span class="comment">// [&#39;Rational&#39;, &#39;&amp;i128&#39;, &#39;Rational&#39;, &#39;Rational::divide_assign_integer&#39;, &#39;lhs&#39;,
-// [&#39;ref_mut&#39;], [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;]]
+<span class="comment">// ['Rational', '&amp;i128', 'Rational', 'Rational::divide_assign_integer', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}, 'deref']]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>i128&gt; <span class="kw">for </span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1671,8 +1671,8 @@
     </span>}
 }
 
-<span class="comment">// [&#39;&amp;Rational&#39;, &#39;i128&#39;, &#39;Rational&#39;, &#39;Rational::divide_integer&#39;, &#39;no&#39;, [],
-// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}]]
+<span class="comment">// ['&amp;Rational', 'i128', 'Rational', 'Rational::divide_integer', 'no', [],
+// ['ref', {'convert': 'Integer'}]]
 </span><span class="kw">impl </span>Div&lt;i128&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1681,8 +1681,8 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;Rational&#39;, &#39;&amp;i128&#39;, &#39;Rational&#39;, &#39;Rational::divide_integer&#39;, &#39;no&#39;, [],
-// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;]]
+<span class="comment">// ['&amp;Rational', '&amp;i128', 'Rational', 'Rational::divide_integer', 'no', [],
+// ['ref', {'convert': 'Integer'}, 'deref']]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>i128&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1691,7 +1691,7 @@
     }
 }
 
-<span class="comment">// [&#39;i128&#39;, &#39;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]
+<span class="comment">// ['i128', 'Rational', 'Rational', 'divide_reuse_lhs', 'no', [], ['ref']]
 </span><span class="kw">impl </span>Div&lt;Rational&gt; <span class="kw">for </span>i128 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1700,7 +1700,7 @@
     }
 }
 
-<span class="comment">// [&#39;i128&#39;, &#39;&amp;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], []]
+<span class="comment">// ['i128', '&amp;Rational', 'Rational', 'divide_reuse_lhs', 'no', [], []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Rational&gt; <span class="kw">for </span>i128 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1709,7 +1709,7 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;i128&#39;, &#39;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]
+<span class="comment">// ['&amp;i128', 'Rational', 'Rational', 'divide_reuse_lhs', 'no', [], ['ref']]
 </span><span class="kw">impl </span>Div&lt;Rational&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>i128 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1718,7 +1718,7 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;i128&#39;, &#39;&amp;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], []]
+<span class="comment">// ['&amp;i128', '&amp;Rational', 'Rational', 'divide_reuse_lhs', 'no', [], []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Rational&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>i128 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1727,8 +1727,8 @@
     }
 }
 
-<span class="comment">// [&#39;Rational&#39;, &#39;u128&#39;, &#39;Rational&#39;, &#39;Rational::divide_assign_integer&#39;, &#39;lhs&#39;,
-// [&#39;ref_mut&#39;], [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}]]
+<span class="comment">// ['Rational', 'u128', 'Rational', 'Rational::divide_assign_integer', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}]]
 </span><span class="kw">impl </span>Div&lt;u128&gt; <span class="kw">for </span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1738,8 +1738,8 @@
     </span>}
 }
 
-<span class="comment">// [&#39;Rational&#39;, &#39;&amp;u128&#39;, &#39;Rational&#39;, &#39;Rational::divide_assign_integer&#39;, &#39;lhs&#39;,
-// [&#39;ref_mut&#39;], [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;]]
+<span class="comment">// ['Rational', '&amp;u128', 'Rational', 'Rational::divide_assign_integer', 'lhs',
+// ['ref_mut'], ['ref', {'convert': 'Integer'}, 'deref']]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>u128&gt; <span class="kw">for </span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1749,8 +1749,8 @@
     </span>}
 }
 
-<span class="comment">// [&#39;&amp;Rational&#39;, &#39;u128&#39;, &#39;Rational&#39;, &#39;Rational::divide_integer&#39;, &#39;no&#39;, [],
-// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}]]
+<span class="comment">// ['&amp;Rational', 'u128', 'Rational', 'Rational::divide_integer', 'no', [],
+// ['ref', {'convert': 'Integer'}]]
 </span><span class="kw">impl </span>Div&lt;u128&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1759,8 +1759,8 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;Rational&#39;, &#39;&amp;u128&#39;, &#39;Rational&#39;, &#39;Rational::divide_integer&#39;, &#39;no&#39;, [],
-// [&#39;ref&#39;, {&#39;convert&#39;: &#39;Integer&#39;}, &#39;deref&#39;]]
+<span class="comment">// ['&amp;Rational', '&amp;u128', 'Rational', 'Rational::divide_integer', 'no', [],
+// ['ref', {'convert': 'Integer'}, 'deref']]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>u128&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>Rational {
     <span class="kw">type </span>Output = Rational;
 
@@ -1769,7 +1769,7 @@
     }
 }
 
-<span class="comment">// [&#39;u128&#39;, &#39;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]
+<span class="comment">// ['u128', 'Rational', 'Rational', 'divide_reuse_lhs', 'no', [], ['ref']]
 </span><span class="kw">impl </span>Div&lt;Rational&gt; <span class="kw">for </span>u128 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1778,7 +1778,7 @@
     }
 }
 
-<span class="comment">// [&#39;u128&#39;, &#39;&amp;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], []]
+<span class="comment">// ['u128', '&amp;Rational', 'Rational', 'divide_reuse_lhs', 'no', [], []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Rational&gt; <span class="kw">for </span>u128 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1787,7 +1787,7 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;u128&#39;, &#39;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], [&#39;ref&#39;]]
+<span class="comment">// ['&amp;u128', 'Rational', 'Rational', 'divide_reuse_lhs', 'no', [], ['ref']]
 </span><span class="kw">impl </span>Div&lt;Rational&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>u128 {
     <span class="kw">type </span>Output = Rational;
 
@@ -1796,7 +1796,7 @@
     }
 }
 
-<span class="comment">// [&#39;&amp;u128&#39;, &#39;&amp;Rational&#39;, &#39;Rational&#39;, &#39;divide_reuse_lhs&#39;, &#39;no&#39;, [], []]
+<span class="comment">// ['&amp;u128', '&amp;Rational', 'Rational', 'divide_reuse_lhs', 'no', [], []]
 </span><span class="kw">impl </span>Div&lt;<span class="kw-2">&amp;</span>Rational&gt; <span class="kw">for </span><span class="kw-2">&amp;</span>u128 {
     <span class="kw">type </span>Output = Rational;
 

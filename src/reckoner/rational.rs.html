@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/rational.rs`."><title>rational.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="reckoner" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0 (79e9716c9 2023-11-13)" data-channel="1.74.0" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../reckoner/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/rational.rs`."><title>rational.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-c5d6553a23f1e5a6.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="reckoner" data-themes="" data-resource-suffix="" data-rustdoc-version="1.81.0 (eeb90cda1 2024-09-04)" data-channel="1.81.0" data-search-js="search-d234aafac6c221dd.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-d2fab2bf619172d3.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -919,7 +919,7 @@
             // that the mpq_t struct has been correctly allocated.
             </span><span class="kw">let </span>res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_rat_init(raw_mpq) };
 
-            <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Rational init failed!&quot;</span>);
+            <span class="macro">imath_check_panic!</span>(res, <span class="string">"Rational init failed!"</span>);
         }
 
         <span class="comment">// This cast is safe (from MaybeUninit&lt;creachadair_imath_sys::mpq_t&gt; to
@@ -938,7 +938,7 @@
             // allocated and `other_raw` has been successfully initialized.
             </span><span class="kw">let </span>res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_rat_init_copy(raw_mpq, other_raw) };
 
-            <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Rational init failed!&quot;</span>);
+            <span class="macro">imath_check_panic!</span>(res, <span class="string">"Rational init failed!"</span>);
         }
 
         <span class="comment">// This cast is safe (from MaybeUninit&lt;creachadair_imath_sys::mpq_t&gt; to
@@ -1006,7 +1006,7 @@
     /// let op_res = unsafe { mp_rat_add(a_raw, b_raw, c_raw) };
     ///
     /// if op_res != unsafe { MP_OK } {
-    ///     panic!(&quot;Operation failed.&quot;)
+    ///     panic!("Operation failed.")
     /// }
     ///
     /// let a = unsafe { Rational::from_raw(a_raw) };
@@ -1058,7 +1058,7 @@
 
         <span class="kw">let </span>res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_rat_reduce(self_raw) };
 
-        <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Reducing rational value failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(res, <span class="string">"Reducing rational value failed!"</span>);
     }
 
     <span class="doccomment">/// Set value of integer to zero
@@ -1185,7 +1185,7 @@
 
             <span class="kw">let </span>res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_rat_numer(self_raw, raw_int) };
 
-            <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Value init failed!&quot;</span>);
+            <span class="macro">imath_check_panic!</span>(res, <span class="string">"Value init failed!"</span>);
 
             <span class="comment">// This is safe because the `raw_int` ptr is created directly from an
             // `Integer::into_raw` call.
@@ -1215,7 +1215,7 @@
             <span class="comment">// This function call is safe as self_raw and raw_int have been initialized.
             </span><span class="kw">let </span>res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_rat_denom(self_raw, raw_int) };
 
-            <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Value init failed!&quot;</span>);
+            <span class="macro">imath_check_panic!</span>(res, <span class="string">"Value init failed!"</span>);
 
             <span class="comment">// This is safe because the `raw_int` ptr is created directly from an
             // `Integer::into_raw` call.
@@ -1241,7 +1241,7 @@
     /// assert_eq!(a, b);
     /// assert_eq!(b, (34256, 54587));
     /// ```
-    </span><span class="attr">#[allow(clippy::needless_pass_by_ref_mut)] </span><span class="comment">// we allow this because we&#39;re signalling to the caller that we&#39;re going to
+    </span><span class="attr">#[allow(clippy::needless_pass_by_ref_mut)] </span><span class="comment">// we allow this because we're signalling to the caller that we're going to
                                                // mutate `other`
     </span><span class="kw">pub fn </span>copy_to(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;mut </span><span class="self">Self</span>) {
         <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
@@ -1250,7 +1250,7 @@
         <span class="comment">// This is safe bc self has been initialized with a value
         </span><span class="kw">let </span>res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_rat_copy(self_raw, other_raw) };
 
-        <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Copying the value failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(res, <span class="string">"Copying the value failed!"</span>);
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>from_string_repr(src: <span class="kw">impl </span>ToString) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
@@ -1267,7 +1267,7 @@
             // src value is of the correct type?
             </span><span class="kw">let </span>res_init = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_rat_init(raw_mpq) };
 
-            <span class="macro">imath_check_panic!</span>(res_init, <span class="string">&quot;Init failed!&quot;</span>);
+            <span class="macro">imath_check_panic!</span>(res_init, <span class="string">"Init failed!"</span>);
 
             <span class="comment">// This is safe bc all the data provided to the function is correctly setup
             // (rational was allocated/initialized, char_ptr is 0-terminated).
@@ -1345,7 +1345,7 @@
             }
         };
 
-        <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Writing the value as a string failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(res, <span class="string">"Writing the value as a string failed!"</span>);
 
         <span class="comment">// Setting the length is safe bc we now that the `mp_rat_to_string`
         // should have used the entire capacity to write to
@@ -1363,7 +1363,7 @@
             .unwrap();
         <span class="kw">let </span>without_nul = <span class="kw-2">&amp;</span>char_vec.as_slice()[..=non_zero_idx];
 
-        CString::new(without_nul).expect(<span class="string">&quot;Failed to produce a valid CString&quot;</span>)
+        CString::new(without_nul).expect(<span class="string">"Failed to produce a valid CString"</span>)
     }
 
     <span class="doccomment">/// Converts the value of `self` to a string in base-10 decimal-point
@@ -1377,10 +1377,10 @@
     ///
     /// let r = Rational::from((1146408, 364913));
     ///
-    /// assert_eq!(r.to_decimal(RoundMode::HalfUp, 6), &quot;3.141593&quot;);
-    /// assert_eq!(r.to_decimal(RoundMode::HalfUp, 5), &quot;3.14159&quot;);
-    /// assert_eq!(r.to_decimal(RoundMode::HalfUp, 4), &quot;3.1416&quot;);
-    /// assert_eq!(r.to_decimal(RoundMode::HalfUp, 3), &quot;3.142&quot;);
+    /// assert_eq!(r.to_decimal(RoundMode::HalfUp, 6), "3.141593");
+    /// assert_eq!(r.to_decimal(RoundMode::HalfUp, 5), "3.14159");
+    /// assert_eq!(r.to_decimal(RoundMode::HalfUp, 4), "3.1416");
+    /// assert_eq!(r.to_decimal(RoundMode::HalfUp, 3), "3.142");
     /// ```
     </span><span class="kw">pub fn </span>to_decimal(<span class="kw-2">&amp;</span><span class="self">self</span>, rounding_mode: RoundMode, max_precision: u16) -&gt; String {
         <span class="kw">let </span>required_len = <span class="self">self</span>.required_decimal_display_len(max_precision);
@@ -1407,7 +1407,7 @@
             }
         };
 
-        <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Writing the value as a string failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(res, <span class="string">"Writing the value as a string failed!"</span>);
 
         <span class="comment">// Setting the length is safe bc we now that the `mp_rat_to_decimal`
         // should have used the entire capacity to write to
@@ -1428,7 +1428,7 @@
         CString::new(without_nul)
             .unwrap_or_else(|err| {
                 <span class="macro">panic!</span>(
-                    <span class="string">&quot;Failed to produce a valid CString. {} {:?}\n{}&quot;</span>,
+                    <span class="string">"Failed to produce a valid CString. {} {:?}\n{}"</span>,
                     non_zero_idx, char_vec, err
                 )
             })
@@ -1443,7 +1443,7 @@
             creachadair_imath_sys::mp_rat_set_value(self_raw, numer.into(), denom.into())
         };
 
-        <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Setting the value failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(res, <span class="string">"Setting the value failed!"</span>);
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>set_numerator(<span class="kw-2">&amp;mut </span><span class="self">self</span>, numer: <span class="kw-2">&amp;</span>Integer) {
@@ -1456,7 +1456,7 @@
 
         <span class="kw">let </span>res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_copy(int_raw, num_raw) };
 
-        <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Setting the numerator failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(res, <span class="string">"Setting the numerator failed!"</span>);
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>set_denominator(<span class="kw-2">&amp;mut </span><span class="self">self</span>, denom: <span class="kw-2">&amp;</span>Integer) {
@@ -1472,7 +1472,7 @@
         // `den_raw` pointer points correctly to the `den` field of the `mpq_t` struct.
         </span><span class="kw">let </span>res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_copy(denom_raw, den_raw) };
 
-        <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Setting the denominator failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(res, <span class="string">"Setting the denominator failed!"</span>);
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>try_into_c_long(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(c_long, c_long)&gt; {
@@ -1503,9 +1503,9 @@
 <span class="doccomment">/// Parse a rational value from a string having one of the following formats,
 /// each with an optional leading sign flag:
 ///
-/// - `n`, integer format, e.g. &quot;123&quot;
-/// - `n/d`, ratio format, e.g., &quot;-12/5&quot;
-/// - `z.ffff`, decimal format, e.g., &quot;1.627&quot;
+/// - `n`, integer format, e.g. "123"
+/// - `n/d`, ratio format, e.g., "-12/5"
+/// - `z.ffff`, decimal format, e.g., "1.627"
 ///
 /// After successfully parsing, the rational will be reduced by factoring out
 /// common multiples of the numerator and denominators, as if `Rational::reduce`
@@ -1525,7 +1525,7 @@
             </span><span class="kw">let </span>num = <span class="self">self</span>.numerator();
             <span class="kw">let </span>den = <span class="self">self</span>.denominator();
 
-            <span class="macro">write!</span>(f, <span class="string">&quot;Rational {{ num: {:#?}, den: {:#?} }}&quot;</span>, num, den)
+            <span class="macro">write!</span>(f, <span class="string">"Rational {{ num: {:#?}, den: {:#?} }}"</span>, num, den)
         } <span class="kw">else </span>{
             fmt::Display::fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f)
         }
@@ -1640,7 +1640,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>parse_normal_rational() {
-        <span class="kw">let </span>rat: Rational = <span class="string">&quot;12345/67890&quot;</span>.parse().unwrap();
+        <span class="kw">let </span>rat: Rational = <span class="string">"12345/67890"</span>.parse().unwrap();
 
         <span class="macro">assert_eq!</span>(rat.numerator(), Integer::from(<span class="number">823</span>));
         <span class="macro">assert_eq!</span>(rat.denominator(), Integer::from(<span class="number">4526</span>));
@@ -1648,7 +1648,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>parse_integer_rational() {
-        <span class="kw">let </span>rat: Rational = <span class="string">&quot;12345&quot;</span>.parse().unwrap();
+        <span class="kw">let </span>rat: Rational = <span class="string">"12345"</span>.parse().unwrap();
 
         <span class="macro">assert_eq!</span>(rat.numerator(), Integer::from(<span class="number">12345</span>));
         <span class="macro">assert_eq!</span>(rat.denominator(), Integer::from(<span class="number">1</span>));
@@ -1656,7 +1656,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>parse_decimal_rational() {
-        <span class="kw">let </span>rat: Rational = <span class="string">&quot;1.2345&quot;</span>.parse().unwrap();
+        <span class="kw">let </span>rat: Rational = <span class="string">"1.2345"</span>.parse().unwrap();
 
         <span class="macro">assert_eq!</span>(rat.numerator(), Integer::from(<span class="number">2469</span>));
         <span class="macro">assert_eq!</span>(rat.denominator(), Integer::from(<span class="number">2000</span>));
@@ -1667,34 +1667,34 @@
         <span class="kw">let </span><span class="kw-2">mut </span>rat = Rational::new();
         rat.set_value(<span class="number">2</span>, <span class="number">3</span>);
 
-        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::Down, <span class="number">3</span>), <span class="string">&quot;0.666&quot;</span>);
-        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::Down, <span class="number">15</span>), <span class="string">&quot;0.666666666666666&quot;</span>);
+        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::Down, <span class="number">3</span>), <span class="string">"0.666"</span>);
+        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::Down, <span class="number">15</span>), <span class="string">"0.666666666666666"</span>);
 
         rat.set_value(<span class="number">2</span>, <span class="number">1</span>);
 
-        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::Down, <span class="number">3</span>), <span class="string">&quot;2.000&quot;</span>);
-        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::Down, <span class="number">15</span>), <span class="string">&quot;2.000000000000000&quot;</span>);
+        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::Down, <span class="number">3</span>), <span class="string">"2.000"</span>);
+        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::Down, <span class="number">15</span>), <span class="string">"2.000000000000000"</span>);
 
         rat.zero();
 
-        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::Down, <span class="number">3</span>), <span class="string">&quot;0.000&quot;</span>);
-        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::Down, <span class="number">15</span>), <span class="string">&quot;0.000000000000000&quot;</span>);
+        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::Down, <span class="number">3</span>), <span class="string">"0.000"</span>);
+        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::Down, <span class="number">15</span>), <span class="string">"0.000000000000000"</span>);
 
         rat.set_value(<span class="number">9</span>, <span class="number">1000</span>);
-        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::Down, <span class="number">2</span>), <span class="string">&quot;0.00&quot;</span>);
+        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::Down, <span class="number">2</span>), <span class="string">"0.00"</span>);
 
         rat.set_value(<span class="number">1</span>, <span class="number">1000</span>);
-        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::Up, <span class="number">2</span>), <span class="string">&quot;0.01&quot;</span>);
+        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::Up, <span class="number">2</span>), <span class="string">"0.01"</span>);
 
         rat.set_value(<span class="number">5</span>, <span class="number">1000</span>);
-        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::HalfUp, <span class="number">2</span>), <span class="string">&quot;0.01&quot;</span>);
+        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::HalfUp, <span class="number">2</span>), <span class="string">"0.01"</span>);
         rat.set_value(<span class="number">4</span>, <span class="number">1000</span>);
-        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::HalfUp, <span class="number">2</span>), <span class="string">&quot;0.00&quot;</span>);
+        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::HalfUp, <span class="number">2</span>), <span class="string">"0.00"</span>);
 
         rat.set_value(<span class="number">5</span>, <span class="number">1000</span>);
-        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::HalfDown, <span class="number">2</span>), <span class="string">&quot;0.00&quot;</span>);
+        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::HalfDown, <span class="number">2</span>), <span class="string">"0.00"</span>);
         rat.set_value(<span class="number">6</span>, <span class="number">1000</span>);
-        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::HalfDown, <span class="number">2</span>), <span class="string">&quot;0.01&quot;</span>);
+        <span class="macro">assert_eq!</span>(rat.to_decimal(RoundMode::HalfDown, <span class="number">2</span>), <span class="string">"0.01"</span>);
     }
 
     <span class="attr">#[test]
@@ -1720,7 +1720,7 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>clone_rational() {
         <span class="kw">let </span>a: Rational =
-            <span class="string">&quot;98712698346126837461287318238761234897612839471623487619872364981726348176234&quot;
+            <span class="string">"98712698346126837461287318238761234897612839471623487619872364981726348176234"
                 </span>.parse()
                 .unwrap();
 

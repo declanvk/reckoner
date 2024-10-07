@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/integer.rs`."><title>integer.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="reckoner" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0 (79e9716c9 2023-11-13)" data-channel="1.74.0" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../reckoner/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/integer.rs`."><title>integer.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-c5d6553a23f1e5a6.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="reckoner" data-themes="" data-resource-suffix="" data-rustdoc-version="1.81.0 (eeb90cda1 2024-09-04)" data-channel="1.81.0" data-search-js="search-d234aafac6c221dd.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-d2fab2bf619172d3.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -665,7 +665,7 @@
             // src value is of the correct type?
             </span><span class="kw">let </span>res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_init_copy(raw_mpz, other_raw) };
 
-            <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Value init failed!&quot;</span>);
+            <span class="macro">imath_check_panic!</span>(res, <span class="string">"Value init failed!"</span>);
         }
 
         <span class="comment">// This cast is safe (from MaybeUninit&lt;creachadair_imath_sys::mpz_t&gt; to
@@ -733,7 +733,7 @@
     /// let op_res = unsafe { mp_int_add(a_raw, b_raw, c_raw) };
     ///
     /// if op_res != unsafe { MP_OK } {
-    ///     panic!(&quot;Operation failed.&quot;)
+    ///     panic!("Operation failed.")
     /// }
     ///
     /// let a = unsafe { Integer::from_raw(a_raw) };
@@ -771,7 +771,7 @@
             // src value is of the correct type?
             </span><span class="kw">let </span>res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_init_value(raw_mpz, src.into()) };
 
-            <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Value init failed!&quot;</span>);
+            <span class="macro">imath_check_panic!</span>(res, <span class="string">"Value init failed!"</span>);
         }
 
         <span class="comment">// This cast is safe (from MaybeUninit&lt;creachadair_imath_sys::mpz_t&gt; to
@@ -786,8 +786,8 @@
     /// ```
     /// use reckoner::Integer;
     ///
-    /// let a = Integer::from_string(&quot;8&quot;, 10);
-    /// let b = Integer::from_string(&quot;1000&quot;, 2);
+    /// let a = Integer::from_string("8", 10);
+    /// let b = Integer::from_string("1000", 2);
     ///
     /// assert_eq!(a, b);
     /// ```
@@ -811,7 +811,7 @@
             // src value is of the correct type?
             </span><span class="kw">let </span>res_init = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_init(raw_mpz) };
 
-            <span class="macro">imath_check_panic!</span>(res_init, <span class="string">&quot;Init failed!&quot;</span>);
+            <span class="macro">imath_check_panic!</span>(res_init, <span class="string">"Init failed!"</span>);
 
             <span class="comment">// This is safe bc all the data provided to the function is correctly setup
             // (integer was allocated/initialized, char_ptr is 0-terminated).
@@ -873,7 +873,7 @@
             }
         };
 
-        <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Writing the value as a string failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(res, <span class="string">"Writing the value as a string failed!"</span>);
 
         <span class="comment">// Setting the length is safe bc we now that the `mp_int_to_string`
         // should have used the entire capacity to write to
@@ -891,7 +891,7 @@
             .unwrap();
         <span class="kw">let </span>without_nul = <span class="kw-2">&amp;</span>char_vec.as_slice()[..=non_zero_idx];
 
-        CString::new(without_nul).expect(<span class="string">&quot;Failed to produce a valid CString&quot;</span>)
+        CString::new(without_nul).expect(<span class="string">"Failed to produce a valid CString"</span>)
     }
 
     <span class="doccomment">/// Replaces the value of `other` with a copy of the value of `self`. No new
@@ -911,9 +911,9 @@
     /// a.copy_to(&amp;mut b);
     ///
     /// assert_eq!(a, 20);
-    /// assert_eq!(b, 20, &quot;Failed to copy&quot;);
+    /// assert_eq!(b, 20, "Failed to copy");
     /// ```
-    </span><span class="attr">#[allow(clippy::needless_pass_by_ref_mut)] </span><span class="comment">// we allow this because we&#39;re signalling to the caller that we&#39;re going to
+    </span><span class="attr">#[allow(clippy::needless_pass_by_ref_mut)] </span><span class="comment">// we allow this because we're signalling to the caller that we're going to
                                                // mutate `other`
     </span><span class="kw">pub fn </span>copy_to(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;mut </span><span class="self">Self</span>) {
         <span class="kw">let </span>self_raw = <span class="self">self</span>.as_raw();
@@ -922,7 +922,7 @@
         <span class="comment">// This is safe bc self has been initialized with a value
         </span><span class="kw">let </span>res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_copy(self_raw, other_raw) };
 
-        <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Copying the value failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(res, <span class="string">"Copying the value failed!"</span>);
     }
 
     <span class="attr">#[allow(dead_code)]
@@ -931,7 +931,7 @@
 
         <span class="kw">let </span>res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_set_value(self_raw, value.into()) };
 
-        <span class="macro">imath_check_panic!</span>(res, <span class="string">&quot;Setting the value directly failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(res, <span class="string">"Setting the value directly failed!"</span>);
     }
 
     <span class="doccomment">/// Set value of integer to zero
@@ -1084,7 +1084,7 @@
 
             <span class="macro">write!</span>(
                 f,
-                <span class="string">&quot;Integer {{ single: {:?}, digits: {:p}, alloc: {:?}, used: {:?}, sign: {:?} }}&quot;</span>,
+                <span class="string">"Integer {{ single: {:?}, digits: {:p}, alloc: {:?}, used: {:?}, sign: {:?} }}"</span>,
                 single, digits, alloc, used, sign
             )
         } <span class="kw">else </span>{
@@ -1145,19 +1145,19 @@
         <span class="kw">let </span>int = Integer::new();
 
         <span class="kw">let </span>string_repr = int.to_string();
-        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>string_repr, <span class="string">&quot;0&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>string_repr, <span class="string">"0"</span>);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>create_integer_with_value() {
-        <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, Integer::from(<span class="number">20000</span>)), <span class="string">&quot;20000&quot;</span>);
-        <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, Integer::from(<span class="number">6</span>)), <span class="string">&quot;6&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{}"</span>, Integer::from(<span class="number">20000</span>)), <span class="string">"20000"</span>);
+        <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{}"</span>, Integer::from(<span class="number">6</span>)), <span class="string">"6"</span>);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>parse_big_integer() {
         <span class="kw">let </span>int: Integer =
-            <span class="string">&quot;98712698346126837461287318238761234897612839471623487619872364981726348176234&quot;
+            <span class="string">"98712698346126837461287318238761234897612839471623487619872364981726348176234"
                 </span>.parse()
                 .unwrap();
         <span class="attr">#[allow(clippy::eq_op)]
@@ -1169,7 +1169,7 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>zero_integer() {
         <span class="kw">let </span><span class="kw-2">mut </span>big_int: Integer =
-            <span class="string">&quot;98712698346126837461287318238761234897612839471623487619872364981726348176234&quot;
+            <span class="string">"98712698346126837461287318238761234897612839471623487619872364981726348176234"
                 </span>.parse()
                 .unwrap();
         <span class="kw">let </span><span class="kw-2">mut </span>small_int: Integer = (-<span class="number">4_565_234</span>).into();
@@ -1184,7 +1184,7 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>clone_integer() {
         <span class="kw">let </span>a: Integer =
-            <span class="string">&quot;98712698346126837461287318238761234897612839471623487619872364981726348176234&quot;
+            <span class="string">"98712698346126837461287318238761234897612839471623487619872364981726348176234"
                 </span>.parse()
                 .unwrap();
 
@@ -1197,13 +1197,13 @@
     </span><span class="kw">fn </span>formatting_integer() {
         <span class="kw">let </span>a = Integer::from(<span class="number">12345</span>);
 
-        <span class="kw">let </span>display_out = <span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, a);
-        <span class="kw">let </span>debug_out = <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, a);
-        <span class="kw">let </span>debug_alt_out = <span class="macro">format!</span>(<span class="string">&quot;{:#?}&quot;</span>, a);
+        <span class="kw">let </span>display_out = <span class="macro">format!</span>(<span class="string">"{}"</span>, a);
+        <span class="kw">let </span>debug_out = <span class="macro">format!</span>(<span class="string">"{:?}"</span>, a);
+        <span class="kw">let </span>debug_alt_out = <span class="macro">format!</span>(<span class="string">"{:#?}"</span>, a);
 
-        <span class="macro">assert_eq!</span>(display_out, <span class="string">&quot;12345&quot;</span>);
-        <span class="macro">assert_eq!</span>(debug_out, <span class="string">&quot;12345&quot;</span>);
-        <span class="macro">assert!</span>(debug_alt_out.starts_with(<span class="string">&quot;Integer {&quot;</span>));
+        <span class="macro">assert_eq!</span>(display_out, <span class="string">"12345"</span>);
+        <span class="macro">assert_eq!</span>(debug_out, <span class="string">"12345"</span>);
+        <span class="macro">assert!</span>(debug_alt_out.starts_with(<span class="string">"Integer {"</span>));
     }
 
     <span class="attr">#[test]

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/integer/ops.rs`."><title>ops.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="reckoner" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0 (79e9716c9 2023-11-13)" data-channel="1.74.0" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../reckoner/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/integer/ops.rs`."><title>ops.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-c5d6553a23f1e5a6.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="reckoner" data-themes="" data-resource-suffix="" data-rustdoc-version="1.81.0 (eeb90cda1 2024-09-04)" data-channel="1.81.0" data-search-js="search-d234aafac6c221dd.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-d2fab2bf619172d3.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -696,7 +696,7 @@
         // initialized. `result` does not necessarily need to be initialized.
         </span><span class="kw">let </span>op_res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_add(self_raw, other_raw, result_raw) };
 
-        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">"Operation failed!"</span>);
 
         result_int
     }
@@ -710,7 +710,7 @@
         // the result pointer is allowed to alias with either of the arguments.
         </span><span class="kw">let </span>op_res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_add(self_raw, other_raw, self_raw) };
 
-        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">"Operation failed!"</span>);
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>add_c_long(<span class="kw-2">&amp;</span><span class="self">self</span>, value: <span class="kw">impl </span>Into&lt;c_long&gt;) -&gt; <span class="self">Self </span>{
@@ -722,7 +722,7 @@
         </span><span class="kw">let </span>op_res =
             <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_add_value(self_raw, value.into(), result_raw) };
 
-        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">"Operation failed!"</span>);
 
         result_int
     }
@@ -735,7 +735,7 @@
         </span><span class="kw">let </span>op_res =
             <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_add_value(self_raw, other.into(), self_raw) };
 
-        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">"Operation failed!"</span>);
     }
 
     <span class="doccomment">/// Subtract two integers and return the result
@@ -750,7 +750,7 @@
         // initialized. `result` does not necessarily need to be initialized.
         </span><span class="kw">let </span>op_res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_sub(self_raw, other_raw, result_raw) };
 
-        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">"Operation failed!"</span>);
 
         result_int
     }
@@ -762,7 +762,7 @@
 
         <span class="kw">let </span>op_res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_sub(self_raw, other_raw, self_raw) };
 
-        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">"Operation failed!"</span>);
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>subtract_c_long(<span class="kw-2">&amp;</span><span class="self">self</span>, value: <span class="kw">impl </span>Into&lt;c_long&gt;) -&gt; <span class="self">Self </span>{
@@ -773,7 +773,7 @@
         <span class="kw">let </span>op_res =
             <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_sub_value(self_raw, value.into(), result_raw) };
 
-        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">"Operation failed!"</span>);
 
         result_int
     }
@@ -784,7 +784,7 @@
         <span class="kw">let </span>op_res =
             <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_sub_value(self_raw, other.into(), self_raw) };
 
-        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">"Operation failed!"</span>);
     }
 
     <span class="doccomment">/// Multiply two integers and return the result
@@ -799,7 +799,7 @@
         // initialized. `result` does not necessarily need to be initialized.
         </span><span class="kw">let </span>op_res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_mul(self_raw, other_raw, result_raw) };
 
-        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">"Operation failed!"</span>);
 
         result_int
     }
@@ -811,7 +811,7 @@
 
         <span class="kw">let </span>op_res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_mul(self_raw, other_raw, self_raw) };
 
-        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">"Operation failed!"</span>);
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>multiply_c_long(<span class="kw-2">&amp;</span><span class="self">self</span>, value: <span class="kw">impl </span>Into&lt;c_long&gt;) -&gt; <span class="self">Self </span>{
@@ -822,7 +822,7 @@
         <span class="kw">let </span>op_res =
             <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_mul_value(self_raw, value.into(), result_raw) };
 
-        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">"Operation failed!"</span>);
 
         result_int
     }
@@ -833,7 +833,7 @@
         <span class="kw">let </span>op_res =
             <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_mul_value(self_raw, other.into(), self_raw) };
 
-        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">"Operation failed!"</span>);
     }
 
     <span class="doccomment">/// Return the additive inverse
@@ -846,7 +846,7 @@
         // `result` does not necessarily need to be initialized.
         </span><span class="kw">let </span>op_res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_neg(self_raw, result_raw) };
 
-        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">"Operation failed!"</span>);
 
         result_int
     }
@@ -857,7 +857,7 @@
 
         <span class="kw">let </span>op_res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_neg(self_raw, self_raw) };
 
-        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">"Operation failed!"</span>);
     }
 
     <span class="doccomment">/// Return the absolute value
@@ -870,7 +870,7 @@
         // `result` does not necessarily need to be initialized.
         </span><span class="kw">let </span>op_res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_abs(self_raw, result_raw) };
 
-        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">"Operation failed!"</span>);
 
         result_int
     }
@@ -881,7 +881,7 @@
 
         <span class="kw">let </span>op_res = <span class="kw">unsafe </span>{ creachadair_imath_sys::mp_int_abs(self_raw, self_raw) };
 
-        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">"Operation failed!"</span>);
     }
 
     <span class="doccomment">/// Perform integer division operation.
@@ -915,7 +915,7 @@
             )
         };
 
-        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">"Operation failed!"</span>);
     }
 
     <span class="doccomment">/// Divide two integers and return quotient and remainder
@@ -990,7 +990,7 @@
             )
         };
 
-        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">&quot;Operation failed!&quot;</span>);
+        <span class="macro">imath_check_panic!</span>(op_res, <span class="string">"Operation failed!"</span>);
     }
 
     <span class="attr">#[allow(dead_code)]
@@ -1204,10 +1204,10 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>fibonacci_values() {
-        <span class="macro">assert_eq!</span>(fibonacci(<span class="number">1</span>).to_string(), <span class="string">&quot;1&quot;</span>);
-        <span class="macro">assert_eq!</span>(fibonacci(<span class="number">10</span>).to_string(), <span class="string">&quot;55&quot;</span>);
-        <span class="macro">assert_eq!</span>(fibonacci(<span class="number">50</span>).to_string(), <span class="string">&quot;12586269025&quot;</span>);
-        <span class="macro">assert_eq!</span>(fibonacci(<span class="number">100</span>).to_string(), <span class="string">&quot;354224848179261915075&quot;</span>);
+        <span class="macro">assert_eq!</span>(fibonacci(<span class="number">1</span>).to_string(), <span class="string">"1"</span>);
+        <span class="macro">assert_eq!</span>(fibonacci(<span class="number">10</span>).to_string(), <span class="string">"55"</span>);
+        <span class="macro">assert_eq!</span>(fibonacci(<span class="number">50</span>).to_string(), <span class="string">"12586269025"</span>);
+        <span class="macro">assert_eq!</span>(fibonacci(<span class="number">100</span>).to_string(), <span class="string">"354224848179261915075"</span>);
     }
 
     <span class="attr">#[test]
@@ -1266,7 +1266,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>divide_integers() {
-        <span class="kw">let </span>a: Integer = <span class="string">&quot;52384129912341238437480192384&quot;</span>.parse().unwrap();
+        <span class="kw">let </span>a: Integer = <span class="string">"52384129912341238437480192384"</span>.parse().unwrap();
 
         <span class="attr">#[allow(clippy::eq_op)]
         </span><span class="kw">let </span>one = <span class="kw-2">&amp;</span>a / <span class="kw-2">&amp;</span>a;
@@ -1282,7 +1282,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>divide_assign_integers() {
-        <span class="kw">let </span><span class="kw-2">mut </span>a: Integer = <span class="string">&quot;52384129912341238437480192384&quot;</span>.parse().unwrap();
+        <span class="kw">let </span><span class="kw-2">mut </span>a: Integer = <span class="string">"52384129912341238437480192384"</span>.parse().unwrap();
 
         a /= a.clone();
         <span class="macro">assert_eq!</span>(a, <span class="number">1</span>);
@@ -1290,7 +1290,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>remainder_integers() {
-        <span class="kw">let </span>a: Integer = <span class="string">&quot;52384129912341238437480192384&quot;</span>.parse().unwrap();
+        <span class="kw">let </span>a: Integer = <span class="string">"52384129912341238437480192384"</span>.parse().unwrap();
 
         <span class="kw">let </span>res_u8: u8 = <span class="kw-2">&amp;</span>a % <span class="number">122u8</span>;
         <span class="macro">assert_eq!</span>(res_u8, <span class="number">62</span>);
@@ -1304,7 +1304,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>remainder_assign_integers() {
-        <span class="kw">let </span><span class="kw-2">mut </span>a: Integer = <span class="string">&quot;52384129912341238437480192384&quot;</span>.parse().unwrap();
+        <span class="kw">let </span><span class="kw-2">mut </span>a: Integer = <span class="string">"52384129912341238437480192384"</span>.parse().unwrap();
 
         a %= <span class="number">60_000u16</span>;
         <span class="macro">assert_eq!</span>(a, <span class="number">12384</span>);
@@ -1312,17 +1312,17 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>negate_integers() {
-        <span class="kw">let </span>a: Integer = <span class="string">&quot;52384129912341238437480192384&quot;</span>.parse().unwrap();
+        <span class="kw">let </span>a: Integer = <span class="string">"52384129912341238437480192384"</span>.parse().unwrap();
         <span class="kw">let </span>b = -a;
 
         <span class="kw">let </span>string_repr = b.to_string();
-        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>string_repr, <span class="string">&quot;-52384129912341238437480192384&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>string_repr, <span class="string">"-52384129912341238437480192384"</span>);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>absolute_value_integer() {
-        <span class="kw">let </span>neg_int: Integer = <span class="string">&quot;-37129740&quot;</span>.parse().unwrap();
-        <span class="kw">let </span>pos_int: Integer = <span class="string">&quot;37129740&quot;</span>.parse().unwrap();
+        <span class="kw">let </span>neg_int: Integer = <span class="string">"-37129740"</span>.parse().unwrap();
+        <span class="kw">let </span>pos_int: Integer = <span class="string">"37129740"</span>.parse().unwrap();
 
         <span class="macro">assert_eq!</span>(neg_int.absolute_value(), pos_int);
         <span class="macro">assert_eq!</span>(pos_int.absolute_value(), <span class="number">37_129_740</span>);
