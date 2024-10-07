@@ -27,7 +27,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout source
-        uses: actions/checkout@v1
+        uses: actions/checkout@v4
         with:
           submodules: recursive
       # LLVM and Clang installation
@@ -37,59 +37,41 @@ jobs:
       # that bindgen can find libclang and depedencies
       - name: Cache LLVM and Clang
         id: cache-llvm
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ${{ runner.temp }}/llvm-${{ matrix.clang }}
           key: ${{ matrix.os }}-llvm-${{ matrix.clang }}
       - name: Install LLVM and Clang
-        uses: KyleMayes/install-llvm-action@v1
+        uses: KyleMayes/install-llvm-action@v2
         with:
           version: ${{ matrix.clang }}
           directory: ${{ runner.temp }}/llvm-${{ matrix.clang }}
           cached: ${{ steps.cache-llvm.outputs.cache-hit }}
       # Rust
       - name: Install ${{ matrix.rust }} toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: ${{ matrix.rust }}
-          override: true
+        uses: dtolnay/rust-toolchain@${{ matrix.rust }}
       - name: Build
-        uses: actions-rs/cargo@v1
+        run: cargo build --all
         env:
           LIBCLANG_PATH: ${{ runner.temp }}/llvm-${{ matrix.clang }}/lib
           LLVM_CONFIG_PATH: ${{ runner.temp }}/llvm-${{ matrix.clang }}/bin/llvm-config
-        with:
-          command: build
-          args: --all
       - name: Test
-        uses: actions-rs/cargo@v1
+        run: cargo test --all
         env:
           LIBCLANG_PATH: ${{ runner.temp }}/llvm-${{ matrix.clang }}/lib
           LLVM_CONFIG_PATH: ${{ runner.temp }}/llvm-${{ matrix.clang }}/bin/llvm-config
-        with:
-          command: test
-          args: --all
   lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
-        uses: actions/checkout@v1
+        uses: actions/checkout@v4
         with:
           submodules: recursive
       - name: Install nightly toolchain
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@nightly
         with:
-          profile: minimal
-          toolchain: nightly
-          override: true
           components: clippy, rustfmt
       - name: Check format
-        uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: --all -- --check
+        run: cargo fmt --all --check
       - name: Lint
-        uses: actions-rs/cargo@v1
-        with:
-          command: clippy
+        run: cargo clippy
