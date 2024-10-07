@@ -4,7 +4,7 @@ description = "FFI bindings to creachadair imath"
 version = "0.2.0"
 authors = ["Declan Kelly <dkelly.home@gmail.com>"]
 edition = "2018"
-readme = "README.md"
+readme = "../README.md"
 repository = "https://github.com/declanvk/reckoner"
 categories = ["external-ffi-bindings", "science"]
 keywords = ["ffi-bindings"]
@@ -12,14 +12,11 @@ license = "MIT"
 
 build = "build.rs"
 links = "imath"
-include = [
-  "src/*",
-  "vendor/imath/*.{c,h}",
-  "Cargo.toml",
-  "build.rs"
-]
+include = ["src/*", "vendor/imath/*.{c,h}", "Cargo.toml", "build.rs", "tests/"]
 
 [build-dependencies]
 cc = "1.0.67"
-bindgen = { version = "0.70.1", default-features = false, features = ["runtime"] }
+bindgen = { version = "0.70.1", default-features = false, features = [
+  "runtime",
+] }
 dunce = "1.0.1"
