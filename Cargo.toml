@@ -9,7 +9,7 @@ repository = "https://github.com/declanvk/reckoner"
 categories = ["science"]
 keywords = ["arbitrary-precision", "math", "number", "integer", "rational"]
 license = "MIT"
-rust-version = "1.65.0" # MSRV
+rust-version = "1.70.0" # MSRV
 
 [dependencies]
 creachadair-imath-sys = { version = "^0.2.0", path = "creachadair-imath-sys/" }

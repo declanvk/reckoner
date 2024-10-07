@@ -42,7 +42,7 @@ fn main() {
         .allowlist_function(FUNCTION_REG)
         .allowlist_type(TYPE_REG)
         .allowlist_var(VAR_REG)
-        // Current MSRV is 1.65.0, see top-level README.md file
+        // Current MSRV is 1.70.0, see top-level README.md file
         .rust_target(bindgen::RustTarget::Stable_1_64)
         .generate()
         .expect("Unable to generate bindings");
