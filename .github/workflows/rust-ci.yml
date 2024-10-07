@@ -23,7 +23,7 @@ jobs:
           - windows-latest
           - macos-latest
         clang:
-          - 11.0
+          - 14.0
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout source
